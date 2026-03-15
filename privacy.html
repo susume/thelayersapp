@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Layers</title>
+<meta name="description" content="Privacy Policy for Layers — The Floating Toolkit for Teachers and Presenters.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+section, nav, footer, div, main { position: relative; z-index: 1; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem; color: var(--text); text-decoration: none;
+}
+.brand-dot {
+  width: 10px; height: 10px;
+  background: var(--accent); border-radius: 50%;
+  box-shadow: 0 0 12px var(--accent);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 8px var(--accent); }
+  50%      { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(91,127,255,0.3); }
+}
+.nav-back {
+  color: var(--muted); text-decoration: none; font-size: 0.875rem;
+  font-weight: 500; transition: color 0.2s; display: flex; align-items: center; gap: 6px;
+}
+.nav-back:hover { color: var(--text); }
+
+/* MAIN CONTENT */
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 120px 40px 100px;
+}
+
+.page-header {
+  margin-bottom: 56px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.page-header .label {
+  display: inline-block; font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; font-weight: 500; color: var(--accent);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.8;
+}
+.page-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  line-height: 1.1; letter-spacing: -0.02em;
+}
+.page-header h1 em { font-style: italic; color: var(--accent); }
+.page-header .meta {
+  margin-top: 16px; font-size: 0.85rem; color: var(--dim);
+  font-family: 'DM Mono', monospace;
+}
+
+/* POLICY SECTIONS */
+.policy-section {
+  margin-bottom: 48px;
+}
+.policy-section h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem; font-weight: 400;
+  margin-bottom: 16px; color: var(--text);
+  display: flex; align-items: center; gap: 10px;
+}
+.policy-section h2 .sec-num {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--accent); font-weight: 500; letter-spacing: 0.1em;
+  background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.2);
+  padding: 3px 8px; border-radius: 6px;
+}
+.policy-section p {
+  color: var(--muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 14px;
+}
+.policy-section p:last-child { margin-bottom: 0; }
+.policy-section ul {
+  list-style: none; display: flex; flex-direction: column; gap: 10px;
+  margin: 14px 0;
+}
+.policy-section ul li {
+  display: flex; align-items: flex-start; gap: 10px;
+  color: var(--muted); font-size: 0.95rem; line-height: 1.7;
+}
+.policy-section ul li::before {
+  content: '→'; color: var(--accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 3px;
+}
+.policy-section a { color: var(--accent2); text-decoration: none; }
+.policy-section a:hover { text-decoration: underline; }
+
+.highlight-box {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px; margin: 20px 0;
+}
+.highlight-box p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+.highlight-box strong { color: var(--text); }
+
+.green-box {
+  background: rgba(46,213,115,0.06); border: 1px solid rgba(46,213,115,0.2);
+  border-radius: 14px; padding: 20px 24px; margin: 20px 0;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.green-box .gi { font-size: 1.4rem; flex-shrink: 0; }
+.green-box p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin: 0; }
+.green-box strong { color: var(--green); }
+
+/* DIVIDER */
+.policy-divider {
+  width: 100%; height: 1px; background: var(--border); margin: 48px 0;
+}
+
+/* CONTACT BOX */
+.contact-box {
+  background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9));
+  border: 1px solid rgba(91,127,255,0.25); border-radius: 20px;
+  padding: 36px; text-align: center; margin-top: 56px;
+}
+.contact-box h3 {
+  font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 12px;
+}
+.contact-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 24px; }
+.contact-box a {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: var(--text);
+  padding: 12px 28px; border-radius: 100px;
+  font-weight: 600; font-size: 0.9rem; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 0 20px rgba(91,127,255,0.3);
+}
+.contact-box a:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(91,127,255,0.5); }
+
+/* FOOTER */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--border); padding: 40px 40px;
+  margin-top: 80px;
+}
+.footer-inner {
+  max-width: 760px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
+.footer-brand span { color: var(--accent); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@media (max-width: 600px) {
+  nav { padding: 0 20px; }
+  main { padding: 100px 24px 80px; }
+  footer { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <a href="index.html" class="nav-back">← Back to Home</a>
+</nav>
+
+<main>
+
+  <div class="page-header">
+    <div class="label">// Legal</div>
+    <h1>Privacy <em>Policy</em></h1>
+    <p class="meta">Last updated: March 2026 &nbsp;·&nbsp; thelayersapp.com</p>
+  </div>
+
+  <div class="green-box">
+    <span class="gi">🔒</span>
+    <p><strong>The short version:</strong> Layers does not sell your data, does not show you ads, and does not collect anything it doesn't need. The teacher app stores nothing online. The student extension stores only what's needed to run your classroom connection.</p>
+  </div>
+
+  <!-- 1 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">01</span> Who we are</h2>
+    <p>Layers is a software tool for teachers and presenters, built and maintained by Peter Hoang, based in Japan. It consists of two products: the <strong>Layers Windows app</strong> (a floating toolbar for teachers) and the <strong>Layers Student Chrome Extension</strong> (a browser toolbar for students).</p>
+    <p>If you have any questions about this policy, you can reach us at <a href="mailto:peter@thelayersapp.com">peter@thelayersapp.com</a>.</p>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 2 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">02</span> The Windows app — what it collects</h2>
+    <p>The Layers Windows app runs entirely on your own computer. It does <strong>not</strong> create an account, does not require a login, and does not send personal information to any server.</p>
+    <p>The only data it stores is saved locally on your own device:</p>
+    <ul>
+      <li>Room codes you've saved for quick access to your classroom connection</li>
+      <li>Your class lists (student names or numbers you enter for the random picker)</li>
+      <li>A PIN code if you choose to set one — stored only on your device</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>This data never leaves your computer.</strong> It is stored in a private folder on your PC and is only used by the Layers app itself.</p>
+    </div>
+    <p>When you use the classroom connection feature (Sync), the app communicates with a secure cloud service to send instructions to connected students. This connection uses a room code — no names, email addresses, or personal details are ever sent. See Section 4 for more details on this.</p>
+    <p>When you use the speech translation feature, your microphone audio is processed by Google's speech recognition service. This is the same technology used by Google Assistant and Google Translate. Audio is sent to Google's servers to be converted to text — it is not stored or recorded by Layers. Please refer to <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a> for details on how Google handles speech data.</p>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 3 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">03</span> The Student Chrome Extension — what it collects</h2>
+    <p>The Layers Student Extension is designed to be as private as possible. It does <strong>not</strong> require an account, does not track browsing history, and does not collect any personally identifiable information.</p>
+    <p>Here is what the extension does and doesn't do:</p>
+    <ul>
+      <li>It saves your language preferences locally in your browser — these never leave your device</li>
+      <li>Your notepad content is saved locally in your browser — it is never uploaded anywhere</li>
+      <li>If you join a teacher's classroom, the extension sends a small anonymous heartbeat signal every 15 seconds so the teacher can see how many students are connected. This signal contains no name, no account, and no personal information — just a random session ID</li>
+      <li>If your teacher activates Focus Mode or blocks sites, the extension receives those instructions via your room code connection</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>The extension does not read, store, or transmit the content of the pages you visit.</strong> It does not track what websites you go to. It cannot see your passwords, payment information, or any other sensitive content.</p>
+    </div>
+    <p>When you use the translation or dictionary feature, the text you highlight is sent to Google Translate to fetch a translation. This is the same service you use when you visit translate.google.com. Layers does not store or log these requests. Please refer to <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a> for details.</p>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 4 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">04</span> The classroom connection (Sync)</h2>
+    <p>The classroom connection feature allows a teacher's Windows app to send instructions — such as Focus Mode on/off, blocked sites, or a PIN — to connected student extensions in real time.</p>
+    <p>This works through a secure cloud database (Google Firebase), hosted in Asia. Here is exactly what is stored there, and for how long:</p>
+    <ul>
+      <li>A room entry identified only by the room code — no names attached</li>
+      <li>The current state of Focus Mode (on or off)</li>
+      <li>The list of blocked sites the teacher has set</li>
+      <li>A hashed (scrambled) version of the PIN, if one is set — the actual PIN is never stored</li>
+      <li>A count of connected students, using anonymous session IDs only</li>
+    </ul>
+    <p>The teacher's connection closes automatically after 45 minutes of inactivity. Student session data expires when they leave the room or close their browser. No data from classroom sessions is retained after the session ends.</p>
+    <div class="highlight-box">
+      <p><strong>No student names, school names, email addresses, or any personally identifiable information is ever stored in the classroom connection.</strong> The room code is the only identifier used.</p>
+    </div>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 5 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">05</span> Third-party services</h2>
+    <p>Layers uses the following third-party services. Each has its own privacy policy:</p>
+    <ul>
+      <li><strong>Google Speech Recognition</strong> — used for live speech-to-text in the teacher app. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy →</a></li>
+      <li><strong>Google Translate</strong> — used to translate text in both the Windows app and the student extension. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy →</a></li>
+      <li><strong>Google Firebase Realtime Database</strong> — used for the classroom connection feature. Data is stored in the Asia Southeast region. <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy Policy →</a></li>
+    </ul>
+    <p>Layers does not use any advertising networks, analytics platforms, or tracking services. No data is ever sold to third parties.</p>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 6 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">06</span> Children's privacy</h2>
+    <p>Layers is designed for use in educational settings and may be used by students of all ages, including children under 13.</p>
+    <p>We take this seriously. The student extension does not collect names, email addresses, photos, or any personally identifiable information from students of any age. Students do not create accounts. The only data associated with a student session is an anonymous, randomly generated ID that exists only for the duration of the classroom session.</p>
+    <p>If you are a parent or school administrator with questions or concerns about how Layers handles student data, please contact us at <a href="mailto:peter@thelayersapp.com">peter@thelayersapp.com</a>.</p>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 7 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">07</span> Permissions — Chrome Extension</h2>
+    <p>The Layers Student Extension requests the following browser permissions, and here is exactly why each one is needed:</p>
+    <ul>
+      <li><strong>Read and change data on websites you visit</strong> — this is required to inject the toolbar onto the page and to enable translation of page content. The extension does not read, log, or transmit the content of pages you visit.</li>
+      <li><strong>Storage</strong> — used to save your language preferences and notepad content locally in your browser. Nothing is sent to a server.</li>
+      <li><strong>Microphone (optional)</strong> — only requested if you use the push-to-talk translation feature in the student toolbar. Audio is processed by Google Speech Recognition and is not stored by Layers.</li>
+    </ul>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 8 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">08</span> Your rights</h2>
+    <p>Because Layers does not collect personal information, there is very little data to manage. However, you have full control over anything stored locally:</p>
+    <ul>
+      <li>Your notepad, language preferences, and saved room codes can be cleared at any time from within the app or by uninstalling it</li>
+      <li>Class lists stored on the teacher's PC can be deleted at any time from within the app</li>
+      <li>Uninstalling the Windows app removes all locally stored data</li>
+      <li>Removing the Chrome extension clears all locally stored extension data</li>
+    </ul>
+    <p>If you believe any data related to you is held somewhere and would like it removed, contact us at <a href="mailto:peter@thelayersapp.com">peter@thelayersapp.com</a> and we will address it promptly.</p>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 9 -->
+  <div class="policy-section">
+    <h2><span class="sec-num">09</span> Changes to this policy</h2>
+    <p>If this policy changes in a meaningful way, the updated version will be posted at this URL with a new "last updated" date at the top. We will not reduce your privacy protections without clear notice.</p>
+    <p>For significant changes — particularly any that affect how student data is handled — we will make reasonable efforts to notify users directly.</p>
+  </div>
+
+  <div class="contact-box">
+    <h3>Questions about privacy?</h3>
+    <p>If anything in this policy is unclear, or if you have a specific concern, get in touch. We'll reply promptly.</p>
+    <a href="mailto:peter@thelayersapp.com">peter@thelayersapp.com</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">The Floating Toolkit for Presenters</span></div>
+    <p class="footer-copy">© 2026 Layers · Built by Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
