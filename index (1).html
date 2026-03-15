@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers — Classroom Translation & Focus Tools</title>
+<meta name="description" content="Real-time translation, focus control, and classroom tools for teachers and students. Free Chrome Extension. Windows app for educators.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #0d0d12;
+    --bg2:       #131318;
+    --bg3:       #1a1a24;
+    --accent:    #5b7fff;
+    --accent2:   #7c9fff;
+    --green:     #2ed573;
+    --red:       #ff4757;
+    --orange:    #ffa502;
+    --text:      #ffffff;
+    --muted:     #a0a0b0;
+    --dim:       #555568;
+    --border:    rgba(91,127,255,0.15);
+    --card-bg:   rgba(26,26,36,0.8);
+    --pill:      #252530;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ── GRID BACKGROUND ── */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  section, nav, footer { position: relative; z-index: 1; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(13,13,18,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-brand .brand-dot {
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 8px var(--accent); }
+    50% { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(91,127,255,0.3); }
+  }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.875rem; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: var(--text) !important;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-weight: 600 !important;
+    transition: opacity 0.2s, transform 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 120px 40px 80px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(91,127,255,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(91,127,255,0.1);
+    border: 1px solid rgba(91,127,255,0.3);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted);
+    max-width: 560px;
+    margin-top: 24px;
+    font-weight: 300;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 44px;
+    animation: fadeUp 0.6s ease 0.3s both;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+    box-shadow: 0 0 30px rgba(91,127,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(91,127,255,0.5); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--dim);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── TOOLBAR MOCKUP ── */
+  .toolbar-demo {
+    margin-top: 80px;
+    animation: fadeUp 0.6s ease 0.4s both;
+    position: relative;
+  }
+
+  .toolbar-wrap {
+    background: #131318;
+    border: 1px solid rgba(91,127,255,0.2);
+    border-radius: 16px;
+    padding: 12px 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 860px;
+  }
+
+  .tb-brand {
+    display: flex; flex-direction: column;
+    padding: 4px 12px 4px 8px;
+    border-right: 1px solid rgba(91,127,255,0.2);
+    margin-right: 4px;
+    position: relative;
+  }
+  .tb-brand::before {
+    content: '';
+    position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 3px; background: var(--accent); border-radius: 2px;
+  }
+  .tb-brand .b1 { font-weight: 700; color: var(--accent); font-size: 0.75rem; letter-spacing: 0.1em; }
+  .tb-brand .b2 { font-size: 0.55rem; color: var(--muted); font-weight: 600; }
+
+  .tb-pill {
+    background: #252530;
+    border-radius: 10px;
+    padding: 5px 10px;
+    display: flex; flex-direction: column;
+    align-items: center;
+    min-width: 48px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+  }
+  .tb-pill:hover { background: #2e2e3e; }
+  .tb-pill.active { background: var(--accent); border-color: var(--accent); }
+  .tb-pill .icon { font-size: 1rem; line-height: 1.2; }
+  .tb-pill .lbl { font-size: 0.45rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8899cc; margin-top: 1px; }
+  .tb-pill.active .lbl { color: rgba(255,255,255,0.9); }
+
+  .tb-sep { width: 1px; background: var(--border); height: 40px; margin: 0 4px; }
+
+  .tb-lang {
+    background: #252530;
+    border-radius: 10px;
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text);
+    display: flex; align-items: center; gap: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .tb-lang:hover { background: #2e2e3e; }
+  .tb-lang .arr { color: var(--muted); font-size: 0.6rem; }
+
+  .toolbar-label {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--dim);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SECTION WRAPPER ── */
+  .section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+  .section-sm { padding: 60px 40px; max-width: 1200px; margin: 0 auto; }
+
+  .label-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  h2 em { font-style: italic; color: var(--accent); }
+
+  .section-intro {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 560px;
+    margin-top: 16px;
+    font-weight: 300;
+  }
+
+  /* ── PRODUCTS ── */
+  .products-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  @media (max-width: 768px) {
+    .products-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 20px; }
+    .nav-links { gap: 16px; }
+    .nav-links a:not(.nav-cta) { display: none; }
+    .hero { padding: 100px 24px 60px; }
+    .section { padding: 60px 24px; }
+  }
+
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .product-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.35); }
+  .product-card:hover::before { opacity: 1; }
+
+  .product-card.featured {
+    border-color: rgba(91,127,255,0.3);
+    background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9));
+  }
+
+  .product-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(46,213,115,0.12);
+    border: 1px solid rgba(46,213,115,0.3);
+    color: var(--green);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .product-badge.blue {
+    background: rgba(91,127,255,0.12);
+    border-color: rgba(91,127,255,0.3);
+    color: var(--accent2);
+  }
+
+  .product-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .product-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .feature-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .feature-list li::before {
+    content: '↗';
+    color: var(--accent);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .product-os {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--dim);
+    letter-spacing: 0.06em;
+    margin-top: 16px;
+  }
+
+  .product-num {
+    position: absolute; top: 28px; right: 28px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 4rem;
+    color: rgba(91,127,255,0.07);
+    line-height: 1;
+    user-select: none;
+  }
+
+  /* ── STUDENT TOOLS ── */
+  .student-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 56px;
+  }
+
+  @media (max-width: 1000px) { .student-tools-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px)  { .student-tools-grid { grid-template-columns: 1fr; } }
+
+  .student-tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .student-tool-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.35); }
+  .student-tool-card.st-focus {
+    border-color: rgba(46,213,115,0.25);
+    background: linear-gradient(140deg, rgba(46,213,115,0.06), rgba(26,26,36,0.9));
+  }
+
+  .st-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 16px;
+  }
+  .st-icon { font-size: 2rem; line-height: 1; }
+  .st-name { font-size: 1rem; font-weight: 700; }
+  .st-sub  { font-size: 0.75rem; color: var(--accent2); font-weight: 500; margin-top: 2px; }
+  .st-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+
+  .st-chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 16px;
+  }
+  .st-chip {
+    background: rgba(46,213,115,0.1);
+    border: 1px solid rgba(46,213,115,0.25);
+    color: var(--green);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 100px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── LANGUAGES ── */
+  .lang-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 80px 40px;
+  }
+
+  .lang-inner { max-width: 1200px; margin: 0 auto; }
+
+  .lang-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 40px;
+  }
+
+  .lang-tag {
+    background: var(--pill);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.2s;
+  }
+  .lang-tag:hover { background: rgba(91,127,255,0.15); color: var(--accent2); border-color: rgba(91,127,255,0.3); }
+
+  /* ── FEATURES GRID ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  @media (max-width: 900px) {
+    .features-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .features-grid { grid-template-columns: 1fr; }
+    .products-grid { grid-template-columns: 1fr; }
+  }
+
+  .feat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .feat-card:hover { transform: translateY(-3px); border-color: rgba(91,127,255,0.3); }
+
+  .feat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .feat-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .feat-card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ── SYNC DIAGRAM ── */
+  .sync-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  @media (max-width: 768px) {
+    .sync-section { grid-template-columns: 1fr; }
+  }
+
+  .sync-diagram {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+  }
+
+  .sync-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--pill);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .sync-row .s-icon { font-size: 1.3rem; }
+  .sync-row .s-info { flex: 1; }
+  .sync-row .s-title { font-size: 0.85rem; font-weight: 600; }
+  .sync-row .s-desc { font-size: 0.75rem; color: var(--muted); }
+
+  .sync-arrow {
+    text-align: center;
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin: 4px 0;
+    opacity: 0.7;
+  }
+
+  .sync-badge {
+    background: rgba(91,127,255,0.12);
+    border: 1px solid rgba(91,127,255,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.75rem;
+    color: var(--accent2);
+    font-family: 'DM Mono', monospace;
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  /* ── PRICING ── */
+  .pricing-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 100px 40px;
+  }
+
+  .pricing-inner { max-width: 1200px; margin: 0 auto; }
+
+  .pricing-toggle {
+    display: inline-flex;
+    background: var(--pill);
+    border-radius: 100px;
+    padding: 4px;
+    margin-top: 36px;
+    margin-bottom: 48px;
+  }
+
+  .pt-btn {
+    padding: 8px 24px;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .pt-btn.active { background: var(--accent); color: var(--text); }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 1000px) { .pricing-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .pricing-grid { grid-template-columns: 1fr; } }
+
+  .price-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    display: flex; flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+
+  .price-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.3); }
+
+  .price-card.popular {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, rgba(91,127,255,0.12), rgba(26,26,36,0.95));
+  }
+
+  .popular-tag {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .price-tier {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .price-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+
+  .price-amount {
+    display: flex; align-items: flex-end; gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  .price-amount .currency { font-size: 1.1rem; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+  .price-amount .amount { font-size: 3rem; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .price-amount .period { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+
+  .price-save {
+    font-size: 0.75rem;
+    color: var(--green);
+    font-weight: 600;
+    margin-bottom: 20px;
+    min-height: 20px;
+  }
+
+  .price-divider {
+    width: 100%; height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  .price-features {
+    list-style: none;
+    flex: 1;
+    display: flex; flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .price-features li {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+
+  .price-features li .check {
+    color: var(--green);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .price-features li .cross {
+    color: var(--dim);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .btn-price {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--dim);
+    color: var(--text);
+  }
+
+  .btn-price:hover { border-color: var(--accent); color: var(--accent); }
+  .price-card.popular .btn-price { background: var(--accent); border-color: var(--accent); }
+  .price-card.popular .btn-price:hover { opacity: 0.85; }
+
+  .price-free .amount { color: var(--green); }
+
+  .pricing-note {
+    text-align: center;
+    margin-top: 32px;
+    font-size: 0.875rem;
+    color: var(--dim);
+  }
+
+  .pricing-note a { color: var(--accent); text-decoration: none; }
+  .pricing-note a:hover { text-decoration: underline; }
+
+  /* ── NO ADS ── */
+  .no-ads-banner {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(46,213,115,0.07);
+    border: 1px solid rgba(46,213,115,0.2);
+    border-radius: 12px;
+    padding: 16px 24px;
+    max-width: 560px;
+    margin: 40px auto 0;
+  }
+  .no-ads-banner .icon { font-size: 1.5rem; }
+  .no-ads-banner p { font-size: 0.9rem; color: var(--muted); }
+  .no-ads-banner strong { color: var(--green); }
+
+  /* ── FAQ / CTA ── */
+  .cta-section {
+    padding: 120px 40px;
+    text-align: center;
+  }
+
+  .cta-inner { max-width: 600px; margin: 0 auto; }
+
+  .cta-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 20px;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .cta-actions {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 48px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 24px;
+  }
+
+  .footer-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+    color: var(--text);
+  }
+
+  .footer-brand span { color: var(--accent); }
+
+  .footer-links {
+    display: flex; gap: 28px;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-copy {
+    color: var(--dim);
+    font-size: 0.8rem;
+    width: 100%;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="brand-dot"></div>
+    Layers
+  </a>
+  <div class="nav-links">
+    <a href="#products">Products</a>
+    <a href="#features">Features</a>
+    <a href="#sync">Sync</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">🌏 Real-time classroom translation</div>
+  <h1>Every student<br><em>understands</em> you.</h1>
+  <p class="hero-sub">Layers floats over your presentation, translates your speech in real-time, and keeps every student in your multilingual classroom focused — in 46 languages.</p>
+  <div class="hero-actions">
+    <a href="https://chromewebstore.google.com" class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+      Free Chrome Extension
+    </a>
+    <a href="#pricing" class="btn-secondary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Get Windows App
+    </a>
+  </div>
+
+  <!-- TOOLBAR MOCKUP -->
+  <div class="toolbar-demo">
+    <div class="toolbar-wrap">
+      <div class="tb-brand">
+        <span class="b1">LAYERS</span>
+        <span class="b2">v2.9</span>
+      </div>
+      <div class="tb-lang">JA <span class="arr">▾</span></div>
+      <div class="tb-lang">EN <span class="arr">▾</span></div>
+      <div class="tb-pill active">
+        <span class="icon">🎙</span>
+        <span class="lbl">HOLD F5</span>
+      </div>
+      <div class="tb-pill">
+        <span class="icon">▶</span>
+        <span class="lbl">START</span>
+      </div>
+      <div class="tb-sep"></div>
+      <div class="tb-pill">
+        <span class="icon">文A</span>
+        <span class="lbl">CAPTION</span>
+      </div>
+      <div class="tb-pill">
+        <span class="icon">⏱</span>
+        <span class="lbl">TIMER</span>
+      </div>
+      <div class="tb-pill">
+        <span class="icon">⚄</span>
+        <span class="lbl">PICKER</span>
+      </div>
+      <div class="tb-pill">
+        <span class="icon">⚠</span>
+        <span class="lbl">NOISE</span>
+      </div>
+      <div class="tb-pill">
+        <span class="icon">✏</span>
+        <span class="lbl">DRAW</span>
+      </div>
+      <div class="tb-sep"></div>
+      <div class="tb-pill">
+        <span class="icon">🔗</span>
+        <span class="lbl">SYNC</span>
+      </div>
+      <div class="tb-pill">
+        <span class="icon">🌐</span>
+        <span class="lbl">BROWSER</span>
+      </div>
+    </div>
+    <p class="toolbar-label">// always-on-top · floats over any application · drag to reposition</p>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="reveal">
+    <span class="label-tag">// The suite</span>
+    <h2>Two tools. One <em>mission.</em></h2>
+    <p class="section-intro">Built for classrooms where not everyone speaks the same language.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card featured reveal">
+      <span class="product-num">01</span>
+      <div class="product-badge blue">Windows App</div>
+      <h3>Layers</h3>
+      <p>An always-on-top floating toolbar for teachers and facilitators. Translates your speech live, controls student devices, draws on your screen — all without leaving your presentation.</p>
+      <ul class="feature-list">
+        <li>Push-to-talk real-time speech translation in 46 languages</li>
+        <li>Floating caption window for students to read along</li>
+        <li>Screen annotation & drawing tools</li>
+        <li>Countdown timer, noise meter & random student picker</li>
+        <li>Firebase Sync — remotely activate Focus Mode on student Chromebooks</li>
+        <li>Custom site blocking & PIN lock for student devices</li>
+      </ul>
+      <p class="product-os">Python 3.12 · Windows 10/11 · PyAudio + Google STT</p>
+    </div>
+    <div class="product-card reveal">
+      <span class="product-num">02</span>
+      <div class="product-badge">Chrome Extension · Free Forever</div>
+      <h3>Layers Student</h3>
+      <p>A full productivity toolbar that lives in the browser — for use in class <em>and</em> while studying at home. Works on any website, including Google Slides fullscreen.</p>
+      <ul class="feature-list">
+        <li><strong>Translation & Dictionary</strong> — instant word & page translation in 29 languages</li>
+        <li><strong>Notepad</strong> — a persistent general notepad, always one click away</li>
+        <li><strong>Countdown Timer</strong> — set a timer for any task without leaving the page</li>
+        <li><strong>Focus Mode</strong> — one-click toggle blocks a preset list of distracting sites (TikTok, YouTube & more); teacher can also activate remotely</li>
+        <li><strong>Sync</strong> — joins a teacher's room via code for live classroom controls</li>
+        <li>Keyboard shortcuts: Alt+L, Alt+T, Ctrl+Z</li>
+      </ul>
+      <p class="product-os">Chrome Extension · MV3 · No build step · Vanilla JS</p>
+    </div>
+  </div>
+</section>
+
+<!-- STUDENT TOOLS -->
+<div style="background:var(--bg); border-top:1px solid var(--border); padding:100px 40px;">
+  <div style="max-width:1200px; margin:0 auto;">
+    <div class="reveal">
+      <span class="label-tag">// Layers Student — Chrome Extension</span>
+      <h2>A productivity suite<br>that <em>travels</em> with them.</h2>
+      <p class="section-intro">Every tool a student needs, tucked into a floating toolbar. No new tabs. No app switching. Just learning.</p>
+    </div>
+    <div class="student-tools-grid reveal">
+
+      <div class="student-tool-card">
+        <div class="st-header">
+          <span class="st-icon">🌐</span>
+          <div>
+            <div class="st-name">Translation &amp; Dictionary</div>
+            <div class="st-sub">29 languages</div>
+          </div>
+        </div>
+        <p class="st-desc">Highlight any word or translate the entire page instantly. Students read in their native language without leaving the site.</p>
+      </div>
+
+      <div class="student-tool-card">
+        <div class="st-header">
+          <span class="st-icon">📝</span>
+          <div>
+            <div class="st-name">Notepad</div>
+            <div class="st-sub">Always accessible</div>
+          </div>
+        </div>
+        <p class="st-desc">A persistent notepad that stays with them across every website. Jot down vocab, ideas, or homework reminders without opening a new tab.</p>
+      </div>
+
+      <div class="student-tool-card">
+        <div class="st-header">
+          <span class="st-icon">⏱</span>
+          <div>
+            <div class="st-name">Countdown Timer</div>
+            <div class="st-sub">Stay on task</div>
+          </div>
+        </div>
+        <p class="st-desc">Set a custom countdown for any task — assignments, self-study sessions, or timed practice. Visible without leaving the page.</p>
+      </div>
+
+      <div class="student-tool-card st-focus">
+        <div class="st-header">
+          <span class="st-icon">🎯</span>
+          <div>
+            <div class="st-name">Focus Mode</div>
+            <div class="st-sub">One click · or teacher-activated</div>
+          </div>
+        </div>
+        <p class="st-desc">Blocks distracting sites with one click. Students activate it themselves, or teachers push it remotely via Sync — with a PIN lock to prevent dismissal.</p>
+        <div class="st-chips">
+          <span class="st-chip">TikTok</span>
+          <span class="st-chip">YouTube</span>
+          <span class="st-chip">Instagram</span>
+          <span class="st-chip">+ 60 more</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- LANGUAGES -->
+<div class="lang-section" id="languages">
+  <div class="lang-inner">
+    <div class="reveal">
+      <span class="label-tag">// Supported languages</span>
+      <h2>46 languages. <em>Zero barriers.</em></h2>
+      <p class="section-intro">From Japanese to Khmer — Layers speaks your students' languages so you can focus on teaching.</p>
+    </div>
+    <div class="lang-grid reveal">
+      <span class="lang-tag">🇯🇵 Japanese</span>
+      <span class="lang-tag">🇬🇧 English</span>
+      <span class="lang-tag">🇻🇳 Vietnamese</span>
+      <span class="lang-tag">🇨🇳 Chinese (Simplified)</span>
+      <span class="lang-tag">🇹🇼 Chinese (Traditional)</span>
+      <span class="lang-tag">🇰🇷 Korean</span>
+      <span class="lang-tag">🇳🇵 Nepali</span>
+      <span class="lang-tag">🇵🇭 Filipino</span>
+      <span class="lang-tag">🇮🇳 Hindi</span>
+      <span class="lang-tag">🇧🇩 Bengali</span>
+      <span class="lang-tag">🇱🇰 Sinhala</span>
+      <span class="lang-tag">🇲🇲 Burmese</span>
+      <span class="lang-tag">🇰🇭 Khmer</span>
+      <span class="lang-tag">🇱🇦 Lao</span>
+      <span class="lang-tag">🇹🇭 Thai</span>
+      <span class="lang-tag">🇮🇩 Indonesian</span>
+      <span class="lang-tag">🇲🇾 Malay</span>
+      <span class="lang-tag">🇪🇸 Spanish</span>
+      <span class="lang-tag">🇫🇷 French</span>
+      <span class="lang-tag">🇩🇪 German</span>
+      <span class="lang-tag">🇵🇹 Portuguese</span>
+      <span class="lang-tag">🇷🇺 Russian</span>
+      <span class="lang-tag">🇮🇹 Italian</span>
+      <span class="lang-tag">🇦🇷 Arabic</span>
+      <span class="lang-tag">🇹🇷 Turkish</span>
+      <span class="lang-tag">🇵🇱 Polish</span>
+      <span class="lang-tag">🇺🇦 Ukrainian</span>
+      <span class="lang-tag">🇳🇱 Dutch</span>
+      <span class="lang-tag">🇬🇷 Greek</span>
+      <span class="lang-tag">🇵🇰 Urdu</span>
+      <span class="lang-tag">🇮🇳 Tamil</span>
+      <span class="lang-tag">🇸🇪 Swedish</span>
+      <span class="lang-tag">🇩🇰 Danish</span>
+      <span class="lang-tag">🇫🇮 Finnish</span>
+      <span class="lang-tag">🇳🇴 Norwegian</span>
+      <span class="lang-tag">🇨🇿 Czech</span>
+      <span class="lang-tag">🇭🇺 Hungarian</span>
+      <span class="lang-tag">🇷🇴 Romanian</span>
+      <span class="lang-tag">🇮🇱 Hebrew</span>
+      <span class="lang-tag">🇮🇷 Persian</span>
+      <span class="lang-tag">🇰🇪 Swahili</span>
+      <span class="lang-tag">🇭🇷 Croatian</span>
+      <span class="lang-tag">🇷🇸 Serbian</span>
+      <span class="lang-tag">🇧🇬 Bulgarian</span>
+      <span class="lang-tag">🇸🇰 Slovak</span>
+      <span class="lang-tag">🏳 Catalan</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="reveal">
+    <span class="label-tag">// Features</span>
+    <h2>Everything you need<br>in the <em>classroom.</em></h2>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <span class="feat-icon">🎙</span>
+      <h4>Push-to-Talk Translation</h4>
+      <p>Hold F5 to speak. Your words are transcribed and translated in real-time using Google Speech Recognition — no API key required.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">文A</span>
+      <h4>Floating Caption Window</h4>
+      <p>A semi-transparent caption overlay floats above your screen so students can read your translated speech at any time.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">✏</span>
+      <h4>Screen Drawing & Annotation</h4>
+      <p>Draw directly over any application — pen, highlighter, shapes, arrows, eraser. Undo with Ctrl+Z. Escape to exit.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">⏱</span>
+      <h4>Timer & Stopwatch</h4>
+      <p>Countdown timer with presets (30s, 1m, 2m, 3m, 5m, 10m) with buzzer, plus a stopwatch with looping progress bar.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">⚄</span>
+      <h4>Random Student Picker</h4>
+      <p>Slot-machine style picker for up to 100 students. Also opens PDFs, Word, PowerPoint, and Excel files directly.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">⚠</span>
+      <h4>Noise Meter</h4>
+      <p>Semicircular arc gauge (green/yellow/red) with adjustable sensitivity. Alarm triggers with a 5-second cooldown.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🔒</span>
+      <h4>PIN Lock System</h4>
+      <p>Set a 4-digit PIN to prevent students from disabling Focus Mode or leaving a room without teacher authorisation.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🚫</span>
+      <h4>Custom Site Blocking</h4>
+      <p>Block specific domains on student Chromebooks in real time — pushed instantly via Firebase to every connected student.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">📖</span>
+      <h4>Multilingual Dictionary</h4>
+      <p>Students highlight any word on any webpage and instantly look it up in their native language — right inside the toolbar, no new tab needed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SYNC -->
+<section class="section" id="sync">
+  <div class="sync-section reveal">
+    <div>
+      <span class="label-tag">// Firebase Sync</span>
+      <h2>Control every<br>device in the <em>room.</em></h2>
+      <p class="section-intro" style="margin-bottom:24px;">The teacher's Windows app and student Chrome extensions communicate via Firebase Realtime Database. One command reaches every Chromebook in your classroom in under 3 seconds.</p>
+      <ul class="feature-list">
+        <li>Teacher enters a room code — students join the same room</li>
+        <li>Focus Mode pushed to all students simultaneously</li>
+        <li>Block distracting sites like TikTok, YouTube, or custom domains</li>
+        <li>PIN lock prevents students from dismissing teacher controls</li>
+        <li>Live student count — see who's connected</li>
+        <li>Auto-disconnect after 45 minutes idle</li>
+      </ul>
+    </div>
+    <div class="sync-diagram">
+      <div class="sync-row">
+        <span class="s-icon">🖥</span>
+        <div class="s-info">
+          <div class="s-title">Teacher — Layers Windows App</div>
+          <div class="s-desc">Sets Focus Mode, blocked sites, PIN lock</div>
+        </div>
+      </div>
+      <div class="sync-arrow">↓ writes command</div>
+      <div class="sync-row" style="background:rgba(91,127,255,0.1); border-color:rgba(91,127,255,0.2);">
+        <span class="s-icon">🔥</span>
+        <div class="s-info">
+          <div class="s-title" style="color:var(--accent2)">Firebase Realtime Database</div>
+          <div class="s-desc">rooms/{code}/commands/</div>
+        </div>
+      </div>
+      <div class="sync-arrow">↓ polls every 3 seconds</div>
+      <div class="sync-row">
+        <span class="s-icon">🎓</span>
+        <div class="s-info">
+          <div class="s-title">Students — Chrome Extension</div>
+          <div class="s-desc">Receives and applies all commands</div>
+        </div>
+      </div>
+      <div class="sync-badge">Asia Southeast 1 region · Free Tier · ~100 simultaneous connections</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<div class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="reveal">
+      <span class="label-tag">// Pricing</span>
+      <h2>Simple, <em>honest</em> pricing.</h2>
+      <p class="section-intro">Students are always free. No ads, ever. Paid plans keep the servers running and the software improving.</p>
+    </div>
+    <div>
+      <div class="pricing-toggle">
+        <button class="pt-btn active" id="btn-monthly" onclick="setPricing('monthly')">Monthly</button>
+        <button class="pt-btn" id="btn-yearly" onclick="setPricing('yearly')">Yearly — save 28%</button>
+      </div>
+    </div>
+    <div class="pricing-grid reveal">
+
+      <!-- FREE -->
+      <div class="price-card price-free">
+        <div class="price-tier">For Students</div>
+        <div class="price-name">Student</div>
+        <div class="price-amount">
+          <span class="amount" style="color:var(--green)">Free</span>
+        </div>
+        <div class="price-save">&nbsp;</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Chrome Extension</li>
+          <li><span class="check">✓</span> 29-language translation</li>
+          <li><span class="check">✓</span> Built-in dictionary</li>
+          <li><span class="check">✓</span> Focus Mode (student-controlled)</li>
+          <li><span class="check">✓</span> Sync with teacher (room join)</li>
+          <li><span class="cross">–</span> Windows desktop app</li>
+          <li><span class="cross">–</span> Teacher controls</li>
+        </ul>
+        <a href="https://chromewebstore.google.com" class="btn-price">Add to Chrome</a>
+      </div>
+
+      <!-- PERSONAL -->
+      <div class="price-card">
+        <div class="price-tier">For Teachers & Tutors</div>
+        <div class="price-name">Personal</div>
+        <div class="price-amount">
+          <span class="currency">$</span>
+          <span class="amount" id="personal-price">8</span>
+          <span class="period" id="personal-period">/mo</span>
+        </div>
+        <div class="price-save" id="personal-save">&nbsp;</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> 1 Windows PC license</li>
+          <li><span class="check">✓</span> Full teacher toolbar</li>
+          <li><span class="check">✓</span> 46-language translation</li>
+          <li><span class="check">✓</span> Firebase Sync (1 room)</li>
+          <li><span class="check">✓</span> Focus Mode, site blocking, PIN</li>
+          <li><span class="check">✓</span> All classroom tools</li>
+          <li><span class="cross">–</span> Custom branding</li>
+        </ul>
+        <a href="/cdn-cgi/l/email-protection#036b666f6f6c43776b666f627a6671706273732d606c6e3c707661696660773e536671706c6d626f234f6a60666d7066" class="btn-price">Get Personal</a>
+      </div>
+
+      <!-- BUSINESS -->
+      <div class="price-card popular">
+        <div class="popular-tag">Most Popular</div>
+        <div class="price-tier">For Schools & Centres</div>
+        <div class="price-name">Business</div>
+        <div class="price-amount">
+          <span class="currency">$</span>
+          <span class="amount" id="business-price">29</span>
+          <span class="period" id="business-period">/mo</span>
+        </div>
+        <div class="price-save" id="business-save">&nbsp;</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Up to 10 Windows PCs</li>
+          <li><span class="check">✓</span> All Personal features</li>
+          <li><span class="check">✓</span> Centralised license management</li>
+          <li><span class="check">✓</span> Priority email support</li>
+          <li><span class="check">✓</span> Multiple sync rooms</li>
+          <li><span class="check">✓</span> Ideal for tutoring centres</li>
+          <li><span class="cross">–</span> Custom branding</li>
+        </ul>
+        <a href="/cdn-cgi/l/email-protection#cca4a9a0a0a38cb8a4a9a0adb5a9bebfadbcbce2afa3a1f3bfb9aea6a9afb8f18eb9bfa5a2a9bfbfec80a5afa9a2bfa9" class="btn-price">Get Business</a>
+      </div>
+
+      <!-- SITE LICENSE -->
+      <div class="price-card">
+        <div class="price-tier">For Districts & Schools</div>
+        <div class="price-name">Site License</div>
+        <div class="price-amount">
+          <span class="currency">$</span>
+          <span class="amount" id="site-price">89</span>
+          <span class="period" id="site-period">/mo</span>
+        </div>
+        <div class="price-save" id="site-save">&nbsp;</div>
+        <div class="price-divider"></div>
+        <ul class="price-features">
+          <li><span class="check">✓</span> Unlimited Windows PCs</li>
+          <li><span class="check">✓</span> All Business features</li>
+          <li><span class="check">✓</span> <strong>Custom branding</strong> — your logo & colours</li>
+          <li><span class="check">✓</span> <strong>Custom extension panels</strong> on request</li>
+          <li><span class="check">✓</span> Dedicated onboarding</li>
+          <li><span class="check">✓</span> Chrome Enterprise support guidance</li>
+          <li><span class="check">✓</span> Invoice billing available</li>
+        </ul>
+        <a href="/cdn-cgi/l/email-protection#0c64696060634c786469606d75697e7f6d7c7c226f6361337f796e66696f78315f6578692c40656f69627f692c49627d79657e75" class="btn-price">Contact Us</a>
+      </div>
+
+    </div>
+
+    <div class="no-ads-banner reveal">
+      <span class="icon">🚫</span>
+      <p><strong>Zero ads, forever.</strong> Layers will never show advertisements to teachers or students. Paid plans keep the infrastructure running and the app improving.</p>
+    </div>
+
+    <p class="pricing-note" style="margin-top:20px;">
+      Need a custom quote for a large district?
+      <a href="/cdn-cgi/l/email-protection#761e131a1a1936021e131a170f1304051706065815191b490503141c1315024b331802130406041f051356331807031f040f">Get in touch →</a>
+    </p>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <h2>Start teaching across<br>every <em>language.</em></h2>
+    <p>The Chrome Extension is free and ready for your students today. Install it in seconds — no sign-up required.</p>
+    <div class="cta-actions">
+      <a href="https://chromewebstore.google.com" class="btn-primary">
+        Free Chrome Extension
+      </a>
+      <a href="/cdn-cgi/l/email-protection#39515c555556794d515c5558405c4b4a584949175a5654" class="btn-secondary">
+        Contact for Windows App
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span>Layers</span> · <span style="color:var(--muted); font-size:0.9rem; font-family:'Outfit',sans-serif;">Classroom Translation Tools</span>
+    </div>
+    <div class="footer-links">
+      <a href="#products">Products</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/cdn-cgi/l/email-protection#523a373e3e3d12263a373e332b3720213322227c313d3f">Contact</a>
+      <a href="#">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© 2025 Layers · Built by Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent); text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── PRICING TOGGLE ──
+  const prices = {
+    personal:  { monthly: 8,  yearly: 69  },
+    business:  { monthly: 29, yearly: 249 },
+    site:      { monthly: 89, yearly: 749 }
+  };
+
+  let currentMode = 'monthly';
+
+  function setPricing(mode) {
+    currentMode = mode;
+    document.getElementById('btn-monthly').classList.toggle('active', mode === 'monthly');
+    document.getElementById('btn-yearly').classList.toggle('active', mode === 'yearly');
+
+    const tiers = ['personal', 'business', 'site'];
+    tiers.forEach(tier => {
+      const p = prices[tier];
+      const priceEl  = document.getElementById(tier + '-price');
+      const periodEl = document.getElementById(tier + '-period');
+      const saveEl   = document.getElementById(tier + '-save');
+
+      if (mode === 'monthly') {
+        priceEl.textContent  = p.monthly;
+        periodEl.textContent = '/mo';
+        saveEl.textContent   = '\u00a0';
+      } else {
+        priceEl.textContent  = p.yearly;
+        periodEl.textContent = '/yr';
+        const saved = Math.round(100 - (p.yearly / (p.monthly * 12)) * 100);
+        saveEl.textContent = '✦ Save ' + saved + '% vs monthly';
+        saveEl.style.color = 'var(--green)';
+      }
+    });
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e
