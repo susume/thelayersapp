@@ -358,6 +358,23 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 .footer-links a:hover { color: var(--text); }
 .footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
 
+/* LANGUAGE SWITCHER */
+.lang-switcher {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--pill); border-radius: 100px;
+  padding: 3px; border: 1px solid var(--border);
+  margin-right: 8px;
+}
+.lang-btn {
+  padding: 4px 10px; border-radius: 100px; border: none;
+  background: transparent; color: var(--muted);
+  font-size: 0.75rem; font-weight: 600; cursor: pointer;
+  font-family: 'Outfit', sans-serif; transition: all 0.15s;
+  letter-spacing: 0.03em;
+}
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { background: var(--bg2); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+
 /* RESPONSIVE */
 @media (max-width: 1000px) { .pricing-grid { grid-template-columns: 1fr 1fr; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px)  { .products-grid { grid-template-columns: 1fr; } .sync-layout { grid-template-columns: 1fr; } .problem-grid { grid-template-columns: 1fr; } nav { padding: 0 20px; } .nav-links a:not(.nav-cta):not(:last-child) { display: none; } .wrap, .band { padding: 60px 24px; } }
@@ -370,25 +387,31 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 <nav>
   <a href="#" class="nav-brand"><div class="brand-dot"></div>Layers</a>
   <div class="nav-links">
-    <a href="#problem">The Problem</a>
-    <a href="#features">Features</a>
-    <a href="#students">For Students</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#pricing" class="nav-cta">Get Started</a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
+    </div>
+    <a href="#problem" data-i18n="nav_problem">The Problem</a>
+    <a href="#features" data-i18n="nav_features">Features</a>
+    <a href="#students" data-i18n="nav_students">For Students</a>
+    <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+    <a href="#pricing" class="nav-cta" data-i18n="nav_cta">Get Started</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-glow"></div>
-  <div class="hero-badge">🖥️ The floating toolkit for teachers &amp; presenters</div>
-  <h1>Present without<br><em>interruptions.</em></h1>
-  <p class="hero-sub">Layers floats on top of your slides, videos, and apps — giving you instant access to timers, annotation, translation, and classroom tools without ever leaving your presentation.</p>
+  <div class="hero-badge" data-i18n="hero_badge">🖥️ The floating toolkit for teachers &amp; presenters</div>
+  <h1 data-i18n="hero_h1">Present without<br><em>interruptions.</em></h1>
+  <p class="hero-sub" data-i18n="hero_sub">Layers floats on top of your slides, videos, and apps — giving you instant access to timers, annotation, translation, and classroom tools without ever leaving your presentation.</p>
   <div class="hero-actions">
-    <a href="mailto:peter@thelayersapp.com" class="btn-primary">
+    <a href="https://thelayersapp.gumroad.com/l/v29eng" class="btn-primary" data-i18n="hero_cta_primary">
       Get the Teacher App — $29
     </a>
-    <a href="https://chromewebstore.google.com" class="btn-secondary">
+    <a href="https://chromewebstore.google.com" class="btn-secondary" data-i18n="hero_cta_secondary">
       Free Student Extension
     </a>
   </div>
@@ -740,7 +763,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <li><span class="ck">✓</span> Quick file launcher</li>
           <li><span class="ck">✓</span> Classroom connection &amp; student controls</li>
         </ul>
-        <a href="mailto:peter@thelayersapp.com" class="btn-price">Buy Now — $29</a>
+        <a href="https://thelayersapp.gumroad.com/l/v29eng" class="btn-price">Buy Now — $29</a>
       </div>
 
       <!-- SCHOOL -->
@@ -759,7 +782,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <li><span class="ck">✓</span> Invoice billing available</li>
           <li><span class="ck">✓</span> Guidance for school IT teams</li>
         </ul>
-        <a href="mailto:peter@thelayersapp.com" class="btn-price">Get in Touch</a>
+        <a href="mailto:questions@thelayersapp.com" class="btn-price">Get in Touch</a>
       </div>
 
     </div>
@@ -776,7 +799,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <h2>Stop switching windows.<br><em>Start presenting.</em></h2>
     <p>Everything you need, right on top of your presentation. The student tool is free — the teacher app is a one-time purchase.</p>
     <div class="cta-actions">
-      <a href="mailto:peter@thelayersapp.com" class="btn-primary">Get the Teacher App — $29</a>
+      <a href="https://thelayersapp.gumroad.com/l/v29eng" class="btn-primary">Get the Teacher App — $29</a>
       <a href="https://chromewebstore.google.com" class="btn-secondary">Free Student Extension</a>
     </div>
   </div>
@@ -790,12 +813,111 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <a href="#features">Features</a>
       <a href="#students">For Students</a>
       <a href="#pricing">Pricing</a>
-      <a href="mailto:peter@thelayersapp.com">Contact</a>
+      <a href="mailto:questions@thelayersapp.com">Contact</a>
       <a href="privacy.html">Privacy Policy</a>
     </div>
     <p class="footer-copy">© 2026 Layers · Built by Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
   </div>
 </footer>
+
+<script>
+// ── TRANSLATIONS ─────────────────────────────────────────────────────
+var TRANSLATIONS = {
+
+  en: {
+    nav_problem: "The Problem",
+    nav_features: "Features",
+    nav_students: "For Students",
+    nav_pricing: "Pricing",
+    nav_cta: "Get Started",
+    hero_badge: "🖥️ The floating toolkit for teachers & presenters",
+    hero_h1: "Present without<br><em>interruptions.</em>",
+    hero_sub: "Layers floats on top of your slides, videos, and apps — giving you instant access to timers, annotation, translation, and classroom tools without ever leaving your presentation.",
+    hero_cta_primary: "Get the Teacher App — $29",
+    hero_cta_secondary: "Free Student Extension",
+  },
+
+  ja: {
+    nav_problem: "課題",
+    nav_features: "機能",
+    nav_students: "生徒向け",
+    nav_pricing: "料金",
+    nav_cta: "はじめる",
+    hero_badge: "🖥️ 教師・プレゼンターのためのフローティングツールキット",
+    hero_h1: "中断なしで<br><em>プレゼンを。</em>",
+    hero_sub: "Layersはスライド、動画、アプリの上に浮かび、プレゼンを離れることなくタイマー、注釈、翻訳、授業ツールに即アクセスできます。",
+    hero_cta_primary: "教師用アプリを入手 — $29",
+    hero_cta_secondary: "生徒用拡張機能（無料）",
+  },
+
+  zh: {
+    nav_problem: "问题所在",
+    nav_features: "功能",
+    nav_students: "学生专区",
+    nav_pricing: "价格",
+    nav_cta: "立即开始",
+    hero_badge: "🖥️ 专为教师和演讲者设计的浮动工具栏",
+    hero_h1: "演示不再<br><em>被打断。</em>",
+    hero_sub: "Layers 悬浮在您的幻灯片、视频和应用程序上方，让您无需离开演示即可立即使用计时器、注释、翻译和课堂工具。",
+    hero_cta_primary: "获取教师应用 — $29",
+    hero_cta_secondary: "免费学生插件",
+  },
+
+  vi: {
+    nav_problem: "Vấn đề",
+    nav_features: "Tính năng",
+    nav_students: "Dành cho học sinh",
+    nav_pricing: "Giá cả",
+    nav_cta: "Bắt đầu",
+    hero_badge: "🖥️ Bộ công cụ nổi dành cho giáo viên và người thuyết trình",
+    hero_h1: "Thuyết trình không<br><em>bị gián đoạn.</em>",
+    hero_sub: "Layers nổi trên các slide, video và ứng dụng của bạn — giúp bạn truy cập ngay vào bộ hẹn giờ, chú thích, dịch thuật và công cụ lớp học mà không cần rời khỏi bài thuyết trình.",
+    hero_cta_primary: "Tải ứng dụng giáo viên — $29",
+    hero_cta_secondary: "Tiện ích miễn phí cho học sinh",
+  }
+
+};
+
+// ── LANG SWITCHER ────────────────────────────────────────────────────
+var currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+
+  // Update button states
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
+  });
+
+  // Apply translations
+  var t = TRANSLATIONS[lang] || TRANSLATIONS['en'];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) {
+      el.innerHTML = t[key];
+    }
+  });
+
+  // Update html lang attribute
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+
+  // Save preference
+  try { localStorage.setItem('layers_lang', lang); } catch(e) {}
+}
+
+// Auto-detect language on load
+(function() {
+  var saved = null;
+  try { saved = localStorage.getItem('layers_lang'); } catch(e) {}
+  var browserLang = (navigator.language || '').toLowerCase();
+  var detected = saved || (
+    browserLang.startsWith('ja') ? 'ja' :
+    browserLang.startsWith('zh') ? 'zh' :
+    browserLang.startsWith('vi') ? 'vi' : 'en'
+  );
+  if (detected !== 'en') setLang(detected);
+})();
+</script>
 
 <script>
 // SCROLL REVEAL
