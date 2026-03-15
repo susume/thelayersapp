@@ -124,10 +124,13 @@ h2 em { font-style: italic; color: var(--accent); }
 .who-icon { font-size: 1.8rem; flex-shrink: 0; }
 .who-text { font-size: 0.9rem; font-weight: 600; }
 .who-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-.student-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-top: 56px; }
+.student-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 56px; }
+.student-grid-bottom { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-top: 20px; }
 .st-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: transform 0.25s, border-color 0.25s; }
 .st-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.3); }
 .st-card.focus-card { border-color: rgba(46,213,115,0.25); background: linear-gradient(140deg, rgba(46,213,115,0.06), rgba(26,26,36,0.9)); }
+.st-card.talk-card { border-color: rgba(91,127,255,0.25); background: linear-gradient(140deg, rgba(91,127,255,0.06), rgba(26,26,36,0.9)); }
+.st-card.sync-card { border-color: rgba(91,127,255,0.2); }
 .st-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
 .st-icon { font-size: 2rem; line-height: 1; }
 .st-name { font-size: 1rem; font-weight: 700; }
@@ -135,6 +138,7 @@ h2 em { font-style: italic; color: var(--accent); }
 .st-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
 .st-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
 .st-chip { background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25); color: var(--green); font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+.st-free-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25); color: var(--green); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-top: 32px; letter-spacing: 0.06em; text-transform: uppercase; }
 .lang-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
 .lang-tag { background: var(--pill); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: var(--muted); border: 1px solid rgba(255,255,255,0.05); transition: all 0.2s; }
 .lang-tag:hover { background: rgba(91,127,255,0.15); color: var(--accent2); border-color: rgba(91,127,255,0.3); }
@@ -387,26 +391,39 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <div class="band-inner">
     <div class="reveal">
       <span class="label-tag" data-i18n="stud_tag">// Layers Student — free browser tool</span>
-      <h2 data-i18n="stud_h2">A productivity toolbar<br>for <em>every</em> student.</h2>
-      <p class="intro" data-i18n="stud_intro">Students get their own floating toolbar in the browser — translation, notes, timer, drawing, and focus tools — all on top of whatever page they're working on.</p>
+      <h2 data-i18n="stud_h2">Not just translation.<br>A full <em>study toolkit.</em></h2>
+      <p class="intro" data-i18n="stud_intro">Layers Student is a complete floating toolkit that lives in the browser — seven tools, always one click away, on top of any page your students are working on. Free forever, no account needed.</p>
+      <div class="st-free-badge" data-i18n="stud_free_badge">✓ Completely free · No sign-up · Works on any website</div>
     </div>
-    <div class="student-grid">
-      <div class="st-card reveal">
-        <div class="st-head"><span class="st-icon">🌐</span><div><div class="st-name" data-i18n="stud1_name">Translation &amp; Dictionary</div><div class="st-sub" data-i18n="stud1_sub">29 languages</div></div></div>
-        <p data-i18n="stud1_p">Highlight any word on any page and instantly see what it means. Or translate the entire page. No switching tabs, no leaving the lesson — right there, on the page they're already on.</p>
+    <div class="student-grid reveal">
+      <div class="st-card talk-card">
+        <div class="st-head"><span class="st-icon">🎤</span><div><div class="st-name" data-i18n="stud1_name">Push-to-Talk Translation</div><div class="st-sub" data-i18n="stud1_sub">Speak and see it translated</div></div></div>
+        <p data-i18n="stud1_p">Students hold a button and speak in their language — their words are translated and displayed instantly. Useful for students who want to ask a question in class but aren't confident in the lesson language.</p>
       </div>
-      <div class="st-card reveal">
-        <div class="st-head"><span class="st-icon">📝</span><div><div class="st-name" data-i18n="stud2_name">Notepad</div><div class="st-sub" data-i18n="stud2_sub">Always accessible</div></div></div>
-        <p data-i18n="stud2_p">A place to jot down notes, vocabulary, or ideas that stays open across every website. Nothing gets lost when they change pages.</p>
+      <div class="st-card">
+        <div class="st-head"><span class="st-icon">🌐</span><div><div class="st-name" data-i18n="stud2_name">Translation &amp; Dictionary</div><div class="st-sub" data-i18n="stud2_sub">29 languages</div></div></div>
+        <p data-i18n="stud2_p">Highlight any word on any page and instantly see a full definition — with pronunciation, part of speech, and an example sentence — translated into their own language. Or translate the entire page with one click.</p>
       </div>
-      <div class="st-card reveal">
-        <div class="st-head"><span class="st-icon">✏</span><div><div class="st-name" data-i18n="stud3_name">Page Drawing</div><div class="st-sub" data-i18n="stud3_sub">Annotate anything</div></div></div>
-        <p data-i18n="stud3_p">Draw and highlight directly on any webpage — useful for marking up articles, diagrams, or anything they're studying. Great for visual learners.</p>
+      <div class="st-card">
+        <div class="st-head"><span class="st-icon">📝</span><div><div class="st-name" data-i18n="stud3_name">Scratch Pad</div><div class="st-sub" data-i18n="stud3_sub">Auto-saves as they type</div></div></div>
+        <p data-i18n="stud3_p">A notepad that stays open across every website and auto-saves every keystroke. Students jot down vocabulary, key terms, or questions without ever losing their work — even if they close the page.</p>
       </div>
-      <div class="st-card focus-card reveal">
-        <div class="st-head"><span class="st-icon">🎯</span><div><div class="st-name" data-i18n="stud4_name">Focus Mode</div><div class="st-sub" data-i18n="stud4_sub">Self or teacher-activated</div></div></div>
-        <p data-i18n="stud4_p">Blocks distracting websites in one click so students can concentrate. Teachers can also activate it for the whole class remotely — with a PIN so students can't turn it off.</p>
-        <div class="st-chips"><span class="st-chip">TikTok</span><span class="st-chip">YouTube</span><span class="st-chip">Instagram</span><span class="st-chip" data-i18n="stud4_more">+ 60 more</span></div>
+      <div class="st-card">
+        <div class="st-head"><span class="st-icon">⏱</span><div><div class="st-name" data-i18n="stud4_name">Timer</div><div class="st-sub" data-i18n="stud4_sub">Quick presets, any time</div></div></div>
+        <p data-i18n="stud4_p">A countdown timer students control themselves — perfect for self-study sessions, timed practice, or staying on track during group work. Pick a preset or type any duration. An alert sounds when it ends.</p>
+      </div>
+      <div class="st-card">
+        <div class="st-head"><span class="st-icon">✏️</span><div><div class="st-name" data-i18n="stud5_name">Page Drawing</div><div class="st-sub" data-i18n="stud5_sub">Pen, highlighter, arrow, shapes</div></div></div>
+        <p data-i18n="stud5_p">Draw and annotate directly over any webpage — mark up an article, circle key terms on a diagram, or highlight anything worth remembering. Multiple tools and colours, undo at any time.</p>
+      </div>
+      <div class="st-card focus-card">
+        <div class="st-head"><span class="st-icon">🎯</span><div><div class="st-name" data-i18n="stud6_name">Focus Mode</div><div class="st-sub" data-i18n="stud6_sub">Student or teacher-activated</div></div></div>
+        <p data-i18n="stud6_p">One click blocks 60+ distracting websites so students can concentrate on their work. Teachers can also push it to the whole class remotely — with an optional PIN so students can't turn it off without permission.</p>
+        <div class="st-chips"><span class="st-chip">TikTok</span><span class="st-chip">YouTube</span><span class="st-chip">Instagram</span><span class="st-chip" data-i18n="stud6_more">+ 60 more</span></div>
+      </div>
+      <div class="st-card sync-card">
+        <div class="st-head"><span class="st-icon">🔗</span><div><div class="st-name" data-i18n="stud7_name">Classroom Sync</div><div class="st-sub" data-i18n="stud7_sub">Connect to the teacher</div></div></div>
+        <p data-i18n="stud7_p">Students enter a room code to join the teacher's classroom. From that moment, the teacher can push Focus Mode, block websites, and send controls directly to every connected student — no app installation required.</p>
       </div>
     </div>
   </div>
@@ -622,12 +639,16 @@ var T = {
     who4_title:"Presenters", who4_sub:"Talks, demos, conference sessions",
     who5_title:"Workshop Facilitators", who5_sub:"Group activities & timed exercises",
     who6_title:"Sales Professionals", who6_sub:"Product demos & client presentations",
-    stud_tag:"// Layers Student — free browser tool", stud_h2:"A productivity toolbar<br>for <em>every</em> student.",
-    stud_intro:"Students get their own floating toolbar in the browser — translation, notes, timer, drawing, and focus tools — all on top of whatever page they're working on.",
-    stud1_name:"Translation & Dictionary", stud1_sub:"29 languages", stud1_p:"Highlight any word on any page and instantly see what it means. Or translate the entire page. No switching tabs, no leaving the lesson — right there, on the page they're already on.",
-    stud2_name:"Notepad", stud2_sub:"Always accessible", stud2_p:"A place to jot down notes, vocabulary, or ideas that stays open across every website. Nothing gets lost when they change pages.",
-    stud3_name:"Page Drawing", stud3_sub:"Annotate anything", stud3_p:"Draw and highlight directly on any webpage — useful for marking up articles, diagrams, or anything they're studying. Great for visual learners.",
-    stud4_name:"Focus Mode", stud4_sub:"Self or teacher-activated", stud4_p:"Blocks distracting websites in one click so students can concentrate. Teachers can also activate it for the whole class remotely — with a PIN so students can't turn it off.", stud4_more:"+ 60 more",
+    stud_tag:"// Layers Student — free browser tool", stud_h2:"Not just translation.<br>A full <em>study toolkit.</em>",
+    stud_intro:"Layers Student is a complete floating toolkit that lives in the browser — seven tools, always one click away, on top of any page your students are working on. Free forever, no account needed.",
+    stud_free_badge:"✓ Completely free · No sign-up · Works on any website",
+    stud1_name:"Push-to-Talk Translation", stud1_sub:"Speak and see it translated", stud1_p:"Students hold a button and speak in their language — their words are translated and displayed instantly. Useful for students who want to ask a question in class but aren't confident in the lesson language.",
+    stud2_name:"Translation & Dictionary", stud2_sub:"29 languages", stud2_p:"Highlight any word on any page and instantly see a full definition — with pronunciation, part of speech, and an example sentence — translated into their own language. Or translate the entire page with one click.",
+    stud3_name:"Scratch Pad", stud3_sub:"Auto-saves as they type", stud3_p:"A notepad that stays open across every website and auto-saves every keystroke. Students jot down vocabulary, key terms, or questions without ever losing their work — even if they close the page.",
+    stud4_name:"Timer", stud4_sub:"Quick presets, any time", stud4_p:"A countdown timer students control themselves — perfect for self-study sessions, timed practice, or staying on track during group work. Pick a preset or type any duration. An alert sounds when it ends.",
+    stud5_name:"Page Drawing", stud5_sub:"Pen, highlighter, arrow, shapes", stud5_p:"Draw and annotate directly over any webpage — mark up an article, circle key terms on a diagram, or highlight anything worth remembering. Multiple tools and colours, undo at any time.",
+    stud6_name:"Focus Mode", stud6_sub:"Student or teacher-activated", stud6_p:"One click blocks 60+ distracting websites so students can concentrate on their work. Teachers can also push it to the whole class remotely — with an optional PIN so students can't turn it off without permission.", stud6_more:"+ 60 more",
+    stud7_name:"Classroom Sync", stud7_sub:"Connect to the teacher", stud7_p:"Students enter a room code to join the teacher's classroom. From that moment, the teacher can push Focus Mode, block websites, and send controls directly to every connected student — no app installation required.",
     lang_tag:"// Translation languages", lang_h2:"Speak. Your students<br><em>understand.</em>",
     lang_intro:"The teacher app translates into 46 languages live as you speak. The student browser tool covers 29. If your students speak it, Layers almost certainly supports it.",
     sync_tag:"// Classroom connection", sync_h2:"Control every screen<br>in the <em>room.</em>",
@@ -717,12 +738,16 @@ var T = {
     who4_title:"プレゼンター", who4_sub:"講演、デモ、カンファレンス",
     who5_title:"ワークショップ進行役", who5_sub:"グループ活動・時間制演習",
     who6_title:"営業担当者", who6_sub:"製品デモ・クライアントプレゼン",
-    stud_tag:"// Layers Student — 無料ブラウザツール", stud_h2:"すべての生徒のための<br><em>生産性</em>ツールバー。",
-    stud_intro:"生徒はブラウザ内に独自のフローティングツールバーを取得。翻訳、メモ、タイマー、描画、フォーカスツールが作業中のページの上に。",
-    stud1_name:"翻訳・辞書", stud1_sub:"29言語対応", stud1_p:"ページ上の任意の単語をハイライトして瞬時に意味を確認。またはページ全体を翻訳。タブ切り替え不要。",
-    stud2_name:"メモ帳", stud2_sub:"常にアクセス可能", stud2_p:"メモ、語彙、アイデアを書き留める場所。ページを移動しても開いたまま。何も失いません。",
-    stud3_name:"ページ描画", stud3_sub:"何でも注釈", stud3_p:"ウェブページに直接描画・強調表示。記事、図、学習中のものに印をつけるのに便利。",
-    stud4_name:"フォーカスモード", stud4_sub:"生徒または教師が起動", stud4_p:"1クリックで気になるウェブサイトをブロック。教師がクラス全体にリモートで起動することも可能。PINで生徒が解除できないようにできます。", stud4_more:"+ 60以上",
+    stud_tag:"// Layers Student — 無料ブラウザツール", stud_h2:"翻訳だけじゃない。<br>完全な<em>学習ツールキット。</em>",
+    stud_intro:"Layers Studentはブラウザに常駐する7つのツールキット。作業中のページの上に常にワンクリックでアクセスできます。永久無料、アカウント不要。",
+    stud_free_badge:"✓ 完全無料 · 登録不要 · あらゆるウェブサイトで動作",
+    stud1_name:"プッシュトゥトーク翻訳", stud1_sub:"話すと即翻訳", stud1_p:"ボタンを押しながら自分の言語で話すと、言葉がすぐに翻訳されて表示されます。授業の言語に自信がない生徒が質問するときに役立ちます。",
+    stud2_name:"翻訳・辞書", stud2_sub:"29言語対応", stud2_p:"ページ上の任意の単語をハイライトして、発音・品詞・例文付きの完全な定義を自分の言語で即確認。またはワンクリックでページ全体を翻訳。",
+    stud3_name:"スクラッチパッド", stud3_sub:"入力しながら自動保存", stud3_p:"あらゆるウェブサイトをまたいで開き続け、キー入力のたびに自動保存するメモ帳。ページを閉じても作業が消えません。",
+    stud4_name:"タイマー", stud4_sub:"プリセットまたは任意の時間", stud4_p:"生徒が自分でコントロールするカウントダウンタイマー。自習、時間制練習、グループワークの時間管理に最適。プリセットを選ぶか時間を入力。終了時にアラート。",
+    stud5_name:"ページ描画", stud5_sub:"ペン・マーカー・矢印・図形", stud5_p:"ウェブページに直接描画・注釈。記事にマークアップ、図の重要用語を丸囲み、覚えたいものを強調表示。複数のツールと色、いつでも取り消し可能。",
+    stud6_name:"フォーカスモード", stud6_sub:"生徒または教師が起動", stud6_p:"1クリックで60以上の気になるウェブサイトをブロック。教師がクラス全体にリモートでプッシュすることも可能。PINを設定すれば許可なく解除できません。", stud6_more:"+ 60以上",
+    stud7_name:"教室同期", stud7_sub:"教師に接続", stud7_p:"生徒がルームコードを入力して教師の教室に参加。その瞬間から教師がフォーカスモードのプッシュ、サイトブロック、コントロールの送信が可能。アプリインストール不要。",
     lang_tag:"// 対応言語", lang_h2:"話すだけで<br>生徒が<em>理解します。</em>",
     lang_intro:"教師用アプリは話しながらリアルタイムで46言語に翻訳。生徒用ブラウザツールは29言語対応。",
     sync_tag:"// 教室接続", sync_h2:"教室のすべての画面を<br><em>管理します。</em>",
@@ -812,12 +837,16 @@ var T = {
     who4_title:"演讲者", who4_sub:"讲座、演示、会议",
     who5_title:"工作坊引导师", who5_sub:"小组活动和计时练习",
     who6_title:"销售专业人员", who6_sub:"产品演示和客户演示",
-    stud_tag:"// Layers Student — 免费浏览器工具", stud_h2:"面向<em>每位</em>学生的<br>生产力工具栏。",
-    stud_intro:"学生在浏览器中获得自己的浮动工具栏——翻译、笔记、计时器、绘图和专注工具——全部在他们正在浏览的页面上方。",
-    stud1_name:"翻译和词典", stud1_sub:"29种语言", stud1_p:"高亮任何页面上的任何单词，立即查看含义。或翻译整个页面。无需切换标签页，无需离开课程——就在他们已经所在的页面上。",
-    stud2_name:"记事本", stud2_sub:"随时可访问", stud2_p:"记录笔记、词汇或想法的地方，在所有网站上保持打开。切换页面时什么都不会丢失。",
-    stud3_name:"页面绘图", stud3_sub:"注释任何内容", stud3_p:"直接在任何网页上绘图和高亮——用于标注文章、图表或他们正在学习的任何内容。非常适合视觉学习者。",
-    stud4_name:"专注模式", stud4_sub:"学生或教师激活", stud4_p:"一键屏蔽干扰网站，让学生专注。教师也可以远程为全班激活——设置PIN使学生无法关闭。", stud4_more:"+ 60个以上",
+    stud_tag:"// Layers Student — 免费浏览器工具", stud_h2:"不只是翻译。<br>完整的<em>学习工具套件。</em>",
+    stud_intro:"Layers Student 是浏览器内的完整浮动工具套件——七种工具，始终一键可达，悬浮于学生正在浏览的任何页面上方。永久免费，无需账户。",
+    stud_free_badge:"✓ 完全免费 · 无需注册 · 适用于任何网站",
+    stud1_name:"按住说话翻译", stud1_sub:"说话即可看到翻译", stud1_p:"学生按住按钮用自己的语言说话——话语立即被翻译并显示出来。对于想在课堂上提问但对课程语言不自信的学生非常有用。",
+    stud2_name:"翻译和词典", stud2_sub:"29种语言", stud2_p:"高亮页面上任何单词，立即查看包含发音、词性和例句的完整释义——翻译成他们自己的语言。或一键翻译整个页面。",
+    stud3_name:"便签本", stud3_sub:"边输入边自动保存", stud3_p:"在所有网站上保持打开并自动保存每次输入的记事本。学生记录词汇、关键术语或问题，即使关闭页面也不会丢失。",
+    stud4_name:"计时器", stud4_sub:"快捷预设或任意时长", stud4_p:"学生自主控制的倒计时器——非常适合自习、限时练习或小组作业时间管理。选择预设或输入任意时长。结束时发出提示音。",
+    stud5_name:"页面绘图", stud5_sub:"钢笔、荧光笔、箭头、形状", stud5_p:"直接在任何网页上绘图和注释——标注文章、圈出图表关键术语，或高亮任何值得记忆的内容。多种工具和颜色，随时撤销。",
+    stud6_name:"专注模式", stud6_sub:"学生或教师激活", stud6_p:"一键屏蔽60多个令人分心的网站，让学生专注学习。教师也可以远程推送给全班——可设置PIN使学生未经许可无法关闭。", stud6_more:"+ 60个以上",
+    stud7_name:"课堂同步", stud7_sub:"连接到教师", stud7_p:"学生输入房间码加入教师课堂。从那一刻起，教师可以推送专注模式、屏蔽网站，并向所有已连接学生发送控制指令——无需安装任何应用。",
     lang_tag:"// 翻译语言", lang_h2:"您说话，学生<br><em>理解。</em>",
     lang_intro:"教师应用在您说话时实时翻译成46种语言。学生浏览器工具支持29种语言。",
     sync_tag:"// 课堂连接", sync_h2:"控制教室中<br><em>每个屏幕。</em>",
@@ -907,12 +936,16 @@ var T = {
     who4_title:"Người thuyết trình", who4_sub:"Bài nói, demo, hội nghị",
     who5_title:"Người hướng dẫn workshop", who5_sub:"Hoạt động nhóm và bài tập có thời gian",
     who6_title:"Chuyên gia bán hàng", who6_sub:"Demo sản phẩm và thuyết trình khách hàng",
-    stud_tag:"// Layers Student — công cụ trình duyệt miễn phí", stud_h2:"Thanh công cụ năng suất<br>cho <em>mọi</em> học sinh.",
-    stud_intro:"Học sinh có thanh công cụ nổi riêng trong trình duyệt — dịch thuật, ghi chú, hẹn giờ, vẽ và công cụ tập trung — tất cả trên trang họ đang làm việc.",
-    stud1_name:"Dịch thuật và từ điển", stud1_sub:"29 ngôn ngữ", stud1_p:"Tô sáng bất kỳ từ nào trên bất kỳ trang nào và xem nghĩa ngay lập tức. Hoặc dịch toàn bộ trang. Không cần chuyển tab, không cần rời bài học.",
-    stud2_name:"Sổ tay", stud2_sub:"Luôn có thể truy cập", stud2_p:"Nơi ghi chú, từ vựng hoặc ý tưởng luôn mở trên mọi trang web. Không mất gì khi chuyển trang.",
-    stud3_name:"Vẽ trên trang", stud3_sub:"Chú thích bất cứ thứ gì", stud3_p:"Vẽ và tô sáng trực tiếp lên bất kỳ trang web nào — hữu ích để đánh dấu bài viết, sơ đồ hoặc bất cứ thứ gì đang học.",
-    stud4_name:"Chế độ tập trung", stud4_sub:"Học sinh hoặc giáo viên kích hoạt", stud4_p:"Chặn các trang web gây sao nhãng chỉ bằng một cú nhấp để học sinh tập trung. Giáo viên cũng có thể kích hoạt cho toàn bộ lớp từ xa — với PIN để học sinh không thể tắt.", stud4_more:"+ 60 trang nữa",
+    stud_tag:"// Layers Student — công cụ trình duyệt miễn phí", stud_h2:"Không chỉ dịch thuật.<br>Bộ công cụ học tập <em>đầy đủ.</em>",
+    stud_intro:"Layers Student là bộ công cụ nổi đầy đủ trong trình duyệt — bảy công cụ, luôn chỉ một cú nhấp, trên mọi trang học sinh đang làm việc. Miễn phí mãi mãi, không cần tài khoản.",
+    stud_free_badge:"✓ Hoàn toàn miễn phí · Không cần đăng ký · Hoạt động trên mọi trang web",
+    stud1_name:"Dịch giọng nói tức thì", stud1_sub:"Nói và xem bản dịch", stud1_p:"Học sinh giữ nút và nói bằng ngôn ngữ của mình — lời nói được dịch và hiển thị ngay lập tức. Hữu ích cho học sinh muốn đặt câu hỏi trong lớp nhưng chưa tự tin với ngôn ngữ bài học.",
+    stud2_name:"Dịch thuật và từ điển", stud2_sub:"29 ngôn ngữ", stud2_p:"Tô sáng bất kỳ từ nào trên trang và xem ngay định nghĩa đầy đủ — kèm phiên âm, từ loại và câu ví dụ — dịch sang ngôn ngữ của họ. Hoặc dịch toàn bộ trang chỉ một cú nhấp.",
+    stud3_name:"Tờ ghi chú", stud3_sub:"Tự động lưu khi gõ", stud3_p:"Sổ tay luôn mở trên mọi trang web và tự động lưu từng lần gõ phím. Học sinh ghi chú từ vựng, thuật ngữ chính hoặc câu hỏi mà không bao giờ mất dữ liệu — kể cả khi đóng trang.",
+    stud4_name:"Hẹn giờ", stud4_sub:"Cài đặt sẵn hoặc bất kỳ thời lượng nào", stud4_p:"Đồng hồ đếm ngược do học sinh tự điều khiển — hoàn hảo cho các buổi tự học, luyện tập có thời gian hoặc quản lý thời gian làm bài nhóm. Chọn cài đặt sẵn hoặc nhập bất kỳ thời lượng nào. Cảnh báo khi kết thúc.",
+    stud5_name:"Vẽ trên trang", stud5_sub:"Bút, bút sáng, mũi tên, hình", stud5_p:"Vẽ và chú thích trực tiếp trên bất kỳ trang web nào — đánh dấu bài viết, khoanh tròn thuật ngữ chính trên sơ đồ, hoặc tô sáng bất cứ điều gì đáng ghi nhớ. Nhiều công cụ và màu sắc, hoàn tác bất cứ lúc nào.",
+    stud6_name:"Chế độ tập trung", stud6_sub:"Học sinh hoặc giáo viên kích hoạt", stud6_p:"Một cú nhấp chặn 60+ trang web gây sao nhãng để học sinh tập trung vào việc học. Giáo viên cũng có thể đẩy đến toàn bộ lớp từ xa — có thể đặt PIN để học sinh không thể tắt mà không có sự cho phép.", stud6_more:"+ 60 trang nữa",
+    stud7_name:"Đồng bộ lớp học", stud7_sub:"Kết nối với giáo viên", stud7_p:"Học sinh nhập mã phòng để tham gia lớp học của giáo viên. Từ thời điểm đó, giáo viên có thể đẩy Chế độ Tập trung, chặn trang web và gửi điều khiển trực tiếp đến mọi học sinh đã kết nối — không cần cài đặt ứng dụng.",
     lang_tag:"// Ngôn ngữ dịch thuật", lang_h2:"Bạn nói. Học sinh<br><em>hiểu.</em>",
     lang_intro:"Ứng dụng giáo viên dịch sang 46 ngôn ngữ theo thời gian thực khi bạn nói. Công cụ trình duyệt học sinh hỗ trợ 29 ngôn ngữ.",
     sync_tag:"// Kết nối lớp học", sync_h2:"Kiểm soát mọi màn hình<br>trong <em>phòng.</em>",
