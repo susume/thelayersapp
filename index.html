@@ -1011,5 +1011,204 @@ var obs = new IntersectionObserver(function(entries) {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 </script>
+
+<!-- ===================== LAYERS AI CHAT WIDGET ===================== -->
+<style>
+#chat-bubble {
+  position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--accent); border: none; cursor: pointer;
+  box-shadow: 0 4px 24px rgba(91,127,255,0.45);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; transition: transform 0.2s, box-shadow 0.2s;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+#chat-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 36px rgba(91,127,255,0.6); }
+#chat-bubble .cb-close { display: none; font-size: 1.2rem; }
+#chat-bubble.open .cb-icon { display: none; }
+#chat-bubble.open .cb-close { display: block; }
+
+#chat-window {
+  position: fixed; bottom: 100px; right: 28px; z-index: 9998;
+  width: 360px; max-height: 520px;
+  background: #131318; border: 1px solid rgba(91,127,255,0.25);
+  border-radius: 20px; display: flex; flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  transform: scale(0.92) translateY(12px); opacity: 0;
+  pointer-events: none; transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  overflow: hidden;
+}
+#chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+
+.chat-header {
+  padding: 16px 20px; border-bottom: 1px solid rgba(91,127,255,0.15);
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(91,127,255,0.06);
+}
+.chat-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.chat-header-text .chat-name { font-size: 0.9rem; font-weight: 700; }
+.chat-header-text .chat-status { font-size: 0.72rem; color: var(--green); display: flex; align-items: center; gap: 5px; }
+.chat-status-dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; display: inline-block; }
+
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: thin; scrollbar-color: rgba(91,127,255,0.2) transparent;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(91,127,255,0.2); border-radius: 2px; }
+
+.msg { max-width: 82%; }
+.msg.bot { align-self: flex-start; }
+.msg.user { align-self: flex-end; }
+.msg-bubble {
+  padding: 10px 14px; border-radius: 14px; font-size: 0.875rem; line-height: 1.55;
+}
+.msg.bot .msg-bubble { background: rgba(255,255,255,0.06); color: var(--text); border-bottom-left-radius: 4px; }
+.msg.user .msg-bubble { background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+.msg-bubble ul { padding-left: 16px; margin-top: 4px; }
+.msg-bubble li { margin-bottom: 2px; }
+
+.typing-indicator { display: flex; align-items: center; gap: 4px; padding: 10px 14px; background: rgba(255,255,255,0.06); border-radius: 14px; border-bottom-left-radius: 4px; width: fit-content; }
+.typing-dot { width: 6px; height: 6px; background: var(--muted); border-radius: 50%; animation: typingBounce 1.2s ease-in-out infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typingBounce { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
+
+.chat-input-row {
+  padding: 12px 14px; border-top: 1px solid rgba(91,127,255,0.12);
+  display: flex; gap: 8px; align-items: flex-end;
+}
+#chat-input {
+  flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px; padding: 9px 13px; color: var(--text);
+  font-family: 'Outfit', sans-serif; font-size: 0.875rem;
+  resize: none; outline: none; max-height: 100px; overflow-y: auto;
+  transition: border-color 0.2s;
+}
+#chat-input:focus { border-color: rgba(91,127,255,0.4); }
+#chat-input::placeholder { color: var(--dim); }
+#chat-send {
+  background: var(--accent); border: none; border-radius: 10px;
+  width: 36px; height: 36px; cursor: pointer; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 1rem; transition: opacity 0.15s;
+}
+#chat-send:hover { opacity: 0.85; }
+#chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+.chat-footer-note { text-align: center; font-size: 0.68rem; color: var(--dim); padding: 0 14px 10px; }
+
+@media (max-width: 420px) {
+  #chat-window { width: calc(100vw - 32px); right: 16px; bottom: 90px; }
+  #chat-bubble { right: 16px; bottom: 16px; }
+}
+</style>
+
+<!-- Bubble button -->
+<button id="chat-bubble" onclick="toggleChat()" aria-label="Chat with Layers assistant">
+  <span class="cb-icon">💬</span>
+  <span class="cb-close">✕</span>
+</button>
+
+<!-- Chat window -->
+<div id="chat-window" role="dialog" aria-label="Layers AI Assistant">
+  <div class="chat-header">
+    <div class="chat-avatar">🧩</div>
+    <div class="chat-header-text">
+      <div class="chat-name">Layers Assistant</div>
+      <div class="chat-status"><span class="chat-status-dot"></span> Online</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg bot">
+      <div class="msg-bubble">Hi! I'm the Layers assistant 👋 Ask me anything about the teacher app, student extension, pricing, or features.</div>
+    </div>
+  </div>
+  <div class="chat-input-row">
+    <textarea id="chat-input" placeholder="Ask a question…" rows="1" onkeydown="chatKeydown(event)"></textarea>
+    <button id="chat-send" onclick="sendMessage()" aria-label="Send">➤</button>
+  </div>
+  <div class="chat-footer-note">Powered by AI · Not always perfect · <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">Email Peter</a> for anything important</div>
+</div>
+
+<script>
+// ── CONFIG ── Replace with your Cloudflare Worker URL after deploying
+var WORKER_URL = 'https://thelayersapp-assistant.susume1982.workers.dev';
+
+var chatHistory = [];
+var chatOpen = false;
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-bubble').classList.toggle('open', chatOpen);
+  document.getElementById('chat-window').classList.toggle('open', chatOpen);
+  if (chatOpen) setTimeout(function() { document.getElementById('chat-input').focus(); }, 250);
+}
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+}
+
+function appendMsg(role, text) {
+  var msgs = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg ' + role;
+  var bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  div.appendChild(bubble);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function showTyping() {
+  var msgs = document.getElementById('chat-messages');
+  var div = document.createElement('div');
+  div.className = 'msg bot'; div.id = 'typing-indicator';
+  div.innerHTML = '<div class="typing-indicator"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  var el = document.getElementById('typing-indicator');
+  if (el) el.remove();
+}
+
+async function sendMessage() {
+  var input = document.getElementById('chat-input');
+  var text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('chat-send').disabled = true;
+
+  appendMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  showTyping();
+
+  try {
+    var res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: chatHistory })
+    });
+    var data = await res.json();
+    hideTyping();
+    var reply = (data.content && data.content[0] && data.content[0].text) || "Sorry, I couldn't get a response. Please try again or email questions@thelayersapp.com.";
+    chatHistory.push({ role: 'assistant', content: reply });
+    appendMsg('bot', reply);
+  } catch(err) {
+    hideTyping();
+    appendMsg('bot', 'Connection error. Please email questions@thelayersapp.com for help.');
+  }
+
+  document.getElementById('chat-send').disabled = false;
+  input.focus();
+}
+</script>
+<!-- ===================== END CHAT WIDGET ===================== -->
+
 </body>
 </html>
