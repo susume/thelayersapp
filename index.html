@@ -208,6 +208,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <a href="#students" data-i18n="nav_students">For Students</a>
     <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
     <a href="contact.html">Contact</a>
+    <a href="support.html" data-i18n="nav_support">☕ Support</a>
     <a href="#pricing" class="nav-cta" data-i18n="nav_cta">Get Started</a>
   </div>
 </nav>
@@ -580,6 +581,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <a href="#students" data-i18n="nav_students">For Students</a>
       <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
       <a href="contact.html" data-i18n="footer_contact">Contact</a>
+      <a href="support.html" data-i18n="nav_support">☕ Support</a>
       <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
     </div>
     <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
@@ -684,7 +686,8 @@ var T = {
     cta_h2:"Stop switching windows.<br><em>Start presenting.</em>",
     cta_p:"Everything you need, right on top of your presentation. The student tool is free — the teacher app is a one-time purchase.",
     cta_btn_teacher:"Get the Teacher App — $29", cta_btn_student:"Free Student Extension",
-    footer_tagline:"The Floating Toolkit for Presenters", footer_contact:"Contact", footer_privacy:"Privacy Policy"
+    footer_tagline:"The Floating Toolkit for Presenters", footer_contact:"Contact", footer_privacy:"Privacy Policy",
+    nav_support:"☕ Support"
   },
 
   ja: {
@@ -783,7 +786,8 @@ var T = {
     cta_h2:"ウィンドウの切り替えをやめて<br><em>プレゼンを始めよう。</em>",
     cta_p:"プレゼンの上に必要なものすべてが揃っています。生徒用ツールは無料 — 教師用アプリは買い切りです。",
     cta_btn_teacher:"教師用アプリを入手 — $29", cta_btn_student:"生徒用拡張機能（無料）",
-    footer_tagline:"プレゼンターのためのフローティングツールキット", footer_contact:"お問い合わせ", footer_privacy:"プライバシーポリシー"
+    footer_tagline:"プレゼンターのためのフローティングツールキット", footer_contact:"お問い合わせ", footer_privacy:"プライバシーポリシー",
+    nav_support:"☕ 応援する"
   },
 
   zh: {
@@ -882,7 +886,8 @@ var T = {
     cta_h2:"停止切换窗口。<br><em>开始演示。</em>",
     cta_p:"您需要的一切都在演示上方。学生工具免费——教师应用一次性购买。",
     cta_btn_teacher:"获取教师应用 — $29", cta_btn_student:"免费学生插件",
-    footer_tagline:"演讲者的浮动工具套件", footer_contact:"联系我们", footer_privacy:"隐私政策"
+    footer_tagline:"演讲者的浮动工具套件", footer_contact:"联系我们", footer_privacy:"隐私政策",
+    nav_support:"☕ 支持我们"
   },
 
   vi: {
@@ -981,7 +986,8 @@ var T = {
     cta_h2:"Ngừng chuyển đổi cửa sổ.<br><em>Bắt đầu thuyết trình.</em>",
     cta_p:"Mọi thứ bạn cần, ngay trên bài thuyết trình. Công cụ học sinh miễn phí — ứng dụng giáo viên mua một lần.",
     cta_btn_teacher:"Tải ứng dụng giáo viên — $29", cta_btn_student:"Tiện ích miễn phí cho học sinh",
-    footer_tagline:"Bộ công cụ nổi dành cho người thuyết trình", footer_contact:"Liên hệ", footer_privacy:"Chính sách bảo mật"
+    footer_tagline:"Bộ công cụ nổi dành cho người thuyết trình", footer_contact:"Liên hệ", footer_privacy:"Chính sách bảo mật",
+    nav_support:"☕ Ủng hộ"
   }
 };
 
@@ -1127,10 +1133,10 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
     <textarea id="chat-input" placeholder="Ask a question…" rows="1" onkeydown="chatKeydown(event)"></textarea>
     <button id="chat-send" onclick="sendMessage()" aria-label="Send">➤</button>
   </div>
-  <div class="chat-footer-note">Powered by AI · Not always perfect · <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">Email Peter</a> for anything important</div>
+  <div class="chat-footer-note">Powered by AI · Not always perfect · <a href="/cdn-cgi/l/email-protection#fc8d89998f889593928fbc889499909d85998e8f9d8c8cd29f9391" style="color:var(--accent2)">Email Peter</a> for anything important</div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ── CONFIG ── Replace with your Cloudflare Worker URL after deploying
 var WORKER_URL = 'https://thelayersapp-assistant.susume1982.workers.dev';
 
@@ -1204,11 +1210,4 @@ async function sendMessage() {
     appendMsg('bot', 'Connection error. Please email questions@thelayersapp.com for help.');
   }
 
-  document.getElementById('chat-send').disabled = false;
-  input.focus();
-}
-</script>
-<!-- ===================== END CHAT WIDGET ===================== -->
-
-</body>
-</html>
+  document.get
