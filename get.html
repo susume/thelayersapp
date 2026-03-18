@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Layers — Windows App</title>
+<!-- No meta description, no OG tags, no canonical — intentionally unlisted -->
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+  --red:     #ff4757;
+  --orange:  #ffa502;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden; min-height: 100vh;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div, main { position: relative; z-index: 1; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 8px var(--accent); } 50% { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(91,127,255,0.3); } }
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-right a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-right a:hover { color: var(--text); }
+.lang-switcher { display: flex; align-items: center; gap: 4px; background: var(--pill); border-radius: 100px; padding: 3px; border: 1px solid var(--border); }
+.lang-btn { padding: 4px 10px; border-radius: 100px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.15s; letter-spacing: 0.03em; }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { background: var(--bg2); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+
+/* LAYOUT */
+main { max-width: 860px; margin: 0 auto; padding: 110px 40px 100px; }
+
+/* HEADER */
+.page-header { margin-bottom: 48px; }
+.label-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; opacity: 0.8; }
+.page-header h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 12px; }
+.page-header h1 em { font-style: italic; color: var(--accent); }
+.page-header p { color: var(--muted); font-size: 1rem; font-weight: 300; max-width: 560px; }
+
+/* CURRENT VERSION CARD */
+.current-card {
+  background: linear-gradient(135deg, rgba(91,127,255,0.1), rgba(26,26,36,0.95));
+  border: 1px solid rgba(91,127,255,0.35); border-radius: 20px;
+  padding: 36px 40px; margin-bottom: 48px; position: relative; overflow: hidden;
+}
+.current-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+.current-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.current-meta { display: flex; flex-direction: column; gap: 6px; }
+.version-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3);
+  color: var(--green); font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px;
+  border-radius: 100px; width: fit-content;
+}
+.version-badge .vdot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; display: inline-block; }
+.current-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.9rem; margin: 4px 0; }
+.current-card h2 span { color: var(--accent); }
+.release-date { font-size: 0.82rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.btn-download {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--accent); color: var(--text);
+  padding: 14px 32px; border-radius: 12px;
+  font-size: 1rem; font-weight: 700; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 0 30px rgba(91,127,255,0.3);
+  white-space: nowrap; flex-shrink: 0;
+}
+.btn-download:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(91,127,255,0.5); }
+.btn-download .dl-icon { font-size: 1.1rem; }
+.file-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 6px; }
+.file-meta span { font-size: 0.8rem; color: var(--dim); font-family: 'DM Mono', monospace; display: flex; align-items: center; gap: 6px; }
+.file-meta span::before { content: '·'; color: var(--dim); }
+.file-meta span:first-child::before { display: none; }
+
+/* CHANGELOG */
+.changelog { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
+.changelog li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--muted); }
+.changelog li .ck { color: var(--green); font-size: 0.75rem; flex-shrink: 0; margin-top: 3px; }
+
+/* SETUP INSTRUCTIONS */
+.setup-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 32px; margin-bottom: 48px;
+}
+.setup-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+.setup-steps { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.setup-steps li { display: flex; gap: 14px; font-size: 0.9rem; color: var(--muted); align-items: flex-start; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--pill); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 0.65rem; font-weight: 700; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+.setup-steps strong { color: var(--text); }
+.smartscreen-box {
+  margin-top: 18px; background: rgba(255,165,2,0.07); border: 1px solid rgba(255,165,2,0.25);
+  border-radius: 10px; padding: 12px 16px; display: flex; gap: 10px; align-items: flex-start;
+}
+.smartscreen-box .si { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+.smartscreen-box p { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+.smartscreen-box strong { color: var(--orange); }
+
+/* PREVIOUS VERSIONS */
+.section-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 20px; }
+.versions-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden;
+}
+.versions-table th {
+  background: rgba(91,127,255,0.06); padding: 12px 20px;
+  text-align: left; font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  font-weight: 500; color: var(--dim); letter-spacing: 0.08em; text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.versions-table td { padding: 14px 20px; font-size: 0.875rem; color: var(--muted); border-bottom: 1px solid rgba(91,127,255,0.07); vertical-align: middle; }
+.versions-table tr:last-child td { border-bottom: none; }
+.versions-table tr:hover td { background: rgba(91,127,255,0.04); }
+.v-tag { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--accent2); font-weight: 500; }
+.v-date { font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+.v-notes { font-size: 0.82rem; }
+.btn-dl-sm {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--pill); border: 1px solid var(--border);
+  color: var(--text); padding: 7px 14px; border-radius: 8px;
+  font-size: 0.78rem; font-weight: 600; text-decoration: none;
+  transition: all 0.15s; white-space: nowrap;
+}
+.btn-dl-sm:hover { border-color: var(--accent); color: var(--accent); background: rgba(91,127,255,0.08); }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 40px 40px; margin-top: 80px; }
+.footer-inner { max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeUp 0.5s ease both; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.1s; }
+.fade-up-3 { animation-delay: 0.15s; }
+.fade-up-4 { animation-delay: 0.2s; }
+
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  main { padding: 90px 20px 80px; }
+  .current-card { padding: 24px 20px; }
+  .current-top { flex-direction: column; }
+  .btn-download { width: 100%; justify-content: center; }
+  .versions-table th:nth-child(3), .versions-table td:nth-child(3) { display: none; }
+  footer { padding: 32px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
+    </div>
+    <a href="index.html" data-i18n="nav_back">← Back to site</a>
+    <a href="contact.html" data-i18n="nav_contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HEADER -->
+  <div class="page-header fade-up">
+    <span class="label-tag" data-i18n="label">// Windows App · Licensed customers</span>
+    <h1 data-i18n="h1">Download <em>Layers</em></h1>
+    <p data-i18n="sub">Re-download your copy of the Layers Windows app. If you need help with your activation key, email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.</p>
+  </div>
+
+  <!-- CURRENT VERSION -->
+  <div class="current-card fade-up fade-up-1">
+    <div class="current-top">
+      <div class="current-meta">
+        <div class="version-badge"><span class="vdot"></span> <span data-i18n="latest">Latest release</span></div>
+        <h2>Layers <span>v3.6</span></h2>
+        <div class="release-date" data-i18n="rel_date">Released March 2026</div>
+        <div class="file-meta">
+          <span>Layers-v3.6.exe</span>
+          <span>Windows 10 / 11</span>
+          <span>~55 MB</span>
+        </div>
+      </div>
+      <a href="https://github.com/YOUR_USERNAME/layers-releases/releases/download/v3.6/Layers-v3.6.exe"
+         class="btn-download" target="_blank" rel="noopener noreferrer">
+        <span class="dl-icon">&#x2B07;</span> <span data-i18n="dl_btn">Download v3.6</span>
+      </a>
+    </div>
+    <ul class="changelog">
+      <li><span class="ck">&#x2713;</span> <span data-i18n="cl1">Permanent rooms — create once, students auto-rejoin every session (Google Classroom style)</span></li>
+      <li><span class="ck">&#x2713;</span> <span data-i18n="cl2">Internet Lockdown — cut all student browsing with one button</span></li>
+      <li><span class="ck">&#x2713;</span> <span data-i18n="cl3">Teacher disconnect automatically kicks all students within 5 seconds</span></li>
+      <li><span class="ck">&#x2713;</span> <span data-i18n="cl4">Room password protection — only you can send commands to your classroom</span></li>
+      <li><span class="ck">&#x2713;</span> <span data-i18n="cl5">Toolbar and panel positions now persist across sessions</span></li>
+      <li><span class="ck">&#x2713;</span> <span data-i18n="cl6">Full English / Japanese UI</span></li>
+    </ul>
+  </div>
+
+  <!-- SETUP INSTRUCTIONS -->
+  <div class="setup-card fade-up fade-up-2">
+    <h3 data-i18n="setup_h">&#x1F5A5; Installation</h3>
+    <ol class="setup-steps">
+      <li><span class="step-num">1</span><span data-i18n="step1">Download the <strong>.exe</strong> file above and save it anywhere on your PC — Desktop, Downloads, wherever works for you.</span></li>
+      <li><span class="step-num">2</span><span data-i18n="step2">Double-click the file to run it. <strong>No installation wizard</strong> — it opens immediately.</span></li>
+      <li><span class="step-num">3</span><span data-i18n="step3">Enter your <strong>Gumroad activation key</strong> when prompted on first launch. This is in your Gumroad purchase confirmation email.</span></li>
+      <li><span class="step-num">4</span><span data-i18n="step4">The toolbar will appear. Drag it anywhere on screen. Press <strong>Alt+L</strong> to hide/show it.</span></li>
+    </ol>
+    <div class="smartscreen-box">
+      <span class="si">&#x26A0;&#xFE0F;</span>
+      <p data-i18n="smartscreen"><strong>Windows SmartScreen warning?</strong> This is expected for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it's just not signed with an expensive Microsoft certificate. If you're unsure, email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Layers<span>.</span></div>
+    <div class="footer-links">
+      <a href="index.html" data-i18n="f_home">Home</a>
+      <a href="contact.html" data-i18n="f_contact">Contact</a>
+      <a href="privacy.html" data-i18n="f_privacy">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Layers &middot; Peter Hoang &middot; Japan</p>
+  </div>
+</footer>
+
+<script>
+var T = {
+  en: {
+    nav_back:"← Back to site", nav_contact:"Contact",
+    label:"// Windows App · Licensed customers",
+    h1:"Download <em>Layers</em>",
+    sub:'Re-download your copy of the Layers Windows app. If you need help with your activation key, email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    latest:"Latest release", rel_date:"Released March 2026", dl_btn:"Download v3.6",
+    cl1:"Permanent rooms — create once, students auto-rejoin every session (Google Classroom style)",
+    cl2:"Internet Lockdown — cut all student browsing with one button",
+    cl3:"Teacher disconnect automatically kicks all students within 5 seconds",
+    cl4:"Room password protection — only you can send commands to your classroom",
+    cl5:"Toolbar and panel positions now persist across sessions",
+    cl6:"Full English / Japanese UI",
+    setup_h:"Installation",
+    step1:"Download the <strong>.exe</strong> file above and save it anywhere on your PC — Desktop, Downloads, wherever works for you.",
+    step2:"Double-click the file to run it. <strong>No installation wizard</strong> — it opens immediately.",
+    step3:"Enter your <strong>Gumroad activation key</strong> when prompted on first launch. This is in your Gumroad purchase confirmation email.",
+    step4:"The toolbar will appear. Drag it anywhere on screen. Press <strong>Alt+L</strong> to hide/show it.",
+    smartscreen:'<strong>Windows SmartScreen warning?</strong> This is expected for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it\'s just not signed with an expensive Microsoft certificate. If you\'re unsure, email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    f_home:"Home", f_contact:"Contact", f_privacy:"Privacy Policy"
+  },
+  ja: {
+    nav_back:"← サイトに戻る", nav_contact:"お問い合わせ",
+    label:"// Windowsアプリ · ライセンス済みのお客様",
+    h1:"Layersを<em>ダウンロード</em>",
+    sub:'Layers Windowsアプリを再ダウンロードできます。アクティベーションキーについては <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a> までご連絡ください。',
+    latest:"最新リリース", rel_date:"2026年3月リリース", dl_btn:"v3.6をダウンロード",
+    cl1:"永続ルーム — 一度作成するだけ。生徒は毎回自動再接続（Google Classroomスタイル）",
+    cl2:"インターネットロックダウン — ボタン一つで全生徒のブラウジングを遮断",
+    cl3:"授業終了時に全生徒が5秒以内に自動キック",
+    cl4:"ルームパスワード保護 — 正規の授業者のみコマンドを送信可能",
+    cl5:"ツールバーとパネルの位置がセッションを超えて保存されるように",
+    cl6:"日本語・英語完全対応 UI",
+    setup_h:"インストール方法",
+    step1:"<strong>.exe</strong>ファイルをダウンロードし、PCの好きな場所に保存してください。",
+    step2:"ファイルをダブルクリックするだけで起動します。<strong>インストールウィザードなし</strong> — そのまま開きます。",
+    step3:"初回起動時に<strong>Gumroadアクティベーションキー</strong>を入力してください。キーはGumroadの購入確認メールに記載されています。",
+    step4:"ツールバーが表示されます。画面上の好きな場所にドラッグできます。<strong>Alt+L</strong>で表示・非表示を切り替え。",
+    smartscreen:'<strong>Windows SmartScreenの警告が表示されますか？</strong> 個人開発のソフトウェアではよくあることです。<strong>「詳細情報」</strong>→<strong>「実行」</strong>をクリックしてください。アプリは安全です。不安な場合は <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a> までご連絡ください。',
+    f_home:"ホーム", f_contact:"お問い合わせ", f_privacy:"プライバシーポリシー"
+  },
+  zh: {
+    nav_back:"← 返回网站", nav_contact:"联系我们",
+    label:"// Windows应用 · 已购买用户",
+    h1:"下载 <em>Layers</em>",
+    sub:'重新下载Layers Windows应用。如需激活码帮助，请发邮件至 <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>。',
+    latest:"最新版本", rel_date:"2026年3月发布", dl_btn:"下载 v3.6",
+    cl1:"永久房间 — 创建一次，学生每次自动重新连接（Google Classroom风格）",
+    cl2:"网络封锁 — 一键切断所有学生的上网",
+    cl3:"教师断开连接后5秒内自动踢出所有学生",
+    cl4:"房间密码保护 — 只有您才能向课堂发送指令",
+    cl5:"工具栏和面板位置现在跨会话保存",
+    cl6:"完整支持英语和日语界面",
+    setup_h:"安装方法",
+    step1:"下载<strong>.exe</strong>文件并保存到PC上的任意位置。",
+    step2:"双击文件即可运行。<strong>无需安装向导</strong> — 直接打开。",
+    step3:"首次启动时输入您的<strong>Gumroad激活码</strong>。激活码在Gumroad购买确认邮件中。",
+    step4:"工具栏将出现。可拖动到屏幕任意位置。按<strong>Alt+L</strong>显示或隐藏。",
+    smartscreen:'<strong>出现Windows SmartScreen警告？</strong> 这对独立软件来说很正常。点击<strong>"更多信息"</strong>然后<strong>"仍要运行"</strong>。该应用是安全的。如有疑问请发邮件至 <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>。',
+    f_home:"主页", f_contact:"联系我们", f_privacy:"隐私政策"
+  },
+  vi: {
+    nav_back:"← Trở về trang web", nav_contact:"Liên hệ",
+    label:"// Ứng dụng Windows · Khách hàng có bản quyền",
+    h1:"Tải xuống <em>Layers</em>",
+    sub:'Tải lại Ứng dụng Layers Windows của bạn. Nếu cần hỗ trợ về mã kích hoạt, hãy gửi email tới <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    latest:"Phiên bản mới nhất", rel_date:"Phát hành tháng 3, 2026", dl_btn:"Tải xuống v3.6",
+    cl1:"Phòng học vĩnh viễn — tạo một lần, học sinh tự động kết nối lại mỗi buổi học",
+    cl2:"Chặn Internet — một nút cắt toàn bộ duyệt web của học sinh",
+    cl3:"Giáo viên ngắt kết nối tự động đuổi tất cả học sinh trong 5 giây",
+    cl4:"Bảo vệ bằng mật khẩu phòng — chỉ bạn mới có thể gửi lệnh cho lớp học",
+    cl5:"Vị trí thanh công cụ và bảng điều khiển được lưu giữ qua các phiên",
+    cl6:"Giao diện đầy đủ tiếng Anh và tiếng Nhật",
+    setup_h:"Cài đặt",
+    step1:"Tải xuống tệp <strong>.exe</strong> và lưu vào bất kỳ vị trí nào trên PC của bạn.",
+    step2:"Nhấp đúng vào tệp để chạy. <strong>Không có trình hướng dẫn cài đặt</strong> — mở ngay lập tức.",
+    step3:"Nhập <strong>mã kích hoạt Gumroad</strong> khi được nhắc lần đầu mở. Mã này có trong email xác nhận mua hàng Gumroad của bạn.",
+    step4:"Thanh công cụ sẽ xuất hiện. Kéo nó đến bất kỳ vị trí nào trên màn hình. Nhấn <strong>Alt+L</strong> để ẩn/hiện.",
+    smartscreen:'<strong>Cảnh báo Windows SmartScreen?</strong> Điều này bình thường với phần mềm độc lập. Nhấp <strong>"Xem thêm thông tin"</strong> rồi <strong>"Chạy bất chấp"</strong>. Ứng dụng an toàn. Nếu không chắc, hãy gửi email tới <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    f_home:"Trang chủ", f_contact:"Liên hệ", f_privacy:"Chính sách bảo mật"
+  }
+};
+
+function setLang(lang) {
+  var t = T[lang] || T['en'];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  try { localStorage.setItem('layers_lang', lang); } catch(e) {}
+}
+
+(function() {
+  var saved; try { saved = localStorage.getItem('layers_lang'); } catch(e) {}
+  var bl = (navigator.language || '').toLowerCase();
+  var lang = saved || (bl.startsWith('ja') ? 'ja' : bl.startsWith('zh') ? 'zh' : bl.startsWith('vi') ? 'vi' : 'en');
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  if (lang !== 'en') setLang(lang);
+})();
+</script>
+</body>
+</html>
