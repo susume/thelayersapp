@@ -223,7 +223,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <span>~55 MB</span>
         </div>
       </div>
-      <a href="https://github.com/YOUR_USERNAME/layers-releases/releases/download/v3.6/Layers-v3.6.exe"
+      <a href="https://drive.google.com/uc?export=download&id=1PgquFJJrqqUdxdZ4w-I_L46BURcD0qJ1"
          class="btn-download" target="_blank" rel="noopener noreferrer">
         <span class="dl-icon">&#x2B07;</span> <span data-i18n="dl_btn">Download v3.6</span>
       </a>
@@ -250,6 +250,10 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <div class="smartscreen-box">
       <span class="si">&#x26A0;&#xFE0F;</span>
       <p data-i18n="smartscreen"><strong>Windows SmartScreen warning?</strong> This is expected for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it's just not signed with an expensive Microsoft certificate. If you're unsure, email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.</p>
+    </div>
+    <div class="smartscreen-box" style="margin-top:10px;background:rgba(91,127,255,0.07);border-color:rgba(91,127,255,0.25);">
+      <span class="si">&#x1F4E5;</span>
+      <p data-i18n="gdrive_note"><strong>Google Drive virus scan warning?</strong> Because the file is large, Google may show a scan warning before downloading. Click <strong>"Download anyway"</strong> — this is a Google limitation, not a problem with the file.</p>
     </div>
   </div>
 
@@ -282,11 +286,12 @@ var T = {
     cl5:"Toolbar and panel positions now persist across sessions",
     cl6:"Full English / Japanese UI",
     setup_h:"Installation",
-    step1:"Download the <strong>.exe</strong> file above and save it anywhere on your PC — Desktop, Downloads, wherever works for you.",
+    step1:"Download the <strong>.exe</strong> file above and save it anywhere on your PC.",
     step2:"Double-click the file to run it. <strong>No installation wizard</strong> — it opens immediately.",
     step3:"Enter your <strong>Gumroad activation key</strong> when prompted on first launch. This is in your Gumroad purchase confirmation email.",
     step4:"The toolbar will appear. Drag it anywhere on screen. Press <strong>Alt+L</strong> to hide/show it.",
     smartscreen:'<strong>Windows SmartScreen warning?</strong> This is expected for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it\'s just not signed with an expensive Microsoft certificate. If you\'re unsure, email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    gdrive_note:'<strong>Google Drive virus scan warning?</strong> Because the file is large, Google may show a scan warning before downloading. Click <strong>"Download anyway"</strong> — this is a Google limitation, not a problem with the file.',
     f_home:"Home", f_contact:"Contact", f_privacy:"Privacy Policy"
   },
   ja: {
@@ -307,6 +312,7 @@ var T = {
     step3:"初回起動時に<strong>Gumroadアクティベーションキー</strong>を入力してください。キーはGumroadの購入確認メールに記載されています。",
     step4:"ツールバーが表示されます。画面上の好きな場所にドラッグできます。<strong>Alt+L</strong>で表示・非表示を切り替え。",
     smartscreen:'<strong>Windows SmartScreenの警告が表示されますか？</strong> 個人開発のソフトウェアではよくあることです。<strong>「詳細情報」</strong>→<strong>「実行」</strong>をクリックしてください。アプリは安全です。不安な場合は <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a> までご連絡ください。',
+    gdrive_note:'<strong>Google Driveのウイルス スキャン警告？</strong> ファイルが大きいため、Googleがダウンロード前にスキャン警告を表示することがあります。<strong>「ダウンロード」</strong>をクリックしてください — Googleの仕様であり、ファイルに問題はありません。',
     f_home:"ホーム", f_contact:"お問い合わせ", f_privacy:"プライバシーポリシー"
   },
   zh: {
@@ -327,6 +333,7 @@ var T = {
     step3:"首次启动时输入您的<strong>Gumroad激活码</strong>。激活码在Gumroad购买确认邮件中。",
     step4:"工具栏将出现。可拖动到屏幕任意位置。按<strong>Alt+L</strong>显示或隐藏。",
     smartscreen:'<strong>出现Windows SmartScreen警告？</strong> 这对独立软件来说很正常。点击<strong>"更多信息"</strong>然后<strong>"仍要运行"</strong>。该应用是安全的。如有疑问请发邮件至 <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>。',
+    gdrive_note:'<strong>Google云端硬盘病毒扫描警告？</strong> 由于文件较大，Google可能在下载前显示扫描警告。点击<strong>"仍然下载"</strong> — 这是Google的限制，文件本身没有问题。',
     f_home:"主页", f_contact:"联系我们", f_privacy:"隐私政策"
   },
   vi: {
@@ -347,6 +354,7 @@ var T = {
     step3:"Nhập <strong>mã kích hoạt Gumroad</strong> khi được nhắc lần đầu mở. Mã này có trong email xác nhận mua hàng Gumroad của bạn.",
     step4:"Thanh công cụ sẽ xuất hiện. Kéo nó đến bất kỳ vị trí nào trên màn hình. Nhấn <strong>Alt+L</strong> để ẩn/hiện.",
     smartscreen:'<strong>Cảnh báo Windows SmartScreen?</strong> Điều này bình thường với phần mềm độc lập. Nhấp <strong>"Xem thêm thông tin"</strong> rồi <strong>"Chạy bất chấp"</strong>. Ứng dụng an toàn. Nếu không chắc, hãy gửi email tới <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    gdrive_note:'<strong>Cảnh báo quét virus Google Drive?</strong> Do tệp lớn, Google có thể hiển thị cảnh báo quét trước khi tải xuống. Nhấp <strong>"Vẫn tải xuống"</strong> — đây là giới hạn của Google, không phải vấn đề với tệp.',
     f_home:"Trang chủ", f_contact:"Liên hệ", f_privacy:"Chính sách bảo mật"
   }
 };
