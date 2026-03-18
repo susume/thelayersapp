@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy — Layers</title>
 <meta name="description" content="Privacy Policy for Layers — The Floating Toolkit for Teachers and Presenters.">
-<meta name="theme-color" content="#5b7fff">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://thelayersapp.com/privacy.html">
-<meta property="og:title" content="Privacy Policy — Layers">
-<meta property="og:description" content="Privacy Policy for Layers — The Floating Toolkit for Teachers and Presenters.">
-<link rel="canonical" href="https://thelayersapp.com/privacy.html">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -78,6 +72,13 @@ nav {
   font-weight: 500; transition: color 0.2s; display: flex; align-items: center; gap: 6px;
 }
 .nav-back:hover { color: var(--text); }
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.lang-switcher { display: flex; align-items: center; gap: 4px; background: #252530; border-radius: 100px; padding: 3px; border: 1px solid rgba(91,127,255,0.15); }
+.lang-btn { padding: 4px 10px; border-radius: 100px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.15s; letter-spacing: 0.03em; }
+.lang-btn:hover { color: var(--text); }
+.lang-ja, .lang-zh, .lang-vi { display: none; }
 
 /* MAIN CONTENT */
 main {
@@ -206,7 +207,15 @@ footer {
 
 <nav>
   <a href="index.html" class="nav-brand"><div class="brand-dot"></div>Layers</a>
-  <a href="index.html" class="nav-back">← Back to Home</a>
+  <div class="nav-links">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
+    </div>
+    <a href="index.html" data-i18n="nav_back">← Back to Home</a>
+  </div>
 </nav>
 
 <main>
@@ -219,20 +228,43 @@ footer {
 
   <div class="green-box">
     <span class="gi">🔒</span>
-    <p><strong>The short version:</strong> Layers does not sell your data, does not show you ads, and does not collect anything it doesn't need. The teacher app stores nothing online. The student extension stores only what's needed to run your classroom connection.</p>
+    <p data-i18n="p_short"><strong>The short version:</strong> Layers does not sell your data, does not show you ads, and does not collect anything it doesn't need. The teacher app stores nothing online. The student extension stores only what's needed to run your classroom connection.</p>
+  </div>
+
+
+  <!-- JA summary -->
+  <div class="lang-ja green-box" style="margin-top:16px;">
+    <span class="gi">🔒</span>
+    <p><strong>要約：</strong>Layersはユーザーのデータを販売せず、広告を表示せず、必要以上の情報を収集しません。教師用アプリはオンラインに何も保存しません。生徒用拡張機能は教室接続の運用に必要なものだけを保存します。</p>
+  </div>
+  <div class="lang-zh green-box" style="margin-top:16px;">
+    <span class="gi">🔒</span>
+    <p><strong>简短版本：</strong>Layers不出售您的数据，不展示广告，也不收集任何不必要的信息。教师应用不在线存储任何内容。学生插件仅存储运行课堂连接所需的信息。</p>
+  </div>
+  <div class="lang-vi green-box" style="margin-top:16px;">
+    <span class="gi">🔒</span>
+    <p><strong>Tóm tắt：</strong>Layers không bán dữ liệu của bạn, không hiển thị quảng cáo, và không thu thập thứ gì không cần thiết. Ứng dụng giáo viên không lưu trữ gì trực tuyến.</p>
   </div>
 
   <!-- 1 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">01</span> 私たちについて</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">01</span> 关于我们</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">01</span> Về chúng tôi</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">01</span> Who we are</h2>
     <p>Layers is a software tool for teachers and presenters, built and maintained by Peter Hoang, based in Japan. It consists of two products: the <strong>Layers Windows app</strong> (a floating toolbar for teachers) and the <strong>Layers Student Chrome Extension</strong> (a browser toolbar for students).</p>
-    <p>If you have any questions about this policy, you can reach us at <a href="/cdn-cgi/l/email-protection#0372766670776a6c6d7043776b666f627a6671706273732d606c6e"><span class="__cf_email__" data-cfemail="8bfafeeef8ffe2e4e5f8cbffe3eee7eaf2eef9f8eafbfba5e8e4e6">[email&#160;protected]</span></a>.</p>
+    <p>If you have any questions about this policy, you can reach us at <a href="/cdn-cgi/l/email-protection#abdadeced8dfc2c4c5d8ebdfc3cec7cad2ced9d8cadbdb85c8c4c6"><span class="__cf_email__" data-cfemail="2c5d59495f584543425f6c584449404d55495e5f4d5c5c024f4341">[email&#160;protected]</span></a>.</p>
   </div>
 
   <div class="policy-divider"></div>
 
   <!-- 2 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">02</span> Windowsアプリが収集するデータ</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">02</span> Windows 应用收集的数据</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">02</span> Dữ liệu ứng dụng Windows thu thập</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">02</span> The Windows app — what it collects</h2>
     <p>The Layers Windows app runs entirely on your own computer. It does <strong>not</strong> create an account, does not require a login, and does not send personal information to any server.</p>
     <p>The only data it stores is saved locally on your own device:</p>
@@ -252,6 +284,10 @@ footer {
 
   <!-- 3 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">03</span> Chrome拡張機能が収集するデータ</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">03</span> Chrome 插件收集的数据</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">03</span> Dữ liệu tiện ích Chrome thu thập</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">03</span> The Student Chrome Extension — what it collects</h2>
     <p>The Layers Student Extension is designed to be as private as possible. It does <strong>not</strong> require an account, does not track browsing history, and does not collect any personally identifiable information.</p>
     <p>Here is what the extension does and doesn't do:</p>
@@ -271,6 +307,10 @@ footer {
 
   <!-- 4 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">04</span> 教室接続（同期）</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">04</span> 课堂连接（同步）</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">04</span> Kết nối lớp học (Đồng bộ)</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">04</span> The classroom connection (Sync)</h2>
     <p>The classroom connection feature allows a teacher's Windows app to send instructions — such as Focus Mode on/off, blocked sites, or a PIN — to connected student extensions in real time.</p>
     <p>This works through a secure cloud database (Google Firebase), hosted in Asia. Here is exactly what is stored there, and for how long:</p>
@@ -291,6 +331,10 @@ footer {
 
   <!-- 5 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">05</span> サードパーティサービス</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">05</span> 第三方服务</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">05</span> Dịch vụ bên thứ ba</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">05</span> Third-party services</h2>
     <p>Layers uses the following third-party services. Each has its own privacy policy:</p>
     <ul>
@@ -305,16 +349,24 @@ footer {
 
   <!-- 6 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">06</span> 子どものプライバシー</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">06</span> 儿童隐私</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">06</span> Quyền riêng tư của trẻ em</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">06</span> Children's privacy</h2>
     <p>Layers is designed for use in educational settings and may be used by students of all ages, including children under 13.</p>
     <p>We take this seriously. The student extension does not collect names, email addresses, photos, or any personally identifiable information from students of any age. Students do not create accounts. The only data associated with a student session is an anonymous, randomly generated ID that exists only for the duration of the classroom session.</p>
-    <p>If you are a parent or school administrator with questions or concerns about how Layers handles student data, please contact us at <a href="/cdn-cgi/l/email-protection#a9d8dcccdaddc0c6c7dae9ddc1ccc5c8d0ccdbdac8d9d987cac6c4"><span class="__cf_email__" data-cfemail="93e2e6f6e0e7fafcfde0d3e7fbf6fff2eaf6e1e0f2e3e3bdf0fcfe">[email&#160;protected]</span></a>.</p>
+    <p>If you are a parent or school administrator with questions or concerns about how Layers handles student data, please contact us at <a href="/cdn-cgi/l/email-protection#6f1e1a0a1c1b0600011c2f1b070a030e160a1d1c0e1f1f410c0002"><span class="__cf_email__" data-cfemail="68191d0d1b1c0107061b281c000d0409110d1a1b091818460b0705">[email&#160;protected]</span></a>.</p>
   </div>
 
   <div class="policy-divider"></div>
 
   <!-- 7 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">07</span> 権限 — Chrome拡張機能</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">07</span> 权限 — Chrome 插件</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">07</span> Quyền hạn — Tiện ích Chrome</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">07</span> Permissions — Chrome Extension</h2>
     <p>The Layers Student Extension requests the following browser permissions, and here is exactly why each one is needed:</p>
     <ul>
@@ -328,6 +380,10 @@ footer {
 
   <!-- 8 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">08</span> お客様の権利</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">08</span> 您的权利</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">08</span> Quyền của bạn</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">08</span> Your rights</h2>
     <p>Because Layers does not collect personal information, there is very little data to manage. However, you have full control over anything stored locally:</p>
     <ul>
@@ -336,19 +392,109 @@ footer {
       <li>Uninstalling the Windows app removes all locally stored data</li>
       <li>Removing the Chrome extension clears all locally stored extension data</li>
     </ul>
-    <p>If you believe any data related to you is held somewhere and would like it removed, contact us at <a href="/cdn-cgi/l/email-protection#205155455354494f4e53605448454c41594552534150500e434f4d"><span class="__cf_email__" data-cfemail="700105150304191f1e03300418151c11091502031100005e131f1d">[email&#160;protected]</span></a> and we will address it promptly.</p>
+    <p>If you believe any data related to you is held somewhere and would like it removed, contact us at <a href="/cdn-cgi/l/email-protection#6b1a1e0e181f020405182b1f030e070a120e19180a1b1b45080406"><span class="__cf_email__" data-cfemail="ff8e8a9a8c8b9690918cbf8b979a939e869a8d8c9e8f8fd19c9092">[email&#160;protected]</span></a> and we will address it promptly.</p>
   </div>
 
   <div class="policy-divider"></div>
 
   <!-- 9 -->
   <div class="policy-section">
+    
+  <div class="lang-ja policy-section" style="margin-top:-32px;"><h2><span class="sec-num">09</span> ポリシーの変更</h2><p style="font-size:0.82rem;color:var(--dim);">詳細は英語版をご参照ください。<a href="contact.html" style="color:var(--accent2);">日本語でのお問い合わせはこちら</a></p></div>
+  <div class="lang-zh policy-section" style="margin-top:-32px;"><h2><span class="sec-num">09</span> 政策变更</h2><p style="font-size:0.82rem;color:var(--dim);">详细内容请参阅英文版本。<a href="contact.html" style="color:var(--accent2);">如有疑问请联系我们</a></p></div>
+  <div class="lang-vi policy-section" style="margin-top:-32px;"><h2><span class="sec-num">09</span> Thay đổi chính sách</h2><p style="font-size:0.82rem;color:var(--dim);">Chi tiết xem phiên bản tiếng Anh. <a href="contact.html" style="color:var(--accent2);">Liên hệ nếu bạn có thắc mắc</a></p></div>
     <h2><span class="sec-num">09</span> Changes to this policy</h2>
     <p>If this policy changes in a meaningful way, the updated version will be posted at this URL with a new "last updated" date at the top. We will not reduce your privacy protections without clear notice.</p>
     <p>For significant changes — particularly any that affect how student data is handled — we will make reasonable efforts to notify users directly.</p>
   </div>
 
   <div class="contact-box">
-    <h3>Questions about privacy?</h3>
-    <p>If anything in this policy is unclear, or if you have a specific concern, get in touch. We'll reply promptly.</p>
-    <a href="/cdn-cgi/l/email-protection#abdadeced8dfc2c4c5d8ebdfc3cec7cad2ced9d8cadbdb85c8c4c6"><
+    <h3 data-i18n="sc_h">Questions about privacy?</h3>
+    <p data-i18n="sc_p">If anything in this policy is unclear, or if you have a specific concern, get in touch. We'll reply promptly.</p>
+    <a href="contact.html" data-i18n="sc_btn">✉ Contact Us</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Layers<span>.</span></div>
+    <div class="footer-links">
+      <a href="index.html" data-i18n="f_home">Home</a>
+      <a href="contact.html" data-i18n="f_contact">Contact</a>
+    </div>
+    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan</p>
+  </div>
+</footer>
+
+<script>
+var T = {
+  en: {
+    nav_back:"← Back to Home",
+    p_label:"// Legal", p_h1:"Privacy <em>Policy</em>",
+    p_meta:"Last updated: March 2026 &nbsp;&middot;&nbsp; thelayersapp.com",
+    sc_h:"Questions about privacy?",
+    sc_p:"If anything in this policy is unclear, or if you have a specific concern, get in touch. We'll reply promptly.",
+    sc_btn:"✉ Contact Us",
+    f_home:"Home", f_contact:"Contact"
+  },
+  ja: {
+    nav_back:"← ホームに戻る",
+    p_label:"// 法的情報", p_h1:"プライバシー<em>ポリシー</em>",
+    p_meta:"最終更新日：2026年3月 &nbsp;&middot;&nbsp; thelayersapp.com",
+    sc_h:"プライバシーに関するご質問は？",
+    sc_p:"このポリシーで不明な点や具体的な懸念がある場合はお気軽にご連絡ください。迅速に対応します。",
+    sc_btn:"✉ お問い合わせ",
+    f_home:"ホーム", f_contact:"お問い合わせ"
+  },
+  zh: {
+    nav_back:"← 返回主页",
+    p_label:"// 法律信息", p_h1:"隐私<em>政策</em>",
+    p_meta:"最后更新：2026年3月 &nbsp;&middot;&nbsp; thelayersapp.com",
+    sc_h:"对隐私有疑问？",
+    sc_p:"如果本政策有任何不清楚的地方，或者您有具体担忧，请联系我们，我们会及时回复。",
+    sc_btn:"✉ 联系我们",
+    f_home:"主页", f_contact:"联系我们"
+  },
+  vi: {
+    nav_back:"← Trở về trang chủ",
+    p_label:"// Pháp lý", p_h1:"Chính sách <em>Bảo mật</em>",
+    p_meta:"Cập nhật lần cuối: Tháng 3, 2026 &nbsp;&middot;&nbsp; thelayersapp.com",
+    sc_h:"Có câu hỏi về quyền riêng tư?",
+    sc_p:"Nếu có điều gì không rõ ràng trong chính sách này, hãy liên hệ với chúng tôi. Chúng tôi sẽ phản hồi nhanh chóng.",
+    sc_btn:"✉ Liên hệ chúng tôi",
+    f_home:"Trang chủ", f_contact:"Liên hệ"
+  }
+};
+
+function setLang(lang) {
+  var t = T[lang] || T['en'];
+  // Simple string replacements
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  // Show/hide language-specific section content
+  ['en','ja','zh','vi'].forEach(function(l) {
+    document.querySelectorAll('.lang-' + l).forEach(function(el) {
+      el.style.display = (l === lang) ? '' : 'none';
+    });
+  });
+  // Update active lang button
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  try { localStorage.setItem('layers_lang', lang); } catch(e) {}
+}
+
+(function() {
+  var saved; try { saved = localStorage.getItem('layers_lang'); } catch(e) {}
+  var bl = (navigator.language || '').toLowerCase();
+  var lang = saved || (bl.startsWith('ja') ? 'ja' : bl.startsWith('zh') ? 'zh' : bl.startsWith('vi') ? 'vi' : 'en');
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  if (lang !== 'en') setLang(lang);
+})();
+</script>
+</body>
+</html>
