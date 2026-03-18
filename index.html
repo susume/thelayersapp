@@ -382,6 +382,11 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <h4 data-i18n="feat9_h">Quick File Launcher</h4>
         <p data-i18n="feat9_p">Open any document, PDF, spreadsheet, or presentation directly from the toolbar. No more hunting through folders mid-lesson — your materials open in one click from wherever Layers is.</p>
       </div>
+      <div class="feat-card reveal" style="border-color:rgba(255,71,87,0.25);background:linear-gradient(140deg,rgba(255,71,87,0.06),rgba(26,26,36,0.9));">
+        <span class="feat-icon">🛑</span>
+        <h4 data-i18n="feat10_h">Internet Lockdown</h4>
+        <p data-i18n="feat10_p">One button instantly blocks all internet access on every student's screen. Students see a full-screen stop overlay and cannot browse until you lift it. Works independently of Focus Mode — both can be active at the same time.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -438,7 +443,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       </div>
       <div class="st-card sync-card">
         <div class="st-head"><span class="st-icon">🔗</span><div><div class="st-name" data-i18n="stud7_name">Classroom Sync</div><div class="st-sub" data-i18n="stud7_sub">Connect to the teacher</div></div></div>
-        <p data-i18n="stud7_p">Students enter a room code to join the teacher's classroom. From that moment, the teacher can push Focus Mode, block websites, and send controls directly to every connected student — no app installation required.</p>
+        <p data-i18n="stud7_p">Students enter a room code once to join the teacher's classroom — they auto-rejoin every session from then on. The teacher can push Focus Mode, trigger Internet Lockdown, block websites, and send links directly to every connected student — no app installation required.</p>
       </div>
     </div>
   </div>
@@ -476,20 +481,20 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <div>
         <span class="label-tag" data-i18n="sync_tag">// Classroom connection</span>
         <h2 data-i18n="sync_h2">Control every screen<br>in the <em>room.</em></h2>
-        <p class="intro" style="margin-bottom:24px;" data-i18n="sync_intro">Share a simple room code with your class. From that moment, you have a live connection to every student's screen — without moving from where you're presenting.</p>
+        <p class="intro" style="margin-bottom:24px;" data-i18n="sync_intro">Create a permanent classroom once and share the code with your class. From that moment, every student's screen is connected — and they'll automatically rejoin at the start of every lesson.</p>
         <ul class="feature-list">
           <li data-i18n="sync_f1">Switch on Focus Mode for the whole class at once</li>
           <li data-i18n="sync_f2">Block any website instantly — it disappears from every student's screen</li>
-          <li data-i18n="sync_f3">Set a PIN so students cannot undo your controls</li>
-          <li data-i18n="sync_f4">See exactly how many students are connected right now</li>
-          <li data-i18n="sync_f5">Works with any device your students are using — Chromebook, laptop, desktop</li>
-          <li data-i18n="sync_f6">Connection closes automatically when the lesson ends</li>
+          <li data-i18n="sync_f3">Trigger Internet Lockdown — cuts all browsing on every student's device</li>
+          <li data-i18n="sync_f4">Set a PIN so students cannot undo your controls</li>
+          <li data-i18n="sync_f5">See exactly how many students are connected right now</li>
+          <li data-i18n="sync_f6">Room codes are permanent — students join once and auto-rejoin every class</li>
         </ul>
       </div>
       <div class="sync-box">
         <div class="sync-row">
           <span class="si">🖥</span>
-          <div><div class="st" data-i18n="sync_box1_title">Teacher — Layers on Windows</div><div class="sd" data-i18n="sync_box1_sub">Activates Focus Mode, blocks sites, sets PIN</div></div>
+          <div><div class="st" data-i18n="sync_box1_title">Teacher — Layers on Windows</div><div class="sd" data-i18n="sync_box1_sub">Focus Mode, Site Blocking, Internet Lockdown, PIN</div></div>
         </div>
         <div class="sync-arrow" data-i18n="sync_arrow1">↓ sends instantly</div>
         <div class="sync-row" style="background:rgba(91,127,255,0.1);border-color:rgba(91,127,255,0.2);">
@@ -670,6 +675,7 @@ var T = {
     feat7_h:"PIN Lock", feat7_p:"Set a four-digit code so students cannot disable Focus Mode or disconnect from your classroom without your permission. Gives you real authority over their screens from where you're standing.",
     feat8_h:"Site Blocking", feat8_p:"If a website is causing problems, block it for the whole class instantly. It vanishes from every student's screen the moment you add it — no need to touch a single device.",
     feat9_h:"Quick File Launcher", feat9_p:"Open any document, PDF, spreadsheet, or presentation directly from the toolbar. No more hunting through folders mid-lesson — your materials open in one click from wherever Layers is.",
+    feat10_h:"Internet Lockdown", feat10_p:"One button instantly blocks all internet access on every student's screen. Students see a full-screen stop overlay and cannot browse until you lift it. Works independently of Focus Mode — both can be active at the same time.",
     who_tag:"// Who uses Layers", who_h2:"Anyone who presents<br>with a <em>screen.</em>",
     who_intro:"Layers was built for teachers, but the problem it solves — constant app-switching during presentations — affects everyone who presents.",
     who1_title:"Teachers", who1_sub:"Primary, secondary & higher education",
@@ -687,18 +693,18 @@ var T = {
     stud4_name:"Timer", stud4_sub:"Quick presets, any time", stud4_p:"A countdown timer students control themselves — perfect for self-study sessions, timed practice, or staying on track during group work. Pick a preset or type any duration. An alert sounds when it ends.",
     stud5_name:"Page Drawing", stud5_sub:"Pen, highlighter, arrow, shapes", stud5_p:"Draw and annotate directly over any webpage — mark up an article, circle key terms on a diagram, or highlight anything worth remembering. Multiple tools and colours, undo at any time.",
     stud6_name:"Focus Mode", stud6_sub:"Student or teacher-activated", stud6_p:"One click blocks 60+ distracting websites so students can concentrate on their work. Teachers can also push it to the whole class remotely — with an optional PIN so students can't turn it off without permission.", stud6_more:"+ 60 more",
-    stud7_name:"Classroom Sync", stud7_sub:"Connect to the teacher", stud7_p:"Students enter a room code to join the teacher's classroom. From that moment, the teacher can push Focus Mode, block websites, and send controls directly to every connected student — no app installation required.",
+    stud7_name:"Classroom Sync", stud7_sub:"Connect to the teacher", stud7_p:"Students enter a room code once to join the teacher's classroom — they auto-rejoin every session from then on. The teacher can push Focus Mode, trigger Internet Lockdown, block websites, and send links directly to every connected student — no app installation required.",
     lang_tag:"// Translation languages", lang_h2:"Speak. Your students<br><em>understand.</em>",
     lang_intro:"The teacher app translates into 46 languages live as you speak. The student browser tool covers 29. If your students speak it, Layers almost certainly supports it.",
     sync_tag:"// Classroom connection", sync_h2:"Control every screen<br>in the <em>room.</em>",
-    sync_intro:"Share a simple room code with your class. From that moment, you have a live connection to every student's screen — without moving from where you're presenting.",
+    sync_intro:"Create a permanent classroom once and share the code with your class. From that moment, every student's screen is connected — and they'll automatically rejoin at the start of every lesson.",
     sync_f1:"Switch on Focus Mode for the whole class at once",
     sync_f2:"Block any website instantly — it disappears from every student's screen",
-    sync_f3:"Set a PIN so students cannot undo your controls",
-    sync_f4:"See exactly how many students are connected right now",
-    sync_f5:"Works with any device your students are using — Chromebook, laptop, desktop",
-    sync_f6:"Connection closes automatically when the lesson ends",
-    sync_box1_title:"Teacher — Layers on Windows", sync_box1_sub:"Activates Focus Mode, blocks sites, sets PIN",
+    sync_f3:"Trigger Internet Lockdown — cuts all browsing on every student's device",
+    sync_f4:"Set a PIN so students cannot undo your controls",
+    sync_f5:"See exactly how many students are connected right now",
+    sync_f6:"Room codes are permanent — students join once and auto-rejoin every class",
+    sync_box1_title:"Teacher — Layers on Windows", sync_box1_sub:"Focus Mode, Site Blocking, Internet Lockdown, PIN",
     sync_arrow1:"↓ sends instantly", sync_box2_title:"Secure connection", sync_box2_sub:"Your room code keeps it private to your class",
     sync_arrow2:"↓ arrives instantly", sync_box3_title:"Students — Layers in the browser", sync_box3_sub:"Receives and applies instructions immediately",
     sync_note:"Works with any Chromebook, laptop, or desktop in your classroom",
@@ -774,6 +780,7 @@ var T = {
     feat7_h:"PINロック", feat7_p:"4桁のコードを設定して、許可なくフォーカスモードを無効化したり教室から切断したりできないようにします。",
     feat8_h:"サイトブロック", feat8_p:"問題のあるウェブサイトをすぐにクラス全体でブロック。追加した瞬間にすべての生徒の画面から消えます。",
     feat9_h:"クイックファイルランチャー", feat9_p:"ツールバーから直接ドキュメント、PDF、スプレッドシート、プレゼンを開く。授業中にフォルダを探す必要はありません。",
+    feat10_h:"\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u30c0\u30a6\u30f3", feat10_p:"\u30dc\u30bf\u30f3\u30671\u3064\u3067\u5168\u751f\u5f92\u306e\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u63a5\u7d9a\u3092\u5373\u5ea7\u306b\u30d6\u30ed\u30c3\u30af\u3002\u751f\u5f92\u306e\u753b\u9762\u306b\u5168\u753b\u9762\u306eSTOP\u30aa\u30fc\u30d0\u30fc\u30ec\u30a4\u304c\u8868\u793a\u3055\u308c\u3001\u89e3\u9664\u3059\u308b\u307e\u3067\u64cd\u4f5c\u3067\u304d\u307e\u305b\u3093\u3002\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3068\u306f\u72ec\u7acb\u3057\u3066\u52d5\u4f5c\u3057\u3001\u540c\u6642\u306b\u4f7f\u7528\u3059\u308b\u3053\u3068\u3082\u3067\u304d\u307e\u3059\u3002",
     who_tag:"// Layersを使う人", who_h2:"画面を使って<br><em>プレゼンする人すべてに。</em>",
     who_intro:"Layersは教師のために作られましたが、プレゼン中のアプリ切り替え問題は、発表するすべての人に影響します。",
     who1_title:"教師", who1_sub:"小学校・中学校・高校・大学",
@@ -791,18 +798,18 @@ var T = {
     stud4_name:"タイマー", stud4_sub:"プリセットまたは任意の時間", stud4_p:"生徒が自分でコントロールするカウントダウンタイマー。自習、時間制練習、グループワークの時間管理に最適。プリセットを選ぶか時間を入力。終了時にアラート。",
     stud5_name:"ページ描画", stud5_sub:"ペン・マーカー・矢印・図形", stud5_p:"ウェブページに直接描画・注釈。記事にマークアップ、図の重要用語を丸囲み、覚えたいものを強調表示。複数のツールと色、いつでも取り消し可能。",
     stud6_name:"フォーカスモード", stud6_sub:"生徒または教師が起動", stud6_p:"1クリックで60以上の気になるウェブサイトをブロック。教師がクラス全体にリモートでプッシュすることも可能。PINを設定すれば許可なく解除できません。", stud6_more:"+ 60以上",
-    stud7_name:"教室同期", stud7_sub:"教師に接続", stud7_p:"生徒がルームコードを入力して教師の教室に参加。その瞬間から教師がフォーカスモードのプッシュ、サイトブロック、コントロールの送信が可能。アプリインストール不要。",
+    stud7_name:"教室同期", stud7_sub:"教師に接続", stud7_p:"\u30eb\u30fc\u30e0\u30b3\u30fc\u30c9\u3092\u4e00\u5ea6\u5165\u529b\u3059\u308c\u3070\u3001\u4ee5\u964d\u306f\u6bce\u56de\u81ea\u52d5\u7684\u306b\u518d\u63a5\u7d9a\u3002\u6388\u696d\u8005\u306f\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u306e\u30d7\u30c3\u30b7\u30e5\u3001\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u30c0\u30a6\u30f3\u3001\u30b5\u30a4\u30c8\u30d6\u30ed\u30c3\u30af\u3001\u30ea\u30f3\u30af\u9001\u4fe1\u304c\u53ef\u80fd\u3002\u30a2\u30d7\u30ea\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\u4e0d\u8981\u3002",
     lang_tag:"// 対応言語", lang_h2:"話すだけで<br>生徒が<em>理解します。</em>",
     lang_intro:"教師用アプリは話しながらリアルタイムで46言語に翻訳。生徒用ブラウザツールは29言語対応。",
     sync_tag:"// 教室接続", sync_h2:"教室のすべての画面を<br><em>管理します。</em>",
-    sync_intro:"シンプルなルームコードをクラスで共有。その瞬間から、席を離れることなくすべての生徒の画面にライブ接続できます。",
-    sync_f1:"クラス全体のフォーカスモードを一度に起動",
-    sync_f2:"ウェブサイトを即座にブロック — すべての生徒の画面から消えます",
-    sync_f3:"生徒が操作を取り消せないようにPINを設定",
-    sync_f4:"今接続している生徒数を正確に確認",
-    sync_f5:"Chromebook、ラップトップ、デスクトップなどあらゆるデバイスに対応",
-    sync_f6:"授業終了時に自動的に接続を閉じる",
-    sync_box1_title:"教師 — WindowsのLayers", sync_box1_sub:"フォーカスモード起動、サイトブロック、PIN設定",
+    sync_intro:"\u6388\u696d\u5ba4\u3092\u4e00\u5ea6\u4f5c\u6210\u3057\u3066\u30b3\u30fc\u30c9\u3092\u30af\u30e9\u30b9\u3067\u5171\u6709\u3059\u308b\u3060\u3051\u3002\u305d\u306e\u77ac\u9593\u304b\u3089\u3059\u3079\u3066\u306e\u751f\u5f92\u306e\u753b\u9762\u306b\u63a5\u7d9a\u3067\u304d\u3001\u6b21\u56de\u306e\u6388\u696d\u304b\u3089\u3082\u81ea\u52d5\u7684\u306b\u518d\u63a5\u7d9a\u3055\u308c\u307e\u3059\u3002",
+    sync_f1:"\u30af\u30e9\u30b9\u5168\u4f53\u306e\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3092\u4e00\u5ea6\u306b\u8d77\u52d5",
+    sync_f2:"\u30a6\u30a7\u30d6\u30b5\u30a4\u30c8\u3092\u5373\u5ea7\u306b\u30d6\u30ed\u30c3\u30af \u2014 \u3059\u3079\u3066\u306e\u751f\u5f92\u306e\u753b\u9762\u304b\u3089\u6d88\u3048\u307e\u3059",
+    sync_f3:"\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u30c0\u30a6\u30f3\u3092\u767a\u52d5 \u2014 \u5168\u751f\u5f92\u306e\u30c7\u30d0\u30a4\u30b9\u306e\u30d6\u30e9\u30a6\u30b8\u30f3\u30b0\u3092\u906e\u65ad",
+    sync_f4:"\u751f\u5f92\u304c\u64cd\u4f5c\u3092\u53d6\u308a\u6d88\u305b\u306a\u3044\u3088\u3046\u306bPIN\u3092\u8a2d\u5b9a",
+    sync_f5:"\u4eca\u63a5\u7d9a\u3057\u3066\u3044\u308b\u751f\u5f92\u6570\u3092\u6b63\u78ba\u306b\u78ba\u8a8d",
+    sync_f6:"\u30eb\u30fc\u30e0\u30b3\u30fc\u30c9\u306f\u6c38\u7d9a\u7684 \u2014 \u751f\u5f92\u306f\u4e00\u5ea6\u53c2\u52a0\u3059\u308c\u3070\u6bce\u56de\u81ea\u52d5\u518d\u63a5\u7d9a",
+    sync_box1_title:"教師 — WindowsのLayers", sync_box1_sub:"\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3001\u30b5\u30a4\u30c8\u30d6\u30ed\u30c3\u30af\u3001\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u3001PIN\u8a2d\u5b9a",
     sync_arrow1:"↓ 即座に送信", sync_box2_title:"セキュアな接続", sync_box2_sub:"ルームコードがクラスのプライバシーを守ります",
     sync_arrow2:"↓ 即座に受信", sync_box3_title:"生徒 — ブラウザのLayers", sync_box3_sub:"指示を受信して即座に適用",
     sync_note:"教室内のあらゆるChromebook、ラップトップ、デスクトップに対応",
@@ -878,6 +885,7 @@ var T = {
     feat7_h:"PIN锁", feat7_p:"设置四位数代码，使学生未经您许可不能禁用专注模式或断开课堂连接。让您在站立的地方就能真正掌控他们的屏幕。",
     feat8_h:"网站屏蔽", feat8_p:"如果某个网站造成问题，立即为全班屏蔽。添加的那一刻它就从每个学生的屏幕上消失——无需触碰任何设备。",
     feat9_h:"快速文件启动器", feat9_p:"直接从工具栏打开任何文档、PDF、电子表格或演示文稿。课堂中无需再翻找文件夹——您的材料从 Layers 所在位置一键打开。",
+    feat10_h:"网络封锁", feat10_p:"一键立即屏蔽每个学生屏幕上的所有互联网访问。学生会看到全屏停止提示，在您解除之前无法浏览任何内容。与专注模式独立运行——两者可同时激活。",
     who_tag:"// 谁在使用 Layers", who_h2:"任何使用屏幕<br><em>演示的人。</em>",
     who_intro:"Layers 是为教师而建，但它解决的问题——演示期间不断切换应用——影响着每一位演讲者。",
     who1_title:"教师", who1_sub:"小学、中学和高等教育",
@@ -895,18 +903,18 @@ var T = {
     stud4_name:"计时器", stud4_sub:"快捷预设或任意时长", stud4_p:"学生自主控制的倒计时器——非常适合自习、限时练习或小组作业时间管理。选择预设或输入任意时长。结束时发出提示音。",
     stud5_name:"页面绘图", stud5_sub:"钢笔、荧光笔、箭头、形状", stud5_p:"直接在任何网页上绘图和注释——标注文章、圈出图表关键术语，或高亮任何值得记忆的内容。多种工具和颜色，随时撤销。",
     stud6_name:"专注模式", stud6_sub:"学生或教师激活", stud6_p:"一键屏蔽60多个令人分心的网站，让学生专注学习。教师也可以远程推送给全班——可设置PIN使学生未经许可无法关闭。", stud6_more:"+ 60个以上",
-    stud7_name:"课堂同步", stud7_sub:"连接到教师", stud7_p:"学生输入房间码加入教师课堂。从那一刻起，教师可以推送专注模式、屏蔽网站，并向所有已连接学生发送控制指令——无需安装任何应用。",
+    stud7_name:"课堂同步", stud7_sub:"连接到教师", stud7_p:"学生只需输入一次房间码加入教师课堂——此后每次课会自动重新连接。教师可以推送专注模式、触发网络封锁、屏蔽网站并直接向所有已连接学生发送链接——无需安装任何应用。",
     lang_tag:"// 翻译语言", lang_h2:"您说话，学生<br><em>理解。</em>",
     lang_intro:"教师应用在您说话时实时翻译成46种语言。学生浏览器工具支持29种语言。",
     sync_tag:"// 课堂连接", sync_h2:"控制教室中<br><em>每个屏幕。</em>",
-    sync_intro:"与班级共享一个简单的房间码。从那一刻起，您无需离开演示位置就能与每个学生的屏幕实时连接。",
+    sync_intro:"一次创建永久课堂并与班级共享代码。从那一刻起，每个学生的屏幕都与您连接——每节课开始时会自动重新连接。",
     sync_f1:"一次性为全班开启专注模式",
     sync_f2:"立即屏蔽任何网站——它从每个学生的屏幕上消失",
-    sync_f3:"设置PIN使学生无法撤销您的控制",
-    sync_f4:"准确查看当前连接的学生数量",
-    sync_f5:"适用于学生使用的任何设备——Chromebook、笔记本、台式机",
-    sync_f6:"课程结束时自动关闭连接",
-    sync_box1_title:"教师 — Windows 上的 Layers", sync_box1_sub:"激活专注模式，屏蔽网站，设置PIN",
+    sync_f3:"触发网络封锁——切断每个学生设备上的所有浏览",
+    sync_f4:"设置PIN使学生无法撤销您的控制",
+    sync_f5:"准确查看当前连接的学生数量",
+    sync_f6:"房间码是永久的——学生加入一次后每节课自动重新连接",
+    sync_box1_title:"教师 — Windows 上的 Layers", sync_box1_sub:"专注模式、网站屏蔽、网络封锁、PIN",
     sync_arrow1:"↓ 即时发送", sync_box2_title:"安全连接", sync_box2_sub:"您的房间码使其对您的班级保持私密",
     sync_arrow2:"↓ 即时到达", sync_box3_title:"学生 — 浏览器中的 Layers", sync_box3_sub:"立即接收并应用指令",
     sync_note:"适用于教室中任何 Chromebook、笔记本或台式机",
@@ -982,6 +990,7 @@ var T = {
     feat7_h:"Khóa PIN", feat7_p:"Đặt mã bốn chữ số để học sinh không thể tắt Chế độ Tập trung hoặc ngắt kết nối khỏi lớp học mà không có sự cho phép của bạn.",
     feat8_h:"Chặn trang web", feat8_p:"Nếu một trang web gây ra vấn đề, chặn ngay lập tức cho toàn bộ lớp. Nó biến mất khỏi màn hình của mọi học sinh ngay khi bạn thêm vào.",
     feat9_h:"Khởi chạy file nhanh", feat9_p:"Mở bất kỳ tài liệu, PDF, bảng tính hoặc bài thuyết trình nào trực tiếp từ thanh công cụ. Không cần tìm kiếm trong thư mục giữa bài học.",
+    feat10_h:"Chặn Internet", feat10_p:"Một nút chặn ngay lập tức toàn bộ truy cập internet trên màn hình của mọi học sinh. Học sinh thấy lớp phủ dừng toàn màn hình và không thể duyệt web cho đến khi bạn gỡ bỏ. Hoạt động độc lập với Chế độ Tập trung — cả hai có thể hoạt động cùng lúc.",
     who_tag:"// Ai sử dụng Layers", who_h2:"Bất kỳ ai thuyết trình<br>với <em>màn hình.</em>",
     who_intro:"Layers được xây dựng cho giáo viên, nhưng vấn đề nó giải quyết — liên tục chuyển đổi ứng dụng khi thuyết trình — ảnh hưởng đến tất cả mọi người thuyết trình.",
     who1_title:"Giáo viên", who1_sub:"Tiểu học, trung học và đại học",
@@ -999,18 +1008,18 @@ var T = {
     stud4_name:"Hẹn giờ", stud4_sub:"Cài đặt sẵn hoặc bất kỳ thời lượng nào", stud4_p:"Đồng hồ đếm ngược do học sinh tự điều khiển — hoàn hảo cho các buổi tự học, luyện tập có thời gian hoặc quản lý thời gian làm bài nhóm. Chọn cài đặt sẵn hoặc nhập bất kỳ thời lượng nào. Cảnh báo khi kết thúc.",
     stud5_name:"Vẽ trên trang", stud5_sub:"Bút, bút sáng, mũi tên, hình", stud5_p:"Vẽ và chú thích trực tiếp trên bất kỳ trang web nào — đánh dấu bài viết, khoanh tròn thuật ngữ chính trên sơ đồ, hoặc tô sáng bất cứ điều gì đáng ghi nhớ. Nhiều công cụ và màu sắc, hoàn tác bất cứ lúc nào.",
     stud6_name:"Chế độ tập trung", stud6_sub:"Học sinh hoặc giáo viên kích hoạt", stud6_p:"Một cú nhấp chặn 60+ trang web gây sao nhãng để học sinh tập trung vào việc học. Giáo viên cũng có thể đẩy đến toàn bộ lớp từ xa — có thể đặt PIN để học sinh không thể tắt mà không có sự cho phép.", stud6_more:"+ 60 trang nữa",
-    stud7_name:"Đồng bộ lớp học", stud7_sub:"Kết nối với giáo viên", stud7_p:"Học sinh nhập mã phòng để tham gia lớp học của giáo viên. Từ thời điểm đó, giáo viên có thể đẩy Chế độ Tập trung, chặn trang web và gửi điều khiển trực tiếp đến mọi học sinh đã kết nối — không cần cài đặt ứng dụng.",
+    stud7_name:"Đồng bộ lớp học", stud7_sub:"Kết nối với giáo viên", stud7_p:"Học sinh nhập mã phòng một lần để tham gia lớp học của giáo viên — sau đó tự động kết nối lại mỗi buổi học. Giáo viên có thể đẩy Chế độ Tập trung, kích hoạt Chặn Internet, chặn trang web và gửi liên kết trực tiếp đến mọi học sinh đã kết nối — không cần cài đặt ứng dụng.",
     lang_tag:"// Ngôn ngữ dịch thuật", lang_h2:"Bạn nói. Học sinh<br><em>hiểu.</em>",
     lang_intro:"Ứng dụng giáo viên dịch sang 46 ngôn ngữ theo thời gian thực khi bạn nói. Công cụ trình duyệt học sinh hỗ trợ 29 ngôn ngữ.",
     sync_tag:"// Kết nối lớp học", sync_h2:"Kiểm soát mọi màn hình<br>trong <em>phòng.</em>",
-    sync_intro:"Chia sẻ mã phòng đơn giản với lớp. Từ thời điểm đó, bạn có kết nối trực tiếp với màn hình của mọi học sinh — mà không cần rời khỏi vị trí thuyết trình.",
+    sync_intro:"Tạo lớp học vĩnh viễn một lần và chia sẻ mã với học sinh. Từ thời điểm đó, mọi màn hình học sinh đều được kết nối — và tự động kết nối lại vào đầu mỗi buổi học.",
     sync_f1:"Bật Chế độ Tập trung cho toàn bộ lớp cùng lúc",
     sync_f2:"Chặn bất kỳ trang web nào ngay lập tức — nó biến mất khỏi màn hình của mọi học sinh",
-    sync_f3:"Đặt PIN để học sinh không thể hoàn tác điều khiển của bạn",
-    sync_f4:"Xem chính xác có bao nhiêu học sinh đang kết nối ngay bây giờ",
-    sync_f5:"Hoạt động với bất kỳ thiết bị nào học sinh đang sử dụng — Chromebook, laptop, máy tính bàn",
-    sync_f6:"Kết nối tự động đóng khi bài học kết thúc",
-    sync_box1_title:"Giáo viên — Layers trên Windows", sync_box1_sub:"Kích hoạt Chế độ Tập trung, chặn trang, đặt PIN",
+    sync_f3:"Kích hoạt Chặn Internet — cắt toàn bộ duyệt web trên mọi thiết bị học sinh",
+    sync_f4:"Đặt PIN để học sinh không thể hoàn tác điều khiển của bạn",
+    sync_f5:"Xem chính xác có bao nhiêu học sinh đang kết nối ngay bây giờ",
+    sync_f6:"Mã phòng là vĩnh viễn — học sinh tham gia một lần và tự động kết nối lại mỗi buổi học",
+    sync_box1_title:"Giáo viên — Layers trên Windows", sync_box1_sub:"Chế độ Tập trung, Chặn trang, Chặn Internet, PIN",
     sync_arrow1:"↓ gửi ngay lập tức", sync_box2_title:"Kết nối bảo mật", sync_box2_sub:"Mã phòng của bạn giữ cho lớp học riêng tư",
     sync_arrow2:"↓ nhận ngay lập tức", sync_box3_title:"Học sinh — Layers trên trình duyệt", sync_box3_sub:"Nhận và áp dụng hướng dẫn ngay lập tức",
     sync_note:"Hoạt động với bất kỳ Chromebook, laptop hoặc máy tính bàn nào trong lớp học của bạn",
@@ -1267,6 +1276,6 @@ async function sendMessage() {
 }
 </script>
 <!-- ===================== END CHAT WIDGET ===================== -->
- 
+
 </body>
 </html>
