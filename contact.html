@@ -147,7 +147,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 <nav>
   <a href="index.html" class="nav-brand"><div class="brand-dot"></div>Layers</a>
   <div class="nav-links">
-    <a href="index.html#features">Features</a>
+    <a href="index.html#features">For Teachers</a>
     <a href="index.html#pricing">Pricing</a>
     <a href="https://thelayersapp.gumroad.com/l/v29eng" class="nav-cta">Get Started</a>
   </div>
@@ -169,26 +169,26 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <span class="info-card-icon">🎓</span>
         <h3>General Questions</h3>
         <p>Feature questions, how-to support, or anything about the app.</p>
-        <a href="mailto:questions@thelayersapp.com">questions@thelayersapp.com</a>
+        <a href="/cdn-cgi/l/email-protection#d6a7a3b3a5a2bfb9b8a596a2beb3bab7afb3a4a5b7a6a6f8b5b9bb"><span class="__cf_email__" data-cfemail="79080c1c0a0d1016170a390d111c1518001c0b0a180909571a1614">[email&#160;protected]</span></a>
       </div>
 
       <div class="info-card">
         <span class="info-card-icon">🏫</span>
         <h3>School & Licensing</h3>
         <p>Looking to roll out Layers across your school or district? Let's talk.</p>
-        <a href="mailto:sales@thelayersapp.com">sales@thelayersapp.com</a>
+        <a href="/cdn-cgi/l/email-protection#90e3f1fcf5e3d0e4f8f5fcf1e9f5e2e3f1e0e0bef3fffd"><span class="__cf_email__" data-cfemail="4635272a233506322e232a273f2334352736366825292b">[email&#160;protected]</span></a>
       </div>
 
       <div class="info-card">
         <span class="info-card-icon">👤</span>
-        <h3>Direct to me</h3>
+        <h3>Direct to Peter</h3>
         <p>The developer himself. Feel free to say hello or share feedback.</p>
-        <a href="mailto:peter@thelayersapp.com">peter@thelayersapp.com</a>
+        <a href="/cdn-cgi/l/email-protection#79091c0d1c0b390d111c1518001c0b0a180909571a1614"><span class="__cf_email__" data-cfemail="d6a6b3a2b3a496a2beb3bab7afb3a4a5b7a6a6f8b5b9bb">[email&#160;protected]</span></a>
       </div>
 
       <div class="response-note">
         <span>⚡</span>
-        <p>Typically replies within <strong>24 hours</strong>. Based in Japan (JST).</p>
+        <p>Typically replies within <strong>24 hours</strong>. Peter is based in Japan (JST).</p>
       </div>
 
     </div>
@@ -231,14 +231,14 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <span>→</span>
         </button>
 
-        <p class="privacy-note">Your message is sent directly to the support teams inbox. No spam, no mailing lists.</p>
+        <p class="privacy-note">Your message is sent directly to Peter's inbox. No spam, no mailing lists.</p>
       </div>
 
       <!-- Success state -->
       <div class="form-success" id="form-success">
         <span class="success-icon">✉️</span>
         <h3>Message sent!</h3>
-        <p>Thanks for reaching out. The support team will get back to you within 24 hours.</p>
+        <p>Thanks for reaching out. Peter will get back to you within 24 hours.</p>
       </div>
     </div>
 
@@ -250,14 +250,14 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <div class="footer-brand">Layers<span>.</span></div>
     <div class="footer-links">
       <a href="index.html">Home</a>
-      <a href="mailto:questions@thelayersapp.com">Contact</a>
+      <a href="/cdn-cgi/l/email-protection#b7c6c2d2c4c3ded8d9c4f7c3dfd2dbd6ced2c5c4d6c7c799d4d8da">Contact</a>
       <a href="privacy.html">Privacy Policy</a>
     </div>
     <p class="footer-copy">© 2025 Layers · Built by Peter Hoang · Japan</p>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function submitForm() {
   var name    = document.getElementById('name').value.trim();
   var email   = document.getElementById('email').value.trim();
@@ -277,23 +277,4 @@ function submitForm() {
     general: 'General Question',
     teacher: 'Teacher App (Windows)',
     student: 'Student Extension (Chrome)',
-    school:  'School / Licensing',
-    bug:     'Bug Report',
-    other:   'Other'
-  };
-
-  var subject = encodeURIComponent('[Layers] ' + topicLabels[topic] + ' from ' + name);
-  var body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
-
-  window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
-
-  // Show success after short delay
-  setTimeout(function() {
-    document.getElementById('contact-form').style.display = 'none';
-    var s = document.getElementById('form-success');
-    s.style.display = 'block';
-  }, 800);
-}
-</script>
-</body>
-</html>
+    school:  'School
