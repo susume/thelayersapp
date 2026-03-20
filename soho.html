@@ -388,12 +388,15 @@ h2 em { font-style: italic; color: var(--soho); }
 .who-sub { font-size: 0.73rem; color: var(--muted); margin-top: 3px; line-height: 1.4; }
 
 /* ── Pricing ──────────────────────────────────────────────────────── */
-.pricing-wrap { max-width: 520px; margin: 48px auto 0; }
+.pricing-wrap { max-width: 960px; margin: 48px auto 0; }
 .price-card-soho {
   background: linear-gradient(160deg, rgba(46,213,115,0.1), rgba(26,26,36,0.95));
   border: 1px solid rgba(46,213,115,0.35); border-radius: 24px;
-  padding: 40px; position: relative; overflow: hidden;
+  padding: 48px; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
 }
+.price-col-left { display: flex; flex-direction: column; }
+.price-col-right { display: flex; flex-direction: column; }
 .price-card-soho::before {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, transparent, var(--soho), transparent);
@@ -414,12 +417,13 @@ h2 em { font-style: italic; color: var(--soho); }
   color: #0d0d12; padding: 16px; border-radius: 14px;
   font-size: 1rem; font-weight: 700; text-decoration: none;
   transition: all 0.2s; box-shadow: 0 0 28px rgba(46,213,115,0.25);
+  margin-top: auto;
 }
 .btn-buy:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(46,213,115,0.45); }
 .no-ads {
   display: flex; align-items: center; gap: 12px;
   background: rgba(46,213,115,0.06); border: 1px solid rgba(46,213,115,0.18);
-  border-radius: 12px; padding: 16px 24px; max-width: 520px; margin: 28px auto 0;
+  border-radius: 12px; padding: 16px 24px; max-width: 960px; margin: 28px auto 0;
 }
 .no-ads p { font-size: 0.875rem; color: var(--muted); }
 .no-ads strong { color: var(--soho); }
@@ -462,6 +466,9 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   .wrap, .band, .insight-band { padding: 60px 24px; }
   .hero { padding: 120px 24px 60px; }
   .mock-tools { display: none; }
+}
+@media (max-width: 768px) {
+  .price-card-soho { grid-template-columns: 1fr; gap: 32px; }
 }
 @media (max-width: 600px) {
   .features-grid { grid-template-columns: 1fr; }
@@ -892,35 +899,43 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 <!-- ── PRICING ── -->
 <div class="band" id="pricing">
   <div class="band-inner">
-    <div class="reveal" style="text-align:center;max-width:580px;margin:0 auto;">
+    <div class="reveal" style="text-align:center;max-width:960px;margin:0 auto;">
       <span class="label-tag" data-i18n="price_tag">// Pricing</span>
       <h2 class="narrow-h2" data-i18n="price_h2">Simple. <em>Honest.</em> One-time.</h2>
       <p class="intro" style="margin:16px auto 0;" data-i18n="price_intro">No subscription. No monthly fee. No limits on how many meetings you use it in. Pay once — it's yours, with free updates included.</p>
     </div>
     <div class="pricing-wrap reveal">
       <div class="price-card-soho">
-        <div class="p-tier">Layers Talk SOHO</div>
-        <div class="p-name">Personal</div>
-        <div class="p-once">✓ One-time purchase</div>
-        <div class="p-amount">
-          <span class="p-currency">$</span>
-          <span class="p-num">29</span>
-        </div>
-        <div class="p-save">Pay once · yours to keep · free updates included</div>
-        <div class="p-divider"></div>
-        <ul class="p-features">
-          <li><span class="ck">✓</span> Your client reads your offer in their language — instantly</li>
-          <li><span class="ck">✓</span> Professional shared-screen setup — no phone passing, no app for them to download</li>
-          <li><span class="ck">✓</span> Circle the clause, highlight the price — visual clarity when words aren't enough</li>
-          <li><span class="ck">✓</span> Work through the numbers together, on screen, so everyone agrees on the figure</li>
-          <li><span class="ck">✓</span> Your proposal or product sheet, one click away, visible from both sides of the table</li>
-          <li><span class="ck">✓</span> Keep the meeting on track — end on a high note, not a rushed one</li>
-          <li><span class="ck">✓</span> Full meeting transcript — a written record before they've reached the car park</li>
-          <li><span class="ck">✓</span> Type it when the mic struggles — the conversation never stalls</li>
-          <li><span class="ck">✓</span> Show a product page or live price — cleanly, without exposing your desktop</li>
-          <li><span class="ck">✓</span> Works on the laptop you're already carrying — nothing new to buy</li>
-        </ul>
-        <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-buy" data-i18n="price_btn">Download Layers Talk SOHO — $29</a>
+          <!-- Left col: identity + price + CTA -->
+          <div class="price-col-left">
+            <div class="p-tier">Layers Talk SOHO</div>
+            <div class="p-name">Personal</div>
+            <div class="p-once">✓ One-time purchase</div>
+            <div class="p-amount">
+              <span class="p-currency">$</span>
+              <span class="p-num">29</span>
+            </div>
+            <div class="p-save">Pay once · yours to keep · free updates included</div>
+            <div class="p-divider"></div>
+            <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:28px;">No subscription. No monthly fee. No limits on meetings. Open your laptop and you're ready — your client doesn't install a thing.</p>
+            <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-buy" data-i18n="price_btn">Download Layers Talk SOHO — $29</a>
+          </div>
+          <!-- Right col: feature list -->
+          <div class="price-col-right">
+            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Everything included</div>
+            <ul class="p-features">
+              <li><span class="ck">✓</span> Your client reads your offer in their language — instantly</li>
+              <li><span class="ck">✓</span> Professional shared-screen setup — no phone passing, no app for them to download</li>
+              <li><span class="ck">✓</span> Circle the clause, highlight the price — visual clarity when words aren't enough</li>
+              <li><span class="ck">✓</span> Work through the numbers together, on screen, so everyone agrees on the figure</li>
+              <li><span class="ck">✓</span> Your proposal or product sheet, one click away, visible from both sides of the table</li>
+              <li><span class="ck">✓</span> Keep the meeting on track — end on a high note, not a rushed one</li>
+              <li><span class="ck">✓</span> Full meeting transcript — a written record before they've reached the car park</li>
+              <li><span class="ck">✓</span> Type it when the mic struggles — the conversation never stalls</li>
+              <li><span class="ck">✓</span> Show a product page or live price — cleanly, without exposing your desktop</li>
+              <li><span class="ck">✓</span> Works on the laptop you're already carrying — nothing new to buy</li>
+            </ul>
+          </div>
       </div>
     </div>
     <div class="no-ads reveal">
