@@ -107,8 +107,7 @@ nav {
 }
 h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
 h2 em { font-style: italic; color: var(--soho); }
-.narrow-h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); }
-.intro { color: var(--muted); font-size: 1.1rem; max-width: 580px; margin-top: 16px; font-weight: 300; }
+.intro { color: var(--muted); font-size: 1.05rem; margin-top: 16px; font-weight: 300; line-height: 1.7; }
 
 /* ── Hero ───────────────────────────────────────────────────────────── */
 .hero {
@@ -131,14 +130,14 @@ h2 em { font-style: italic; color: var(--soho); }
 }
 .hero h1 {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
-  line-height: 1.08; letter-spacing: -0.02em; max-width: 720px;
+  font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+  line-height: 1.12; letter-spacing: -0.01em; max-width: 800px;
   animation: fadeUp 0.6s ease 0.1s both;
 }
 .hero h1 em { font-style: italic; color: var(--soho); }
 .hero-sub {
-  font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted);
-  max-width: 560px; margin-top: 24px; font-weight: 300;
+  font-size: clamp(1rem, 1.5vw, 1.1rem); color: var(--muted);
+  max-width: 720px; margin-top: 24px; font-weight: 300;
   animation: fadeUp 0.6s ease 0.2s both;
 }
 .hero-actions {
@@ -163,7 +162,7 @@ h2 em { font-style: italic; color: var(--soho); }
 /* ── Dual-panel mockup ─────────────────────────────────────────────── */
 .mockup-wrap {
   margin-top: 80px; animation: fadeUp 0.6s ease 0.4s both;
-  max-width: 860px; margin-left: auto; margin-right: auto;
+  max-width: 960px; margin-left: auto; margin-right: auto;
 }
 .mockup {
   background: #0a0a0f; border: 1px solid rgba(46,213,115,0.2);
@@ -429,11 +428,11 @@ h2 em { font-style: italic; color: var(--soho); }
 .no-ads strong { color: var(--soho); }
 
 /* ── CTA ──────────────────────────────────────────────────────────── */
-.cta-section { padding: 120px 40px; text-align: center; }
-.cta-inner { max-width: 620px; margin: 0 auto; }
-.cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem,5vw,3.5rem); margin-bottom: 20px; }
+.cta-section { padding: 100px 40px; text-align: center; }
+.cta-inner { max-width: 860px; margin: 0 auto; }
+.cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 2.8vw, 2.8rem); line-height: 1.12; margin-bottom: 20px; }
 .cta-section h2 em { color: var(--soho); }
-.cta-section p { color: var(--muted); font-size: 1.1rem; margin-bottom: 40px; font-weight: 300; }
+.cta-section p { color: var(--muted); font-size: 1.05rem; margin-bottom: 40px; font-weight: 300; max-width: 640px; margin-left: auto; margin-right: auto; }
 .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
 
 /* ── Footer ───────────────────────────────────────────────────────── */
@@ -901,8 +900,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <div class="band-inner">
     <div class="reveal" style="text-align:center;max-width:960px;margin:0 auto;">
       <span class="label-tag" data-i18n="price_tag">// Pricing</span>
-      <h2 class="narrow-h2" data-i18n="price_h2">Simple. <em>Honest.</em> One-time.</h2>
-      <p class="intro" style="margin:16px auto 0;" data-i18n="price_intro">No subscription. No monthly fee. No limits on how many meetings you use it in. Pay once — it's yours, with free updates included.</p>
+      <h2 data-i18n="price_h2">Simple. <em>Honest.</em> One-time.</h2>
+      <p class="intro" style="margin:16px auto 0;max-width:640px;" data-i18n="price_intro">No subscription. No monthly fee. No limits on how many meetings you use it in. Pay once — it's yours, with free updates included.</p>
     </div>
     <div class="pricing-wrap reveal">
       <div class="price-card-soho">
@@ -948,7 +947,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 <!-- ── CTA ── -->
 <section class="cta-section">
   <div class="cta-inner reveal">
-    <h2 class="narrow-h2" data-i18n="cta_h2">The next deal shouldn't<br>fall apart over <em>language.</em></h2>
+    <h2 data-i18n="cta_h2">The next deal shouldn't<br>fall apart over <em>language.</em></h2>
     <p data-i18n="cta_p">Open your laptop. Choose your languages. Face the screen toward them. Speak. Within seconds, they're reading your words in theirs — and the meeting you've been working toward finally goes the way it should.</p>
     <div class="cta-actions">
       <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="cta_btn">Download Layers Talk SOHO — $29</a>
