@@ -233,8 +233,8 @@ footer {
   <div class="policy-section" id="s1">
 <h2><span class="sec-num">01</span> <span data-i18n="s1_h">Who we are</span></h2>
     <div class="section-body">
-    <p>Layers is a software tool for teachers and presenters, built and maintained by Peter Hoang, based in Japan. It consists of two products: the <strong>Layers Windows app</strong> (a floating toolbar for teachers) and the <strong>Layers Student Chrome Extension</strong> (a browser toolbar for students).</p>
-    <p>If you have any questions about this policy, you can reach us at <a href="mailto:questions@thelayersapp.com">questions@thelayersapp.com</a>.</p>
+    <p>Layers is a software tool for teachers, presenters, and business professionals, built and maintained by Peter Hoang, based in Japan. It consists of three products: the <strong>Layers Windows app</strong> (a floating toolbar for teachers), the <strong>Layers Student Chrome Extension</strong> (a browser toolbar for students), and <strong>Layers Talk SOHO</strong> (a two-way translation tool for in-person business meetings, also a Windows app).</p>
+    <p>If you have any questions about this policy, you can reach us at <a href="/cdn-cgi/l/email-protection#18696d7d6b6c7177766b586c707d7479617d6a6b796868367b7775"><span class="__cf_email__" data-cfemail="2d5c58485e594442435e6d594548414c54485f5e4c5d5d034e4240">[email&#160;protected]</span></a>.</p>
     </div>
   </div>
 
@@ -252,13 +252,43 @@ footer {
       <li>Room codes you've saved for quick access to your classroom connection</li>
       <li>Your class lists (student names or numbers you enter for the random picker)</li>
       <li>A PIN code if you choose to set one — stored only on your device</li>
+      <li>Your toolbar size and language settings</li>
     </ul>
     <div class="highlight-box">
-      <p><strong>This data never leaves your computer.</strong> It is stored in a private folder on your PC and is only used by the Layers app itself.</p>
+      <p><strong>This data never leaves your computer.</strong> It is stored in a private folder on your PC (<code>%LOCALAPPDATA%\Layers\</code>) and is only used by the Layers app itself.</p>
     </div>
+
+    <p><strong>License verification.</strong> When you activate Layers with your Gumroad license key, the app sends your license key and a hashed machine fingerprint (a SHA-256 hash derived from your Windows MachineGuid — not your name, email, or any personal detail) to <a href="https://gumroad.com/privacy" target="_blank" rel="noopener noreferrer">Gumroad's API</a> to confirm the key is valid. This fingerprint is used only to bind the license to your device. It is stored locally alongside your license key and is never shared further.</p>
+
     <p>When you use the classroom connection feature (Sync), the app communicates with a secure cloud service to send instructions to connected students. This connection uses a room code — no names, email addresses, or personal details are ever sent. See Section 4 for more details on this.</p>
-    <p>When you use the speech translation feature, your microphone audio is processed by Google's speech recognition service. This is the same technology used by Google Assistant and Google Translate. Audio is sent to Google's servers to be converted to text — it is not stored or recorded by Layers. Please refer to <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a> for details on how Google handles speech data.</p>
+    <p>When you use the speech translation feature, your microphone audio is processed by Google's speech recognition service. Audio is sent to Google's servers to be converted to text — it is not stored or recorded by Layers. Please refer to <a href="https://policies.google.com/privacy" target="_blank">Google's Privacy Policy</a> for details on how Google handles speech data.</p>
+    <p>When you use the dictionary or synonym panel, the word or phrase you type is sent to the <a href="https://dictionaryapi.dev" target="_blank" rel="noopener noreferrer">Free Dictionary API</a> (dictionaryapi.dev) to retrieve definitions. Layers does not store these requests.</p>
   </div>
+  </div>
+
+  <div class="policy-divider"></div>
+
+  <!-- 2b -->
+  <div class="policy-section" id="s2b">
+    <h2><span class="sec-num">02b</span> <span data-i18n="s2b_h">Layers Talk SOHO — what it collects</span></h2>
+    <div class="section-body">
+    <p>Layers Talk SOHO is the most private product in the Layers family. It runs entirely offline except for the speech recognition and translation services it uses in real time.</p>
+    <div class="green-box" style="margin:16px 0;">
+      <span class="gi">✓</span>
+      <p><strong>No license check. No account. No cloud storage. No Firebase.</strong> Layers Talk SOHO does not connect to any Layers server at any point. It does not verify a license key over the internet — activation is handled locally.</p>
+    </div>
+    <p>Here is what SOHO does during a meeting:</p>
+    <ul>
+      <li>Microphone audio from both participants is sent to Google's speech recognition service to convert speech to text — one phrase at a time, only while the talk button is held</li>
+      <li>The recognised text is sent to Google Translate to produce a translation — also one phrase at a time</li>
+      <li>A transcript of the conversation (original speech + translation, with timestamps) is kept <strong>in memory only</strong> for the duration of the session</li>
+    </ul>
+    <div class="highlight-box">
+      <p><strong>The transcript never leaves your device unless you choose to export it.</strong> When you click "Export", a save dialog opens and you choose where to save the file on your own PC. Nothing is uploaded to Layers or any cloud service. When you close the app, the in-memory transcript is gone.</p>
+    </div>
+    <p>Audio is not recorded or stored by Layers. It is processed in real time, converted to text, and discarded. Please refer to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a> for details on how Google handles speech and translation data.</p>
+    <p>No settings, no files, and no user data are written to disk by Layers Talk SOHO unless you explicitly export a transcript.</p>
+    </div>
   </div>
 
   <div class="policy-divider"></div>
@@ -292,19 +322,21 @@ footer {
 
 <h2><span class="sec-num">04</span> <span data-i18n="s4_h">The classroom connection (Sync)</span></h2>
     <div class="section-body">
-    <p>The classroom connection feature allows a teacher's Windows app to send instructions — such as Focus Mode on/off, blocked sites, or a PIN — to connected student extensions in real time.</p>
+    <p>The classroom connection feature allows a teacher's Windows app to send instructions — such as Focus Mode on/off, blocked sites, a PIN, or a link to open — to connected student extensions in real time.</p>
     <p>This works through a secure cloud database (Google Firebase), hosted in Asia. Here is exactly what is stored there, and for how long:</p>
     <ul>
       <li>A room entry identified only by the room code — no names attached</li>
+      <li>The room's display name and a hashed password (written once when the room is created, and retained permanently so the room code can be reused across lessons)</li>
       <li>The current state of Focus Mode (on or off)</li>
       <li>The list of blocked sites the teacher has set</li>
       <li>A hashed (scrambled) version of the PIN, if one is set — the actual PIN is never stored</li>
       <li>A count of connected students, using anonymous session IDs only</li>
+      <li>URLs the teacher pushes to students — stored temporarily so all connected students can receive them</li>
     </ul>
-    <p>The teacher's connection closes automatically after 45 minutes of inactivity. Student session data expires when they leave the room or close their browser. No data from classroom sessions is retained after the session ends.</p>
     <div class="highlight-box">
-      <p><strong>No student names, school names, email addresses, or any personally identifiable information is ever stored in the classroom connection.</strong> The room code is the only identifier used.</p>
+      <p><strong>Room identity is permanent but contains no personal information.</strong> The room name and hashed password you set when creating a room remain in Firebase so students can rejoin automatically in future lessons. The room code is the only identifier. No student names, school names, email addresses, or any personally identifiable information is ever stored.</p>
     </div>
+    <p>The teacher's active session closes automatically after 45 minutes of inactivity. Student session data expires when they leave the room or close their browser. If you want a room permanently deleted from Firebase, contact us and we will remove it promptly.</p>
   </div>
   </div>
 
@@ -318,9 +350,11 @@ footer {
     <div class="section-body">
     <p>Layers uses the following third-party services. Each has its own privacy policy:</p>
     <ul>
-      <li><strong>Google Speech Recognition</strong> — used for live speech-to-text in the teacher app. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy →</a></li>
-      <li><strong>Google Translate</strong> — used to translate text in both the Windows app and the student extension. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy →</a></li>
-      <li><strong>Google Firebase Realtime Database</strong> — used for the classroom connection feature. Data is stored in the Asia Southeast region. <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy Policy →</a></li>
+      <li><strong>Google Speech Recognition</strong> — used for live speech-to-text in the teacher app and Layers Talk SOHO. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy →</a></li>
+      <li><strong>Google Translate</strong> — used to translate text in all three products. <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy →</a></li>
+      <li><strong>Google Firebase Realtime Database</strong> — used for the classroom connection feature (teacher app and student extension only; Layers Talk SOHO does not use Firebase). Data is stored in the Asia Southeast region. <a href="https://firebase.google.com/support/privacy" target="_blank">Firebase Privacy Policy →</a></li>
+      <li><strong>Gumroad</strong> — used to sell and verify licenses for the teacher app. When you purchase or activate a license, Gumroad receives your payment and contact details. Layers only contacts Gumroad to verify your license key — it does not share any student or classroom data with Gumroad. <a href="https://gumroad.com/privacy" target="_blank" rel="noopener noreferrer">Gumroad Privacy Policy →</a></li>
+      <li><strong>Free Dictionary API (dictionaryapi.dev)</strong> — used in the teacher app's dictionary and synonym panel. Words you look up are sent to this service to retrieve definitions. <a href="https://dictionaryapi.dev" target="_blank" rel="noopener noreferrer">dictionaryapi.dev →</a></li>
     </ul>
     <p>Layers does not use any advertising networks, analytics platforms, or tracking services. No data is ever sold to third parties.</p>
   </div>
@@ -336,7 +370,7 @@ footer {
     <div class="section-body">
     <p>Layers is designed for use in educational settings and may be used by students of all ages, including children under 13.</p>
     <p>We take this seriously. The student extension does not collect names, email addresses, photos, or any personally identifiable information from students of any age. Students do not create accounts. The only data associated with a student session is an anonymous, randomly generated ID that exists only for the duration of the classroom session.</p>
-    <p>If you are a parent or school administrator with questions or concerns about how Layers handles student data, please contact us at <a href="mailto:questions@thelayersapp.com">questions@thelayersapp.com</a>.</p>
+    <p>If you are a parent or school administrator with questions or concerns about how Layers handles student data, please contact us at <a href="/cdn-cgi/l/email-protection#3e4f4b5b4d4a5751504d7e4a565b525f475b4c4d5f4e4e105d5153"><span class="__cf_email__" data-cfemail="e19094849295888e8f92a19589848d8098849392809191cf828e8c">[email&#160;protected]</span></a>.</p>
   </div>
   </div>
 
@@ -372,7 +406,7 @@ footer {
       <li>Uninstalling the Windows app removes all locally stored data</li>
       <li>Removing the Chrome extension clears all locally stored extension data</li>
     </ul>
-    <p>If you believe any data related to you is held somewhere and would like it removed, contact us at <a href="mailto:questions@thelayersapp.com">questions@thelayersapp.com</a> and we will address it promptly.</p>
+    <p>If you believe any data related to you is held somewhere and would like it removed, contact us at <a href="/cdn-cgi/l/email-protection#502125352324393f3e23102438353c31293522233120207e333f3d"><span class="__cf_email__" data-cfemail="4435312137302d2b2a3704302c2128253d2136372534346a272b29">[email&#160;protected]</span></a> and we will address it promptly.</p>
   </div>
   </div>
 
@@ -410,21 +444,24 @@ footer {
 
 
 <!-- ═══ TRANSLATED SECTION TEMPLATES ═══ -->
-<template id="s1-ja"><p>Layersは日本在住のPeter Hoangが開発・維持する教師・プレゼンター向けソフトウェアです。<strong>Layers Windowsアプリ</strong>（教師向けフローティングツールバー）と<strong>Layers Student Chrome拡張機能</strong>（生徒向けブラウザツールバー）の2製品で構成されます。</p><p>このポリシーについてご不明な点は<a href="contact.html">こちらからお問い合わせください</a>。</p></template>
-<template id="s1-zh"><p>Layers是由日本的Peter Hoang开发和维护的教师与演讲者软件工具，包含两款产品：<strong>Layers Windows应用</strong>（教师专用浮动工具栏）和<strong>Layers Student Chrome插件</strong>（学生专用浏览器工具栏）。</p><p>如果您对本政策有任何疑问，请<a href="contact.html">在此联系我们</a>。</p></template>
-<template id="s1-vi"><p>Layers là công cụ phần mềm dành cho giáo viên và người thuyết trình, được xây dựng bởi Peter Hoang tại Nhật Bản. Gồm hai sản phẩm: <strong>Ứng dụng Layers Windows</strong> và <strong>Tiện ích Layers Student Chrome</strong>.</p><p>Nếu bạn có câu hỏi về chính sách này, hãy <a href="contact.html">liên hệ với chúng tôi</a>.</p></template>
-<template id="s2-ja"><p>Layers WindowsアプリはすべてPC上で動作します。アカウント作成やログインは不要で、個人情報をサーバーに送信しません。</p><p>保存されるデータはデバイス上にのみ保存されます：</p><ul><li>教室接続のために保存したルームコード</li><li>クラスリスト（ランダムピッカー用に入力した生徒名または番号）</li><li>設定した場合のPINコード（デバイス上にのみ保存）</li></ul><div class="highlight-box"><p><strong>このデータがコンピューターを離れることはありません。</strong>PCのプライベートフォルダに保存され、Layersアプリのみが使用します。</p></div><p>教室接続機能（同期）を使用する場合、アプリはルームコードを使用して生徒にのみ指示を送信します。氏名、メールアドレス、個人情報は送信されません。</p><p>音声翻訳機能を使用する場合、マイク音声はGoogleの音声認識サービスで処理されます。Layersは音声を保存・記録しません。詳細は<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a>をご参照ください。</p></template>
-<template id="s2-zh"><p>Layers Windows应用完全在您的电脑上运行，无需创建账户或登录，不向任何服务器发送个人信息。</p><p>存储的数据仅保存在您的设备上：</p><ul><li>您保存的课堂连接房间码</li><li>您的班级名单（用于随机选取器的学生姓名或编号）</li><li>如果您设置了PIN码，仅存储在您的设备上</li></ul><div class="highlight-box"><p><strong>这些数据永远不会离开您的电脑。</strong>存储在PC的私有文件夹中，仅供Layers应用使用。</p></div><p>使用课堂连接功能时，应用通过房间码与学生通信，从不发送姓名或个人信息。</p><p>使用语音翻译功能时，麦克风音频由Google语音识别服务处理，Layers不存储。详情请参阅<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策</a>。</p></template>
-<template id="s2-vi"><p>Ứng dụng Layers Windows chạy hoàn toàn trên máy tính của bạn, không tạo tài khoản, không gửi thông tin cá nhân đến bất kỳ máy chủ nào.</p><p>Dữ liệu được lưu cục bộ trên thiết bị:</p><ul><li>Mã phòng bạn đã lưu để truy cập kết nối lớp học</li><li>Danh sách lớp (tên học sinh hoặc số cho bộ chọn ngẫu nhiên)</li><li>Mã PIN nếu bạn chọn đặt — chỉ lưu trên thiết bị của bạn</li></ul><div class="highlight-box"><p><strong>Dữ liệu này không bao giờ rời khỏi máy tính của bạn.</strong> Được lưu trong thư mục riêng tư trên PC và chỉ được Layers sử dụng.</p></div><p>Khi sử dụng đồng bộ lớp học, ứng dụng giao tiếp qua mã phòng — không bao giờ gửi tên hay thông tin cá nhân.</p><p>Khi sử dụng dịch giọng nói, âm thanh được xử lý bởi Google, Layers không lưu trữ. Xem <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google</a>.</p></template>
+<template id="s1-ja"><p>Layersは日本在住のPeter Hoangが開発・維持する、教師・プレゼンター・ビジネスプロフェッショナル向けソフトウェアです。3つの製品で構成されます：<strong>Layers Windowsアプリ</strong>（教師向けフローティングツールバー）、<strong>Layers Student Chrome拡張機能</strong>（生徒向けブラウザツールバー）、および<strong>Layers Talk SOHO</strong>（対面ビジネス会議向け双方向翻訳ツール、Windowsアプリ）。</p><p>このポリシーについてご不明な点は<a href="contact.html">こちらからお問い合わせください</a>。</p></template>
+<template id="s1-zh"><p>Layers是由日本的Peter Hoang开发和维护的面向教师、演讲者和商务人士的软件工具，包含三款产品：<strong>Layers Windows应用</strong>（教师专用浮动工具栏）、<strong>Layers Student Chrome插件</strong>（学生专用浏览器工具栏）以及<strong>Layers Talk SOHO</strong>（用于面对面商务会议的双向翻译工具，也是一款Windows应用）。</p><p>如果您对本政策有任何疑问，请<a href="contact.html">在此联系我们</a>。</p></template>
+<template id="s1-vi"><p>Layers là công cụ phần mềm dành cho giáo viên, người thuyết trình và chuyên gia kinh doanh, được xây dựng và duy trì bởi Peter Hoang tại Nhật Bản. Gồm ba sản phẩm: <strong>Ứng dụng Layers Windows</strong> (thanh công cụ nổi cho giáo viên), <strong>Tiện ích Layers Student Chrome</strong> (thanh công cụ trình duyệt cho học sinh), và <strong>Layers Talk SOHO</strong> (công cụ dịch thuật hai chiều cho cuộc họp kinh doanh trực tiếp, cũng là ứng dụng Windows).</p><p>Nếu bạn có câu hỏi về chính sách này, hãy <a href="contact.html">liên hệ với chúng tôi</a>.</p></template>
+<template id="s2-ja"><p>Layers WindowsアプリはすべてPC上で動作します。アカウント作成やログインは不要で、個人情報をサーバーに送信しません。</p><p>保存されるデータはデバイス上にのみ保存されます：</p><ul><li>教室接続のために保存したルームコード</li><li>クラスリスト（ランダムピッカー用に入力した生徒名または番号）</li><li>設定した場合のPINコード（デバイス上にのみ保存）</li><li>ツールバーサイズと言語設定</li></ul><div class="highlight-box"><p><strong>このデータがコンピューターを離れることはありません。</strong>PCのプライベートフォルダ（<code>%LOCALAPPDATA%\Layers\</code>）に保存され、Layersアプリのみが使用します。</p></div><p><strong>ライセンス認証。</strong>GumroadのライセンスキーでLayersを有効化する際、アプリはライセンスキーとハッシュ化されたマシンフィンガープリント（WindowsのMachineGuidをSHA-256でハッシュ化したもの — 氏名・メール・個人情報ではありません）をGumroadのAPIに送信し、キーの有効性を確認します。このフィンガープリントはデバイスへのライセンス紐付けのみに使用され、ライセンスキーとともにローカルに保存されます。第三者に共有されることはありません。</p><p>教室接続機能（同期）を使用する場合、アプリはルームコードを使用して生徒にのみ指示を送信します。氏名、メールアドレス、個人情報は送信されません。</p><p>音声翻訳機能を使用する場合、マイク音声はGoogleの音声認識サービスで処理されます。Layersは音声を保存・記録しません。詳細は<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a>をご参照ください。</p><p>辞書・類義語パネルを使用する場合、入力した単語や文章はFree Dictionary API（dictionaryapi.dev）に送信されます。Layersはこれらのリクエストを保存しません。</p></template>
+<template id="s2-zh"><p>Layers Windows应用完全在您的电脑上运行，无需创建账户或登录，不向任何服务器发送个人信息。</p><p>存储的数据仅保存在您的设备上：</p><ul><li>您保存的课堂连接房间码</li><li>您的班级名单（用于随机选取器的学生姓名或编号）</li><li>如果您设置了PIN码，仅存储在您的设备上</li><li>工具栏大小和语言设置</li></ul><div class="highlight-box"><p><strong>这些数据永远不会离开您的电脑。</strong>存储在PC的私有文件夹（<code>%LOCALAPPDATA%\Layers\</code>）中，仅供Layers应用使用。</p></div><p><strong>许可证验证。</strong>使用Gumroad许可证密钥激活Layers时，应用会将您的许可证密钥和哈希机器指纹（从Windows MachineGuid派生的SHA-256哈希值，而非姓名、电子邮件或任何个人信息）发送至Gumroad API，以验证密钥的有效性。此指纹仅用于将许可证绑定到您的设备，与许可证密钥一起存储在本地，不会进一步共享。</p><p>使用课堂连接功能时，应用通过房间码与学生通信，从不发送姓名或个人信息。</p><p>使用语音翻译功能时，麦克风音频由Google语音识别服务处理，Layers不存储。详情请参阅<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策</a>。</p><p>使用词典或同义词面板时，您输入的单词或短语会发送至Free Dictionary API（dictionaryapi.dev）以获取释义。Layers不存储这些请求。</p></template>
+<template id="s2-vi"><p>Ứng dụng Layers Windows chạy hoàn toàn trên máy tính của bạn, không tạo tài khoản, không gửi thông tin cá nhân đến bất kỳ máy chủ nào.</p><p>Dữ liệu được lưu cục bộ trên thiết bị:</p><ul><li>Mã phòng bạn đã lưu để truy cập kết nối lớp học</li><li>Danh sách lớp (tên học sinh hoặc số cho bộ chọn ngẫu nhiên)</li><li>Mã PIN nếu bạn chọn đặt — chỉ lưu trên thiết bị của bạn</li><li>Cài đặt kích thước thanh công cụ và ngôn ngữ</li></ul><div class="highlight-box"><p><strong>Dữ liệu này không bao giờ rời khỏi máy tính của bạn.</strong> Được lưu trong thư mục riêng tư trên PC (<code>%LOCALAPPDATA%\Layers\</code>) và chỉ được Layers sử dụng.</p></div><p><strong>Xác minh giấy phép.</strong> Khi kích hoạt Layers bằng khóa giấy phép Gumroad, ứng dụng gửi khóa giấy phép và dấu vân tay máy được băm (hàm băm SHA-256 từ Windows MachineGuid — không phải tên, email hay thông tin cá nhân nào) đến API của Gumroad để xác nhận tính hợp lệ của khóa. Dấu vân tay này chỉ được dùng để liên kết giấy phép với thiết bị của bạn, được lưu cục bộ cùng khóa giấy phép và không được chia sẻ thêm.</p><p>Khi sử dụng đồng bộ lớp học, ứng dụng giao tiếp qua mã phòng — không bao giờ gửi tên hay thông tin cá nhân.</p><p>Khi sử dụng dịch giọng nói, âm thanh được xử lý bởi Google, Layers không lưu trữ. Xem <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google</a>.</p><p>Khi sử dụng bảng từ điển hoặc đồng nghĩa, từ bạn nhập được gửi đến Free Dictionary API (dictionaryapi.dev) để lấy định nghĩa. Layers không lưu trữ các yêu cầu này.</p></template>
+<template id="s2b-ja"><p>Layers Talk SOHOはLayersファミリーの中で最もプライバシーに配慮した製品です。リアルタイムで使用する音声認識・翻訳サービスを除き、完全にオフラインで動作します。</p><div class="green-box" style="margin:16px 0;"><span class="gi">✓</span><p><strong>ライセンス確認なし。アカウントなし。クラウドストレージなし。Firebaseなし。</strong>Layers Talk SOHOはいかなるLayersサーバーにも接続しません。インターネット経由でライセンスキーを確認しません — 認証はローカルで処理されます。</p></div><p>会議中にSOHOが行うこと：</p><ul><li>両参加者のマイク音声は、トークボタンを押している間のみ、フレーズごとにGoogleの音声認識サービスに送信されテキストに変換されます</li><li>認識されたテキストはフレーズごとにGoogle翻訳に送信され翻訳が生成されます</li><li>会話のトランスクリプト（元の発言＋翻訳、タイムスタンプ付き）はセッション中のみメモリ内に保持されます</li></ul><div class="highlight-box"><p><strong>エクスポートを選択しない限り、トランスクリプトがデバイスを離れることはありません。</strong>「エクスポート」をクリックすると保存ダイアログが開き、PC上の保存先を自由に選択できます。Layersやクラウドサービスへのアップロードはありません。アプリを閉じると、メモリ内のトランスクリプトは消去されます。</p></div><p>音声はLayersによって録音・保存されません。リアルタイムで処理されテキストに変換された後、破棄されます。Googleが音声・翻訳データをどのように扱うかについては、<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleのプライバシーポリシー</a>をご参照ください。</p><p>明示的にトランスクリプトをエクスポートしない限り、Layers Talk SOHOはデータをディスクに書き込みません。</p></template>
+<template id="s2b-zh"><p>Layers Talk SOHO是Layers系列中隐私保护最强的产品。除实时使用的语音识别和翻译服务外，完全离线运行。</p><div class="green-box" style="margin:16px 0;"><span class="gi">✓</span><p><strong>无需验证许可证、无账户、无云存储、无Firebase。</strong>Layers Talk SOHO不连接任何Layers服务器，不通过互联网验证许可证密钥 — 激活在本地处理。</p></div><p>会议期间SOHO的工作方式：</p><ul><li>双方参与者的麦克风音频仅在按住通话按钮时，逐句发送至Google语音识别服务进行文字转换</li><li>识别出的文字逐句发送至Google翻译生成译文</li><li>对话记录（原始发言＋翻译＋时间戳）仅在会话期间保存在内存中</li></ul><div class="highlight-box"><p><strong>除非您选择导出，否则记录不会离开您的设备。</strong>点击"导出"将打开保存对话框，您可自由选择在PC上的保存位置。不会上传至Layers或任何云服务。关闭应用后，内存中的记录将被清除。</p></div><p>音频不会被Layers录制或存储。它会实时处理并转换为文字后被丢弃。请参阅<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策</a>了解Google如何处理语音和翻译数据。</p><p>除非您明确导出记录，否则Layers Talk SOHO不会向磁盘写入任何数据。</p></template>
+<template id="s2b-vi"><p>Layers Talk SOHO là sản phẩm bảo vệ quyền riêng tư nhất trong bộ sản phẩm Layers. Hoạt động hoàn toàn ngoại tuyến ngoại trừ các dịch vụ nhận dạng giọng nói và dịch thuật được sử dụng theo thời gian thực.</p><div class="green-box" style="margin:16px 0;"><span class="gi">✓</span><p><strong>Không xác minh giấy phép. Không tài khoản. Không lưu trữ đám mây. Không Firebase.</strong> Layers Talk SOHO không kết nối với bất kỳ máy chủ Layers nào. Không xác minh khóa giấy phép qua internet — quá trình kích hoạt được xử lý cục bộ.</p></div><p>Những gì SOHO thực hiện trong cuộc họp:</p><ul><li>Âm thanh micrô của cả hai người chỉ được gửi đến dịch vụ nhận dạng giọng nói của Google khi đang giữ nút talk, từng câu một</li><li>Văn bản được nhận dạng được gửi đến Google Dịch để tạo bản dịch — cũng từng câu một</li><li>Bản ghi cuộc trò chuyện (lời nói gốc + bản dịch + thời gian) chỉ được lưu trong bộ nhớ trong suốt phiên làm việc</li></ul><div class="highlight-box"><p><strong>Bản ghi không rời khỏi thiết bị của bạn trừ khi bạn chọn xuất.</strong> Khi nhấp "Xuất", hộp thoại lưu mở ra và bạn chọn nơi lưu trên PC. Không có gì được tải lên Layers hay bất kỳ dịch vụ đám mây nào. Khi đóng ứng dụng, bản ghi trong bộ nhớ sẽ bị xóa.</p></div><p>Âm thanh không được Layers ghi âm hay lưu trữ. Nó được xử lý theo thời gian thực, chuyển đổi thành văn bản rồi bị loại bỏ. Xem <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google</a> để biết cách Google xử lý dữ liệu giọng nói và dịch thuật.</p><p>Layers Talk SOHO không ghi dữ liệu vào đĩa trừ khi bạn chủ động xuất bản ghi.</p></template>
 <template id="s3-ja"><p>Layers Student拡張機能はアカウント不要で、閲覧履歴を追跡せず、個人を特定できる情報を一切収集しません。</p><ul><li>言語設定はブラウザ内にローカル保存され、デバイスを離れることはありません</li><li>メモ帳の内容はローカルに保存され、どこにもアップロードされません</li><li>教師の教室に参加した場合、接続中の生徒数を確認できるよう15秒ごとに匿名のシグナルが送信されます。氏名や個人情報は含まれず、ランダムなセッションIDのみです</li><li>教師がフォーカスモードまたはインターネットロックダウンを有効にすると、ルームコード接続を通じて指示が届きます</li></ul><div class="highlight-box"><p><strong>拡張機能は閲覧しているページの内容を読み取り、保存、または送信しません。</strong>パスワードや支払い情報などのセンシティブな情報を閲覧することはできません。</p></div><p>翻訳・辞書機能を使用する場合、ハイライトしたテキストがGoogle翻訳に送信されます。Layersはこれらのリクエストを保存・記録しません。</p></template>
 <template id="s3-zh"><p>Layers Student插件无需账户，不追踪浏览历史，不收集任何个人身份信息。</p><ul><li>语言偏好在浏览器中本地保存，不会离开您的设备</li><li>便签内容在本地保存，不会上传到任何地方</li><li>如果您加入教师课堂，插件每15秒发送一次匿名心跳信号，让教师了解连接学生数量，不包含任何个人信息</li><li>当教师激活专注模式或网络封锁时，插件通过房间码连接接收相应指令</li></ul><div class="highlight-box"><p><strong>插件不读取、存储或传输您访问的页面内容。</strong>无法看到您的密码、付款信息或任何其他敏感内容。</p></div><p>使用翻译或词典功能时，您高亮的文本会发送至Google翻译。Layers不存储或记录这些请求。</p></template>
 <template id="s3-vi"><p>Tiện ích Layers Student không yêu cầu tài khoản, không theo dõi lịch sử duyệt web, không thu thập thông tin nhận dạng cá nhân.</p><ul><li>Tùy chọn ngôn ngữ được lưu cục bộ trong trình duyệt — không bao giờ rời khỏi thiết bị</li><li>Nội dung ghi chú được lưu cục bộ — không bao giờ được tải lên đâu cả</li><li>Nếu bạn tham gia lớp học, tiện ích gửi tín hiệu ẩn danh mỗi 15 giây để giáo viên biết số học sinh kết nối — không chứa tên hay thông tin cá nhân</li><li>Khi giáo viên kích hoạt Chế độ Tập trung hoặc Chặn Internet, tiện ích nhận hướng dẫn qua kết nối mã phòng</li></ul><div class="highlight-box"><p><strong>Tiện ích không đọc, lưu trữ hoặc truyền tải nội dung các trang bạn truy cập.</strong> Không thể xem mật khẩu, thông tin thanh toán hoặc nội dung nhạy cảm khác.</p></div><p>Khi sử dụng tính năng dịch thuật, văn bản bạn tô sáng được gửi đến Google Dịch. Layers không lưu trữ hoặc ghi lại các yêu cầu này.</p></template>
-<template id="s4-ja"><p>教室接続機能により、教師のWindowsアプリからフォーカスモード、インターネットロックダウン、サイトブロック、PINなどの指示をリアルタイムで接続中の生徒の拡張機能に送信できます。</p><p>これはアジアにホストされた安全なクラウドデータベース（Google Firebase）を通じて機能します。保存されるデータ：</p><ul><li>ルームコードのみで識別されるルームエントリ（氏名は含まれません）</li><li>フォーカスモードとインターネットロックダウンの現在の状態</li><li>教師が設定したブロックサイトのリスト</li><li>PINが設定されている場合はハッシュ化されたバージョン（実際のPINは保存されません）</li><li>匿名セッションIDのみを使用した接続中生徒数</li></ul><p>ルームコードは永続的ですが、個人情報を含みません。生徒のセッションデータは退出またはブラウザを閉じると削除されます。</p><div class="highlight-box"><p><strong>生徒名、学校名、メールアドレス、その他の個人を特定できる情報は教室接続には一切保存されません。</strong></p></div></template>
-<template id="s4-zh"><p>课堂连接功能允许教师的Windows应用实时向连接的学生插件发送指令，如专注模式、网络封锁、屏蔽网站或PIN。</p><p>这通过托管于亚洲的安全云数据库（Google Firebase）实现。存储的内容：</p><ul><li>仅由房间码标识的房间条目，不含姓名</li><li>专注模式和网络封锁的当前状态</li><li>教师设置的屏蔽网站列表</li><li>如果设置了PIN，则存储其哈希版本，实际PIN不会被存储</li><li>仅使用匿名会话ID的连接学生计数</li></ul><p>房间码是永久的，但不包含任何个人信息。学生会话数据在离开房间或关闭浏览器时过期。</p><div class="highlight-box"><p><strong>课堂连接中从不存储学生姓名、学校名称、电子邮件地址或任何个人身份信息。</strong></p></div></template>
-<template id="s4-vi"><p>Tính năng kết nối lớp học cho phép ứng dụng Windows của giáo viên gửi hướng dẫn — Chế độ Tập trung, Chặn Internet, chặn trang web hoặc PIN — đến tiện ích học sinh theo thời gian thực.</p><p>Hoạt động qua cơ sở dữ liệu đám mây bảo mật (Google Firebase) tại châu Á. Dữ liệu được lưu trữ:</p><ul><li>Mục phòng chỉ được xác định bằng mã phòng — không có tên đính kèm</li><li>Trạng thái Chế độ Tập trung và Chặn Internet</li><li>Danh sách các trang web bị chặn mà giáo viên đã đặt</li><li>Phiên bản băm của PIN nếu được đặt — PIN thực tế không bao giờ được lưu</li><li>Số học sinh kết nối, chỉ sử dụng ID phiên ẩn danh</li></ul><p>Mã phòng là vĩnh viễn nhưng không chứa thông tin cá nhân. Dữ liệu phiên học sinh hết hạn khi rời phòng hoặc đóng trình duyệt.</p><div class="highlight-box"><p><strong>Không có tên học sinh, tên trường, địa chỉ email hoặc thông tin nhận dạng cá nhân nào được lưu trong kết nối lớp học.</strong></p></div></template>
-<template id="s5-ja"><p>Layersは以下のサードパーティサービスを使用しています：</p><ul><li><strong>Google音声認識</strong> — 教師アプリのリアルタイム音声テキスト変換。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleプライバシーポリシー →</a></li><li><strong>Google翻訳</strong> — 両製品でのテキスト翻訳。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleプライバシーポリシー →</a></li><li><strong>Google Firebase リアルタイムデータベース</strong> — 教室接続機能。データはアジア東南アジアリージョンに保存。<a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebaseプライバシーポリシー →</a></li></ul><p>Layersは広告ネットワーク、分析プラットフォーム、追跡サービスを使用しません。データが第三者に販売されることはありません。</p></template>
-<template id="s5-zh"><p>Layers使用以下第三方服务：</p><ul><li><strong>Google语音识别</strong> — 教师应用的实时语音转文字。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策 →</a></li><li><strong>Google翻译</strong> — 两款产品的文本翻译。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策 →</a></li><li><strong>Google Firebase实时数据库</strong> — 课堂连接功能，数据存储于亚洲东南亚地区。<a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase隐私政策 →</a></li></ul><p>Layers不使用任何广告网络、分析平台或追踪服务，数据不会出售给第三方。</p></template>
-<template id="s5-vi"><p>Layers sử dụng các dịch vụ bên thứ ba sau:</p><ul><li><strong>Google Nhận dạng Giọng nói</strong> — chuyển giọng nói thành văn bản trong ứng dụng giáo viên. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google →</a></li><li><strong>Google Dịch</strong> — dịch văn bản trong cả hai sản phẩm. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google →</a></li><li><strong>Google Firebase Realtime Database</strong> — tính năng kết nối lớp học, dữ liệu lưu tại vùng Đông Nam Á. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Firebase →</a></li></ul><p>Layers không sử dụng mạng quảng cáo, nền tảng phân tích hoặc dịch vụ theo dõi nào. Dữ liệu không bao giờ được bán cho bên thứ ba.</p></template>
+<template id="s4-ja"><p>教室接続機能により、教師のWindowsアプリからフォーカスモード、インターネットロックダウン、サイトブロック、PIN、リンク送信などの指示をリアルタイムで接続中の生徒の拡張機能に送信できます。</p><p>これはアジアにホストされた安全なクラウドデータベース（Google Firebase）を通じて機能します。保存されるデータと保存期間：</p><ul><li>ルームコードのみで識別されるルームエントリ（氏名は含まれません）</li><li>ルームの表示名とハッシュ化されたパスワード（ルーム作成時に一度書き込まれ、授業間でルームコードを再利用できるよう永続的に保持されます）</li><li>フォーカスモードの現在の状態（オン/オフ）</li><li>教師が設定したブロックサイトのリスト</li><li>PINが設定されている場合はハッシュ化されたバージョン（実際のPINは保存されません）</li><li>匿名セッションIDのみを使用した接続中生徒数</li><li>教師が生徒に送信したURL（接続中の全生徒が受信できるよう一時的に保存されます）</li></ul><div class="highlight-box"><p><strong>ルームの情報は永続的ですが、個人情報は含まれません。</strong>ルーム作成時に設定した名前とハッシュ化されたパスワードはFirebaseに保持され、生徒が次回の授業から自動再接続できます。識別子はルームコードのみです。生徒名、学校名、メールアドレス、その他の個人を特定できる情報は一切保存されません。</p></div><p>教師のアクティブなセッションは45分間操作がないと自動終了します。生徒のセッションデータは退出またはブラウザを閉じると削除されます。ルームをFirebaseから完全に削除したい場合は、お問い合わせいただければ速やかに対応いたします。</p></template>
+<template id="s4-zh"><p>课堂连接功能允许教师的Windows应用实时向连接的学生插件发送指令 — 如专注模式、网络封锁、屏蔽网站、PIN或链接推送。</p><p>这通过托管于亚洲的安全云数据库（Google Firebase）实现。存储内容及时长：</p><ul><li>仅由房间码标识的房间条目，不含姓名</li><li>房间显示名称和哈希密码（创建房间时写入一次，永久保留以便跨课时复用房间码）</li><li>专注模式的当前状态（开/关）</li><li>教师设置的屏蔽网站列表</li><li>如果设置了PIN，则存储其哈希版本，实际PIN不会被存储</li><li>仅使用匿名会话ID的连接学生计数</li><li>教师向学生推送的URL（临时存储以确保所有连接学生均可接收）</li></ul><div class="highlight-box"><p><strong>房间信息永久保留，但不包含任何个人信息。</strong>创建房间时设置的名称和哈希密码保存在Firebase中，以便学生在后续课时自动重连。唯一标识符是房间码。不存储学生姓名、学校名称、电子邮件地址或任何个人身份信息。</p></div><p>教师活跃会话在45分钟无操作后自动关闭。学生会话数据在离开房间或关闭浏览器时过期。如需从Firebase永久删除房间，请<a href="contact.html">联系我们</a>，我们将立即处理。</p></template>
+<template id="s4-vi"><p>Tính năng kết nối lớp học cho phép ứng dụng Windows của giáo viên gửi hướng dẫn — Chế độ Tập trung, Chặn Internet, chặn trang web, PIN hoặc liên kết — đến tiện ích học sinh theo thời gian thực.</p><p>Hoạt động qua cơ sở dữ liệu đám mây bảo mật (Google Firebase) tại châu Á. Dữ liệu được lưu trữ và thời gian lưu:</p><ul><li>Mục phòng chỉ được xác định bằng mã phòng — không có tên đính kèm</li><li>Tên hiển thị phòng và mật khẩu được băm (ghi một lần khi tạo phòng, lưu vĩnh viễn để có thể tái sử dụng mã phòng qua các buổi học)</li><li>Trạng thái Chế độ Tập trung (bật/tắt)</li><li>Danh sách trang web bị chặn mà giáo viên đã đặt</li><li>Phiên bản băm của PIN nếu được đặt — PIN thực tế không bao giờ được lưu</li><li>Số học sinh kết nối, chỉ sử dụng ID phiên ẩn danh</li><li>URL giáo viên đẩy đến học sinh — lưu tạm thời để tất cả học sinh đang kết nối có thể nhận</li></ul><div class="highlight-box"><p><strong>Thông tin phòng được lưu vĩnh viễn nhưng không chứa thông tin cá nhân.</strong> Tên và mật khẩu băm bạn đặt khi tạo phòng được giữ trong Firebase để học sinh tự động kết nối lại trong các buổi học sau. Mã phòng là định danh duy nhất. Không có tên học sinh, tên trường, địa chỉ email hay thông tin nhận dạng cá nhân nào được lưu trữ.</p></div><p>Phiên hoạt động của giáo viên tự động đóng sau 45 phút không có hoạt động. Dữ liệu phiên học sinh hết hạn khi rời phòng hoặc đóng trình duyệt. Nếu bạn muốn xóa vĩnh viễn một phòng khỏi Firebase, hãy <a href="contact.html">liên hệ với chúng tôi</a> và chúng tôi sẽ xử lý ngay.</p></template>
+<template id="s5-ja"><p>Layersは以下のサードパーティサービスを使用しています：</p><ul><li><strong>Google音声認識</strong> — 教師アプリとLayers Talk SOHOでのリアルタイム音声テキスト変換。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleプライバシーポリシー →</a></li><li><strong>Google翻訳</strong> — 3製品すべてでのテキスト翻訳。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Googleプライバシーポリシー →</a></li><li><strong>Google Firebase リアルタイムデータベース</strong> — 教室接続機能（教師アプリと生徒用拡張機能のみ。Layers Talk SOHOはFirebaseを使用しません）。データはアジア東南アジアリージョンに保存。<a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebaseプライバシーポリシー →</a></li><li><strong>Gumroad</strong> — 教師アプリのライセンス販売・認証に使用。購入またはライセンスを有効化する際、Gumroadはお支払いおよび連絡先情報を受け取ります。LayersはライセンスキーのGumroad照会にのみ利用し、生徒・教室データをGumroadと共有することはありません。<a href="https://gumroad.com/privacy" target="_blank" rel="noopener noreferrer">Gumroadプライバシーポリシー →</a></li><li><strong>Free Dictionary API（dictionaryapi.dev）</strong> — 教師アプリの辞書・類義語パネルで使用。検索した単語がこのサービスに送信されます。<a href="https://dictionaryapi.dev" target="_blank" rel="noopener noreferrer">dictionaryapi.dev →</a></li></ul><p>Layersは広告ネットワーク、分析プラットフォーム、追跡サービスを使用しません。データが第三者に販売されることはありません。</p></template>
+<template id="s5-zh"><p>Layers使用以下第三方服务：</p><ul><li><strong>Google语音识别</strong> — 用于教师应用和Layers Talk SOHO的实时语音转文字。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策 →</a></li><li><strong>Google翻译</strong> — 用于三款产品的文本翻译。<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google隐私政策 →</a></li><li><strong>Google Firebase实时数据库</strong> — 用于课堂连接功能（仅教师应用和学生插件使用，Layers Talk SOHO不使用Firebase）。数据存储于亚洲东南亚地区。<a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase隐私政策 →</a></li><li><strong>Gumroad</strong> — 用于销售和验证教师应用的许可证。购买或激活许可证时，Gumroad会收到您的支付信息和联系方式。Layers仅联系Gumroad验证许可证密钥，不会与Gumroad共享任何学生或课堂数据。<a href="https://gumroad.com/privacy" target="_blank" rel="noopener noreferrer">Gumroad隐私政策 →</a></li><li><strong>Free Dictionary API（dictionaryapi.dev）</strong> — 用于教师应用的词典和同义词面板。您查询的单词会发送至此服务以获取释义。<a href="https://dictionaryapi.dev" target="_blank" rel="noopener noreferrer">dictionaryapi.dev →</a></li></ul><p>Layers不使用任何广告网络、分析平台或追踪服务，数据不会出售给第三方。</p></template>
+<template id="s5-vi"><p>Layers sử dụng các dịch vụ bên thứ ba sau:</p><ul><li><strong>Google Nhận dạng Giọng nói</strong> — chuyển giọng nói thành văn bản theo thời gian thực trong ứng dụng giáo viên và Layers Talk SOHO. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google →</a></li><li><strong>Google Dịch</strong> — dịch văn bản trong cả ba sản phẩm. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Google →</a></li><li><strong>Google Firebase Realtime Database</strong> — dùng cho tính năng kết nối lớp học (chỉ ứng dụng giáo viên và tiện ích học sinh; Layers Talk SOHO không sử dụng Firebase). Dữ liệu lưu tại vùng Đông Nam Á. <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Firebase →</a></li><li><strong>Gumroad</strong> — dùng để bán và xác minh giấy phép ứng dụng giáo viên. Khi mua hoặc kích hoạt giấy phép, Gumroad nhận thông tin thanh toán và liên hệ của bạn. Layers chỉ liên hệ Gumroad để xác minh khóa giấy phép — không chia sẻ dữ liệu học sinh hay lớp học với Gumroad. <a href="https://gumroad.com/privacy" target="_blank" rel="noopener noreferrer">Chính sách Quyền riêng tư Gumroad →</a></li><li><strong>Free Dictionary API (dictionaryapi.dev)</strong> — dùng trong bảng từ điển và đồng nghĩa của ứng dụng giáo viên. Từ bạn tra cứu được gửi đến dịch vụ này để lấy định nghĩa. <a href="https://dictionaryapi.dev" target="_blank" rel="noopener noreferrer">dictionaryapi.dev →</a></li></ul><p>Layers không sử dụng mạng quảng cáo, nền tảng phân tích hoặc dịch vụ theo dõi nào. Dữ liệu không bao giờ được bán cho bên thứ ba.</p></template>
 <template id="s6-ja"><p>Layersは教育現場での使用を想定しており、13歳未満を含むすべての年齢の生徒に使用される場合があります。</p><p>生徒用拡張機能は、年齢に関係なく、氏名、メールアドレス、写真、その他の個人情報を収集しません。生徒はアカウントを作成しません。生徒セッションに関連付けられるデータは、セッション中のみ存在する匿名のランダムIDのみです。</p><p>保護者や学校管理者の方でご質問がある場合は<a href="contact.html">お問い合わせください</a>。</p></template>
 <template id="s6-zh"><p>Layers专为教育场景设计，可能被各年龄段学生使用，包括13岁以下儿童。</p><p>学生插件不收集任何年龄段学生的姓名、电子邮件地址、照片或任何个人身份信息。学生无需创建账户，与学生会话关联的唯一数据是仅在会话期间存在的匿名随机ID。</p><p>如果您是家长或学校管理员并有疑问，请<a href="contact.html">联系我们</a>。</p></template>
 <template id="s6-vi"><p>Layers được thiết kế cho môi trường giáo dục và có thể được sử dụng bởi học sinh mọi lứa tuổi, bao gồm trẻ em dưới 13 tuổi.</p><p>Tiện ích học sinh không thu thập tên, địa chỉ email, ảnh hoặc bất kỳ thông tin nhận dạng cá nhân nào. Học sinh không tạo tài khoản. Dữ liệu duy nhất là ID ẩn danh ngẫu nhiên chỉ tồn tại trong thời gian phiên học.</p><p>Nếu bạn là phụ huynh hoặc quản trị viên trường học, vui lòng <a href="contact.html">liên hệ với chúng tôi</a>.</p></template>
@@ -438,7 +475,7 @@ footer {
 <template id="s9-zh"><p>如果本政策发生重大变更，更新版本将以新的最后更新日期发布在此URL。我们不会在未明确通知的情况下降低您的隐私保护。</p><p>对于重大变更——尤其是影响学生数据处理方式的变更——我们将合理努力直接通知用户。</p></template>
 <template id="s9-vi"><p>Nếu chính sách này thay đổi theo cách có ý nghĩa, phiên bản cập nhật sẽ được đăng tại URL này với ngày cập nhật mới. Chúng tôi sẽ không giảm bớt các biện pháp bảo vệ quyền riêng tư của bạn mà không có thông báo rõ ràng.</p><p>Đối với những thay đổi đáng kể ảnh hưởng đến dữ liệu học sinh, chúng tôi sẽ nỗ lực thông báo trực tiếp đến người dùng.</p></template>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 var T = {
   en: {
     nav_back:"← Back to Home",
@@ -446,6 +483,7 @@ var T = {
     p_meta:"Last updated: March 2026 &nbsp;&middot;&nbsp; thelayersapp.com",
     p_short:"<strong>The short version:</strong> Layers does not sell your data, does not show you ads, and does not collect anything it doesn't need. The teacher app stores nothing online. The student extension stores only what's needed to run your classroom connection.",
     s1_h:"Who we are", s2_h:"The Windows app \u2014 what it collects",
+    s2b_h:"Layers Talk SOHO \u2014 what it collects",
     s3_h:"The Student Chrome Extension \u2014 what it collects",
     s4_h:"The classroom connection (Sync)", s5_h:"Third-party services",
     s6_h:"Children's privacy", s7_h:"Permissions \u2014 Chrome Extension",
@@ -461,6 +499,7 @@ var T = {
     p_short:"<strong>\u8981\u7d04\uff1a</strong>Layers\u306f\u30e6\u30fc\u30b6\u30fc\u306e\u30c7\u30fc\u30bf\u3092\u8ca9\u58f2\u305b\u305a\u3001\u5e83\u544a\u3092\u8868\u793a\u305b\u305a\u3001\u5fc5\u8981\u4ee5\u4e0a\u306e\u60c5\u5831\u3092\u53ce\u96c6\u3057\u307e\u305b\u3093\u3002\u6559\u5e2b\u7528\u30a2\u30d7\u30ea\u306f\u30aa\u30f3\u30e9\u30a4\u30f3\u306b\u4f55\u3082\u4fdd\u5b58\u3057\u307e\u305b\u3093\u3002\u751f\u5f92\u7528\u62e1\u5f35\u6a5f\u80fd\u306f\u6559\u5ba4\u63a5\u7d9a\u306e\u904b\u7528\u306b\u5fc5\u8981\u306a\u3082\u306e\u3060\u3051\u3092\u4fdd\u5b58\u3057\u307e\u3059\u3002",
     s1_h:"\u79c1\u305f\u3061\u306b\u3064\u3044\u3066",
     s2_h:"Windows\u30a2\u30d7\u30ea\u304c\u53ce\u96c6\u3059\u308b\u30c7\u30fc\u30bf",
+    s2b_h:"Layers Talk SOHO \u2014 \u53ce\u96c6\u3059\u308b\u30c7\u30fc\u30bf",
     s3_h:"Chrome\u62e1\u5f35\u6a5f\u80fd\u304c\u53ce\u96c6\u3059\u308b\u30c7\u30fc\u30bf",
     s4_h:"\u6559\u5ba4\u63a5\u7d9a\uff08\u540c\u671f\uff09",
     s5_h:"\u30b5\u30fc\u30c9\u30d1\u30fc\u30c6\u30a3\u30b5\u30fc\u30d3\u30b9",
@@ -478,6 +517,7 @@ var T = {
     p_meta:"\u6700\u540e\u66f4\u65b0\uff1a2026\u5e743\u6708 &nbsp;&middot;&nbsp; thelayersapp.com",
     p_short:"<strong>\u7b80\u77ed\u7248\u672c\uff1a</strong>Layers\u4e0d\u51fa\u552e\u60a8\u7684\u6570\u636e\uff0c\u4e0d\u5c55\u793a\u5e7f\u544a\uff0c\u4e5f\u4e0d\u6536\u96c6\u4efb\u4f55\u4e0d\u5fc5\u8981\u7684\u4fe1\u606f\u3002\u6559\u5e08\u5e94\u7528\u4e0d\u5728\u7ebf\u5b58\u50a8\u4efb\u4f55\u5185\u5bb9\u3002\u5b66\u751f\u63d2\u4ef6\u4ec5\u5b58\u50a8\u8fd0\u884c\u8bfe\u5802\u8fde\u63a5\u6240\u9700\u7684\u4fe1\u606f\u3002",
     s1_h:"\u5173\u4e8e\u6211\u4eec", s2_h:"Windows\u5e94\u7528\u6536\u96c6\u7684\u6570\u636e",
+    s2b_h:"Layers Talk SOHO \u2014 \u6536\u96c6\u7684\u6570\u636e",
     s3_h:"Chrome\u63d2\u4ef6\u6536\u96c6\u7684\u6570\u636e", s4_h:"\u8bfe\u5802\u8fde\u63a5\uff08\u540c\u6b65\uff09",
     s5_h:"\u7b2c\u4e09\u65b9\u670d\u52a1", s6_h:"\u513f\u7ae5\u9690\u79c1",
     s7_h:"\u6743\u9650 \u2014 Chrome\u63d2\u4ef6", s8_h:"\u60a8\u7684\u6743\u5229", s9_h:"\u653f\u7b56\u53d8\u66f4",
@@ -491,6 +531,7 @@ var T = {
     p_meta:"C\u1eadp nh\u1eadt l\u1ea7n cu\u1ed1i: Th\u00e1ng 3, 2026 &nbsp;&middot;&nbsp; thelayersapp.com",
     p_short:"<strong>T\u00f3m t\u1eaft:</strong>Layers kh\u00f4ng b\u00e1n d\u1eef li\u1ec7u c\u1ee7a b\u1ea1n, kh\u00f4ng hi\u1ec3n th\u1ecb qu\u1ea3ng c\u00e1o, v\u00e0 kh\u00f4ng thu th\u1eadp th\u1ee9 g\u00ec kh\u00f4ng c\u1ea7n thi\u1ebft. \u1ee8ng d\u1ee5ng gi\u00e1o vi\u00ean kh\u00f4ng l\u01b0u tr\u1eef g\u00ec tr\u1ef1c tuy\u1ebfn.",
     s1_h:"V\u1ec1 ch\u00fang t\u00f4i", s2_h:"D\u1eef li\u1ec7u \u1ee9ng d\u1ee5ng Windows thu th\u1eadp",
+    s2b_h:"Layers Talk SOHO \u2014 d\u1eef li\u1ec7u thu th\u1eadp",
     s3_h:"D\u1eef li\u1ec7u ti\u1ec7n \u00edch Chrome thu th\u1eadp", s4_h:"K\u1ebft n\u1ed1i l\u1edbp h\u1ecdc (\u0110\u1ed3ng b\u1ed9)",
     s5_h:"D\u1ecbch v\u1ee5 b\u00ean th\u1ee9 ba", s6_h:"Quy\u1ec1n ri\u00eang t\u01b0 c\u1ee7a tr\u1ebb em",
     s7_h:"Quy\u1ec1n h\u1ea1n \u2014 Ti\u1ec7n \u00edch Chrome", s8_h:"Quy\u1ec1n c\u1ee7a b\u1ea1n", s9_h:"Thay \u0111\u1ed5i ch\u00ednh s\u00e1ch",
@@ -501,11 +542,13 @@ var T = {
 };
 
 var enBodies = {};
-for (var i = 1; i <= 9; i++) {
-  var sec = document.getElementById('s' + i);
+var SECTION_IDS = ['s1','s2','s2b','s3','s4','s5','s6','s7','s8','s9'];
+for (var _si = 0; _si < SECTION_IDS.length; _si++) {
+  var _id = SECTION_IDS[_si];
+  var sec = document.getElementById(_id);
   if (sec) {
     var body = sec.querySelector('.section-body');
-    if (body) enBodies['s' + i] = body.innerHTML;
+    if (body) enBodies[_id] = body.innerHTML;
   }
 }
 
@@ -515,32 +558,18 @@ function setLang(lang) {
     var key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
-  for (var i = 1; i <= 9; i++) {
-    var sec = document.getElementById('s' + i);
+  for (var i = 0; i < SECTION_IDS.length; i++) {
+    var sid = SECTION_IDS[i];
+    var sec = document.getElementById(sid);
     if (!sec) continue;
     var body = sec.querySelector('.section-body');
     if (!body) continue;
     if (lang === 'en') {
-      if (enBodies['s' + i]) body.innerHTML = enBodies['s' + i];
+      if (enBodies[sid]) body.innerHTML = enBodies[sid];
     } else {
-      var tmpl = document.getElementById('s' + i + '-' + lang);
+      var tmpl = document.getElementById(sid + '-' + lang);
       if (tmpl) body.innerHTML = tmpl.innerHTML;
     }
   }
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
-  });
-  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
-  try { localStorage.setItem('layers_lang', lang); } catch(e) {}
-}
-
-(function() {
-  var saved; try { saved = localStorage.getItem('layers_lang'); } catch(e) {}
-  var bl = (navigator.language || '').toLowerCase();
-  var lang = saved || (bl.startsWith('ja') ? 'ja' : bl.startsWith('zh') ? 'zh' : bl.startsWith('vi') ? 'vi' : 'en');
-  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
-  if (lang !== 'en') setLang(lang);
-})();
-</script>
-</body>
-</html>
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang(
