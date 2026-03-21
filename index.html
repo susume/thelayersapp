@@ -256,15 +256,11 @@ h2 em { font-style: italic; color: var(--accent); }
 .no-ads .ni { font-size: 1.5rem; }
 .no-ads p { font-size: 0.9rem; color: var(--muted); }
 .no-ads strong { color: var(--green); }
-.story-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
-.story-left { position: sticky; top: 100px; }
-.story-left h2 { margin-bottom: 20px; }
-.story-sign { font-size: 0.875rem; color: var(--dim); font-style: italic; margin-top: 16px; }
-.story-body { color: var(--muted); font-size: 0.95rem; line-height: 1.9; font-weight: 300; }
+.story-body { color: var(--muted); font-size: 0.95rem; line-height: 1.9; font-weight: 300; max-width: 720px; margin-top: 32px; }
 .story-body p { margin-bottom: 18px; }
 .story-body p:last-child { margin-bottom: 0; }
 .story-body strong { color: var(--text); font-weight: 600; }
-@media (max-width: 768px) { .story-layout { grid-template-columns: 1fr; gap: 36px; } .story-left { position: static; } }
+.story-sign { font-size: 0.875rem; color: var(--dim); font-style: italic; margin-top: 24px; }
 footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
 .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
 .footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
@@ -703,25 +699,23 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
 <div class="band" id="story">
   <div class="band-inner">
-    <div class="story-layout reveal">
-      <div class="story-left">
-        <span class="label-tag" data-i18n="story_tag">// Why I built Layers</span>
-        <h2 data-i18n="story_h2">This is personal.<br><em>Here's why.</em></h2>
-        <p class="story-sign">— Peter Hoang, Teacher · Japan</p>
-      </div>
-      <div class="story-right story-body reveal" data-i18n="story_body">
-        <p>I'm Peter Hoang, a teacher living in Japan.</p>
-        <p>I teach at a school where most of my students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where the lessons are in Japanese, sometimes English, and they understand very little of either.</p>
-        <p>I watch them struggle, and I see something I recognise.</p>
-        <p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn't speak the language, didn't understand the culture, and had no one to explain what was happening around them. My mother sat in government offices not understanding the forms she was signing. My father took whatever work he could find, nodding along to instructions he couldn't follow. They built a life anyway — through stubbornness, sacrifice, and the kindness of people who took the time to help.</p>
-        <p>I grew up watching what it costs to live in a language that isn't yours. The confusion. The isolation. The quiet shame of not understanding something everyone else seems to get.</p>
-        <p>Now I see the same thing in my classroom. A student from Vietnam staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who's bright and capable but falls behind because the lesson moves faster than their language skills allow.</p>
-        <p>These kids remind me of my parents. They remind me of the kid I would have been if my family had landed somewhere else.</p>
-        <p><strong>That's why I built Layers.</strong></p>
-        <p>It's a small thing — a floating toolbar that gives students real-time translation, a dictionary, and study tools right on top of whatever they're working on. It doesn't solve everything. But it gives them a chance to keep up, to understand, to feel a little less lost in a classroom full of words they don't yet know.</p>
-        <p>The Chrome extension is free, and it always will be. Because the students who need it most are the ones whose families can least afford to pay for it.</p>
-      </div>
+    <div class="reveal">
+      <span class="label-tag" data-i18n="story_tag">// Why I built Layers</span>
+      <h2 data-i18n="story_h2">This is personal.<br><em>Here's why.</em></h2>
     </div>
+    <div class="story-body reveal" data-i18n="story_body">
+      <p>I'm Peter Hoang, a teacher living in Japan.</p>
+      <p>I teach at a school where most of my students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where the lessons are in Japanese, sometimes English, and they understand very little of either.</p>
+      <p>I watch them struggle, and I see something I recognise.</p>
+      <p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn't speak the language, didn't understand the culture, and had no one to explain what was happening around them. My mother sat in government offices not understanding the forms she was signing. My father took whatever work he could find, nodding along to instructions he couldn't follow. They built a life anyway — through stubbornness, sacrifice, and the kindness of people who took the time to help.</p>
+      <p>I grew up watching what it costs to live in a language that isn't yours. The confusion. The isolation. The quiet shame of not understanding something everyone else seems to get.</p>
+      <p>Now I see the same thing in my classroom. A student from Vietnam staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who's bright and capable but falls behind because the lesson moves faster than their language skills allow.</p>
+      <p>These kids remind me of my parents. They remind me of the kid I would have been if my family had landed somewhere else.</p>
+      <p><strong>That's why I built Layers.</strong></p>
+      <p>It's a small thing — a floating toolbar that gives students real-time translation, a dictionary, and study tools right on top of whatever they're working on. It doesn't solve everything. But it gives them a chance to keep up, to understand, to feel a little less lost in a classroom full of words they don't yet know.</p>
+      <p>The Chrome extension is free, and it always will be. Because the students who need it most are the ones whose families can least afford to pay for it.</p>
+    </div>
+    <p class="story-sign reveal">— Peter Hoang</p>
   </div>
 </div>
 
