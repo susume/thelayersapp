@@ -59,11 +59,59 @@ nav {
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--text); }
 .nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
-.lang-switcher { display: flex; align-items: center; gap: 4px; background: var(--pill); border-radius: 100px; padding: 3px; border: 1px solid var(--border); margin-right: 8px; }
-.lang-btn { padding: 4px 10px; border-radius: 100px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.15s; letter-spacing: 0.03em; }
-.lang-btn:hover { color: var(--text); }
-.lang-btn.active { background: var(--bg2); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
-.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 40px 80px; text-align: center; }
+.lang-select-wrap { position: relative; display: flex; align-items: center; margin-right: 8px; }
+.lang-select-wrap::before { content: '🌐'; position: absolute; left: 10px; font-size: 0.75rem; pointer-events: none; z-index: 1; }
+.lang-select {
+  appearance: none; -webkit-appearance: none;
+  background: var(--pill); border: 1px solid var(--border);
+  color: var(--muted); font-size: 0.75rem; font-weight: 600;
+  font-family: 'Outfit', sans-serif; cursor: pointer;
+  padding: 5px 28px 5px 28px; border-radius: 100px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555568' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  transition: border-color 0.2s, color 0.2s;
+}
+.lang-select:hover { color: var(--text); border-color: rgba(91,127,255,0.35); }
+.lang-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
+.lang-select option { background: #1a1a24; color: var(--text); }
+/* SOHO teaser section */
+.soho-teaser { padding: 0 40px 80px; }
+.soho-teaser-inner { max-width: 1200px; margin: 0 auto; }
+.soho-banner {
+  background: linear-gradient(135deg, rgba(46,213,115,0.07) 0%, rgba(26,26,36,0.9) 60%);
+  border: 1px solid rgba(46,213,115,0.25); border-radius: 24px;
+  padding: 48px 52px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.soho-banner:hover { border-color: rgba(46,213,115,0.45); transform: translateY(-3px); }
+.soho-banner::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(46,213,115,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.soho-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3);
+  color: #2ed573; padding: 4px 14px; border-radius: 100px;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.soho-banner h3 { font-family: 'DM Serif Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 10px; line-height: 1.15; }
+.soho-banner h3 em { font-style: italic; color: #2ed573; }
+.soho-banner p { color: var(--muted); font-size: 0.95rem; max-width: 560px; line-height: 1.65; font-weight: 300; }
+.soho-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.soho-pill { background: rgba(46,213,115,0.08); border: 1px solid rgba(46,213,115,0.2); color: #52e88a; font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 100px; }
+.btn-soho {
+  display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  background: #2ed573; color: #0d0d12; padding: 14px 28px; border-radius: 100px;
+  font-size: 0.95rem; font-weight: 700; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 0 28px rgba(46,213,115,0.28);
+  flex-shrink: 0;
+}
+.btn-soho:hover { transform: translateY(-2px); box-shadow: 0 0 44px rgba(46,213,115,0.45); }
+@media (max-width: 768px) { .soho-banner { grid-template-columns: 1fr; padding: 32px 28px; } .soho-teaser { padding: 0 24px 60px; } } display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 40px 80px; text-align: center; }
 .hero-glow { position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(91,127,255,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-60%); pointer-events: none; z-index: 0; }
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.3); padding: 6px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; color: var(--accent2); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -161,7 +209,7 @@ h2 em { font-style: italic; color: var(--accent); }
 .sync-row .sd { font-size: 0.75rem; color: var(--muted); }
 .sync-arrow { text-align: center; color: var(--accent); font-size: 1.2rem; margin: 4px 0; opacity: 0.7; }
 .sync-note { background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.2); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: var(--accent2); text-align: center; margin-top: 12px; }
-.pricing-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+.pricing-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-top: 48px; }
 .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
 .price-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.3); }
 .price-card.popular { border-color: var(--accent); background: linear-gradient(160deg, rgba(91,127,255,0.12), rgba(26,26,36,0.95)); }
@@ -181,6 +229,11 @@ h2 em { font-style: italic; color: var(--accent); }
 .btn-price:hover { border-color: var(--accent); color: var(--accent); }
 .price-card.popular .btn-price { background: var(--accent); border-color: var(--accent); }
 .price-card.popular .btn-price:hover { opacity: 0.85; }
+.price-card.soho { border-color: rgba(46,213,115,0.3); background: linear-gradient(160deg, rgba(46,213,115,0.08), rgba(26,26,36,0.95)); }
+.price-card.soho .pop-tag { background: #2ed573; color: #0d0d12; }
+.price-card.soho .btn-price { background: #2ed573; border-color: #2ed573; color: #0d0d12; font-weight: 700; }
+.price-card.soho .btn-price:hover { opacity: 0.85; }
+.price-card.soho::before { background: linear-gradient(90deg, transparent, #2ed573, transparent); }
 .no-ads { display: flex; align-items: center; gap: 12px; background: rgba(46,213,115,0.07); border: 1px solid rgba(46,213,115,0.2); border-radius: 12px; padding: 16px 24px; max-width: 560px; margin: 40px auto 0; }
 .no-ads .ni { font-size: 1.5rem; }
 .no-ads p { font-size: 0.9rem; color: var(--muted); }
@@ -221,17 +274,18 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 <nav>
   <a href="#" class="nav-brand"><div class="brand-dot"></div>Layers</a>
   <div class="nav-links">
-    <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
-      <button class="lang-btn" onclick="setLang('zh')">中文</button>
-      <button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
+    <div class="lang-select-wrap">
+      <select class="lang-select" id="lang-select" onchange="setLang(this.value)" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="ja">日本語</option>
+        <option value="zh">中文</option>
+        <option value="vi">Tiếng Việt</option>
+      </select>
     </div>
     <a href="#features" data-i18n="nav_features">Features</a>
     <a href="#students" data-i18n="nav_students">For Students</a>
-    <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
+    <a href="soho.html" style="color:#52e88a;">Layers SOHO</a>
     <a href="contact.html" data-i18n="footer_contact">Contact</a>
-    <a href="support.html" data-i18n="nav_support">☕ Support</a>
     <a href="#pricing" class="nav-cta" data-i18n="nav_cta">Get Started</a>
   </div>
 </nav>
@@ -242,7 +296,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <h1 data-i18n="hero_h1">Present without<br><em>interruptions.</em></h1>
   <p class="hero-sub" data-i18n="hero_sub">Layers floats on top of your slides, videos, and apps — giving you instant access to timers, annotation, translation, and classroom tools without ever leaving your presentation.</p>
   <div class="hero-actions">
-    <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="hero_btn_teacher">Get the Teacher App — $29</a>
+    <a href="#pricing" class="btn-primary" data-i18n="hero_btn_teacher">Get the Teacher App — $29</a>
     <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" class="btn-secondary" data-i18n="hero_btn_student">Free Student Extension</a>
   </div>
   <div class="toolbar-demo">
@@ -282,10 +336,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         </ul>
       </div>
       <div class="problem-quote">
-        <blockquote data-i18n="prob_quote">"Every switch breaks your flow and distracts your audience. Layers puts everything right where you need it — on top of your presentation."</blockquote>
-        <cite>— Peter Hoang, Teacher &amp; creator of Layers · Japan</cite>
-        <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--border);">
-          <div style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;" data-i18n="prob_works_on">Works on top of</div>
+        <div>
+          <div style="font-size:0.8rem;color:var(--dim);margin-bottom:16px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;" data-i18n="prob_works_on">Works on top of</div>
           <div style="display:flex;flex-wrap:wrap;gap:8px;">
             <span style="background:var(--pill);padding:5px 12px;border-radius:100px;font-size:0.75rem;color:var(--muted);">PowerPoint</span>
             <span style="background:var(--pill);padding:5px 12px;border-radius:100px;font-size:0.75rem;color:var(--muted);">Google Slides</span>
@@ -339,7 +391,26 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   </div>
 </section>
 
-<div class="band" id="features">
+<!-- ── SOHO Teaser ─────────────────────────────────── -->
+<section class="soho-teaser">
+  <div class="soho-teaser-inner">
+    <div class="soho-banner reveal">
+      <div>
+        <div class="soho-badge">💼 New — Layers Talk SOHO</div>
+        <h3>Two people. Two languages.<br><em>One conversation.</em></h3>
+        <p>Layers Talk SOHO turns your laptop screen into a live translation table for face-to-face international business meetings. Hold to talk, release to translate — 47 languages, no interpreter needed, one-time purchase.</p>
+        <div class="soho-pills">
+          <span class="soho-pill">Live speech translation</span>
+          <span class="soho-pill">47 languages</span>
+          <span class="soho-pill">Screen annotation</span>
+          <span class="soho-pill">Meeting transcript</span>
+          <span class="soho-pill">$29 one-time</span>
+        </div>
+      </div>
+      <a href="soho.html" class="btn-soho">See Layers SOHO →</a>
+    </div>
+  </div>
+</section>
   <div class="band-inner">
     <div class="reveal">
       <span class="label-tag" data-i18n="feat_tag">// Teacher app features</span>
@@ -565,7 +636,25 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         </ul>
         <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" class="btn-price" data-i18n="p2_btn">Buy Now — $29</a>
       </div>
-      <div class="price-card">
+      <!-- SOHO -->
+      <div class="price-card soho">
+        <div class="pop-tag">One-time</div>
+        <div class="p-tier">For Business Meetings</div>
+        <div class="p-name">Layers SOHO</div>
+        <div class="p-amount"><span class="p-currency">$</span><span class="p-num">29</span></div>
+        <div class="p-save" style="color:#52e88a;">Pay once · yours to keep · free updates included</div>
+        <div class="p-divider"></div>
+        <ul class="p-features">
+          <li><span class="ck" style="color:#2ed573;">✓</span> Live two-way speech translation</li>
+          <li><span class="ck" style="color:#2ed573;">✓</span> 47 languages</li>
+          <li><span class="ck" style="color:#2ed573;">✓</span> Split-screen layout — both sides read their own language</li>
+          <li><span class="ck" style="color:#2ed573;">✓</span> Screen annotation for pointing out terms &amp; figures</li>
+          <li><span class="ck" style="color:#2ed573;">✓</span> Calculator overlay for live pricing</li>
+          <li><span class="ck" style="color:#2ed573;">✓</span> Auto meeting transcript with timestamps</li>
+          <li><span class="ck" style="color:#2ed573;">✓</span> No interpreter needed</li>
+        </ul>
+        <a href="soho.html" class="btn-price">Learn More →</a>
+      </div>
         <div class="p-tier" data-i18n="p3_tier">For Schools &amp; Centres</div>
         <div class="p-name" data-i18n="p3_name">School</div>
         <div class="p-amount"><span class="p-num" style="font-size:2rem;color:var(--accent2)" data-i18n="p3_price">Contact</span></div>
@@ -607,9 +696,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <p>The Chrome extension is free, and it always will be. Because the students who need it most are the ones whose families can least afford to pay for it.</p>
     </div>
     <p class="story-sign">— Peter Hoang</p>
-    <div class="story-cta">
-      <a href="support.html" class="story-coffee">☕ <span data-i18n="story_coffee">Support Layers</span></a>
-    </div>
   </div>
 </section>
 
@@ -618,7 +704,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <h2 data-i18n="cta_h2">Stop switching windows.<br><em>Start presenting.</em></h2>
     <p data-i18n="cta_p">Everything you need, right on top of your presentation. The student tool is free — the teacher app is a one-time purchase.</p>
     <div class="cta-actions">
-      <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="cta_btn_teacher">Get the Teacher App — $29</a>
+      <a href="#pricing" class="btn-primary" data-i18n="cta_btn_teacher">Get the Teacher App — $29</a>
       <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" class="btn-secondary" data-i18n="cta_btn_student">Free Student Extension</a>
     </div>
   </div>
@@ -630,9 +716,9 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <div class="footer-links">
       <a href="#features" data-i18n="nav_features">Features</a>
       <a href="#students" data-i18n="nav_students">For Students</a>
+      <a href="soho.html" style="color:#52e88a;">Layers SOHO</a>
       <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
       <a href="contact.html" data-i18n="footer_contact">Contact</a>
-      <a href="support.html" data-i18n="nav_support">☕ Support</a>
       <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
     </div>
     <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
@@ -1068,9 +1154,9 @@ function setLang(lang) {
     var key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
-  });
+  // Sync dropdown
+  var sel = document.getElementById('lang-select');
+  if (sel) sel.value = lang;
   document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
   try { localStorage.setItem('layers_lang', lang); } catch(e) {}
 }
