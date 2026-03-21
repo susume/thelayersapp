@@ -245,22 +245,26 @@ h2 em { font-style: italic; color: var(--accent); }
 .price-card.soho .btn-price { background: #2ed573; border-color: #2ed573; color: #0d0d12; font-weight: 700; }
 .price-card.soho .btn-price:hover { opacity: 0.88; transform: translateY(-1px); }
 /* School enterprise strip */
-.price-school { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px 44px; display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center; transition: border-color 0.3s; }
+.price-school { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: border-color 0.3s; }
 .price-school:hover { border-color: rgba(91,127,255,0.3); }
-.price-school-left { display: flex; gap: 48px; align-items: flex-start; }
-.price-school-info { flex: 1; }
-.price-school-info .p-tier { margin-bottom: 4px; }
-.price-school-info .p-name { font-family: 'DM Serif Display', serif; font-size: 1.7rem; margin-bottom: 8px; }
-.price-school-info p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; max-width: 420px; }
-.price-school-feats { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px 32px; }
-.price-school-feats li { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--muted); }
-.price-school-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
-.price-school-cta .p-num { font-size: 1.4rem; color: var(--accent2); font-family: 'DM Serif Display', serif; }
+.price-school-header { padding: 32px 40px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.price-school-header-left .p-tier { margin-bottom: 6px; }
+.price-school-header-left .p-name { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 10px; line-height: 1.1; }
+.price-school-header-left p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; max-width: 480px; }
+.price-school-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+.price-school-body { padding: 32px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.price-school-feats { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.price-school-feats li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
+.price-school-feats li .ck { color: var(--accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+.price-school-it { background: rgba(91,127,255,0.06); border: 1px solid rgba(91,127,255,0.18); border-radius: 14px; padding: 20px 22px; font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.price-school-it strong { color: var(--accent2); display: block; margin-bottom: 6px; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.price-school-it a { color: var(--accent2); text-decoration: none; }
+.price-school-it a:hover { text-decoration: underline; }
 .btn-price-school { display: block; text-align: center; padding: 13px 32px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid rgba(91,127,255,0.4); color: var(--accent2); white-space: nowrap; }
 .btn-price-school:hover { background: rgba(91,127,255,0.1); border-color: var(--accent); color: var(--accent); }
-.no-ads { display: flex; align-items: center; gap: 12px; background: rgba(46,213,115,0.07); border: 1px solid rgba(46,213,115,0.2); border-radius: 12px; padding: 16px 24px; max-width: 560px; margin: 36px auto 0; }
-.no-ads .ni { font-size: 1.5rem; }
-.no-ads p { font-size: 0.9rem; color: var(--muted); }
+.no-ads { display: flex; align-items: center; gap: 20px; background: rgba(46,213,115,0.07); border: 1px solid rgba(46,213,115,0.2); border-radius: 16px; padding: 24px 36px; margin: 24px 0 0; }
+.no-ads .ni { font-size: 1.8rem; flex-shrink: 0; }
+.no-ads p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
 .no-ads strong { color: var(--green); }
 .story-body { color: var(--muted); font-size: 0.95rem; line-height: 1.9; font-weight: 300; max-width: 720px; margin-top: 32px; }
 .story-body p { margin-bottom: 18px; }
@@ -275,7 +279,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
 .footer-links a:hover { color: var(--text); }
 .footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
-@media (max-width: 1000px) { .pricing-top { grid-template-columns: 1fr 1fr; } .price-school { grid-template-columns: 1fr; } .price-school-left { flex-direction: column; gap: 24px; } .price-school-cta { align-items: flex-start; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1000px) { .pricing-top { grid-template-columns: 1fr 1fr; } .price-school-body { grid-template-columns: 1fr; } .price-school-header { flex-direction: column; align-items: flex-start; } .price-school-header-right { align-items: flex-start; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } .sync-layout { grid-template-columns: 1fr; } .problem-grid { grid-template-columns: 1fr; } nav { padding: 0 20px; } .nav-links a:not(.nav-cta):not(:last-child) { display: none; } .wrap, .band { padding: 60px 24px; } }
 @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } .student-grid { grid-template-columns: 1fr; } .pricing-top { grid-template-columns: 1fr; } .who-grid { grid-template-columns: 1fr; } .price-school-feats { grid-template-columns: 1fr; } }
 </style>
@@ -696,12 +700,18 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
     <!-- School enterprise strip -->
     <div class="price-school reveal">
-      <div class="price-school-left">
-        <div class="price-school-info">
+      <div class="price-school-header">
+        <div class="price-school-header-left">
           <div class="p-tier" data-i18n="p3_tier">For Schools &amp; Centres</div>
           <div class="p-name" data-i18n="p3_name">School</div>
           <p data-i18n="p3_save">Custom pricing for your school or district. Roll out Layers across as many teachers as you need.</p>
         </div>
+        <div class="price-school-header-right">
+          <div style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--accent2);font-weight:400;" data-i18n="p3_price">Custom pricing</div>
+          <a href="contact.html" class="btn-price-school" data-i18n="p3_btn">Get in Touch</a>
+        </div>
+      </div>
+      <div class="price-school-body">
         <ul class="price-school-feats">
           <li><span class="ck">✓</span> <span data-i18n="p3_f1">As many teachers as you need</span></li>
           <li><span class="ck">✓</span> <span data-i18n="p3_f4">Priority support</span></li>
@@ -710,13 +720,10 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <li><span class="ck">✓</span> <span data-i18n="p3_f5">Help getting everyone set up</span></li>
           <li><span class="ck">✓</span> <span data-i18n="p3_f7">Guidance for school IT teams</span></li>
         </ul>
-        <div style="margin-top:16px;padding:12px 16px;background:rgba(91,127,255,0.06);border:1px solid rgba(91,127,255,0.15);border-radius:10px;font-size:0.8rem;color:var(--muted);line-height:1.65;">
-          <strong style="color:var(--accent2);">For IT teams:</strong> Layers collects no student names or personal data. The classroom sync runs over Google Firebase (Asia region). The Windows app needs no admin portal, MDM, or network exceptions beyond standard HTTPS. <a href="privacy.html" style="color:var(--accent2);">Full privacy policy →</a>
+        <div class="price-school-it">
+          <strong>For IT teams</strong>
+          Layers collects no student names or personal data. The classroom sync runs over Google Firebase (Asia region). The Windows app needs no admin portal, MDM, or network exceptions beyond standard HTTPS. <a href="privacy.html">Full privacy policy →</a>
         </div>
-      </div>
-      <div class="price-school-cta">
-        <div class="p-num" style="font-family:'DM Serif Display',serif;font-size:1.3rem;color:var(--accent2);font-weight:400;" data-i18n="p3_price">Custom pricing</div>
-        <a href="contact.html" class="btn-price-school" data-i18n="p3_btn">Get in Touch</a>
       </div>
     </div>
     <div class="no-ads reveal">
