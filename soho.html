@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Layers Talk SOHO — Two People. Two Languages. One Conversation.</title>
-<meta name="description" content="Layers Talk SOHO is a floating toolbar that translates live between two people on one shared screen. No interpreter. No app for them to install. Hold to talk. Release to translate.">
+<title>Layers Talk — Two People. Two Languages. One Conversation.</title>
+<meta name="description" content="Layers Talk is a floating toolbar that translates live between two people on one shared screen. No interpreter. No app for them to install. Hold to talk. Release to translate.">
 <meta name="theme-color" content="#2ed573">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thelayersapp.com/soho">
-<meta property="og:title" content="Layers Talk SOHO — Two People. Two Languages. One Conversation.">
+<meta property="og:title" content="Layers Talk — Two People. Two Languages. One Conversation.">
 <meta property="og:description" content="A floating toolbar for international business meetings. Hold to talk. Release to translate. 47 languages. No interpreter needed.">
 <meta property="og:image" content="https://thelayersapp.com/og-image-soho.png">
 <link rel="canonical" href="https://thelayersapp.com/soho">
@@ -112,7 +112,7 @@ h2 em { font-style: italic; color: var(--soho); }
 /* ── Hero ───────────────────────────────────────────────────────────── */
 .hero {
   min-height: 100vh; display: flex; align-items: center;
-  padding: 100px 40px 80px; max-width: 1280px; margin: 0 auto;
+  padding: 100px 60px 80px; max-width: 1280px; margin: 0 auto;
 }
 .hero-glow {
   position: fixed; width: 800px; height: 800px;
@@ -136,14 +136,12 @@ h2 em { font-style: italic; color: var(--soho); }
 .hero h1 {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(2.2rem, 3.5vw, 3.6rem);
-  line-height: 1.08; letter-spacing: -0.02em;
-  margin-bottom: 24px;
+  line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 24px;
 }
 .hero h1 em { font-style: italic; color: var(--soho); }
 .hero-sub {
   font-size: 1.05rem; color: var(--muted);
-  max-width: 520px; font-weight: 300; line-height: 1.75;
-  margin-bottom: 40px;
+  max-width: 520px; font-weight: 300; line-height: 1.75; margin-bottom: 40px;
 }
 .hero-actions {
   display: flex; gap: 14px; flex-wrap: wrap;
@@ -490,7 +488,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <a href="/" class="nav-brand">
     <div class="brand-dot"></div>
     <span class="nav-brand-text"><span>Layers</span></span>
-    <span class="nav-soho-pill">SOHO</span>
+    <span class="nav-soho-pill">Talk</span>
   </a>
   <div class="nav-links">
     <div class="lang-switcher">
@@ -511,97 +509,94 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-glow"></div>
-
-  <!-- Left: text + CTAs -->
   <div class="hero-left">
     <div class="hero-badge" data-i18n="hero_badge">💼 Close the deal — even when you don't share a language</div>
     <h1 data-i18n="hero_h1">Your next international<br>deal shouldn't depend<br>on <em>luck.</em></h1>
-    <p class="hero-sub" data-i18n="hero_sub">Layers Talk SOHO sits on your laptop screen between you and your client. You speak. They read it in their language — immediately, in large text, on their side of the screen. They reply. You read theirs. The deal moves forward.</p>
+    <p class="hero-sub" data-i18n="hero_sub">Layers Talk sits on your laptop screen between you and your client. You speak. They read it in their language — immediately, in large text, on their side of the screen. They reply. You read theirs. The deal moves forward.</p>
     <div class="hero-actions">
-      <a href="#pricing" class="btn-primary" data-i18n="hero_btn">Download Layers Talk SOHO</a>
-      <a href="#how-it-works" class="btn-secondary" data-i18n="hero_btn2">See how it works ↓</a>
+      <a href="#pricing" class="btn-primary" data-i18n="hero_btn">Download Layers Talk</a>
+      <a href="#how-it-works" class="btn-secondary" data-i18n="hero_btn2">See how it helps ↓</a>
     </div>
   </div>
-
-  <!-- Right: mockup -->
   <div class="hero-right">
-    <div class="mockup-wrap">
-      <div class="mockup">
-        <!-- Top bar (Person B side — displayed inverted) -->
-        <div class="mock-bar-top">
-          <div class="mock-lang-row">
-            <div class="mock-talk-btn">F6</div>
-            <div class="mock-lang">日本語</div>
-          </div>
-          <div class="mock-tools">
-            <div class="mock-tool">⏱</div>
-            <div class="mock-tool">✏</div>
-            <div class="mock-tool">🧮</div>
-            <div class="mock-tool active">⚙</div>
-          </div>
-          <div class="mock-brand"><span class="mb1">LAYERS TALK</span><span class="mb2">SOHO v1.5</span></div>
+  <!-- Dual-panel mockup -->
+  <div class="mockup-wrap">
+    <div class="mockup">
+      <!-- Top bar (Person B side — displayed inverted) -->
+      <div class="mock-bar-top">
+        <div class="mock-lang-row">
+          <div class="mock-talk-btn">F6</div>
+          <div class="mock-lang">日本語</div>
         </div>
-
-        <!-- Top caption (Person B reads — their translation) -->
-        <div class="mock-captions">
-          <div class="mock-caption-top">
-            <div class="mock-caption-prev">前の翻訳がここに表示されます</div>
-            <div class="mock-caption-current">はい、この価格で同意します</div>
-          </div>
+        <div class="mock-tools">
+          <div class="mock-tool">⏱</div>
+          <div class="mock-tool">✏</div>
+          <div class="mock-tool">🧮</div>
+          <div class="mock-tool active">⚙</div>
         </div>
+        <div class="mock-brand"><span class="mb1">LAYERS TALK</span><span class="mb2">v1.5</span></div>
+      </div>
 
-        <div class="mock-divider"></div>
-        <div class="mock-label">// shared screen · both sides visible · drag to reposition</div>
-        <div class="mock-divider"></div>
-
-        <!-- Bottom caption (Person A reads — their translation) -->
-        <div class="mock-captions">
-          <div class="mock-caption-bottom">
-            <div class="mock-caption-prev">Previous translation appears here</div>
-            <div class="mock-caption-current blue">Yes, I agree to this price</div>
-          </div>
-        </div>
-
-        <!-- Bottom bar (Person A side) -->
-        <div class="mock-bar-bottom">
-          <div class="mock-brand"><span class="mb1">LAYERS TALK</span><span class="mb2">SOHO v1.5</span></div>
-          <div class="mock-tools">
-            <div class="mock-tool">⏱</div>
-            <div class="mock-tool">📂</div>
-            <div class="mock-tool">✏</div>
-            <div class="mock-tool">🧮</div>
-          </div>
-          <div class="mock-lang-row">
-            <div class="mock-lang">English</div>
-            <div class="mock-talk-btn">F5</div>
-          </div>
+      <!-- Top caption (Person B reads — their translation) -->
+      <div class="mock-captions">
+        <div class="mock-caption-top">
+          <div class="mock-caption-prev">前の翻訳がここに表示されます</div>
+          <div class="mock-caption-current">はい、この価格で同意します</div>
         </div>
       </div>
 
-      <div class="person-labels">
-        <div class="person-label"><div class="person-dot blue"></div>Person A — faces screen normally (English)</div>
-        <div class="person-label">Person B — reads from the other side (Japanese) <div class="person-dot"></div></div>
+      <div class="mock-divider"></div>
+      <div class="mock-label">// shared screen · both sides visible · drag to reposition</div>
+      <div class="mock-divider"></div>
+
+      <!-- Bottom caption (Person A reads — their translation) -->
+      <div class="mock-captions">
+        <div class="mock-caption-bottom">
+          <div class="mock-caption-prev">Previous translation appears here</div>
+          <div class="mock-caption-current blue">Yes, I agree to this price</div>
+        </div>
+      </div>
+
+      <!-- Bottom bar (Person A side) -->
+      <div class="mock-bar-bottom">
+        <div class="mock-brand"><span class="mb1">LAYERS TALK</span><span class="mb2">v1.5</span></div>
+        <div class="mock-tools">
+          <div class="mock-tool">⏱</div>
+          <div class="mock-tool">📂</div>
+          <div class="mock-tool">✏</div>
+          <div class="mock-tool">🧮</div>
+        </div>
+        <div class="mock-lang-row">
+          <div class="mock-lang">English</div>
+          <div class="mock-talk-btn">F5</div>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="person-labels">
+      <div class="person-label"><div class="person-dot blue"></div>Person A — faces screen normally (English)</div>
+      <div class="person-label">Person B — reads from the other side (Japanese) <div class="person-dot"></div></div>
+    </div>
+    </div><!-- end mockup-wrap -->
+  </div><!-- end hero-right -->
 </section>
 
 <!-- ── THE PROBLEM ── -->
 <div class="band" id="problem">
   <div class="band-inner">
     <div class="reveal">
-      <span class="label-tag" data-i18n="prob_tag">// The problem</span>
-      <h2 data-i18n="prob_h2">Every stumble in translation<br>is a reason for them<br>to <em>walk away.</em></h2>
+      <span class="label-tag" data-i18n="prob_tag">// The cost of being misunderstood</span>
+      <h2 data-i18n="prob_h2">The deal stalls the moment<br>the language does.</h2>
     </div>
     <div class="problem-grid reveal">
       <div>
-        <p class="intro" style="margin-bottom:32px;" data-i18n="prob_intro">The deal is real. The relationship is right. But every pause, every mis-read expression, every awkward moment of “sorry, could you repeat that?” chips away at the confidence of the person across from you. Language shouldn't be what costs you the contract.</p>
+        <p class="intro" style="margin-bottom:32px;" data-i18n="prob_intro">You’ve done the work. The relationship is there. But without a shared language, every exchange carries risk — a price misread, a condition lost in translation, a follow-up that never comes because neither side was certain what was agreed.</p>
         <ul class="problem-list">
-          <li><span class="px">📱</span> <span data-i18n="prob_li1">Passing a phone across the table looks unprepared — and the client notices</span></li>
-          <li><span class="px">⏸️</span> <span data-i18n="prob_li2">Every silence while you fumble with an app is a moment where they're reconsidering</span></li>
-          <li><span class="px">🤔</span> <span data-i18n="prob_li3">A mis-translated price or condition becomes a dispute after the handshake</span></li>
-          <li><span class="px">😬</span> <span data-i18n="prob_li4">Asking them to repeat themselves a third time erodes the trust you spent the whole meeting building</span></li>
-          <li><span class="px">💸</span> <span data-i18n="prob_li5">A professional interpreter costs more per hour than you'll make on the deal</span></li>
+          <li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li1">Holding out your phone to a client signals you weren’t prepared for this conversation</span></li>
+          <li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li2">Every pause while you search for the right app is a moment they’re reassessing the meeting</span></li>
+          <li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li3">A price or term that was misunderstood doesn’t surface until after the contract is signed</span></li>
+          <li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li4">Asking someone to repeat themselves undermines the professional authority you walked in with</span></li>
+          <li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li5">A professional interpreter costs more for a single meeting than many deals are worth</span></li>
         </ul>
       </div>
       <div class="problem-quote">
@@ -618,85 +613,32 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     </div>
   </div>
 </div>
-
-<!-- ── HOW IT WORKS ── -->
+<!-- ── HOW IT HELPS ── -->
 <section class="wrap" id="how-it-works">
   <div class="reveal">
-    <span class="label-tag" data-i18n="how_tag">// How it works</span>
-    <h2 data-i18n="how_h2">Ready before your<br>client sits <em>down.</em></h2>
-    <p class="intro" data-i18n="how_intro">Open your laptop, choose your languages, turn the screen to face them. That's it. You're ready. They don't install anything. They don't need to touch their phone.</p>
+    <span class="label-tag" data-i18n="how_tag">// How it helps you close the deal</span>
+    <h2 data-i18n="how_h2">Three things that change<br>the outcome of the <em>meeting.</em></h2>
+    <p class="intro" data-i18n="how_intro">Language barriers don’t just slow a conversation down — they cost you deals. Layers Talk removes three specific moments where international meetings fall apart.</p>
   </div>
   <div class="steps-grid reveal">
     <div class="step">
       <div class="step-num">01</div>
-      <span class="step-icon">🖥️</span>
-      <h4 data-i18n="how1_h">Set up in 10 seconds — before they sit down</h4>
-      <p data-i18n="how1_p">Place your laptop on the table between you. Their translation appears at the top of the screen — facing them, in their language, large enough to read from across a table. Yours is at the bottom. No configuration. Nothing for them to set up.</p>
+      <h4 data-i18n="how1_h">You walk in looking prepared</h4>
+      <p data-i18n="how1_p">The moment you open the laptop, their language is already on screen — facing them, waiting for them, no setup required on their side. Before you’ve said a word, you’ve signalled that you came ready for this conversation. That first impression changes the entire tone of the meeting.</p>
     </div>
     <div class="step">
       <div class="step-num">02</div>
-      <span class="step-icon">🎙️</span>
-      <h4 data-i18n="how2_h">Speak naturally. They understand immediately.</h4>
-      <p data-i18n="how2_p">Hold the talk button while you speak — just like a walkie-talkie. Release it. Within seconds, your words appear in your client's language on their side of the screen. No waiting, no copy-pasting, no lost eye contact while you fumble with a phone.</p>
+      <h4 data-i18n="how2_h">Your price is understood exactly as stated</h4>
+      <p data-i18n="how2_p">Prices, terms, and conditions appear in their language, word for word, the moment you say them — not paraphrased, not approximated, not lost between languages. The misunderstandings that turn into disputes after the handshake don’t happen when both sides read exactly the same thing.</p>
     </div>
     <div class="step">
       <div class="step-num">03</div>
-      <span class="step-icon">🤝</span>
-      <h4 data-i18n="how3_h">They reply. You read it. The deal moves forward.</h4>
-      <p data-i18n="how3_p">They hold the button on their side and reply in their own language. You read the translation instantly. Back and forth — natural, unhurried, professional. No phones on the table. No awkward silences. Just a conversation that actually goes somewhere.</p>
+      <h4 data-i18n="how3_h">You leave with a record of what was agreed</h4>
+      <p data-i18n="how3_p">Every exchange is logged automatically — the original and the translation, with timestamps. One click after the meeting and you have a written record that neither side can dispute. No more follow-up emails trying to reconstruct what was said. The deal is documented before they’ve reached the car park.</p>
     </div>
   </div>
 </section>
 
-<!-- ── THE INSIGHT ── -->
-<div class="insight-band">
-  <div class="insight-inner reveal">
-    <div>
-      <span class="label-tag" data-i18n="ins_tag">// Why it works differently</span>
-      <h2 data-i18n="ins_h2">Your client feels like<br>you came <em>prepared.</em></h2>
-      <p class="intro" style="margin-bottom:28px;" data-i18n="ins_intro">When you open Layers Talk SOHO, your client doesn't see you scrambling with a phone app. They see a professional setup — their language already on screen, ready for them. That first impression changes the entire tone of the meeting.</p>
-      <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;font-weight:300;">The top half of the screen is theirs — their language, their toolbar, their buttons, all facing them. The bottom half is yours. They're not leaning over, squinting at your side of the screen. Everything they need is already oriented for them.</p>
-      <p style="color:var(--muted);font-size:0.95rem;line-height:1.8;font-weight:300;margin-top:16px;">Every tool — the timer, the calculator, the document viewer — is accessible from both sides of the screen, so the meeting stays collaborative rather than one-sided. Neither person is locked out of anything.</p>
-      <div style="margin-top:28px;display:flex;gap:16px;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--soho2);font-weight:600;">
-          <span style="color:var(--soho)">✓</span> Your client doesn't install anything — nothing to explain, no waiting
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--soho2);font-weight:600;">
-          <span style="color:var(--soho)">✓</span> Works on the same laptop you're already carrying
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--soho2);font-weight:600;">
-          <span style="color:var(--soho)">✓</span> Drag either toolbar to suit the room — works on any desk setup
-        </div>
-      </div>
-    </div>
-    <div class="insight-diagram">
-      <div class="diagram-person inverted">
-        <div class="diagram-avatar">🧑‍💼</div>
-        <div>
-          <div class="diagram-lang blue">Person B · Japanese</div>
-          <div class="diagram-bubble" style="margin-top:6px;">はい、この価格で同意します</div>
-        </div>
-      </div>
-      <div class="diagram-arrow">↕ translated instantly</div>
-      <div class="diagram-center">
-        <div class="dc-icon">💬</div>
-        <div class="dc-text">Layers Talk SOHO</div>
-        <div class="dc-langs">47 languages · live speech · shared screen</div>
-      </div>
-      <div class="diagram-arrow">↕ translated instantly</div>
-      <div class="diagram-person">
-        <div class="diagram-avatar">👔</div>
-        <div>
-          <div class="diagram-lang green">Person A · English</div>
-          <div class="diagram-bubble" style="margin-top:6px;">Yes, I agree to this price</div>
-        </div>
-      </div>
-      <div style="margin-top:20px;padding:12px;background:rgba(46,213,115,0.05);border-radius:10px;border:1px solid rgba(46,213,115,0.15);text-align:center;">
-        <div style="font-size:0.7rem;color:var(--dim);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">One laptop. No phone needed.</div>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- ── FEATURES ── -->
 <div class="band" id="features">
@@ -704,7 +646,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <div class="reveal">
       <span class="label-tag" data-i18n="feat_tag">// Built for business meetings</span>
       <h2 data-i18n="feat_h2">Everything you need<br>to walk out with a <em>yes.</em></h2>
-      <p class="intro" data-i18n="feat_intro">Every tool in Layers Talk SOHO was put there because of a specific moment in a business meeting that used to go wrong. These are the moments it fixes.</p>
+      <p class="intro" data-i18n="feat_intro">Every tool in Layers Talk was put there because of a specific moment in a business meeting that used to go wrong. These are the moments it fixes.</p>
     </div>
     <div class="features-grid">
 
@@ -773,7 +715,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <div class="reveal">
     <span class="label-tag" data-i18n="lang_tag">// Supported languages</span>
     <h2 data-i18n="lang_h2">47 languages.<br>Most of the world's <em>business.</em></h2>
-    <p class="intro" data-i18n="lang_intro">If you're doing international SOHO business, the language your client speaks is almost certainly here. More are added with each update.</p>
+    <p class="intro" data-i18n="lang_intro">If you're conducting international business meetings, the language your client speaks is almost certainly here. More are added with each update.</p>
   </div>
   <div class="lang-grid reveal">
     <span class="lang-tag">🇯🇵 Japanese</span>
@@ -832,7 +774,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <div>
         <span class="label-tag" data-i18n="exp_tag">// After the meeting</span>
         <h2 data-i18n="exp_h2">Walk out with a record.<br>Not just a <em>memory.</em></h2>
-        <p class="intro" style="margin-bottom:24px;" data-i18n="exp_intro">How many deals have stalled because two people left the meeting with different memories of what was agreed? Every translation in Layers Talk SOHO is logged automatically. One click after the meeting and you have a record neither side can dispute.</p>
+        <p class="intro" style="margin-bottom:24px;" data-i18n="exp_intro">How many deals have stalled because two people left the meeting with different memories of what was agreed? Every translation in Layers Talk is logged automatically. One click after the meeting and you have a record neither side can dispute.</p>
         <ul class="feature-list" style="list-style:none;display:flex;flex-direction:column;gap:12px;">
           <li style="display:flex;align-items:flex-start;gap:10px;font-size:0.9rem;color:var(--muted);">
             <span style="color:var(--soho);flex-shrink:0;">↗</span>
@@ -892,12 +834,12 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <div class="reveal">
     <span class="label-tag" data-i18n="who_tag">// Who it's for</span>
     <h2 data-i18n="who_h2">Any meeting where the<br>stakes are too high<br>to <em>miscommunicate.</em></h2>
-    <p class="intro" data-i18n="who_intro">Layers Talk SOHO is for the meeting where you absolutely cannot afford to be misunderstood — and you can't justify $400 an hour for an interpreter to be in the room with you.</p>
+    <p class="intro" data-i18n="who_intro">Layers Talk is for the meeting where you absolutely cannot afford to be misunderstood — and you can't justify $400 an hour for an interpreter to be in the room with you.</p>
   </div>
   <div class="who-grid reveal">
     <div class="who-card"><span class="who-icon">🛒</span><div><div class="who-text">Importers &amp; Exporters</div><div class="who-sub">Nail the unit price without a middleman in the room</div></div></div>
     <div class="who-card"><span class="who-icon">🏠</span><div><div class="who-text">Real Estate Agents</div><div class="who-sub">Let the buyer fall in love with the property, not struggle with the pitch</div></div></div>
-    <div class="who-card"><span class="who-icon">⚕️</span><div><div class="who-text">Clinics &amp; Allied Health</div><div class="who-sub">When clarity isn't just good manners — it's duty of care</div></div></div>
+    <div class="who-card"><span class="who-icon">📋</span><div><div class="who-text">Consultants &amp; Advisors</div><div class="who-sub">Build the trust that turns a first meeting into a retained client</div></div></div>
     <div class="who-card"><span class="who-icon">👔</span><div><div class="who-text">Sales Professionals</div><div class="who-sub">Walk out with the signed order, not a "we'll think about it"</div></div></div>
     <div class="who-card"><span class="who-icon">⚖️</span><div><div class="who-text">Legal &amp; Financial Advisors</div><div class="who-sub">Build trust from the first conversation, not the third</div></div></div>
     <div class="who-card"><span class="who-icon">🏨</span><div><div class="who-text">Hospitality &amp; Tourism</div><div class="who-sub">Turn a confused visitor into a delighted returning guest</div></div></div>
@@ -916,7 +858,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <div class="price-card-soho">
           <!-- Left col: identity + price + CTA -->
           <div class="price-col-left">
-            <div class="p-tier">Layers Talk SOHO</div>
+            <div class="p-tier">Layers Talk</div>
             <div class="p-name">Personal</div>
             <div class="p-once">✓ One-time purchase</div>
             <div class="p-amount">
@@ -926,7 +868,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
             <div class="p-save">Pay once · yours to keep · free updates included</div>
             <div class="p-divider"></div>
             <p style="font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:28px;">No subscription. No monthly fee. No limits on meetings. Open your laptop and you're ready — your client doesn't install a thing.</p>
-            <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-buy" data-i18n="price_btn">Download Layers Talk SOHO — $29</a>
+            <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-buy" data-i18n="price_btn">Download Layers Talk — $29</a>
+            <p style="text-align:center;font-size:0.75rem;color:var(--dim);margin-top:12px;">30-day refund · no questions asked</p>
           </div>
           <!-- Right col: feature list -->
           <div class="price-col-right">
@@ -948,7 +891,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     </div>
     <div class="no-ads reveal">
       <span style="font-size:1.4rem;">🚫</span>
-      <p><strong>No ads. Ever.</strong> Layers Talk SOHO will never show you an advertisement. Your purchase keeps the app improving — nothing else.</p>
+      <p><strong>No ads. Ever.</strong> Layers Talk will never show you an advertisement. Your purchase keeps the app improving — nothing else.</p>
     </div>
   </div>
 </div>
@@ -959,7 +902,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <h2 data-i18n="cta_h2">The next deal shouldn't<br>fall apart over <em>language.</em></h2>
     <p data-i18n="cta_p">Open your laptop. Choose your languages. Face the screen toward them. Speak. Within seconds, they're reading your words in theirs — and the meeting you've been working toward finally goes the way it should.</p>
     <div class="cta-actions">
-      <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="cta_btn">Download Layers Talk SOHO — $29</a>
+      <a href="https://thelayersapp.gumroad.com/l/soho" target="_blank" rel="noopener noreferrer" class="btn-primary" data-i18n="cta_btn">Download Layers Talk — $29</a>
       <a href="/" class="btn-secondary">← See the Teacher App</a>
     </div>
   </div>
@@ -970,7 +913,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <div class="footer-inner">
     <div class="footer-brand">
       <span>Layers</span>
-      <span class="soho-tag">Talk SOHO</span>
+      <span class="soho-tag">Talk</span>
     </div>
     <div class="footer-links">
       <a href="#features">Features</a>
@@ -994,36 +937,37 @@ var T = {
 
     hero_badge:"💼 Close the deal — even when you don't share a language",
     hero_h1:"Your next international<br>deal shouldn't depend<br>on <em>luck.</em>",
-    hero_sub:"Layers Talk SOHO sits on your laptop screen between you and your client. You speak. They read it in their language — immediately, in large text, on their side of the screen. They reply. You read theirs. The deal moves forward.",
-    hero_btn:"Download Layers Talk SOHO",
-    hero_btn2:"See how it works ↓",
+    hero_sub:"Layers Talk sits on your laptop screen between you and your client. You speak. They read it in their language — immediately, in large text, on their side of the screen. They reply. You read theirs. The deal moves forward.",
+    hero_btn:"Download Layers Talk",
+    hero_btn2:"See how it helps ↓",
 
-    prob_tag:"// The problem",
-    prob_h2:"Every stumble in translation<br>is a reason for them<br>to <em>walk away.</em>",
-    prob_intro:"The deal is real. The relationship is right. But every pause, every mis-read expression, every awkward moment of “sorry, could you repeat that?” chips away at the confidence of the person across from you. Language shouldn't be what costs you the contract.",
-    prob_li1:"Passing a phone across the table looks unprepared — and the client notices",
-    prob_li2:"Every silence while you fumble with an app is a moment where they're reconsidering",
-    prob_li3:"A mis-translated price or condition becomes a dispute after the handshake",
-    prob_li4:"Asking them to repeat themselves a third time erodes the trust you spent the whole meeting building",
-    prob_li5:"A professional interpreter costs more per hour than you'll make on the deal",
+    prob_tag:"// The cost of being misunderstood",
+    prob_h2:"The deal stalls the moment<br>the language does.",
+    prob_intro:"You’ve done the work. The relationship is there. But without a shared language, every exchange carries risk — a price misread, a condition lost in translation, a follow-up that never comes because neither side was certain what was agreed.",
+    prob_li1:"Holding out your phone to a client signals you weren’t prepared for this conversation",
+    prob_li2:"Every pause while you search for the right app is a moment they’re reassessing the meeting",
+    prob_li3:"A price or term that was misunderstood doesn’t surface until after the contract is signed",
+    prob_li4:"Asking someone to repeat themselves undermines the professional authority you walked in with",
+    prob_li5:"A professional interpreter costs more for a single meeting than many deals are worth",
+    prob_quote:"\"I used to dread the price negotiation part of meetings with my Japanese suppliers. Now they read my offer in Japanese before I've finished speaking. The deal gets done in one meeting instead of three.\"",
 
-    how_tag:"// How it works",
-    how_h2:"Ready before your<br>client sits <em>down.</em>",
-    how_intro:"Open your laptop, choose your languages, turn the screen to face them. That's it. You're ready. They don't install anything. They don't need to touch their phone.",
-    how1_h:"Set up in 10 seconds — before they sit down",
-    how1_p:"Place your laptop on the table between you. Their translation appears at the top of the screen — facing them, in their language, large enough to read from across a table. Yours is at the bottom. No configuration. Nothing for them to set up.",
-    how2_h:"Speak naturally. They understand immediately.",
-    how2_p:"Hold the talk button while you speak — just like a walkie-talkie. Release it. Within seconds, your words appear in your client's language on their side of the screen. No waiting, no copy-pasting, no lost eye contact while you fumble with a phone.",
-    how3_h:"They reply. You read it. The deal moves forward.",
-    how3_p:"They hold the button on their side and reply in their own language. You read the translation instantly. Back and forth — natural, unhurried, professional. No phones on the table. No awkward silences. Just a conversation that actually goes somewhere.",
+    how_tag:"// How it helps you close the deal",
+    how_h2:"Three things that change<br>the outcome of the <em>meeting.</em>",
+    how_intro:"Language barriers don’t just slow a conversation down — they cost you deals. Layers Talk removes three specific moments where international meetings fall apart.",
+    how1_h:"You walk in looking prepared",
+    how1_p:"The moment you open the laptop, their language is already on screen — facing them, waiting for them, no setup required on their side. Before you’ve said a word, you’ve signalled that you came ready for this conversation. That first impression changes the entire tone of the meeting.",
+    how2_h:"Your price is understood exactly as stated",
+    how2_p:"Prices, terms, and conditions appear in their language, word for word, the moment you say them — not paraphrased, not approximated, not lost between languages. The misunderstandings that turn into disputes after the handshake don’t happen when both sides read exactly the same thing.",
+    how3_h:"You leave with a record of what was agreed",
+    how3_p:"Every exchange is logged automatically — the original and the translation, with timestamps. One click after the meeting and you have a written record that neither side can dispute. No more follow-up emails trying to reconstruct what was said. The deal is documented before they’ve reached the car park.",
 
     ins_tag:"// Why it works differently",
     ins_h2:"Your client feels like<br>you came <em>prepared.</em>",
-    ins_intro:"When you open Layers Talk SOHO, your client doesn't see you scrambling with a phone app. They see a professional setup — their language already on screen, ready for them. That first impression changes the entire tone of the meeting.",
+    ins_intro:"When you open Layers Talk, your client doesn't see you scrambling with a phone app. They see a professional setup — their language already on screen, ready for them. That first impression changes the entire tone of the meeting.",
 
     feat_tag:"// Built for business meetings",
     feat_h2:"Everything you need<br>to walk out with a <em>yes.</em>",
-    feat_intro:"Every tool in Layers Talk SOHO was put there because of a specific moment in a business meeting that used to go wrong. These are the moments it fixes.",
+    feat_intro:"Every tool in Layers Talk was put there because of a specific moment in a business meeting that used to go wrong. These are the moments it fixes.",
     feat1_h:"Your client reads your offer before you've finished saying it",
     feat1_p:"Speak normally. Within seconds, your words appear on their side of the screen — in their language, large enough to read from across the table. Price, terms, timeline — understood clearly, the first time. No re-explaining. No misread expressions. 47 languages, so whoever you're meeting, you're covered.",
     feat2_h:"They see a professional setup before you say a word",
@@ -1045,24 +989,24 @@ var T = {
 
     lang_tag:"// Supported languages",
     lang_h2:"47 languages.<br>Most of the world's <em>business.</em>",
-    lang_intro:"If you're doing international SOHO business, the language your client speaks is almost certainly here. More are added with each update.",
+    lang_intro:"If you're conducting international business meetings, the language your client speaks is almost certainly here. More are added with each update.",
 
     exp_tag:"// After the meeting",
     exp_h2:"Walk out with a record.<br>Not just a <em>memory.</em>",
-    exp_intro:"How many deals have stalled because two people left the meeting with different memories of what was agreed? Every translation in Layers Talk SOHO is logged automatically. One click after the meeting and you have a record neither side can dispute.",
+    exp_intro:"How many deals have stalled because two people left the meeting with different memories of what was agreed? Every translation in Layers Talk is logged automatically. One click after the meeting and you have a record neither side can dispute.",
 
     who_tag:"// Who it's for",
     who_h2:"Any meeting where the<br>stakes are too high<br>to <em>miscommunicate.</em>",
-    who_intro:"Layers Talk SOHO is for the meeting where you absolutely cannot afford to be misunderstood — and you can't justify $400 an hour for an interpreter to be in the room with you.",
+    who_intro:"Layers Talk is for the meeting where you absolutely cannot afford to be misunderstood — and you can't justify $400 an hour for an interpreter to be in the room with you.",
 
     price_tag:"// Pricing",
     price_h2:"Simple. <em>Honest.</em> One-time.",
     price_intro:"No subscription. No monthly fee. No limits on how many meetings you use it in. Pay once — it's yours, with free updates included.",
-    price_btn:"Download Layers Talk SOHO — $29",
+    price_btn:"Download Layers Talk — $29",
 
     cta_h2:"The next deal shouldn't<br>fall apart over <em>language.</em>",
     cta_p:"Open your laptop. Choose your languages. Face the screen toward them. Speak. Within seconds, they're reading your words in theirs — and the meeting you've been working toward finally goes the way it should.",
-    cta_btn:"Download Layers Talk SOHO — $29"
+    cta_btn:"Download Layers Talk — $29"
   },
 
   ja: {
@@ -1071,36 +1015,37 @@ var T = {
 
     hero_badge:"💼 言語の壁を越えて、商談を成立させる",
     hero_h1:"次の海外ビジネスを、<br><em>運任せ</em>にしないでください。",
-    hero_sub:"Layers Talk SOHOは、あなたと取引先の間にあるノートパソコンの画面を、リアルタイム通訳デスクに変えます。話すだけで、相手には自分の言語で即座に表示されます。",
-    hero_btn:"Layers Talk SOHOをダウンロード",
-    hero_btn2:"使い方を見る ↓",
+    hero_sub:"Layers Talkは、あなたと取引先の間にあるノートパソコンの画面を、リアルタイム通訳デスクに変えます。話すだけで、相手には自分の言語で即座に表示されます。",
+    hero_btn:"Layers Talkをダウンロード",
+    hero_btn2:"成果を見る ↓",
 
-    prob_tag:"// 課題",
-    prob_h2:"通訳の失敗が一つあるだけで、<br>相手は席を立つ<em>理由</em>を見つけます。",
-    prob_intro:"商談の準備はできている。関係も良好だ。でも、「すみません、もう一度言っていただけますか？」という一言のたびに、相手の信頼は少しずつ削れていく。言語の壁で契約を失うのは、あってはならないことです。",
-    prob_li1:"スマートフォンをテーブル越しに渡し合う姿は、準備不足を印象づける",
-    prob_li2:"翻訳アプリを操作する間の沈黙は、相手が考え直す時間になる",
-    prob_li3:"価格や条件の誤訳は、握手の後に争いの種となる",
-    prob_li4:"三度目の「もう一度お願いします」は、会議全体で積み上げた信頼を崩す",
-    prob_li5:"プロの通訳者は、一時間の費用が商談の利益を超えることもある",
+    prob_tag:"// 誤解の代償",
+    prob_h2:"言語が止まれば、<br>商談も<em>止まる。</em>",
+    prob_intro:"準備は整っている。関係も良好だ。しかし共通言語がなければ、あらゆるやり取りにリスクが伴います—誤読された価格、訳しきれなかった条件、「何に合意したのか」が曖昧なまま来ないフォローアップ。",
+    prob_li1:"スマートフォンを差し出す行為は、この商談に備えていなかったというメッセージを伝える",
+    prob_li2:"翻訳ツールを探している間は、相手が商談を再評価している時間",
+    prob_li3:"誤解された価格や条件は、契約書に署名されてから初めて表面化する",
+    prob_li4:"聴き返しを求めることは、商談に持ち込んだプロとしての権威を損なう",
+    prob_li5:"プロの通訳者は、一度の商談だけで多くの案件の利益を超える費用がかかる",
+    prob_quote:"「以前は日本の取引先との価格交渉が憂鬱でした。今は、私が話し終わる前に相手が日本語で内容を読んでいます。三回に分けていた商談が、一回で決まるようになりました。」",
 
-    how_tag:"// 使い方",
-    how_h2:"取引先が席に着く前に、<br><em>準備完了</em>。",
-    how_intro:"ノートパソコンを開き、言語を選択し、画面を相手に向けるだけ。それだけです。相手側は何もインストールする必要がありません。スマートフォンに触れる必要もありません。",
-    how1_h:"10秒でセットアップ — 相手が座る前に",
-    how1_p:"ノートパソコンをテーブルの中央に置きます。相手への翻訳はテーブルを挟んでも読める大きさで画面上部に表示され、あなたのものは画面下部に表示されます。設定は不要です。相手側の準備も一切必要ありません。",
-    how2_h:"普通に話すだけ。相手はすぐに理解できます。",
-    how2_p:"トークボタンを押しながら話します — トランシーバーと同じ感覚です。ボタンを離すと、数秒以内に相手の言語で画面に表示されます。待ち時間なし、コピー&ペーストなし、スマートフォンを操作する間のアイコンタクトの途切れもありません。",
-    how3_h:"相手が返答し、あなたが読む。商談が前進します。",
-    how3_p:"相手は自分の側のボタンを押して、自国語で返答します。あなたはその翻訳を即座に読めます。自然に、焦りなく、プロフェッショナルに会話が続きます。テーブルにスマートフォンはありません。気まずい沈黙もありません。",
+    how_tag:"// 商談を成立させる3つの効果",
+    how_h2:"商談の結果を変える、<br><em>3つのポイント。</em>",
+    how_intro:"言語の壁は商談を遅らせるだけでなく、案件を失わせます。Layers Talkは、国際商談が突崩する3つの具体的な場面を取り除きます。",
+    how1_h:"準備万全の印象で臨む",
+    how1_p:"ノートパソコンを開いた瞬間、相手の言語が画面に表示されています—相手側に向いて、相手のために。一言も発する前に、あなたはこの商談に備えていたというメッセージを伝えています。その第一印象が、商談全体のトーンを決めます。",
+    how2_h:"価格が正確に伝わる",
+    how2_p:"価格、条件、契約内容が、言ったその瞬間に相手の言語で画面に表示されます—言い換えなし、概訳なし、訳誤なし。双方が全く同じ内容を読むことで、握手後に紛争になる誤解は生まれません。",
+    how3_h:"合意内容の記録を持って退出できる",
+    how3_p:"すべてのやり取りが自動記録されます—原文と翻訳、タイムスタンプ付きで。商談後、ワンクリックで両者が争えない文書記録を入手できます。「あのとき何を言ったか」を確認するフォローアップメールは不要。商談の内容は相手が席を立つ前に文書化されています。",
 
     ins_tag:"// なぜ他とは違うのか",
     ins_h2:"取引先は、あなたが<br><em>準備万端</em>で来たと感じる。",
-    ins_intro:"Layers Talk SOHOを開いた瞬間、取引先の目に映るのはスマートフォンを慌てて操作するあなたではありません。相手の言語がすでに画面に用意されているプロフェッショナルなセットアップです。その第一印象が、商談全体のトーンを決めます。",
+    ins_intro:"Layers Talkを開いた瞬間、取引先の目に映るのはスマートフォンを慌てて操作するあなたではありません。相手の言語がすでに画面に用意されているプロフェッショナルなセットアップです。その第一印象が、商談全体のトーンを決めます。",
 
     feat_tag:"// ビジネス商談に特化した設計",
     feat_h2:"「合意」を引き出すために<br>必要なものが<em>すべて</em>揃っています。",
-    feat_intro:"Layers Talk SOHOのすべての機能は、実際のビジネス商談で何かがうまくいかなかった具体的な瞬間のために作られました。",
+    feat_intro:"Layers Talkのすべての機能は、実際のビジネス商談で何かがうまくいかなかった具体的な瞬間のために作られました。",
     feat1_h:"話し終わる前に、取引先があなたの提案を読んでいる",
     feat1_p:"普通に話すだけです。数秒後、あなたの言葉が相手の言語でテーブルを挟んでも読める大きさで表示されます。価格、条件、納期 — 初回から明確に伝わります。47言語に対応しているため、どんな取引先との商談でも安心です。",
     feat2_h:"言葉を発する前に、プロフェッショナルな印象を与える",
@@ -1122,24 +1067,24 @@ var T = {
 
     lang_tag:"// 対応言語",
     lang_h2:"47言語。<br>世界の主要な<em>ビジネス</em>をカバー。",
-    lang_intro:"国際的なSOHOビジネスを展開しているなら、取引先の言語はほぼ確実にここにあります。アップデートのたびに追加されます。",
+    lang_intro:"国際的なビジネスミーティングを行っているなら、取引先の言語はほぼ確実にここにあります。アップデートのたびに追加されます。",
 
     exp_tag:"// 商談後",
     exp_h2:"記憶ではなく、<br><em>記録</em>を持って退室する。",
-    exp_intro:"双方が「自分たちが合意した内容」について異なる記憶を持って退室したために、頓挫した商談はいくつあったでしょうか？Layers Talk SOHOでは、すべての翻訳が自動的に記録されます。",
+    exp_intro:"双方が「自分たちが合意した内容」について異なる記憶を持って退室したために、頓挫した商談はいくつあったでしょうか？Layers Talkでは、すべての翻訳が自動的に記録されます。",
 
     who_tag:"// 対象ユーザー",
     who_h2:"誤解が許されない<br>あらゆる<em>商談</em>のために。",
-    who_intro:"Layers Talk SOHOは、誤解が絶対に許されないのに、1時間数万円の通訳者を呼ぶ余裕がない商談のために作られています。",
+    who_intro:"Layers Talkは、誤解が絶対に許されないのに、1時間数万円の通訳者を呼ぶ余裕がない商談のために作られています。",
 
     price_tag:"// 料金",
     price_h2:"シンプル。<em>誠実。</em>買い切り。",
     price_intro:"サブスクリプションなし。月額費用なし。使用回数の制限なし。一度支払えば、無料アップデート付きで永久に使えます。",
-    price_btn:"Layers Talk SOHOをダウンロード — $29",
+    price_btn:"Layers Talkをダウンロード — $29",
 
     cta_h2:"次の商談を、<br><em>言語</em>で失わないでください。",
     cta_p:"ノートパソコンを開く。言語を選ぶ。画面を相手に向ける。話す。数秒後、相手はあなたの言葉を自分の言語で読んでいます。ずっと目指してきた商談が、ようやくうまくいく瞬間です。",
-    cta_btn:"Layers Talk SOHOをダウンロード — $29"
+    cta_btn:"Layers Talkをダウンロード — $29"
   },
 
   zh: {
@@ -1148,36 +1093,37 @@ var T = {
 
     hero_badge:"💼 跨越语言障碍，成功拿下每一单",
     hero_h1:"下一笔国际生意，<br>不应该靠<em>运气。</em>",
-    hero_sub:"Layers Talk SOHO 将您的笔记本电脑变成实时翻译台。您说话，对方即刻在屏幕上看到自己语言的翻译。对方回应，您立刻读懂。交易就此推进。",
-    hero_btn:"下载 Layers Talk SOHO",
-    hero_btn2:"了解工作方式 ↓",
+    hero_sub:"Layers Talk 将您的笔记本电脑变成实时翻译台。您说话，对方即刻在屏幕上看到自己语言的翻译。对方回应，您立刻读懂。交易就此推进。",
+    hero_btn:"下载 Layers Talk",
+    hero_btn2:"查看效果 ↓",
 
-    prob_tag:"// 问题所在",
-    prob_h2:"每一次翻译失误，<br>都是对方<em>离席</em>的理由。",
-    prob_intro:"生意本身没问题，关系也够好。但每一次尴尬的沉默、每一个被误解的表情、每一句\"抱歉，您能再说一遍吗？\"，都在悄悄消耗着对方对您的信心。语言不应该成为失去合同的原因。",
-    prob_li1:"把手机推来推去显得毫无准备，客户看在眼里",
-    prob_li2:"您操作翻译软件时的每一秒沉默，都是对方重新考虑的机会",
-    prob_li3:"价格或条款的误译，会在握手之后演变成争议",
-    prob_li4:"第三次请对方重复，会瓦解整场会议建立起来的信任",
-    prob_li5:"专业口译员的费用，有时比这笔生意的利润还要高",
+    prob_tag:"// 误解的代价",
+    prob_h2:"语言一旦卡壳，<br>商谈也随之<em>停滞。</em>",
+    prob_intro:"工作已经做到。关系也够到位。但没有共同语言，每次交流都存在风险—被误读的报价、丢失在翻译中的条款、因为双方都不确定达成了什么而迟迟不来的后续跨进。",
+    prob_li1:"向客户伸出手机，传递的是您没有为这次对话做好准备的信号",
+    prob_li2:"您寻找工具时的每次延迫，都是对方重新评估这次会议的时机",
+    prob_li3:"被误解的价格或条款，在合同签署后才会浮出水面",
+    prob_li4:"请对方重复会削弱您走进会议时带来的专业权威",
+    prob_li5:"专业口译员一次会议的费用，往往超过许多商务的利润",
+    prob_quote:"\"以前我最怕和日本供应商谈价格。现在，我话还没说完，对方就已经在读日文报价了。原来需要三次会议才能谈成的单，现在一次就搞定。\"",
 
-    how_tag:"// 使用方式",
-    how_h2:"客户落座之前，<br>一切已<em>就绪。</em>",
-    how_intro:"打开笔记本电脑，选择语言，将屏幕转向对方。就这些。您已经准备好了。对方不需要安装任何东西，不需要碰自己的手机。",
-    how1_h:"10秒完成设置 — 在对方坐下之前",
-    how1_p:"将笔记本电脑放在桌子中间。对方的翻译显示在屏幕顶部，字体够大，隔着桌子也能清楚阅读。您的翻译在底部。无需任何配置，对方也无需进行任何设置。",
-    how2_h:"自然说话，对方立刻理解。",
-    how2_p:"按住通话按钮说话——就像对讲机一样。松开按钮，几秒内您的话就以对方的语言出现在他们那侧屏幕上。没有等待，没有复制粘贴，没有因为操作手机而中断的眼神交流。",
-    how3_h:"对方回应，您读懂。交易继续推进。",
-    how3_p:"对方按住他们那侧的按钮，用自己的语言回应。您即刻读到翻译。就这样来来回回——自然、从容、专业。桌上没有手机，没有尴尬的沉默。只有一段真正能推进下去的对话。",
+    how_tag:"// 帮您谈成交易的三个效果",
+    how_h2:"三个关键改变<br><em>会谈结果。</em>",
+    how_intro:"语言障碍不只是让对话变慢，它会让您失去商务。Layers Talk消除三个导致国际会谈失败的关键节点。",
+    how1_h:"你走进去就是一种准备充分的姿态",
+    how1_p:"笔记本一开屏，对方的语言就已显示在屏幕上—面向他们，为他们准备好了。还没开口，您已经传递出一个信号：您为这次对话做好了准备。这个第一印象，将改变整场会谈的基调。",
+    how2_h:"您的报价被如实理解",
+    how2_p:"价格、条款、合同内容在您说出的瞬间，就以对方语言出现—逐字逆送，不进行改述、概括或展内。当双方读到的是完全相同的内容，握手后演变成纠纷的误解就不会发生。",
+    how3_h:"离开时有合同内容的书面记录",
+    how3_p:"每次交流均被自动记录—原文和译文，带时间戳。会议结束后，一键导出完整书面记录。双方都无法就此开展争议。再也不用发邮件试图还原谈话内容。合同都已文字化。",
 
     ins_tag:"// 为什么与众不同",
     ins_h2:"客户感受到的，是您<br><em>有备而来。</em>",
-    ins_intro:"打开 Layers Talk SOHO 的那一刻，客户看到的不是您慌乱地操作手机应用，而是一套专业的设置——他们的语言已经显示在屏幕上，为他们准备好了。这第一印象，决定了整场会议的基调。",
+    ins_intro:"打开 Layers Talk 的那一刻，客户看到的不是您慌乱地操作手机应用，而是一套专业的设置——他们的语言已经显示在屏幕上，为他们准备好了。这第一印象，决定了整场会议的基调。",
 
     feat_tag:"// 专为商务会议打造",
     feat_h2:"让您满载<em>肯定</em>而归<br>所需的一切。",
-    feat_intro:"Layers Talk SOHO 的每一个功能，都源于商务会议中某个曾经出错的具体时刻。这些，正是它要解决的问题。",
+    feat_intro:"Layers Talk 的每一个功能，都源于商务会议中某个曾经出错的具体时刻。这些，正是它要解决的问题。",
     feat1_h:"话还没说完，客户已经读到了您的报价",
     feat1_p:"正常说话就好。几秒内，您的话以对方语言出现在屏幕上，大到隔桌都能看清。价格、条款、交货期——第一次就说清楚。覆盖47种语言，无论面对哪位客户，您都有备无患。",
     feat2_h:"还没开口，就已经留下专业印象",
@@ -1199,24 +1145,24 @@ var T = {
 
     lang_tag:"// 支持语言",
     lang_h2:"47种语言，<br>覆盖全球主要<em>商业</em>市场。",
-    lang_intro:"如果您从事国际SOHO业务，您客户所说的语言几乎可以肯定在这里。每次更新都会增加更多语言。",
+    lang_intro:"如果您从事国际商务会议，您客户所说的语言几乎可以肯定在这里。每次更新都会增加更多语言。",
 
     exp_tag:"// 会议结束后",
     exp_h2:"带走的是记录，<br>而不只是<em>记忆。</em>",
-    exp_intro:"有多少笔生意因为双方带着对\"已达成共识内容\"的不同记忆离开会议室而陷入僵局？Layers Talk SOHO 会自动记录每一条翻译。会议结束后一键导出，双方都无法争辩的记录就在手边。",
+    exp_intro:"有多少笔生意因为双方带着对\"已达成共识内容\"的不同记忆离开会议室而陷入僵局？Layers Talk 会自动记录每一条翻译。会议结束后一键导出，双方都无法争辩的记录就在手边。",
 
     who_tag:"// 适合人群",
     who_h2:"任何一场误解代价<br>过于高昂的<em>会议。</em>",
-    who_intro:"Layers Talk SOHO 是为那些绝对不能被误解、却又没有理由花每小时数百美元请口译员的会议而生的。",
+    who_intro:"Layers Talk 是为那些绝对不能被误解、却又没有理由花每小时数百美元请口译员的会议而生的。",
 
     price_tag:"// 定价",
     price_h2:"简单。<em>诚实。</em>买断。",
     price_intro:"无订阅，无月费，无使用次数限制。一次付费，永久使用，免费更新。",
-    price_btn:"下载 Layers Talk SOHO — $29",
+    price_btn:"下载 Layers Talk — $29",
 
     cta_h2:"别让下一笔生意，<br>输在<em>语言</em>上。",
     cta_p:"打开笔记本电脑，选择语言，将屏幕对向对方，开口说话。几秒内，对方正在用自己的语言读您说的话——那场您一直在期待的会议，终于按您希望的方式进行了。",
-    cta_btn:"下载 Layers Talk SOHO — $29"
+    cta_btn:"下载 Layers Talk — $29"
   },
 
   vi: {
@@ -1225,36 +1171,37 @@ var T = {
 
     hero_badge:"💼 Chốt hợp đồng — dù bạn không nói cùng ngôn ngữ",
     hero_h1:"Thương vụ quốc tế tiếp theo<br>của bạn không nên phụ thuộc<br>vào <em>may mắn.</em>",
-    hero_sub:"Layers Talk SOHO biến màn hình laptop thành bàn phiên dịch trực tiếp. Bạn nói — đối tác đọc ngay bằng ngôn ngữ của họ, trên chính màn hình này. Họ trả lời — bạn hiểu ngay. Thương vụ tiến về phía trước.",
-    hero_btn:"Tải Layers Talk SOHO",
-    hero_btn2:"Xem cách hoạt động ↓",
+    hero_sub:"Layers Talk biến màn hình laptop thành bàn phiên dịch trực tiếp. Bạn nói — đối tác đọc ngay bằng ngôn ngữ của họ, trên chính màn hình này. Họ trả lời — bạn hiểu ngay. Thương vụ tiến về phía trước.",
+    hero_btn:"Tải Layers Talk",
+    hero_btn2:"Xem lợi ích ↓",
 
-    prob_tag:"// Vấn đề",
-    prob_h2:"Mỗi lần dịch vấp váp<br>là một lý do để đối tác<br><em>rời bàn.</em>",
-    prob_intro:"Thương vụ có thật. Mối quan hệ đúng chỗ. Nhưng mỗi lần im lặng khó xử, mỗi lần hiểu nhầm sắc thái, mỗi câu \"xin lỗi, bạn có thể nói lại không?\" đang dần bào mòn sự tự tin của người ngồi đối diện. Ngôn ngữ không nên là thứ khiến bạn mất hợp đồng.",
-    prob_li1:"Đưa điện thoại qua lại trông thiếu chuyên nghiệp — và khách hàng nhận ra điều đó",
-    prob_li2:"Mỗi giây im lặng khi bạn loay hoay với ứng dụng là cơ hội để họ do dự",
-    prob_li3:"Một con số hay điều khoản bị dịch sai sẽ thành tranh chấp sau khi bắt tay",
-    prob_li4:"Lần thứ ba nhờ họ nhắc lại sẽ phá vỡ lòng tin mà cả buổi họp mới xây dựng được",
-    prob_li5:"Phiên dịch viên chuyên nghiệp có thể tốn nhiều hơn cả lợi nhuận từ thương vụ",
+    prob_tag:"// Chi phí của sự hiểu lầm",
+    prob_h2:"Ngôn ngữ tắc nghẽ<br>là lúc thương vụ<br><em>dừng lại.</em>",
+    prob_intro:"Bạn đã chuẩn bị xong. Mối quan hệ đúng chỗ. Nhưng không có ngôn ngữ chung, mỗi trao đổi đều mang rủi ro—một con số bị đọc sai, một điều khoản bị bỏ sót, một email theo dõi không bao giờ đến vì không bên nào chắc chắn điều gì đã được thống nhất.",
+    prob_li1:"Chìa điện thoại cho khách là tín hiệu bạn không chuẩn bị cho cuộc trò chuyện này",
+    prob_li2:"Mỗi lần dừng lại để tìm ứng dụng là lúc họ đang đánh giá lại cuộc họn",
+    prob_li3:"Một mức giá hay điều khoản bị hiểu sai sẽ không lộ ra cho đến sau khi hợp đồng được ký",
+    prob_li4:"Nhờ nhắc lại sẽ làm giảm quyền uy chuyên nghiệp mà bạn mang vào cuộc họn",
+    prob_li5:"Phiên dịch viên chuyên nghiệp cho một buổi họn có thể tốn nhiều hơn lợi nhuận của nhiều thương vụ",
+    prob_quote:"\"Trước đây tôi rất ngại phần thương lượng giá với đối tác Nhật Bản. Bây giờ họ đọc báo giá bằng tiếng Nhật trước khi tôi nói xong câu. Thương vụ chốt trong một buổi thay vì ba.\"",
 
-    how_tag:"// Cách sử dụng",
-    how_h2:"Sẵn sàng trước khi<br>khách hàng <em>ngồi xuống.</em>",
-    how_intro:"Mở laptop, chọn ngôn ngữ, xoay màn hình về phía họ. Chỉ vậy thôi. Bạn đã sẵn sàng. Họ không cần cài đặt gì. Họ không cần chạm vào điện thoại.",
-    how1_h:"Thiết lập trong 10 giây — trước khi họ ngồi xuống",
-    how1_p:"Đặt laptop giữa bàn. Bản dịch cho đối tác hiện ở phía trên màn hình — đủ lớn để đọc từ phía bên kia bàn, bằng ngôn ngữ của họ. Bản dịch của bạn ở phía dưới. Không cần cấu hình. Không có gì để họ thiết lập.",
-    how2_h:"Nói tự nhiên. Họ hiểu ngay lập tức.",
-    how2_p:"Giữ nút nói trong khi bạn phát biểu — giống như bộ đàm. Thả nút ra. Trong vài giây, lời bạn xuất hiện bằng ngôn ngữ của khách hàng trên phần màn hình của họ. Không chờ đợi, không sao chép dán, không mất giao tiếp bằng mắt khi loay hoay điện thoại.",
-    how3_h:"Họ trả lời. Bạn đọc. Thương vụ tiến lên.",
-    how3_p:"Họ giữ nút phía họ và trả lời bằng ngôn ngữ của mình. Bạn đọc bản dịch ngay lập tức. Qua lại — tự nhiên, không vội vàng, chuyên nghiệp. Không có điện thoại trên bàn. Không có khoảng lặng khó xử.",
+    how_tag:"// Cách giúp bạn chốt được thương vụ",
+    how_h2:"Ba điều thay đổi<br><em>kết quả cuộc họn.</em>",
+    how_intro:"Rào cản ngôn ngữ không chỉ làm chận đị cuộc trò chuyện—nó khiến bạn mất thương vụ. Layers Talk loại bỏ ba thời điểm cụ thể khiến cuộc họn kinh doanh quốc tế thất bại.",
+    how1_h:"Bạn bước vào với hình ảnh chuẩn bị kỹ",
+    how1_p:"Người mở laptop ra, ngôn ngữ của họ đã hiện trên màn hình—hướng về phía họ, sẵn sàng cho họ. Trước khi bạn nói một lời, bạn đã gửi tín hiệu rằng mình đã chuẩn bị sẵn cho cuộc trò chuyện này. Ấn tượng đầu tiên đó thay đổi toàn bộ tone của buổi họn.",
+    how2_h:"Báo giá của bạn được hiểu chính xác",
+    how2_p:"Giá, điều khoản, nội dung hợp đồng xuất hiện bằng ngôn ngữ của họ, từng chữ, ngay khi bạn nói—không diễn đạt lại, không tóm tắt, không bị thất lạc giữa hai ngôn ngữ. Khi cả hai đọc đúng một nội dung, những hiểu lầm biến thành tranh chấp sau bắt tay sẽ không xảy ra.",
+    how3_h:"Bạn rời đi với bằng chứng về điều đã thống nhất",
+    how3_p:"Mọi trao đổi được ghi lại tự động—bản gốc và bản dịch, có dấu thời gian. Một cú nhấp sau buổi họn và bạn có biên bản mà không bên nào có thể phủ nhận. Không cần email hỏi lại xem ai đã nói gì. Thương vụ được ghi chép trước khi họ về đến nhà.",
 
     ins_tag:"// Tại sao khác biệt",
     ins_h2:"Khách hàng cảm nhận được<br>bạn đến <em>chuẩn bị kỹ.</em>",
-    ins_intro:"Khi bạn mở Layers Talk SOHO, khách hàng không thấy bạn loay hoay với ứng dụng điện thoại. Họ thấy một thiết lập chuyên nghiệp — ngôn ngữ của họ đã sẵn sàng trên màn hình. Ấn tượng đầu tiên đó thay đổi toàn bộ không khí buổi họp.",
+    ins_intro:"Khi bạn mở Layers Talk, khách hàng không thấy bạn loay hoay với ứng dụng điện thoại. Họ thấy một thiết lập chuyên nghiệp — ngôn ngữ của họ đã sẵn sàng trên màn hình. Ấn tượng đầu tiên đó thay đổi toàn bộ không khí buổi họp.",
 
     feat_tag:"// Thiết kế riêng cho buổi họp kinh doanh",
     feat_h2:"Mọi thứ cần thiết<br>để ra về với lời <em>đồng ý.</em>",
-    feat_intro:"Mỗi tính năng trong Layers Talk SOHO được tạo ra vì một khoảnh khắc cụ thể trong buổi họp kinh doanh từng bị hỏng. Đây là những khoảnh khắc nó sửa chữa.",
+    feat_intro:"Mỗi tính năng trong Layers Talk được tạo ra vì một khoảnh khắc cụ thể trong buổi họp kinh doanh từng bị hỏng. Đây là những khoảnh khắc nó sửa chữa.",
     feat1_h:"Khách hàng đọc được báo giá trước khi bạn nói xong",
     feat1_p:"Cứ nói tự nhiên. Trong vài giây, lời bạn xuất hiện ở phần màn hình của họ — bằng ngôn ngữ của họ, đủ lớn để đọc từ bên kia bàn. Giá, điều khoản, thời gian giao hàng — truyền đạt rõ ràng ngay lần đầu. 47 ngôn ngữ, dù bạn gặp ai, bạn đều được đảm bảo.",
     feat2_h:"Họ thấy sự chuyên nghiệp trước khi bạn nói một lời",
@@ -1276,24 +1223,24 @@ var T = {
 
     lang_tag:"// Ngôn ngữ hỗ trợ",
     lang_h2:"47 ngôn ngữ.<br>Hầu hết các thị trường <em>kinh doanh</em> thế giới.",
-    lang_intro:"Nếu bạn đang kinh doanh SOHO quốc tế, ngôn ngữ của khách hàng gần như chắc chắn có trong danh sách này. Thêm ngôn ngữ với mỗi lần cập nhật.",
+    lang_intro:"Nếu bạn đang thực hiện các cuộc họn kinh doanh quốc tế, ngôn ngữ của khách hàng gần như chắc chắn có trong danh sách này. Thêm ngôn ngữ với mỗi lần cập nhật.",
 
     exp_tag:"// Sau buổi họp",
     exp_h2:"Ra về với biên bản,<br>không chỉ là <em>ký ức.</em>",
-    exp_intro:"Có bao nhiêu thương vụ bị trì hoãn vì hai bên rời cuộc họp với ký ức khác nhau về những gì đã được đồng ý? Layers Talk SOHO tự động ghi lại mọi bản dịch. Một cú nhấp sau cuộc họp — bạn có biên bản mà không ai có thể tranh luận.",
+    exp_intro:"Có bao nhiêu thương vụ bị trì hoãn vì hai bên rời cuộc họp với ký ức khác nhau về những gì đã được đồng ý? Layers Talk tự động ghi lại mọi bản dịch. Một cú nhấp sau cuộc họp — bạn có biên bản mà không ai có thể tranh luận.",
 
     who_tag:"// Dành cho ai",
     who_h2:"Bất kỳ cuộc họp nào mà<br>hiểu lầm là <em>quá đắt giá.</em>",
-    who_intro:"Layers Talk SOHO dành cho những cuộc họp mà bạn tuyệt đối không thể bị hiểu lầm — nhưng không thể biện minh cho chi phí vài triệu đồng mỗi giờ thuê phiên dịch viên.",
+    who_intro:"Layers Talk dành cho những cuộc họp mà bạn tuyệt đối không thể bị hiểu lầm — nhưng không thể biện minh cho chi phí vài triệu đồng mỗi giờ thuê phiên dịch viên.",
 
     price_tag:"// Giá",
     price_h2:"Đơn giản. <em>Minh bạch.</em> Mua một lần.",
     price_intro:"Không đăng ký. Không phí hàng tháng. Không giới hạn số buổi họp. Trả một lần — dùng mãi mãi, kèm cập nhật miễn phí.",
-    price_btn:"Tải Layers Talk SOHO — $29",
+    price_btn:"Tải Layers Talk — $29",
 
     cta_h2:"Đừng để thương vụ tiếp theo<br>thất bại vì <em>ngôn ngữ.</em>",
     cta_p:"Mở laptop. Chọn ngôn ngữ. Xoay màn hình về phía họ. Nói. Trong vài giây, họ đang đọc lời bạn bằng ngôn ngữ của mình — và cuộc họp bạn đã nỗ lực chuẩn bị cuối cùng diễn ra theo cách bạn mong muốn.",
-    cta_btn:"Tải Layers Talk SOHO — $29"
+    cta_btn:"Tải Layers Talk — $29"
   }
 };
 
