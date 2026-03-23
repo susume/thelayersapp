@@ -84,6 +84,7 @@
     border-radius: 8px;
     padding: 3px;
     gap: 2px;
+    flex-wrap: wrap;
   }
   .lang-btn {
     background: none; border: none;
@@ -501,6 +502,8 @@
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('en')">EN</button>
       <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      <button class="lang-btn" onclick="setLang('zh')">中文</button>
+      <button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
     </div>
     <span class="badge">v1.3.3</span>
   </div>
@@ -878,18 +881,20 @@ function showSubMethod(id) {
 
 // ── Copy ──
 function copyText(btn, text) {
+  const copiedLabels = { en: 'Copied!', ja: 'コピー済み！', zh: '已复制！', vi: 'Đã sao chép!' };
+  const copyLabels = { en: 'Copy', ja: 'コピー', zh: '复制', vi: 'Sao chép' };
   navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.textContent;
-    btn.textContent = currentLang === 'ja' ? 'コピー済み！' : 'Copied!';
+    btn.textContent = copiedLabels[currentLang] || 'Copied!';
     btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+    setTimeout(() => { btn.textContent = copyLabels[currentLang] || 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
 }
 
 function copyBlock(btn) {
+  const copiedLabels = { en: 'Copied!', ja: 'コピー済み！', zh: '已复制！', vi: 'Đã sao chép!' };
   const pre = btn.previousElementSibling;
   navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
-    btn.textContent = currentLang === 'ja' ? 'コピー済み！' : 'Copied!';
+    btn.textContent = copiedLabels[currentLang] || 'Copied!';
     btn.classList.add('copied');
     setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
   });
@@ -915,89 +920,89 @@ let currentLang = 'en';
 
 const i18n = {
   // Header
-  header_title:   { en: 'Layers — Installation Guide', ja: 'Layers — インストールガイド' },
-  header_sub:     { en: 'Deploy or install the Layers Chrome extension', ja: 'Layers Chrome 拡張機能の導入・インストール' },
+  header_title:   { en: 'Layers — Installation Guide', ja: 'Layers — インストールガイド', zh: 'Layers — 安装指南', vi: 'Layers — Hướng dẫn cài đặt' },
+  header_sub:     { en: 'Deploy or install the Layers Chrome extension', ja: 'Layers Chrome 拡張機能の導入・インストール', zh: '部署或安装 Layers Chrome 扩展程序', vi: 'Triển khai hoặc cài đặt tiện ích mở rộng Layers Chrome' },
 
   // Routing guide
-  route_h:              { en: '👋 Which guide do you need?', ja: '👋 どのガイドが必要ですか？' },
-  route_teacher_h:      { en: "I'm a teacher", ja: '教員の方' },
-  route_teacher_p:      { en: 'Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.', ja: '<strong>セルフインストール</strong>で自分のブラウザに追加するか、QRコードを生徒に共有してインストールしてもらいましょう。' },
-  route_teacher_action: { en: '→ Go to Self-Install guide', ja: '→ セルフインストールガイドへ' },
-  route_it_h:           { en: "I'm IT / school admin", ja: 'IT管理者・学校管理者の方' },
-  route_it_p:           { en: 'Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.', ja: 'すべての生徒端末に一括導入します。生徒側の操作は不要です。Google Workspace または Windows PC の管理者権限が必要です。' },
-  route_it_action:      { en: '→ Go to deployment guides', ja: '→ 一括導入ガイドへ' },
+  route_h:              { en: '👋 Which guide do you need?', ja: '👋 どのガイドが必要ですか？', zh: '👋 您需要哪个指南？', vi: '👋 Bạn cần hướng dẫn nào?' },
+  route_teacher_h:      { en: "I'm a teacher", ja: '教員の方', zh: '我是教师', vi: 'Tôi là giáo viên' },
+  route_teacher_p:      { en: 'Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.', ja: '<strong>セルフインストール</strong>で自分のブラウザに追加するか、QRコードを生徒に共有してインストールしてもらいましょう。', zh: '使用<strong>自助安装</strong>将 Layers 添加到您的浏览器，或将二维码分享给学生让他们自行安装。', vi: 'Sử dụng tùy chọn <strong>Tự cài đặt</strong> để thêm Layers vào trình duyệt của bạn, hoặc chia sẻ mã QR cho học sinh để các em tự cài đặt.' },
+  route_teacher_action: { en: '→ Go to Self-Install guide', ja: '→ セルフインストールガイドへ', zh: '→ 前往自助安装指南', vi: '→ Đến hướng dẫn Tự cài đặt' },
+  route_it_h:           { en: "I'm IT / school admin", ja: 'IT管理者・学校管理者の方', zh: 'IT / 学校管理员', vi: 'Tôi là quản trị viên IT / trường học' },
+  route_it_p:           { en: 'Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.', ja: 'すべての生徒端末に一括導入します。生徒側の操作は不要です。Google Workspace または Windows PC の管理者権限が必要です。', zh: '一次性将 Layers 部署到所有学生设备——无需学生操作。需要 Google Workspace 或 Windows PC 的管理员权限。', vi: 'Triển khai Layers đến tất cả thiết bị học sinh cùng lúc — không cần học sinh thao tác. Yêu cầu quyền quản trị Google Workspace hoặc máy tính Windows.' },
+  route_it_action:      { en: '→ Go to deployment guides', ja: '→ 一括導入ガイドへ', zh: '→ 前往部署指南', vi: '→ Đến hướng dẫn triển khai' },
 
   // Tabs
-  tab_cb_h:  { en: 'Chromebook Admin', ja: 'Chromebook 管理者' },
-  tab_cb_p:  { en: 'Force-install via Google Workspace Admin Console', ja: 'Google Workspace 管理コンソールで一括インストール' },
-  tab_win_h: { en: 'Windows Admin', ja: 'Windows 管理者' },
-  tab_win_p: { en: 'Force-install via registry on Windows 10/11 PCs', ja: 'レジストリを使って Windows 10/11 に強制インストール' },
-  tag_student: { en: 'Self-Install', ja: 'セルフ' },
-  tab_st_h:  { en: 'Teacher / Self-Install', ja: '教員 / セルフインストール' },
-  tab_st_p:  { en: 'Install on your own browser or share with students', ja: '自分のブラウザにインストール、または生徒に共有' },
+  tab_cb_h:  { en: 'Chromebook Admin', ja: 'Chromebook 管理者', zh: 'Chromebook 管理员', vi: 'Quản trị Chromebook' },
+  tab_cb_p:  { en: 'Force-install via Google Workspace Admin Console', ja: 'Google Workspace 管理コンソールで一括インストール', zh: '通过 Google Workspace 管理控制台强制安装', vi: 'Cài đặt bắt buộc qua Google Workspace Admin Console' },
+  tab_win_h: { en: 'Windows Admin', ja: 'Windows 管理者', zh: 'Windows 管理员', vi: 'Quản trị Windows' },
+  tab_win_p: { en: 'Force-install via registry on Windows 10/11 PCs', ja: 'レジストリを使って Windows 10/11 に強制インストール', zh: '通过注册表在 Windows 10/11 上强制安装', vi: 'Cài đặt bắt buộc qua registry trên Windows 10/11' },
+  tag_student: { en: 'Self-Install', ja: 'セルフ', zh: '自助安装', vi: 'Tự cài đặt' },
+  tab_st_h:  { en: 'Teacher / Self-Install', ja: '教員 / セルフインストール', zh: '教师 / 自助安装', vi: 'Giáo viên / Tự cài đặt' },
+  tab_st_p:  { en: 'Install on your own browser or share with students', ja: '自分のブラウザにインストール、または生徒に共有', zh: '安装到您的浏览器或分享给学生', vi: 'Cài đặt trên trình duyệt của bạn hoặc chia sẻ cho học sinh' },
 
   // Chromebook
-  admin_note_cb: { en: 'This guide requires <strong>Google Workspace admin access</strong>. If you\'re a teacher without admin rights, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Google Workspace 管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。' },
-  admin_note_win: { en: 'This guide requires <strong>Windows administrator rights</strong>. If you\'re a teacher without admin access, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Windows の管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。' },
-  cb_intro:    { en: 'This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.', ja: 'このガイドに従うと、<strong>すべての生徒の Chromebook に Layers 拡張機能を自動インストール</strong>できます。生徒側の操作は一切不要です。インストール後、生徒は拡張機能を削除できません。' },
-  cb_s1_h:     { en: 'Open Google Admin Console', ja: 'Google 管理コンソールを開く' },
-  cb_s1_p:     { en: 'Sign in with your Google Workspace admin account.', ja: 'Google Workspace の管理者アカウントでサインインします。' },
-  cb_s2_h:     { en: 'Navigate to Chrome App Management', ja: 'Chrome アプリ管理ページに移動する' },
-  cb_s2_p:     { en: 'Follow this path in the left sidebar:', ja: '左サイドバーで次の順にクリックします：' },
-  cb_s2_nav1:  { en: 'Devices', ja: 'デバイス' },
-  cb_s2_nav3:  { en: 'Apps & Extensions', ja: 'アプリと拡張機能' },
-  cb_s2_nav4:  { en: 'Users & Browsers', ja: 'ユーザーとブラウザ' },
-  cb_s3_h:     { en: 'Select the Student Organisational Unit', ja: '生徒の組織部門（OU）を選択する' },
-  cb_s3_p:     { en: 'In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.', ja: '左パネルで生徒が所属する組織部門（例：<em>生徒</em>、<em>1年生</em>）をクリックします。これにより、教職員ではなく生徒だけにインストールされます。' },
-  cb_s4_h:     { en: 'Add the Layers Extension', ja: 'Layers 拡張機能を追加する' },
-  cb_s4_p:     { en: 'Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:', ja: '右下の <strong>＋ ボタン</strong> をクリック → <strong>Chrome ウェブストアから追加</strong> を選択します。「Layers」で検索するか、拡張機能 ID を直接貼り付けます：' },
-  cb_s4_p2:    { en: 'Select the Layers extension and click <strong>Select</strong>.', ja: 'Layers 拡張機能を選択して <strong>選択</strong> をクリックします。' },
-  cb_s5_h:     { en: 'Set Installation Policy to Force Install', ja: 'インストールポリシーを「強制インストール」に設定する' },
-  cb_s5_p:     { en: 'After adding the extension, a settings panel appears. Set:', ja: '拡張機能を追加すると、右側に設定パネルが表示されます。次のように設定します：' },
-  cb_s5_policy:{ en: 'Installation policy', ja: 'インストールポリシー' },
-  cb_s5_force: { en: 'Force install', ja: '強制インストール' },
-  cb_s5_pin:   { en: 'Pin to toolbar', ja: 'ツールバーにピン留め' },
-  cb_s5_enabled:{ en: 'Enabled (recommended)', ja: '有効（推奨）' },
-  cb_s5_note:  { en: '<strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.', ja: '「インストールを許可」は選ばないでください。生徒が削除できてしまいます。必ず<strong>強制インストール</strong>を選択してください。' },
-  cb_s6_h:     { en: 'Save', ja: '保存する' },
-  cb_s6_p:     { en: 'Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.', ja: '右上の <strong>保存</strong> をクリックします。ポリシーはすぐに反映されます。' },
-  cb_done_h:   { en: 'Done — What Happens Next', ja: '完了 — この後の動作' },
-  cb_done_title:{ en: 'Extension auto-installs on all student devices', ja: 'すべての生徒端末に自動インストールされます' },
-  cb_done_p:   { en: 'Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.', ja: '次回 Chrome にサインインするか再起動すると、生徒のツールバーに Layers アイコンが表示されます。生徒側の操作は不要です。ポリシーが有効な間、生徒は拡張機能を削除できません。' },
+  admin_note_cb: { en: 'This guide requires <strong>Google Workspace admin access</strong>. If you\'re a teacher without admin rights, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Google Workspace 管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。', zh: '本指南需要 <strong>Google Workspace 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>自助安装</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị Google Workspace</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.' },
+  admin_note_win: { en: 'This guide requires <strong>Windows administrator rights</strong>. If you\'re a teacher without admin access, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Windows の管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。', zh: '本指南需要 <strong>Windows 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>自助安装</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị viên Windows</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.' },
+  cb_intro:    { en: 'This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.', ja: 'このガイドに従うと、<strong>すべての生徒の Chromebook に Layers 拡張機能を自動インストール</strong>できます。生徒側の操作は一切不要です。インストール後、生徒は拡張機能を削除できません。', zh: '此操作会在<strong>所有学生 Chromebook 上自动安装</strong> Layers Chrome 扩展程序——无需学生操作。扩展程序会立即显示，学生无法删除。', vi: 'Thao tác này sẽ tự động cài đặt tiện ích Layers Chrome trên <strong>tất cả Chromebook của học sinh</strong> — không cần học sinh thao tác. Tiện ích sẽ xuất hiện ngay lập tức và học sinh không thể gỡ bỏ.' },
+  cb_s1_h:     { en: 'Open Google Admin Console', ja: 'Google 管理コンソールを開く', zh: '打开 Google 管理控制台', vi: 'Mở Google Admin Console' },
+  cb_s1_p:     { en: 'Sign in with your Google Workspace admin account.', ja: 'Google Workspace の管理者アカウントでサインインします。', zh: '使用 Google Workspace 管理员帐号登录。', vi: 'Đăng nhập bằng tài khoản quản trị Google Workspace.' },
+  cb_s2_h:     { en: 'Navigate to Chrome App Management', ja: 'Chrome アプリ管理ページに移動する', zh: '导航到 Chrome 应用管理', vi: 'Điều hướng đến Quản lý ứng dụng Chrome' },
+  cb_s2_p:     { en: 'Follow this path in the left sidebar:', ja: '左サイドバーで次の順にクリックします：', zh: '在左侧栏按以下路径点击：', vi: 'Theo đường dẫn này trên thanh bên trái:' },
+  cb_s2_nav1:  { en: 'Devices', ja: 'デバイス', zh: '设备', vi: 'Thiết bị' },
+  cb_s2_nav3:  { en: 'Apps & Extensions', ja: 'アプリと拡張機能', zh: '应用和扩展程序', vi: 'Ứng dụng & Tiện ích' },
+  cb_s2_nav4:  { en: 'Users & Browsers', ja: 'ユーザーとブラウザ', zh: '用户和浏览器', vi: 'Người dùng & Trình duyệt' },
+  cb_s3_h:     { en: 'Select the Student Organisational Unit', ja: '生徒の組織部門（OU）を選択する', zh: '选择学生组织单位', vi: 'Chọn Đơn vị tổ chức học sinh' },
+  cb_s3_p:     { en: 'In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.', ja: '左パネルで生徒が所属する組織部門（例：<em>生徒</em>、<em>1年生</em>）をクリックします。これにより、教職員ではなく生徒だけにインストールされます。', zh: '在左侧面板中，点击包含学生的组织单位（如 <em>学生</em> 或 <em>一年级</em>）。这样可以确保扩展程序只安装在学生设备上，不会影响教职工。', vi: 'Trong bảng bên trái, nhấp vào OU chứa học sinh của bạn (ví dụ: <em>Học sinh</em> hoặc <em>Lớp 1</em>). Điều này đảm bảo tiện ích chỉ được cài đặt cho học sinh, không phải nhân viên.' },
+  cb_s4_h:     { en: 'Add the Layers Extension', ja: 'Layers 拡張機能を追加する', zh: '添加 Layers 扩展程序', vi: 'Thêm tiện ích Layers' },
+  cb_s4_p:     { en: 'Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:', ja: '右下の <strong>＋ ボタン</strong> をクリック → <strong>Chrome ウェブストアから追加</strong> を選択します。「Layers」で検索するか、拡張機能 ID を直接貼り付けます：', zh: '点击右下角的 <strong>＋ 按钮</strong> → <strong>从 Chrome 网上应用店添加</strong>。搜索"Layers"，或直接粘贴扩展程序 ID：', vi: 'Nhấp nút <strong>＋</strong> (góc dưới bên phải) → <strong>Thêm từ Chrome Web Store</strong>. Tìm "Layers", hoặc dán ID tiện ích:' },
+  cb_s4_p2:    { en: 'Select the Layers extension and click <strong>Select</strong>.', ja: 'Layers 拡張機能を選択して <strong>選択</strong> をクリックします。', zh: '选择 Layers 扩展程序，然后点击<strong>选择</strong>。', vi: 'Chọn tiện ích Layers và nhấp <strong>Chọn</strong>.' },
+  cb_s5_h:     { en: 'Set Installation Policy to Force Install', ja: 'インストールポリシーを「強制インストール」に設定する', zh: '将安装策略设为强制安装', vi: 'Đặt chính sách cài đặt thành Cài đặt bắt buộc' },
+  cb_s5_p:     { en: 'After adding the extension, a settings panel appears. Set:', ja: '拡張機能を追加すると、右側に設定パネルが表示されます。次のように設定します：', zh: '添加扩展程序后，会出现设置面板。设置如下：', vi: 'Sau khi thêm tiện ích, bảng cài đặt sẽ xuất hiện. Thiết lập:' },
+  cb_s5_policy:{ en: 'Installation policy', ja: 'インストールポリシー', zh: '安装策略', vi: 'Chính sách cài đặt' },
+  cb_s5_force: { en: 'Force install', ja: '強制インストール', zh: '强制安装', vi: 'Cài đặt bắt buộc' },
+  cb_s5_pin:   { en: 'Pin to toolbar', ja: 'ツールバーにピン留め', zh: '固定到工具栏', vi: 'Ghim vào thanh công cụ' },
+  cb_s5_enabled:{ en: 'Enabled (recommended)', ja: '有効（推奨）', zh: '已启用（推荐）', vi: 'Bật (khuyến nghị)' },
+  cb_s5_note:  { en: '<strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.', ja: '「インストールを許可」は選ばないでください。生徒が削除できてしまいます。必ず<strong>強制インストール</strong>を選択してください。', zh: '<strong>不要</strong>选择"允许安装"——学生不能自行删除。请选择<strong>强制安装</strong>。', vi: '<strong>Không</strong> chọn "Cho phép cài đặt" — học sinh không được phép gỡ bỏ. Hãy chọn <strong>Cài đặt bắt buộc</strong>.' },
+  cb_s6_h:     { en: 'Save', ja: '保存する', zh: '保存', vi: 'Lưu' },
+  cb_s6_p:     { en: 'Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.', ja: '右上の <strong>保存</strong> をクリックします。ポリシーはすぐに反映されます。', zh: '点击右上角的<strong>保存</strong>。策略会立即生效。', vi: 'Nhấp <strong>Lưu</strong> ở góc trên bên phải. Chính sách sẽ được triển khai ngay lập tức.' },
+  cb_done_h:   { en: 'Done — What Happens Next', ja: '完了 — この後の動作', zh: '完成 — 接下来会发生什么', vi: 'Hoàn tất — Điều gì xảy ra tiếp theo' },
+  cb_done_title:{ en: 'Extension auto-installs on all student devices', ja: 'すべての生徒端末に自動インストールされます', zh: '扩展程序会自动安装到所有学生设备', vi: 'Tiện ích sẽ tự động cài đặt trên tất cả thiết bị học sinh' },
+  cb_done_p:   { en: 'Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.', ja: '次回 Chrome にサインインするか再起動すると、生徒のツールバーに Layers アイコンが表示されます。生徒側の操作は不要です。ポリシーが有効な間、生徒は拡張機能を削除できません。', zh: '学生下次登录或重启 Chrome 时，工具栏会出现 Layers 图标。无需学生操作。策略生效期间，学生无法删除该扩展程序。', vi: 'Học sinh sẽ thấy biểu tượng Layers trên thanh công cụ Chrome khi đăng nhập hoặc khởi động lại Chrome lần sau. Không cần học sinh thao tác. Tiện ích không thể bị gỡ bỏ khi chính sách còn hiệu lực.' },
 
   // Windows
-  win_intro:      { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。生徒は削除できません。' },
-  win_recommended:{ en: 'Recommended', ja: '推奨' },
-  win_fastest:    { en: 'Fastest', ja: '最速' },
-  win_m1_h:       { en: '⚙️ Registry (.reg file)', ja: '⚙️ レジストリ (.reg ファイル)' },
-  win_m1_p:       { en: 'Double-click to install. 30 sec per machine.', ja: 'ダブルクリックでインストール。1台30秒。' },
-  win_m2_h:       { en: '💻 Silent .bat Script', ja: '💻 サイレント .bat スクリプト' },
-  win_m2_p:       { en: 'Run from USB or network share. No clicks.', ja: 'USB やネットワーク共有から実行。クリック不要。' },
-  win_reg_s1_h:   { en: 'Download the .reg file', ja: '.reg ファイルをダウンロード' },
-  win_reg_s1_p:   { en: 'Save it anywhere on the target PC.', ja: '対象 PC の任意の場所に保存します。' },
-  win_reg_s1_note:{ en: 'Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue. This is normal for .reg files.', ja: 'Windows が「不明な発行元」と警告する場合があります — <strong>はい</strong> をクリックして続行してください。.reg ファイルでは通常の動作です。' },
-  win_reg_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行' },
-  win_reg_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> を右クリック → <strong>結合</strong>（またはダブルクリック）。UAC プロンプトを承認します。' },
-  win_s3_h:       { en: 'Restart Chrome', ja: 'Chrome を再起動' },
-  win_s3_p:       { en: 'Close and reopen Chrome. The extension installs automatically within seconds.', ja: 'Chrome を閉じて再度開きます。数秒で拡張機能が自動インストールされます。' },
-  win_done_h:     { en: 'Done', ja: '完了' },
-  win_done_title: { en: 'Layers is now force-installed', ja: 'Layers が強制インストールされました' },
-  win_done_p:     { en: 'The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.', ja: 'Chrome ツールバーに 🗂️ アイコンが表示されます。レジストリキーが存在する限り、拡張機能を削除できません。' },
-  win_ref:        { en: "What's inside the .reg file (for reference):", ja: '.reg ファイルの内容（参考）：' },
-  win_reg_note2:  { en: 'If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.', ja: '値 <code style="font-family:var(--mono)">"1"</code> が他の拡張機能で使用中の場合は、<code style="font-family:var(--mono)">"2"</code> など未使用の番号に変更してください。' },
-  win_bat_s1_h:   { en: 'Download the .bat script', ja: '.bat スクリプトをダウンロード' },
-  win_bat_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行' },
-  win_bat_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. A black window flashes briefly.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> を右クリック → <strong>管理者として実行</strong>。黒い画面が一瞬表示されます。' },
-  win_bat_s2_warn:{ en: 'Must be run as Administrator or the registry write will fail silently.', ja: '管理者として実行しないと、レジストリの書き込みがサイレントに失敗します。' },
-  win_bat_done_title:{ en: 'Layers is force-installed', ja: 'Layers が強制インストールされました' },
-  win_bat_done_p: { en: 'Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.', ja: '.bat を USB にコピーし、各生徒 PC で実行してください。1台あたり60秒以内で完了します。' },
-  win_bat_ref:    { en: "What's inside the .bat file:", ja: '.bat ファイルの内容：' },
+  win_intro:      { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。生徒は削除できません。', zh: '此操作会添加一个注册表项，让 Chrome 在 Windows PC 上强制安装 Layers 扩展程序。学生无法删除。', vi: 'Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows. Học sinh không thể gỡ bỏ.' },
+  win_recommended:{ en: 'Recommended', ja: '推奨', zh: '推荐', vi: 'Khuyến nghị' },
+  win_fastest:    { en: 'Fastest', ja: '最速', zh: '最快', vi: 'Nhanh nhất' },
+  win_m1_h:       { en: '⚙️ Registry (.reg file)', ja: '⚙️ レジストリ (.reg ファイル)', zh: '⚙️ 注册表（.reg 文件）', vi: '⚙️ Registry (tệp .reg)' },
+  win_m1_p:       { en: 'Double-click to install. 30 sec per machine.', ja: 'ダブルクリックでインストール。1台30秒。', zh: '双击安装。每台机器 30 秒。', vi: 'Nhấp đúp để cài đặt. 30 giây mỗi máy.' },
+  win_m2_h:       { en: '💻 Silent .bat Script', ja: '💻 サイレント .bat スクリプト', zh: '💻 静默 .bat 脚本', vi: '💻 Script .bat tự động' },
+  win_m2_p:       { en: 'Run from USB or network share. No clicks.', ja: 'USB やネットワーク共有から実行。クリック不要。', zh: '从 USB 或网络共享运行。无需点击。', vi: 'Chạy từ USB hoặc ổ đĩa mạng. Không cần nhấp chuột.' },
+  win_reg_s1_h:   { en: 'Download the .reg file', ja: '.reg ファイルをダウンロード', zh: '下载 .reg 文件', vi: 'Tải tệp .reg' },
+  win_reg_s1_p:   { en: 'Save it anywhere on the target PC.', ja: '対象 PC の任意の場所に保存します。', zh: '保存到目标电脑的任意位置。', vi: 'Lưu vào bất kỳ đâu trên máy tính mục tiêu.' },
+  win_reg_s1_note:{ en: 'Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue. This is normal for .reg files.', ja: 'Windows が「不明な発行元」と警告する場合があります — <strong>はい</strong> をクリックして続行してください。.reg ファイルでは通常の動作です。', zh: 'Windows 可能会警告"未知发布者"——点击<strong>是</strong>继续。这对 .reg 文件是正常的。', vi: 'Windows có thể cảnh báo "Nhà phát hành không xác định" — nhấp <strong>Yes</strong> để tiếp tục. Đây là bình thường với tệp .reg.' },
+  win_reg_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
+  win_reg_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> を右クリック → <strong>結合</strong>（またはダブルクリック）。UAC プロンプトを承認します。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>合并</strong>（或双击）。接受 UAC 提示。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (hoặc nhấp đúp). Chấp nhận yêu cầu UAC.' },
+  win_s3_h:       { en: 'Restart Chrome', ja: 'Chrome を再起動', zh: '重启 Chrome', vi: 'Khởi động lại Chrome' },
+  win_s3_p:       { en: 'Close and reopen Chrome. The extension installs automatically within seconds.', ja: 'Chrome を閉じて再度開きます。数秒で拡張機能が自動インストールされます。', zh: '关闭并重新打开 Chrome。扩展程序会在几秒内自动安装。', vi: 'Đóng và mở lại Chrome. Tiện ích sẽ tự động cài đặt trong vài giây.' },
+  win_done_h:     { en: 'Done', ja: '完了', zh: '完成', vi: 'Hoàn tất' },
+  win_done_title: { en: 'Layers is now force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
+  win_done_p:     { en: 'The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.', ja: 'Chrome ツールバーに 🗂️ アイコンが表示されます。レジストリキーが存在する限り、拡張機能を削除できません。', zh: 'Chrome 工具栏会出现 🗂️ 图标。只要注册表项存在，扩展程序就无法被删除。', vi: 'Biểu tượng 🗂️ sẽ xuất hiện trên thanh công cụ Chrome. Tiện ích không thể bị gỡ bỏ khi mục registry còn tồn tại.' },
+  win_ref:        { en: "What's inside the .reg file (for reference):", ja: '.reg ファイルの内容（参考）：', zh: '.reg 文件内容（参考）：', vi: 'Nội dung tệp .reg (tham khảo):' },
+  win_reg_note2:  { en: 'If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.', ja: '値 <code style="font-family:var(--mono)">"1"</code> が他の拡張機能で使用中の場合は、<code style="font-family:var(--mono)">"2"</code> など未使用の番号に変更してください。', zh: '如果值 <code style="font-family:var(--mono)">"1"</code> 已被其他扩展程序占用，请改为 <code style="font-family:var(--mono)">"2"</code> 或其他未使用的数字。', vi: 'Nếu giá trị <code style="font-family:var(--mono)">"1"</code> đã được tiện ích khác sử dụng, hãy đổi thành <code style="font-family:var(--mono)">"2"</code> hoặc số chưa dùng.' },
+  win_bat_s1_h:   { en: 'Download the .bat script', ja: '.bat スクリプトをダウンロード', zh: '下载 .bat 脚本', vi: 'Tải script .bat' },
+  win_bat_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
+  win_bat_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. A black window flashes briefly.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> を右クリック → <strong>管理者として実行</strong>。黒い画面が一瞬表示されます。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>以管理员身份运行</strong>。黑色窗口会短暂闪烁。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. Cửa sổ đen sẽ xuất hiện thoáng qua.' },
+  win_bat_s2_warn:{ en: 'Must be run as Administrator or the registry write will fail silently.', ja: '管理者として実行しないと、レジストリの書き込みがサイレントに失敗します。', zh: '必须以管理员身份运行，否则注册表写入会静默失败。', vi: 'Phải chạy với quyền Quản trị viên, nếu không việc ghi registry sẽ thất bại mà không báo lỗi.' },
+  win_bat_done_title:{ en: 'Layers is force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
+  win_bat_done_p: { en: 'Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.', ja: '.bat を USB にコピーし、各生徒 PC で実行してください。1台あたり60秒以内で完了します。', zh: '将 .bat 复制到 U 盘，在每台学生电脑上运行，每台不到 60 秒。', vi: 'Sao chép tệp .bat vào USB và chạy trên từng máy tính học sinh, mỗi máy chưa đến 60 giây.' },
+  win_bat_ref:    { en: "What's inside the .bat file:", ja: '.bat ファイルの内容：', zh: '.bat 文件内容：', vi: 'Nội dung tệp .bat:' },
 
   // Student
-  st_tagline:  { en: 'Translation, dictionary, notes & timer — floats over any page', ja: '翻訳・辞書・メモ・タイマー — どのページにも表示' },
-  st_qr_label: { en: 'Scan the QR code', ja: 'QRコードをスキャン' },
-  st_link:     { en: '🔗 Open Chrome Web Store', ja: '🔗 Chrome ウェブストアを開く' },
-  st_hint:     { en: "Can't scan? Click the link above", ja: 'スキャンできない場合はこちら' },
+  st_tagline:  { en: 'Translation, dictionary, notes & timer — floats over any page', ja: '翻訳・辞書・メモ・タイマー — どのページにも表示', zh: '翻译、词典、笔记和计时器 — 悬浮在任何页面上', vi: 'Dịch thuật, từ điển, ghi chú & hẹn giờ — nổi trên mọi trang web' },
+  st_qr_label: { en: 'Scan the QR code', ja: 'QRコードをスキャン', zh: '扫描二维码', vi: 'Quét mã QR' },
+  st_link:     { en: '🔗 Open Chrome Web Store', ja: '🔗 Chrome ウェブストアを開く', zh: '🔗 打开 Chrome 网上应用店', vi: '🔗 Mở Chrome Web Store' },
+  st_hint:     { en: "Can't scan? Click the link above", ja: 'スキャンできない場合はこちら', zh: '无法扫描？点击上方链接', vi: 'Không quét được? Nhấp vào liên kết phía trên' },
 };
 
 const studentSteps = {
@@ -1012,6 +1017,18 @@ const studentSteps = {
     '<strong>「Chromeに追加」</strong>ボタンをクリック',
     '確認ダイアログで<strong>「拡張機能を追加」</strong>をクリック',
     'ブラウザ右上に <strong>🗂️ アイコン</strong>が表示されれば完了！',
+  ],
+  zh: [
+    '用手机<strong>扫描二维码</strong>，或在 Chromebook 上打开此页面',
+    '点击<strong>"添加到 Chrome"</strong>',
+    '在确认对话框中点击<strong>"添加扩展程序"</strong>',
+    '完成！您会在浏览器右上角看到 <strong>🗂️ 图标</strong>',
+  ],
+  vi: [
+    '<strong>Quét mã QR</strong> bằng điện thoại, hoặc mở trang này trên Chromebook',
+    'Nhấp <strong>"Thêm vào Chrome"</strong>',
+    'Nhấp <strong>"Thêm tiện ích"</strong> trong hộp thoại xác nhận',
+    'Hoàn tất! Bạn sẽ thấy <strong>biểu tượng 🗂️</strong> ở góc trên bên phải trình duyệt',
   ]
 };
 
@@ -1026,7 +1043,7 @@ function setLang(lang) {
   currentLang = lang;
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
-  document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
+  document.documentElement.lang = lang;
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -1036,11 +1053,10 @@ function setLang(lang) {
   });
 
   // Update copy buttons text
+  const copyLabels = { en: 'Copy', ja: 'コピー', zh: '复制', vi: 'Sao chép' };
   document.querySelectorAll('.copy-btn:not(.copied)').forEach(btn => {
-    if (!btn.classList.contains('copied')) {
-      if (btn.textContent === 'Copy' || btn.textContent === 'コピー') {
-        btn.textContent = lang === 'ja' ? 'コピー' : 'Copy';
-      }
+    if (!btn.classList.contains('copied') && !btn.closest('.code-block')) {
+      btn.textContent = copyLabels[lang] || 'Copy';
     }
   });
 
