@@ -319,7 +319,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   </p>
   <div class="toolbar-demo">
     <div class="toolbar-wrap">
-      <div class="tb-brand"><span class="b1">LAYERS</span><span class="b2">v3.6</span></div>
+      <div class="tb-brand"><span class="b1">LAYERS</span><span class="b2">v3.7</span></div>
       <div class="tb-lang">JA <span class="arr">▾</span></div>
       <div class="tb-lang">EN <span class="arr">▾</span></div>
       <div class="tb-pill active"><span class="icon">🎙</span><span class="lbl">SPEAK</span></div>
@@ -599,27 +599,28 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <li><span class="ck">✓</span> <span data-i18n="p2_f7">Classroom connection &amp; student controls</span></li>
         </ul>
         <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" class="btn-price" data-i18n="p2_btn">Buy Now — $29</a>
-        <p style="text-align:center;font-size:0.75rem;color:var(--dim);margin-top:10px;">30-day refund · no questions asked</p>
+        <p style="text-align:center;font-size:0.75rem;color:var(--dim);margin-top:10px;" data-i18n="p2_trial">14-day free trial · no license needed to start</p>
       </div>
 
       <!-- SOHO -->
       <div class="price-card soho">
-        <div class="pop-tag">One-time</div>
-        <div class="p-tier">For Business Meetings</div>
+        <div class="pop-tag" data-i18n="ps_tag">One-time</div>
+        <div class="p-tier" data-i18n="ps_tier">For Business Meetings</div>
         <div class="p-name">Layers Talk</div>
         <div class="p-amount"><span class="p-currency">$</span><span class="p-num">29</span></div>
-        <div class="p-save">Pay once · yours to keep · free updates included</div>
+        <div class="p-save" data-i18n="ps_save">Pay once · yours to keep · free updates included</div>
         <div class="p-divider"></div>
         <ul class="p-features">
-          <li><span class="ck">✓</span> Live two-way speech translation</li>
-          <li><span class="ck">✓</span> 47 languages</li>
-          <li><span class="ck">✓</span> Split-screen — both sides read their language</li>
-          <li><span class="ck">✓</span> Screen annotation for terms &amp; figures</li>
-          <li><span class="ck">✓</span> Calculator overlay for live pricing</li>
-          <li><span class="ck">✓</span> Auto meeting transcript with timestamps</li>
-          <li><span class="ck">✓</span> No interpreter needed</li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f1">Live two-way speech translation — 47 languages</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f2">Split-screen — both sides read their language</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f3">Screen annotation for terms &amp; figures</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f4">Calculator overlay for live pricing</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f5">Auto meeting transcript — export as TXT or CSV</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f6">Type-to-translate — for noisy rooms or tricky terms</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f7">Open documents mid-conversation without leaving the screen</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="ps_f8">High-contrast mode for bright rooms</span></li>
         </ul>
-        <a href="soho.html" class="btn-price">Learn More →</a>
+        <a href="soho.html" class="btn-price" data-i18n="ps_btn">Learn More →</a>
       </div>
 
     </div>
@@ -787,6 +788,7 @@ var T = {
     p2_f3:"Screen drawing & annotation", p2_f4:"Live speech translation — 46 languages",
     p2_f5:"Focused browser window", p2_f6:"Quick file launcher", p2_f7:"Classroom connection & student controls",
     p2_btn:"Buy Now — $29",
+    p2_trial:"14-day free trial · no license needed to start",
     p3_tier:"For Schools & Centres", p3_name:"School", p3_price:"Contact", p3_save:"Custom pricing for your school",
     p3_f1:"As many teachers as you need", p3_f2:"Everything in Personal", p3_f3:"Multiple classrooms at once",
     p3_f4:"Priority support", p3_f5:"Help getting everyone set up", p3_f6:"Invoice billing available", p3_f7:"Guidance for school IT teams",
@@ -800,7 +802,18 @@ var T = {
     story_tag:"// Why I built Layers",
     story_h2:"This is personal.<br><em>Here's why.</em>",
     story_body:'<p>I\'m Peter Hoang, a teacher living in Japan.</p><p>I teach at a school where most of my students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where the lessons are in Japanese, sometimes English, and they understand very little of either.</p><p>I watch them struggle, and I see something I recognise.</p><p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn\'t speak the language, didn\'t understand the culture, and had no one to explain what was happening around them. My mother sat in government offices not understanding the forms she was signing. My father took whatever work he could find, nodding along to instructions he couldn\'t follow. They built a life anyway — through stubbornness, sacrifice, and the kindness of people who took the time to help.</p><p>I grew up watching what it costs to live in a language that isn\'t yours. The confusion. The isolation. The quiet shame of not understanding something everyone else seems to get.</p><p>Now I see the same thing in my classroom. A student from Vietnam staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who\'s bright and capable but falls behind because the lesson moves faster than their language skills allow.</p><p>These kids remind me of my parents. They remind me of the kid I would have been if my family had landed somewhere else.</p><p><strong>That\'s why I built Layers.</strong></p><p>It\'s a small thing — a floating toolbar that gives students real-time translation, a dictionary, and study tools right on top of whatever they\'re working on. It doesn\'t solve everything. But it gives them a chance to keep up, to understand, to feel a little less lost in a classroom full of words they don\'t yet know.</p><p>The Chrome extension is free, and it always will be. Because the students who need it most are the ones whose families can least afford to pay for it.</p>',
-    story_coffee:"Support Layers"
+    story_coffee:"Support Layers",
+    ps_tag:"One-time", ps_tier:"For Business Meetings",
+    ps_save:"Pay once · yours to keep · free updates included",
+    ps_f1:"Live two-way speech translation — 47 languages",
+    ps_f2:"Split-screen — both sides read their language",
+    ps_f3:"Screen annotation for terms & figures",
+    ps_f4:"Calculator overlay for live pricing",
+    ps_f5:"Auto meeting transcript — export as TXT or CSV",
+    ps_f6:"Type-to-translate — for noisy rooms or tricky terms",
+    ps_f7:"Open documents mid-conversation without leaving the screen",
+    ps_f8:"High-contrast mode for bright rooms",
+    ps_btn:"Learn More →"
   },
 
   ja: {
@@ -892,6 +905,7 @@ var T = {
     p2_f3:"画面描画・注釈", p2_f4:"リアルタイム音声翻訳 — 46言語",
     p2_f5:"フォーカスブラウザウィンドウ", p2_f6:"クイックファイルランチャー", p2_f7:"教室接続・生徒コントロール",
     p2_btn:"今すぐ購入 — $29",
+    p2_trial:"14日間無料体験 · ライセンス不要ですぐ使えます",
     p3_tier:"学校・教育センター向け", p3_name:"学校プラン", p3_price:"お問い合わせ", p3_save:"学校向けカスタム料金",
     p3_f1:"必要な数だけ教師を追加", p3_f2:"個人プランのすべての機能", p3_f3:"複数の教室を同時に運用",
     p3_f4:"優先サポート", p3_f5:"セットアップのサポート", p3_f6:"請求書払い対応", p3_f7:"学校IT担当者向けガイダンス",
@@ -905,7 +919,18 @@ var T = {
     story_tag:"// Layersを作った理由",
     story_h2:"これは個人的な話です。<br><em>聞いてください。</em>",
     story_body:'<p>Peter Hoangです。日本で教師をしています。</p><p>私が教えている学校では、ほとんどの生徒が日本人ですが、ここ数年で変化が起きています。ベトナム、中国、ネパール、フィリピンなど、さまざまな国から生徒が増えてきました。日本で新しい生活を築こうとしている家族たちです。彼らは日本語、時には英語で行われる授業に座っていますが、どちらもほとんど理解できません。</p><p>彼らが苦労しているのを見ると、見覚えのあるものを感じます。</p><p>40年前、私の両親は難民でした。ベトナムから何も持たずに逃れ、オーストラリアに再定住しました。言葉もわからず、文化も理解できず、周りで何が起きているか説明してくれる人もいない国でした。母は政府の窓口で、署名している書類の内容がわからないまま座っていました。父はどんな仕事でも引き受け、理解できない指示にうなずいていました。それでも彼らは生活を築きました——頑固さと犠牲、そして助けてくれた人々の優しさによって。</p><p>自分の言語ではない世界で生きることの代償を、私は子供の頃からずっと見てきました。混乱。孤立。他の人が当たり前に理解していることがわからない、静かな恥ずかしさ。</p><p>今、教室で同じことを目にしています。日本語の教科書を前に途方に暮れるベトナムの生徒。3回目のお願いをするのが恥ずかしくて聞けないネパールの生徒。優秀で能力があるのに、授業のスピードが言語能力を超えているために遅れをとるフィリピンの生徒。</p><p>この子たちを見ると、両親を思い出します。もし家族が別の場所にたどり着いていたら、自分がなっていたかもしれない子供を思い出します。</p><p><strong>だからLayersを作りました。</strong></p><p>小さなものです——リアルタイム翻訳、辞書、学習ツールを、作業中の画面の上に浮かべるツールバー。すべてを解決するわけではありません。でも、まだ知らない言葉でいっぱいの教室で、ついていくチャンス、理解するチャンス、少しでも迷わずにいられるチャンスを与えてくれます。</p><p>Chrome拡張機能は無料です。そしてこれからもずっと無料です。なぜなら、最も必要としている生徒たちの家族こそ、お金を払う余裕が最もない人たちだからです。</p>',
-    story_coffee:"Layersを応援する"
+    story_coffee:"Layersを応援する",
+    ps_tag:"買い切り", ps_tier:"ビジネスミーティング向け",
+    ps_save:"一度の支払いで永久使用 · 無料アップデート付き",
+    ps_f1:"双方向リアルタイム音声翻訳 — 47言語",
+    ps_f2:"分割画面 — 両者がそれぞれの言語で読める",
+    ps_f3:"画面上の注釈で条件や数字を明確に",
+    ps_f4:"電卓オーバーレイでその場で価格計算",
+    ps_f5:"会議の自動記録 — TXTまたはCSVで書き出し",
+    ps_f6:"タイプして翻訳 — 騒がしい場所や専門用語に対応",
+    ps_f7:"会話を中断せずに書類を表示",
+    ps_f8:"ハイコントラストモード — 明るい部屋でも見やすい",
+    ps_btn:"詳しく見る →"
   },
 
   zh: {
@@ -997,6 +1022,7 @@ var T = {
     p2_f3:"屏幕绘图和注释", p2_f4:"实时语音翻译——46种语言",
     p2_f5:"专注浏览器窗口", p2_f6:"快速文件启动器", p2_f7:"课堂连接和学生控制",
     p2_btn:"立即购买——$29",
+    p2_trial:"14天免费试用 · 无需许可证即可开始",
     p3_tier:"学校和培训机构", p3_name:"学校版", p3_price:"联系我们", p3_save:"为您的学校定制价格",
     p3_f1:"所需数量的教师", p3_f2:"个人版的所有功能", p3_f3:"同时运行多个课堂",
     p3_f4:"优先支持", p3_f5:"帮助完成设置", p3_f6:"支持发票付款", p3_f7:"学校IT团队指导",
@@ -1010,7 +1036,18 @@ var T = {
     story_tag:"// 我为什么创建 Layers",
     story_h2:"这很私人。<br><em>请听我说。</em>",
     story_body:'<p>我是 Peter Hoang，住在日本的一名教师。</p><p>我所在的学校大部分学生是日本人，但过去几年情况在变化。越来越多的学生从越南、中国、尼泊尔、菲律宾等国家来到这里——他们的家庭在尝试在日本建立新生活。他们坐在用日语、有时用英语授课的教室里，两种语言都几乎听不懂。</p><p>看着他们挣扎，我看到了一些熟悉的东西。</p><p>四十年前，我的父母是难民。他们一无所有地逃离越南，在澳大利亚重新定居——一个他们不会说语言、不理解文化、没有人解释周围发生什么的国家。我母亲坐在政府办公室里，不明白她正在签署的表格。我父亲接受任何能找到的工作，对着听不懂的指令点头。他们还是建立了生活——凭借倔强、牺牲，以及愿意花时间帮助他们的人的善意。</p><p>我从小就看着用不属于自己的语言生活需要付出什么代价。困惑。孤立。当别人都能理解的事情你却不懂时，那种安静的羞耻感。</p><p>现在我在教室里看到了同样的事情。一个越南学生盯着日语课本，茫然无措。一个尼泊尔孩子太尴尬了，不好意思让老师第三次重复。一个菲律宾学生聪明能干，却因为课程进度超过了她的语言能力而落后。</p><p>这些孩子让我想起我的父母。他们让我想起，如果我的家庭当初去了别的地方，我可能成为的那个孩子。</p><p><strong>这就是我创建 Layers 的原因。</strong></p><p>这是一个小东西——一个浮动工具栏，在学生正在使用的任何内容上方提供实时翻译、词典和学习工具。它不能解决所有问题。但它给了他们一个跟上的机会，一个理解的机会，在一个满是他们还不认识的词语的教室里，少一些迷失。</p><p>Chrome 扩展程序是免费的，而且永远都是。因为最需要它的学生，来自最负担不起费用的家庭。</p>',
-    story_coffee:"支持 Layers"
+    story_coffee:"支持 Layers",
+    ps_tag:"一次性购买", ps_tier:"商务会议专用",
+    ps_save:"一次付费 · 永久使用 · 包含免费更新",
+    ps_f1:"双向实时语音翻译 — 47种语言",
+    ps_f2:"分屏显示 — 双方各自阅读自己的语言",
+    ps_f3:"屏幕标注突出条款和数据",
+    ps_f4:"计算器叠加层用于现场报价",
+    ps_f5:"会议自动记录 — 导出为TXT或CSV",
+    ps_f6:"输入翻译 — 适用于嘈杂环境或复杂术语",
+    ps_f7:"无需离开屏幕即可打开文档",
+    ps_f8:"高对比度模式 — 适合明亮环境",
+    ps_btn:"了解更多 →"
   },
 
   vi: {
@@ -1102,6 +1139,7 @@ var T = {
     p2_f3:"Vẽ và chú thích màn hình", p2_f4:"Dịch giọng nói trực tiếp — 46 ngôn ngữ",
     p2_f5:"Cửa sổ trình duyệt tập trung", p2_f6:"Khởi chạy file nhanh", p2_f7:"Kết nối lớp học và kiểm soát học sinh",
     p2_btn:"Mua ngay — $29",
+    p2_trial:"Dùng thử miễn phí 14 ngày · không cần giấy phép để bắt đầu",
     p3_tier:"Dành cho trường học và trung tâm", p3_name:"Gói trường học", p3_price:"Liên hệ", p3_save:"Giá tùy chỉnh cho trường học của bạn",
     p3_f1:"Số lượng giáo viên tùy ý", p3_f2:"Tất cả tính năng của Gói cá nhân", p3_f3:"Nhiều lớp học cùng lúc",
     p3_f4:"Hỗ trợ ưu tiên", p3_f5:"Hỗ trợ cài đặt cho mọi người", p3_f6:"Thanh toán hóa đơn có sẵn", p3_f7:"Hướng dẫn cho nhóm IT trường học",
@@ -1115,7 +1153,18 @@ var T = {
     story_tag:"// Tại sao tôi tạo Layers",
     story_h2:"Đây là câu chuyện cá nhân.<br><em>Xin hãy lắng nghe.</em>",
     story_body:'<p>Tôi là Peter Hoang, một giáo viên sống tại Nhật Bản.</p><p>Tôi dạy ở một trường mà hầu hết học sinh là người Nhật, nhưng trong vài năm qua, mọi thứ đang thay đổi. Ngày càng nhiều học sinh đến từ Việt Nam, Trung Quốc, Nepal, Philippines và các quốc gia khác — những gia đình đang cố gắng xây dựng cuộc sống mới tại Nhật Bản. Họ ngồi trong lớp học nơi bài giảng bằng tiếng Nhật, đôi khi bằng tiếng Anh, và họ hiểu rất ít cả hai.</p><p>Tôi nhìn họ vật lộn, và tôi nhận ra điều gì đó quen thuộc.</p><p>Bốn mươi năm trước, bố mẹ tôi là người tị nạn. Họ rời Việt Nam với hai bàn tay trắng và tái định cư tại Úc — một đất nước nơi họ không nói được ngôn ngữ, không hiểu văn hóa, và không có ai giải thích những gì đang xảy ra xung quanh. Mẹ tôi ngồi trong các cơ quan chính phủ mà không hiểu những giấy tờ mình đang ký. Bố tôi nhận bất kỳ công việc nào tìm được, gật đầu theo những hướng dẫn mà ông không thể hiểu. Họ vẫn xây dựng được cuộc sống — bằng sự bướng bỉnh, hy sinh, và lòng tốt của những người dành thời gian giúp đỡ.</p><p>Tôi lớn lên chứng kiến cái giá phải trả khi sống bằng một ngôn ngữ không phải của mình. Sự bối rối. Sự cô lập. Nỗi xấu hổ thầm lặng khi không hiểu điều mà mọi người khác dường như đều hiểu.</p><p>Bây giờ tôi thấy điều tương tự trong lớp học của mình. Một học sinh Việt Nam nhìn chằm chằm vào sách giáo khoa tiếng Nhật, lạc lõng. Một em Nepal quá ngại để nhờ thầy nhắc lại lần thứ ba. Một học sinh Philippines thông minh và có năng lực nhưng bị tụt lại vì bài học chạy nhanh hơn khả năng ngôn ngữ của em.</p><p>Những đứa trẻ này nhắc tôi nhớ đến bố mẹ tôi. Chúng nhắc tôi nhớ đến đứa trẻ mà tôi có thể đã trở thành nếu gia đình tôi đặt chân đến một nơi khác.</p><p><strong>Đó là lý do tôi tạo ra Layers.</strong></p><p>Đó là một thứ nhỏ bé — một thanh công cụ nổi cung cấp cho học sinh bản dịch thời gian thực, từ điển và công cụ học tập ngay trên bất cứ thứ gì họ đang làm việc. Nó không giải quyết được mọi thứ. Nhưng nó cho họ cơ hội theo kịp, hiểu bài, cảm thấy bớt lạc lõng hơn trong một lớp học đầy những từ họ chưa biết.</p><p>Tiện ích Chrome miễn phí, và sẽ luôn như vậy. Bởi vì những học sinh cần nó nhất là những em có gia đình ít có khả năng chi trả nhất.</p>',
-    story_coffee:"Ủng hộ Layers"
+    story_coffee:"Ủng hộ Layers",
+    ps_tag:"Mua một lần", ps_tier:"Dành cho cuộc họp kinh doanh",
+    ps_save:"Mua một lần · dùng mãi · cập nhật miễn phí",
+    ps_f1:"Dịch giọng nói hai chiều trực tiếp — 47 ngôn ngữ",
+    ps_f2:"Màn hình chia đôi — cả hai đọc ngôn ngữ của mình",
+    ps_f3:"Chú thích trên màn hình cho điều khoản và số liệu",
+    ps_f4:"Máy tính nổi để tính giá trực tiếp",
+    ps_f5:"Biên bản họp tự động — xuất dưới dạng TXT hoặc CSV",
+    ps_f6:"Gõ để dịch — cho phòng ồn hoặc thuật ngữ chuyên ngành",
+    ps_f7:"Mở tài liệu giữa cuộc trò chuyện mà không rời màn hình",
+    ps_f8:"Chế độ tương phản cao — dễ đọc trong phòng sáng",
+    ps_btn:"Tìm hiểu thêm →"
   }
 };
 
