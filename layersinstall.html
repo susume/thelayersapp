@@ -419,6 +419,59 @@
     margin-bottom: 10px; margin-top: 24px;
   }
 
+  /* ── Routing Guide ── */
+  .routing-guide {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(79,142,247,0.06) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 24px 20px;
+    margin-bottom: 28px;
+  }
+  .routing-guide h2 {
+    font-size: 16px; font-weight: 700; color: #fff;
+    margin-bottom: 14px;
+  }
+  .routing-paths {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .route-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .route-card:hover { transform: translateY(-2px); }
+  .route-teacher {
+    background: var(--blue-dim);
+    border: 1.5px solid var(--blue);
+  }
+  .route-teacher:hover { border-color: #7aabff; }
+  .route-it {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+  }
+  .route-it:hover { border-color: var(--muted); }
+  .route-card .route-emoji { font-size: 22px; margin-bottom: 8px; }
+  .route-card h3 {
+    font-size: 14px; font-weight: 700; color: #fff;
+    margin-bottom: 4px;
+  }
+  .route-card p {
+    font-size: 12px; color: var(--muted); line-height: 1.55;
+  }
+  .route-card .route-action {
+    display: inline-block; margin-top: 10px;
+    font-size: 12px; font-weight: 600;
+    color: var(--blue); cursor: pointer;
+  }
+  .route-teacher .route-action { color: var(--blue); }
+  .route-it .route-action { color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .routing-paths { grid-template-columns: 1fr; }
+  }
+
   /* ── Responsive ── */
   @media (max-width: 640px) {
     header { padding: 18px 20px; }
@@ -430,7 +483,7 @@
 
   @media print {
     body { background: #fff; color: #000; }
-    .lang-toggle, .tabs { display: none; }
+    .lang-toggle, .tabs, .routing-guide { display: none; }
     .panel { display: block !important; }
     .panel + .panel { page-break-before: always; }
   }
@@ -455,9 +508,28 @@
 
 <main>
 
+  <!-- ── Routing Guide ── -->
+  <div class="routing-guide">
+    <h2 data-i18n="route_h">👋 Which guide do you need?</h2>
+    <div class="routing-paths">
+      <div class="route-card route-teacher" onclick="showPanel('student'); scrollToTabs();">
+        <div class="route-emoji">🧑‍🏫</div>
+        <h3 data-i18n="route_teacher_h">I'm a teacher</h3>
+        <p data-i18n="route_teacher_p">Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.</p>
+        <span class="route-action" data-i18n="route_teacher_action">→ Go to Self-Install guide</span>
+      </div>
+      <div class="route-card route-it" onclick="showPanel('chromebook'); scrollToTabs();">
+        <div class="route-emoji">🔧</div>
+        <h3 data-i18n="route_it_h">I'm IT / school admin</h3>
+        <p data-i18n="route_it_p">Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.</p>
+        <span class="route-action" data-i18n="route_it_action">→ Go to deployment guides</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Audience Tabs ── -->
-  <div class="tabs">
-    <div class="tab active" onclick="showPanel('chromebook')">
+  <div class="tabs" id="guide-tabs">
+    <div class="tab" onclick="showPanel('chromebook')">
       <span class="tab-tag tag-chromebook">ChromeOS</span>
       <h3 data-i18n="tab_cb_h">Chromebook Admin</h3>
       <p data-i18n="tab_cb_p">Force-install via Google Workspace Admin Console</p>
@@ -467,17 +539,21 @@
       <h3 data-i18n="tab_win_h">Windows Admin</h3>
       <p data-i18n="tab_win_p">Force-install via registry on Windows 10/11 PCs</p>
     </div>
-    <div class="tab" onclick="showPanel('student')">
+    <div class="tab active" onclick="showPanel('student')">
       <span class="tab-tag tag-student" data-i18n="tag_student">Self-Install</span>
-      <h3 data-i18n="tab_st_h">Student / Manual</h3>
-      <p data-i18n="tab_st_p">QR code &amp; Chrome Web Store link for students</p>
+      <h3 data-i18n="tab_st_h">Teacher / Self-Install</h3>
+      <p data-i18n="tab_st_p">Install on your own browser or share with students</p>
     </div>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
   <!--  CHROMEBOOK PANEL                            -->
   <!-- ═══════════════════════════════════════════ -->
-  <div id="panel-chromebook" class="panel visible">
+  <div id="panel-chromebook" class="panel">
+    <div class="note" style="margin-bottom:16px;">
+      <span>🔒</span>
+      <span data-i18n="admin_note_cb">This guide requires <strong>Google Workspace admin access</strong>. If you're a teacher without admin rights, ask your school's IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.</span>
+    </div>
     <div class="intro-box">
       <span class="icon">ℹ️</span>
       <span data-i18n="cb_intro">This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.</span>
@@ -587,6 +663,11 @@
   <!--  WINDOWS PANEL                               -->
   <!-- ═══════════════════════════════════════════ -->
   <div id="panel-windows" class="panel">
+
+    <div class="note" style="margin-bottom:16px;">
+      <span>🔒</span>
+      <span data-i18n="admin_note_win">This guide requires <strong>Windows administrator rights</strong>. If you're a teacher without admin access, ask your school's IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.</span>
+    </div>
 
     <div class="intro-box">
       <span class="icon">ℹ️</span>
@@ -738,7 +819,7 @@ pause</pre>
   <!-- ═══════════════════════════════════════════ -->
   <!--  STUDENT PANEL                               -->
   <!-- ═══════════════════════════════════════════ -->
-  <div id="panel-student" class="panel">
+  <div id="panel-student" class="panel visible">
     <div class="student-card">
       <div class="s-logo">
         <div class="s-logo-icon">🗂️</div>
@@ -774,11 +855,18 @@ new QRCode(document.getElementById('qrcode'), {
 });
 
 // ── Tab switching ──
+function scrollToTabs() {
+  document.getElementById('guide-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function showPanel(id) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('panel-' + id).classList.add('visible');
-  event.currentTarget.classList.add('active');
+  // Highlight the matching tab
+  const tabs = document.querySelectorAll('.tab');
+  const tabMap = { chromebook: 0, windows: 1, student: 2 };
+  if (tabMap[id] !== undefined) tabs[tabMap[id]].classList.add('active');
 }
 
 function showSubMethod(id) {
@@ -830,16 +918,27 @@ const i18n = {
   header_title:   { en: 'Layers — Installation Guide', ja: 'Layers — インストールガイド' },
   header_sub:     { en: 'Deploy or install the Layers Chrome extension', ja: 'Layers Chrome 拡張機能の導入・インストール' },
 
+  // Routing guide
+  route_h:              { en: '👋 Which guide do you need?', ja: '👋 どのガイドが必要ですか？' },
+  route_teacher_h:      { en: "I'm a teacher", ja: '教員の方' },
+  route_teacher_p:      { en: 'Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.', ja: '<strong>セルフインストール</strong>で自分のブラウザに追加するか、QRコードを生徒に共有してインストールしてもらいましょう。' },
+  route_teacher_action: { en: '→ Go to Self-Install guide', ja: '→ セルフインストールガイドへ' },
+  route_it_h:           { en: "I'm IT / school admin", ja: 'IT管理者・学校管理者の方' },
+  route_it_p:           { en: 'Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.', ja: 'すべての生徒端末に一括導入します。生徒側の操作は不要です。Google Workspace または Windows PC の管理者権限が必要です。' },
+  route_it_action:      { en: '→ Go to deployment guides', ja: '→ 一括導入ガイドへ' },
+
   // Tabs
   tab_cb_h:  { en: 'Chromebook Admin', ja: 'Chromebook 管理者' },
   tab_cb_p:  { en: 'Force-install via Google Workspace Admin Console', ja: 'Google Workspace 管理コンソールで一括インストール' },
   tab_win_h: { en: 'Windows Admin', ja: 'Windows 管理者' },
   tab_win_p: { en: 'Force-install via registry on Windows 10/11 PCs', ja: 'レジストリを使って Windows 10/11 に強制インストール' },
   tag_student: { en: 'Self-Install', ja: 'セルフ' },
-  tab_st_h:  { en: 'Student / Manual', ja: '生徒 / 手動' },
-  tab_st_p:  { en: 'QR code & Chrome Web Store link for students', ja: 'QRコード & Chrome ウェブストアリンク' },
+  tab_st_h:  { en: 'Teacher / Self-Install', ja: '教員 / セルフインストール' },
+  tab_st_p:  { en: 'Install on your own browser or share with students', ja: '自分のブラウザにインストール、または生徒に共有' },
 
   // Chromebook
+  admin_note_cb: { en: 'This guide requires <strong>Google Workspace admin access</strong>. If you\'re a teacher without admin rights, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Google Workspace 管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。' },
+  admin_note_win: { en: 'This guide requires <strong>Windows administrator rights</strong>. If you\'re a teacher without admin access, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Windows の管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。' },
   cb_intro:    { en: 'This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.', ja: 'このガイドに従うと、<strong>すべての生徒の Chromebook に Layers 拡張機能を自動インストール</strong>できます。生徒側の操作は一切不要です。インストール後、生徒は拡張機能を削除できません。' },
   cb_s1_h:     { en: 'Open Google Admin Console', ja: 'Google 管理コンソールを開く' },
   cb_s1_p:     { en: 'Sign in with your Google Workspace admin account.', ja: 'Google Workspace の管理者アカウントでサインインします。' },
