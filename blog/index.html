@@ -1,1 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Layers</title>
+<meta name="description" content="Stories, tutorials, and insights from the teacher who built Layers — the floating toolkit for multilingual classrooms.">
+<meta name="theme-color" content="#5b7fff">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thelayersapp.com/blog/">
+<meta property="og:title" content="Blog — Layers">
+<meta property="og:description" content="Stories, tutorials, and insights from the teacher who built Layers.">
+<meta property="og:image" content="https://thelayersapp.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://thelayersapp.com/blog/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div, main { position: relative; z-index: 1; }
 
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+
+/* HERO */
+.blog-hero {
+  padding: 140px 40px 60px; text-align: center;
+  background: linear-gradient(180deg, rgba(91,127,255,0.06) 0%, transparent 60%);
+}
+.blog-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; }
+.blog-hero h1 em { font-style: italic; color: var(--accent); }
+.blog-hero p { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 16px auto 0; font-weight: 300; }
+.label-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.8; }
+
+/* POST GRID */
+.blog-grid {
+  max-width: 900px; margin: 0 auto; padding: 0 40px 100px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+.post-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
+  padding: 36px 40px; transition: transform 0.3s, border-color 0.3s;
+  text-decoration: none; color: inherit; display: block;
+}
+.post-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.35); }
+.post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+.post-date { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.post-tag {
+  background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.25);
+  color: var(--accent2); font-size: 0.68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.post-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.25; margin-bottom: 10px; }
+.post-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; font-weight: 300; }
+.read-more { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-top: 16px; }
+
+/* FEATURED CARD */
+.post-card.featured {
+  border-color: rgba(91,127,255,0.3);
+  background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9));
+}
+.post-card.featured::before {
+  content: ''; display: block; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  border-radius: 20px 20px 0 0;
+}
+.post-card.featured { position: relative; overflow: hidden; }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .blog-hero { padding: 120px 24px 40px; }
+  .blog-grid { padding: 0 24px 60px; }
+  .post-card { padding: 28px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <div class="nav-links">
+    <a href="../#features">Features</a>
+    <a href="../soho.html" style="color:#52e88a;">Layers Talk</a>
+    <a href="./" style="color:var(--accent);">Blog</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<section class="blog-hero">
+  <span class="label-tag">// From the classroom</span>
+  <h1>The Layers <em>Blog</em></h1>
+  <p>Stories, tutorials, and honest insights from a teacher building tools for multilingual classrooms.</p>
+</section>
+
+<main class="blog-grid">
+
+  <!-- POST 1 — Featured -->
+  <a href="why-i-built-layers.html" class="post-card featured">
+    <div class="post-meta">
+      <span class="post-date">April 1, 2026</span>
+      <span class="post-tag">Origin Story</span>
+    </div>
+    <h2>Why I Built Layers: A Teacher in Japan Who Couldn't Reach His Students</h2>
+    <p>My parents were refugees. Forty years later, I'm watching their story repeat itself in my classroom — and I decided to do something about it.</p>
+    <span class="read-more">Read the full story →</span>
+  </a>
+
+  <!-- Future posts will be added here as new cards -->
+
+  <!-- POST 2 -->
+  <a href="5-invisible-barriers-international-students.html" class="post-card">
+    <div class="post-meta">
+      <span class="post-date">April 3, 2026</span>
+      <span class="post-tag">Problem Awareness</span>
+    </div>
+    <h2>5 Invisible Barriers International Students Face Every Day</h2>
+    <p>Language isn't the only thing standing between international students and success. These five barriers are in every multilingual classroom — and most teachers don't even see them.</p>
+    <span class="read-more">Read the full post →</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">The Floating Toolkit for Presenters</span></div>
+    <div class="footer-links">
+      <a href="../">Home</a>
+      <a href="../soho.html" style="color:#52e88a;">Layers Talk</a>
+      <a href="./">Blog</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
