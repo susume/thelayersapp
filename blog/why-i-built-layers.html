@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why I Built Layers: A Teacher in Japan Who Couldn't Reach His Students — Layers Blog</title>
+<meta name="description" content="My parents were Vietnamese refugees who rebuilt their lives without speaking the language. Forty years later, I'm watching their story repeat itself in my classroom in Japan — and I decided to do something about it.">
+<meta name="theme-color" content="#5b7fff">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://thelayersapp.com/blog/why-i-built-layers.html">
+<meta property="og:title" content="Why I Built Layers: A Teacher in Japan Who Couldn't Reach His Students">
+<meta property="og:description" content="My parents were Vietnamese refugees. Forty years later, I'm watching their story repeat in my classroom — and I decided to do something about it.">
+<meta property="og:image" content="https://thelayersapp.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://thelayersapp.com/blog/why-i-built-layers.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div, main, article { position: relative; z-index: 1; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+
+/* ARTICLE HEADER */
+.article-header {
+  padding: 140px 40px 48px; max-width: 760px; margin: 0 auto;
+  background: linear-gradient(180deg, rgba(91,127,255,0.06) 0%, transparent 60%);
+}
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 0.82rem; font-weight: 600; text-decoration: none; margin-bottom: 28px; transition: gap 0.2s; }
+.back-link:hover { gap: 10px; }
+.article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.article-date { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.article-tag {
+  background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.25);
+  color: var(--accent2); font-size: 0.68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.article-read { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.article-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.12;
+}
+.article-header h1 em { font-style: italic; color: var(--accent); }
+.article-header .subtitle {
+  color: var(--muted); font-size: 1.1rem; margin-top: 16px; font-weight: 300; line-height: 1.7;
+}
+
+/* ARTICLE BODY */
+.article-body {
+  max-width: 680px; margin: 0 auto; padding: 0 40px 60px;
+}
+.article-body p {
+  color: var(--muted); font-size: 1.02rem; line-height: 1.9; font-weight: 300; margin-bottom: 24px;
+}
+.article-body p strong { color: var(--text); font-weight: 600; }
+.article-body h2 {
+  font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.2;
+  margin: 48px 0 20px; color: var(--text);
+}
+.article-body h2 em { font-style: italic; color: var(--accent); }
+.article-body blockquote {
+  border-left: 3px solid var(--accent); padding: 16px 24px; margin: 32px 0;
+  background: rgba(91,127,255,0.04); border-radius: 0 12px 12px 0;
+}
+.article-body blockquote p { color: var(--accent2); font-style: italic; font-size: 1.05rem; margin-bottom: 0; }
+.article-body .separator {
+  text-align: center; color: var(--dim); font-size: 1.4rem; letter-spacing: 0.5em;
+  margin: 40px 0; user-select: none;
+}
+
+/* CTA SECTION */
+.article-cta {
+  max-width: 680px; margin: 0 auto 80px; padding: 0 40px;
+}
+.cta-card {
+  background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9));
+  border: 1px solid rgba(91,127,255,0.25); border-radius: 20px;
+  padding: 40px 36px; text-align: center;
+}
+.cta-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 12px; }
+.cta-card h3 em { font-style: italic; color: var(--accent); }
+.cta-card p { color: var(--muted); font-size: 0.92rem; max-width: 480px; margin: 0 auto 24px; font-weight: 300; }
+.cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--accent); color: var(--text); padding: 12px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 0 24px rgba(91,127,255,0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(91,127,255,0.5); }
+.btn-secondary { background: transparent; color: var(--text); padding: 12px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 500; text-decoration: none; border: 1px solid var(--dim); display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* SHARE BAR */
+.share-bar {
+  max-width: 680px; margin: 0 auto; padding: 0 40px 48px;
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid var(--border); padding-top: 28px;
+}
+.share-bar span { font-size: 0.8rem; color: var(--dim); font-weight: 600; }
+.share-btn {
+  background: var(--pill); border: 1px solid rgba(255,255,255,0.06);
+  color: var(--muted); padding: 6px 14px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: all 0.2s;
+  font-family: 'Outfit', sans-serif;
+}
+.share-btn:hover { background: rgba(91,127,255,0.15); color: var(--accent2); border-color: rgba(91,127,255,0.3); }
+
+/* AUTHOR */
+.author-card {
+  max-width: 680px; margin: 0 auto; padding: 0 40px 60px;
+}
+.author-inner {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px;
+}
+.author-avatar {
+  width: 52px; height: 52px; border-radius: 50%; background: var(--accent);
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+}
+.author-name { font-weight: 700; font-size: 0.95rem; }
+.author-bio { font-size: 0.82rem; color: var(--muted); font-weight: 300; margin-top: 2px; }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .article-header { padding: 120px 24px 36px; }
+  .article-body, .article-cta, .share-bar, .author-card { padding-left: 24px; padding-right: 24px; }
+  .cta-card { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <div class="nav-links">
+    <a href="../#features">Features</a>
+    <a href="../soho.html" style="color:#52e88a;">Layers Talk</a>
+    <a href="./" style="color:var(--accent);">Blog</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<header class="article-header">
+  <a href="./" class="back-link">← Back to Blog</a>
+  <div class="article-meta">
+    <span class="article-date">April 1, 2026</span>
+    <span class="article-tag">Origin Story</span>
+    <span class="article-read">· 6 min read</span>
+  </div>
+  <h1>Why I Built Layers: A Teacher in Japan Who <em>Couldn't Reach His Students</em></h1>
+  <p class="subtitle">My parents were Vietnamese refugees who rebuilt their lives without speaking the language. Forty years later, I'm watching their story repeat itself in my classroom — and I decided to do something about it.</p>
+</header>
+
+<article class="article-body">
+
+  <p>I'm Peter Hoang. I'm a teacher living in Japan.</p>
+
+  <p>I teach at a school where most students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where instruction happens in Japanese, sometimes English, and they understand very little of either.</p>
+
+  <p>I watch them struggle, and I recognize something familiar.</p>
+
+  <h2>A story I already <em>know</em></h2>
+
+  <p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn't speak the language, didn't understand the culture, and had no one to explain what was happening around them.</p>
+
+  <p>My mother sat in government offices not understanding the documents she was signing. My father took whatever work he could find, nodding along to instructions he couldn't follow. They still built a life — through stubbornness, sacrifice, and the kindness of strangers who took the time to help.</p>
+
+  <p>I grew up watching the cost of living in a language that isn't yours. The confusion. The isolation. The quiet shame of not understanding something that everyone else seems to get.</p>
+
+  <div class="separator">· · ·</div>
+
+  <p>Now I see the same thing in my classroom.</p>
+
+  <p>A Vietnamese student staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who is smart and capable but falling behind because the lesson moves faster than their language ability allows.</p>
+
+  <p>These kids remind me of my parents. They remind me of the kid I might have been if my family had landed somewhere different.</p>
+
+  <h2>The moment that <em>started everything</em></h2>
+
+  <p>There wasn't one dramatic moment. It was more like a hundred small ones.</p>
+
+  <p>A student typing a word into Google Translate on her phone under the desk, trying not to get caught. A kid zoning out because he'd lost track of the lesson twenty minutes ago and had no way to catch up. A girl who aced every math problem but couldn't read the question because it was in Japanese.</p>
+
+  <p><strong>I kept thinking: why isn't there something simple that just sits on their screen and helps them understand what's in front of them?</strong></p>
+
+  <p>Not a separate app. Not a new tab. Not something that takes them away from the lesson. Something that floats right there, on top of whatever they're working on, giving them translation, a dictionary, a place to take notes — without anyone noticing, without disrupting the class.</p>
+
+  <p>I couldn't find it. So I started building it.</p>
+
+  <h2>What Layers <em>actually is</em></h2>
+
+  <p>Layers is a small floating toolbar. For students, it's a free Chrome extension that sits on top of any webpage and gives them real-time translation, a dictionary, a scratch pad, drawing tools, a timer, and focus mode — all without opening a single new tab.</p>
+
+  <p>For teachers, it's a Windows app that floats over your slides, your videos, your apps — giving you timers, annotation, a student picker, a noise meter, live translation, and the ability to remotely control what students can access on their devices.</p>
+
+  <p>The two work together. Teacher connects, students join with a code, and from that moment the teacher can push Focus Mode, block distracting websites, lock down the internet entirely, or send a link to every connected device — all from a toolbar that never covers your presentation.</p>
+
+  <blockquote>
+    <p>The student extension is free, and it always will be. Because the students who need it most are the ones whose families can least afford to pay for it.</p>
+  </blockquote>
+
+  <h2>Why this is <em>personal</em></h2>
+
+  <p>I didn't build Layers to start a company. I built it because I was tired of watching kids fall through the cracks for a problem that technology should have solved already.</p>
+
+  <p>Every teacher with international students knows the feeling. You're mid-lesson, you see the blank stare, and you know — that student is gone. Not because they're lazy or disengaged, but because the words coming out of your mouth might as well be static.</p>
+
+  <p>I wanted to give them a lifeline. Something quiet, always there, that lets them keep up without having to raise their hand and say "I don't understand" for the fifth time that day.</p>
+
+  <p>That's it. That's the whole reason Layers exists.</p>
+
+  <div class="separator">· · ·</div>
+
+  <p>If you teach students who don't speak the language of instruction — or if you know someone who does — I'd love for you to try Layers. The student Chrome extension is completely free. The teacher app has a 14-day free trial.</p>
+
+  <p>And if you've made it this far, thank you for reading. It means a lot.</p>
+
+  <p style="color:var(--dim);font-style:italic;margin-top:40px;">— Peter Hoang, from a classroom in Japan</p>
+
+</article>
+
+<!-- SHARE -->
+<div class="share-bar">
+  <span>Share:</span>
+  <a class="share-btn" href="https://twitter.com/intent/tweet?text=Why%20I%20Built%20Layers%3A%20A%20Teacher%20in%20Japan%20Who%20Couldn%E2%80%99t%20Reach%20His%20Students&url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-i-built-layers.html" target="_blank" rel="noopener noreferrer">𝕏 Twitter</a>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-i-built-layers.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-i-built-layers.html" target="_blank" rel="noopener noreferrer">Facebook</a>
+  <a class="share-btn" href="https://www.reddit.com/submit?url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-i-built-layers.html&title=Why%20I%20Built%20Layers%3A%20A%20Teacher%20in%20Japan%20Who%20Couldn%E2%80%99t%20Reach%20His%20Students" target="_blank" rel="noopener noreferrer">Reddit</a>
+</div>
+
+<!-- AUTHOR -->
+<div class="author-card">
+  <div class="author-inner">
+    <div class="author-avatar">👨‍🏫</div>
+    <div>
+      <div class="author-name">Peter Hoang</div>
+      <div class="author-bio">Teacher in Japan. Son of Vietnamese refugees. Building tools so no student gets left behind because of language.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="article-cta">
+  <div class="cta-card">
+    <h3>Try Layers in <em>your classroom</em></h3>
+    <p>The student Chrome extension is free forever. The teacher app has a 14-day free trial — no payment info needed.</p>
+    <div class="cta-buttons">
+      <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer" class="btn-primary">Free Student Extension</a>
+      <a href="../get.html" class="btn-secondary">Try Teacher App Free</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">The Floating Toolkit for Presenters</span></div>
+    <div class="footer-links">
+      <a href="../">Home</a>
+      <a href="../soho.html" style="color:#52e88a;">Layers Talk</a>
+      <a href="./">Blog</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
