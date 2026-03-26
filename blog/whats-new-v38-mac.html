@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's New: Scheduled Focus Mode, Smarter Rooms, and the Mac App Is Coming — Layers Blog</title>
+<meta name="description" content="Layers v3.8 brings scheduled Focus Mode and Internet Lockdown, a smarter Classroom Sync panel, Chrome extension schedule enforcement, and a Mac app that's almost ready.">
+<meta name="theme-color" content="#5b7fff">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://thelayersapp.com/blog/whats-new-v38-mac.html">
+<meta property="og:title" content="What's New in Layers — v3.8, Schedule Feature, and Mac App Coming">
+<meta property="og:description" content="Scheduled Focus Mode, smarter Classroom Sync, Chrome extension v1.3.5, and the Mac app is real.">
+<meta property="og:image" content="https://thelayersapp.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://thelayersapp.com/blog/whats-new-v38-mac.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --orange:  #ffb347;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div, main, article, header { position: relative; z-index: 1; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+
+/* ARTICLE LAYOUT */
+.article-wrap {
+  max-width: 720px; margin: 0 auto;
+  padding: 120px 40px 100px;
+}
+
+/* HEADER */
+.article-header { margin-bottom: 56px; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--muted); text-decoration: none; font-size: 0.85rem;
+  margin-bottom: 32px; transition: color 0.2s;
+}
+.back-link:hover { color: var(--accent); }
+.back-link svg { width: 14px; height: 14px; }
+.article-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.tag {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 100px;
+  font-family: 'DM Mono', monospace;
+}
+.tag-blue { background: rgba(91,127,255,0.12); border: 1px solid rgba(91,127,255,0.3); color: var(--accent2); }
+.tag-green { background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25); color: var(--green); }
+.tag-orange { background: rgba(255,179,71,0.1); border: 1px solid rgba(255,179,71,0.25); color: var(--orange); }
+.article-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.15; margin-bottom: 20px;
+}
+.article-header h1 em { color: var(--green); font-style: italic; }
+.article-byline {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.byline-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif; font-size: 1rem; color: white;
+  flex-shrink: 0;
+}
+.byline-text { font-size: 0.85rem; color: var(--muted); }
+.byline-text strong { color: var(--text); display: block; }
+
+/* ARTICLE BODY */
+.article-body { font-size: 1.05rem; line-height: 1.85; color: #d0d0e0; }
+.article-body p { margin-bottom: 24px; }
+.article-body p:last-child { margin-bottom: 0; }
+.article-body h2 {
+  font-family: 'DM Serif Display', serif; font-size: 1.7rem;
+  color: var(--text); margin: 52px 0 18px; line-height: 1.2;
+}
+.article-body h3 {
+  font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+  color: var(--text); margin: 32px 0 10px; letter-spacing: 0.01em;
+  text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.article-body strong { color: var(--text); font-weight: 600; }
+.article-body em { color: var(--accent2); font-style: italic; }
+.article-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.article-body a:hover { color: var(--accent2); }
+
+/* FEATURE BLOCKS */
+.feature-block {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px 32px; margin: 32px 0;
+}
+.feature-block-title {
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 16px; opacity: 0.8;
+}
+.feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.feature-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.95rem; color: var(--muted); line-height: 1.5;
+}
+.feature-list li::before {
+  content: '→'; color: var(--accent); font-size: 0.85rem;
+  flex-shrink: 0; margin-top: 2px;
+}
+.feature-list li strong { color: var(--text); }
+
+/* VERSION BADGE */
+.version-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(46,213,115,0.08); border: 1px solid rgba(46,213,115,0.2);
+  border-radius: 100px; padding: 6px 16px;
+  font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--green);
+  margin-bottom: 8px;
+}
+.version-badge::before { content: '●'; font-size: 0.5rem; }
+
+/* MAC CALLOUT */
+.mac-callout {
+  background: linear-gradient(135deg, rgba(46,213,115,0.06), rgba(91,127,255,0.06));
+  border: 1px solid rgba(46,213,115,0.2);
+  border-radius: 20px; padding: 36px; margin: 40px 0;
+  position: relative; overflow: hidden;
+}
+.mac-callout::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--green), var(--accent));
+}
+.mac-callout h2 {
+  font-family: 'DM Serif Display', serif; font-size: 1.6rem;
+  margin-bottom: 14px; margin-top: 0;
+}
+.mac-callout p { color: var(--muted); font-size: 0.95rem; margin-bottom: 16px; }
+.mac-callout p:last-child { margin-bottom: 0; }
+.mac-notify-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--green); color: #0d1a0f;
+  padding: 10px 22px; border-radius: 100px;
+  font-weight: 700; font-size: 0.875rem; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.mac-notify-link:hover { opacity: 0.85; color: #0d1a0f; }
+
+/* DIVIDER */
+.article-divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 48px 0;
+}
+
+/* CLOSING */
+.article-closing {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 32px; margin-top: 56px;
+  text-align: center;
+}
+.article-closing p { color: var(--muted); font-size: 0.95rem; margin-bottom: 20px; }
+.cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 24px; border-radius: 100px;
+  font-weight: 600; font-size: 0.875rem; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.cta-btn:hover { opacity: 0.85; }
+.cta-primary { background: var(--accent); color: white; }
+.cta-secondary { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+.cta-secondary:hover { color: var(--text); border-color: rgba(91,127,255,0.4); }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .article-wrap { padding: 100px 24px 60px; }
+  .feature-block { padding: 22px 20px; }
+  .mac-callout { padding: 26px 22px; }
+  .article-closing { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <div class="nav-links">
+    <a href="../#features">Features</a>
+    <a href="../soho.html" style="color:#52e88a;">Layers Talk</a>
+    <a href="./" style="color:var(--accent);">Blog</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<div class="article-wrap">
+
+  <header class="article-header">
+    <a href="./" class="back-link">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Blog
+    </a>
+    <div class="article-tags">
+      <span class="tag tag-green">Release Notes</span>
+      <span class="tag tag-orange">Mac App</span>
+      <span class="tag tag-blue">Classroom Sync</span>
+    </div>
+    <h1>What's New: Scheduled Focus Mode, Smarter Rooms, and the <em>Mac App</em> Is Coming</h1>
+    <div class="article-byline">
+      <div class="byline-avatar">P</div>
+      <div class="byline-text">
+        <strong>Peter Hoang</strong>
+        March 26, 2026 · 5 min read
+      </div>
+    </div>
+  </header>
+
+  <article class="article-body">
+
+    <p>
+      This one has been building for a while. Every session I've spent on Layers lately has been fixing the things that quietly bugged me in my own classroom — the sync panel that needed scrolling through half a dozen controls just to reach the one I wanted, the rooms that required a password every time, the Focus Mode I had to manually turn on at the start of every lesson. Small friction, but it adds up when you're standing in front of 30 students.
+    </p>
+
+    <p>
+      v3.8 is a focused update. No new headline feature to put on the website. Just a lot of things that now work better than they did.
+    </p>
+
+    <hr class="article-divider">
+
+    <h2>Scheduled Focus Mode and Internet Lockdown</h2>
+
+    <p>
+      This was the most-requested thing I'd heard from teachers. "Can Layers just automatically turn on Focus Mode at the start of class?" Yes — now it can.
+    </p>
+
+    <p>
+      In the Classroom Sync panel there's now a Schedule section at the bottom. You set a start and end time for Focus Mode and/or Internet Lockdown — separately, independently. Layers checks every 60 seconds and enforces whatever the schedule says. It handles overnight ranges, so if you want lockdown from 10pm to 7am for a boarding school situation, that works too.
+    </p>
+
+    <div class="feature-block">
+      <div class="feature-block-title">// How scheduling works</div>
+      <ul class="feature-list">
+        <li><strong>Two independent schedules</strong> — Focus Mode and Internet Lockdown each have their own start/end time. Setting one doesn't affect the other.</li>
+        <li><strong>Survives teacher disconnect</strong> — if you close the app or the session ends, the schedule keeps enforcing on student devices until its end time or until a student explicitly leaves the room.</li>
+        <li><strong>Persists across browser restarts</strong> — students' Chrome extension stores the schedule locally. If they restart their laptop at 8am and class starts at 9am, it still kicks in at 9am.</li>
+        <li><strong>Shared between teachers</strong> — if two teachers share a room (e.g. homeroom + subject teacher), Teacher B sees whatever Teacher A already scheduled when they connect. Firebase is the source of truth.</li>
+      </ul>
+    </div>
+
+    <p>
+      The Chrome extension needed its own update to support this — that's v1.3.5, which should auto-update in Chrome within 24 hours. If you want to force it now, go to <code>chrome://extensions</code> → enable Developer Mode → click Update.
+    </p>
+
+    <hr class="article-divider">
+
+    <h2>A Cleaner Classroom Sync Panel</h2>
+
+    <p>
+      The Sync panel was getting crowded. Saved rooms used to appear as a row of small buttons that wrapped awkwardly. PIN Lock was buried in its own expandable section. The panel couldn't scroll, so once you had a few features enabled the whole thing felt cramped.
+    </p>
+
+    <p>
+      Three changes here in v3.8:
+    </p>
+
+    <div class="feature-block">
+      <div class="feature-block-title">// Sync panel changes</div>
+      <ul class="feature-list">
+        <li><strong>Saved rooms are now a dropdown.</strong> Select a saved room to connect instantly — no password re-entry. A × button removes the selected room. "✨ New Room" is always the first option.</li>
+        <li><strong>PIN Lock moved to room creation.</strong> When you create a new room you can optionally set a 4-digit PIN. Students can't disable Focus Mode without it. The Sync panel no longer has a separate PIN section.</li>
+        <li><strong>The panel scrolls.</strong> All cards — Connection, Focus, Lockdown, Push Link, Block Sites, Schedule — sit inside a scrollable area. The panel stays a fixed size; the content adapts.</li>
+      </ul>
+    </div>
+
+    <hr class="article-divider">
+
+    <h2>A Few Other Things</h2>
+
+    <h3>Room Creation Is Faster</h3>
+    <p>
+      There was a bug where creating a new room caused a 5-second delay before the app connected. It was caused by a Firebase write that was happening too early — before the teacher session was properly established. Fixed. Room creation is now instant.
+    </p>
+
+    <h3>Layers Talk — Continuous Listening and Meeting Minutes</h3>
+    <p>
+      Layers Talk v1.5 shipped a few weeks ago with a full set of new features — continuous listening mode (no more holding F5/F6), a live scrollable transcript, editable speaker names, HTML meeting minutes export, and a customizable toolbar. If you haven't updated, grab the latest from Gumroad. Existing customers get it free.
+    </p>
+
+    <hr class="article-divider">
+
+    <!-- MAC CALLOUT -->
+    <div class="mac-callout">
+      <h2>The Mac App Is Real</h2>
+      <p>
+        I've been asked about a Mac version since I launched Layers. The honest answer for a long time was: I'm on Windows, I don't have a Mac, and building cross-platform without owning the hardware felt like a wall.
+      </p>
+      <p>
+        That wall came down. I built a complete Mac version of Layers — Electron + React, floats above Keynote and Safari in full-screen, real microphone capture, Firebase Classroom Sync, noise meter, schedule, everything. The build pipeline runs on GitHub's free Mac servers, so I don't need to own a Mac to ship a Mac app.
+      </p>
+      <p>
+        It's not out yet. The first build is compiling. I still need to test it properly, sort out the download page, and decide whether to charge for it separately or bundle it with the Windows license. But it's real, it exists, and it will be available at thelayersapp.com when it's ready.
+      </p>
+      <p>
+        If you want to be notified the moment the Mac app drops, email me at <a href="mailto:questions@thelayersapp.com" style="color:var(--green);">questions@thelayersapp.com</a> with the subject "Mac — notify me" and I'll let you know.
+      </p>
+    </div>
+
+    <hr class="article-divider">
+
+    <h2>How to Get the Updates</h2>
+
+    <p>
+      <strong>Layers v3.8 (Windows)</strong> — download from your Gumroad purchase page, or from the hidden download page if you have that link. Existing license keys work with no changes.
+    </p>
+
+    <p>
+      <strong>Chrome Extension v1.3.5</strong> — auto-updates in Chrome within 24 hours. Force-update via chrome://extensions → Developer Mode → Update. If you deployed via Admin Console, the update pushes automatically.
+    </p>
+
+    <p>
+      <strong>Layers Talk v1.5</strong> — available on your Gumroad purchase page. Your existing license key works.
+    </p>
+
+    <p>
+      As always, if anything isn't working, email me directly at <a href="mailto:questions@thelayersapp.com">questions@thelayersapp.com</a>. I reply personally, usually within a few hours.
+    </p>
+
+    <p style="color:var(--dim);font-size:0.9rem;margin-top:40px;">— Peter</p>
+
+  </article>
+
+  <div class="article-closing">
+    <p>Try the 14-day free trial — no license key needed for the first two weeks.</p>
+    <div class="cta-row">
+      <a href="https://thelayersapp.gumroad.com/l/v29eng" class="cta-btn cta-primary">Download Layers — $29</a>
+      <a href="https://thelayersapp.gumroad.com/l/ltalk" class="cta-btn cta-secondary">Layers Talk — $49</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">The Floating Toolkit for Presenters</span></div>
+    <div class="footer-links">
+      <a href="../">Home</a>
+      <a href="../soho.html" style="color:#52e88a;">Layers Talk</a>
+      <a href="./">Blog</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
