@@ -86,6 +86,14 @@ nav {
   color: var(--accent2); font-size: 0.68rem; font-weight: 700;
   padding: 3px 10px; border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
 }
+.post-tag.green {
+  background: rgba(46,213,115,0.1); border-color: rgba(46,213,115,0.25);
+  color: var(--green);
+}
+.post-tag.orange {
+  background: rgba(255,165,50,0.1); border-color: rgba(255,165,50,0.25);
+  color: #ffb347;
+}
 .post-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.25; margin-bottom: 10px; }
 .post-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; font-weight: 300; }
 .read-more { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-top: 16px; }
@@ -101,6 +109,19 @@ nav {
   border-radius: 20px 20px 0 0;
 }
 .post-card.featured { position: relative; overflow: hidden; }
+
+/* NEW / ANNOUNCEMENT CARD */
+.post-card.announce {
+  border-color: rgba(46,213,115,0.25);
+  background: linear-gradient(135deg, rgba(46,213,115,0.06), rgba(26,26,36,0.95));
+}
+.post-card.announce::before {
+  content: ''; display: block; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  border-radius: 20px 20px 0 0;
+}
+.post-card.announce { position: relative; overflow: hidden; }
+.post-card.announce .read-more { color: var(--green); }
 
 /* FOOTER */
 footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
@@ -142,6 +163,18 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
 <main class="blog-grid">
 
+  <!-- POST 3 — Announce -->
+  <a href="whats-new-v38-mac.html" class="post-card announce">
+    <div class="post-meta">
+      <span class="post-date">March 26, 2026</span>
+      <span class="post-tag green">Release Notes</span>
+      <span class="post-tag orange">Mac App</span>
+    </div>
+    <h2>What's New: Scheduled Focus Mode, Smarter Rooms, and the Mac App Is Coming</h2>
+    <p>Layers v3.8 adds scheduled Focus Mode and Lockdown, a cleaner Classroom Sync panel, and a lot of small things that were quietly annoying. Plus: the Mac app is real, it builds, and it's almost ready.</p>
+    <span class="read-more">Read the update →</span>
+  </a>
+
   <!-- POST 1 — Featured -->
   <a href="why-i-built-layers.html" class="post-card featured">
     <div class="post-meta">
@@ -152,8 +185,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <p>My parents were refugees. Forty years later, I'm watching their story repeat itself in my classroom — and I decided to do something about it.</p>
     <span class="read-more">Read the full story →</span>
   </a>
-
-  <!-- Future posts will be added here as new cards -->
 
   <!-- POST 2 -->
   <a href="5-invisible-barriers-international-students.html" class="post-card">
