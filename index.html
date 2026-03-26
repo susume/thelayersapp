@@ -74,7 +74,35 @@ nav {
 .lang-select:hover { color: var(--text); border-color: rgba(91,127,255,0.35); }
 .lang-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
 .lang-select option { background: #1a1a24; color: var(--text); }
-/* SOHO teaser section */
+/* ANNOUNCEMENT BANNER */
+.announce-bar {
+  position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+  background: linear-gradient(90deg, rgba(46,213,115,0.12), rgba(91,127,255,0.12));
+  border-bottom: 1px solid rgba(46,213,115,0.2);
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  padding: 9px 20px; font-size: 0.82rem; text-align: center; flex-wrap: wrap;
+}
+.announce-bar .ab-tag {
+  background: rgba(46,213,115,0.15); border: 1px solid rgba(46,213,115,0.3);
+  color: var(--green); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 2px 9px; border-radius: 100px;
+  font-family: 'DM Mono', monospace; white-space: nowrap;
+}
+.announce-bar span { color: var(--muted); }
+.announce-bar strong { color: var(--text); font-weight: 600; }
+.announce-bar a.ab-link {
+  color: var(--accent2); text-decoration: none; font-weight: 600;
+  border-bottom: 1px solid rgba(124,159,255,0.35); transition: color 0.2s;
+  white-space: nowrap;
+}
+.announce-bar a.ab-link:hover { color: var(--text); }
+.announce-bar .ab-dismiss {
+  position: absolute; right: 16px; background: none; border: none;
+  color: var(--dim); cursor: pointer; font-size: 1rem; padding: 0 4px;
+  transition: color 0.2s; line-height: 1;
+}
+.announce-bar .ab-dismiss:hover { color: var(--muted); }
+
 .soho-teaser { padding: 0 40px 80px; }
 .soho-teaser-inner { max-width: 1200px; margin: 0 auto; }
 .soho-banner {
@@ -162,13 +190,39 @@ h2 em { font-style: italic; color: var(--accent); }
 .compat-app:hover .compat-app-icon { transform: translateY(-3px); }
 .compat-app-name { font-size: 0.65rem; color: var(--dim); text-align: center; font-weight: 500; white-space: nowrap; }
 .compat-float-label { margin-top: 20px; font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; letter-spacing: 0.04em; text-align: center; }
-.products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
+.products-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 56px; }
 .product-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
 .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0; transition: opacity 0.3s; }
 .product-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.35); }
 .product-card:hover::before { opacity: 1; }
 .product-card.featured { border-color: rgba(91,127,255,0.3); background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9)); }
-.product-badge { display: inline-flex; align-items: center; background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+.product-card.mac-soon {
+  border-color: rgba(46,213,115,0.2);
+  background: linear-gradient(135deg, rgba(46,213,115,0.05), rgba(26,26,36,0.9));
+  position: relative; overflow: hidden;
+}
+.product-card.mac-soon::before { background: linear-gradient(90deg, transparent, var(--green), transparent); opacity: 0.6; }
+.mac-soon-overlay {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  background: rgba(13,13,18,0.55); backdrop-filter: blur(2px);
+  border-radius: 19px;
+}
+.mac-soon-badge {
+  background: rgba(46,213,115,0.15); border: 1px solid rgba(46,213,115,0.35);
+  color: var(--green); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 5px 16px; border-radius: 100px;
+  font-family: 'DM Mono', monospace;
+}
+.mac-soon-text { font-size: 0.85rem; color: var(--muted); text-align: center; max-width: 180px; line-height: 1.5; }
+.mac-soon-notify {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--green); font-size: 0.8rem; font-weight: 600;
+  text-decoration: none; border-bottom: 1px solid rgba(46,213,115,0.35);
+  transition: opacity 0.2s;
+}
+.mac-soon-notify:hover { opacity: 0.75; }
+ background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
 .product-badge.blue { background: rgba(91,127,255,0.12); border-color: rgba(91,127,255,0.3); color: var(--accent2); }
 .product-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 10px; }
 .product-card > p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 24px; }
@@ -279,7 +333,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
 .footer-links a:hover { color: var(--text); }
 .footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
-@media (max-width: 1000px) { .pricing-top { grid-template-columns: 1fr 1fr; } .price-school-body { grid-template-columns: 1fr; } .price-school-header { flex-direction: column; align-items: flex-start; } .price-school-header-right { align-items: flex-start; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 1000px) { .pricing-top { grid-template-columns: 1fr 1fr; } .products-grid { grid-template-columns: 1fr 1fr; } .price-school-body { grid-template-columns: 1fr; } .price-school-header { flex-direction: column; align-items: flex-start; } .price-school-header-right { align-items: flex-start; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } .sync-layout { grid-template-columns: 1fr; } .problem-grid { grid-template-columns: 1fr; } nav { padding: 0 20px; } .nav-links a:not(.nav-cta):not(:last-child) { display: none; } .wrap, .band { padding: 60px 24px; } }
 @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } .student-grid { grid-template-columns: 1fr; } .pricing-top { grid-template-columns: 1fr; } .who-grid { grid-template-columns: 1fr; } .price-school-feats { grid-template-columns: 1fr; } }
 </style>
@@ -306,6 +360,13 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   </div>
 </nav>
 
+<div class="announce-bar" id="announce-bar">
+  <span class="ab-tag">New</span>
+  <span><strong>Layers v3.8 is out</strong> — Scheduled Focus Mode, smarter Classroom Sync, and the Mac app is coming.</span>
+  <a href="blog/whats-new-v38-mac.html" class="ab-link">Read what's new →</a>
+  <button class="ab-dismiss" onclick="document.getElementById('announce-bar').style.display='none'" aria-label="Dismiss">×</button>
+</div>
+
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-badge" data-i18n="hero_badge">🖥️ The floating toolkit for teachers &amp; presenters</div>
@@ -316,11 +377,11 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" class="btn-secondary" data-i18n="hero_btn_student">Free Student Extension</a>
   </div>
   <p style="margin-top:14px;font-size:0.78rem;color:var(--dim);letter-spacing:0.03em;">
-    🖥️ <strong style="color:var(--muted);">Windows only</strong> &nbsp;·&nbsp; Mac version coming soon &nbsp;·&nbsp; <a href="#pricing" style="color:var(--accent2);text-decoration:none;" data-i18n="hero_see_pricing">See pricing</a>
+    🖥️ <strong style="color:var(--muted);">Windows</strong> &nbsp;·&nbsp; 🍎 <a href="blog/whats-new-v38-mac.html" style="color:var(--green);text-decoration:none;font-weight:600;">Mac coming soon</a> &nbsp;·&nbsp; <a href="#pricing" style="color:var(--accent2);text-decoration:none;" data-i18n="hero_see_pricing">See pricing</a>
   </p>
   <div class="toolbar-demo">
     <div class="toolbar-wrap">
-      <div class="tb-brand"><span class="b1">LAYERS</span><span class="b2">v3.7</span></div>
+      <div class="tb-brand"><span class="b1">LAYERS</span><span class="b2">v3.8</span></div>
       <div class="tb-lang">JA <span class="arr">▾</span></div>
       <div class="tb-lang">EN <span class="arr">▾</span></div>
       <div class="tb-pill active"><span class="icon">🎙</span><span class="lbl">SPEAK</span></div>
@@ -416,7 +477,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <div class="products-grid reveal">
     <div class="product-card featured">
       <span class="product-num">01</span>
-      <div class="product-badge blue" data-i18n="prod1_badge">For Teachers &amp; Presenters · Windows</div>
+      <div class="product-badge blue" data-i18n="prod1_badge">For Teachers &amp; Presenters · Windows &amp; Mac</div>
       <h3>Layers</h3>
       <p data-i18n="prod1_desc">A compact floating toolbar that sits on top of everything on your screen. Every tool you need during a lesson or presentation is one click away — no minimizing, no switching, no losing your place.</p>
       <ul class="feature-list">
@@ -427,7 +488,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <li data-i18n="prod1_f5">Open a clean, focused browser without exposing your personal tabs</li>
         <li data-i18n="prod1_f6">Connect to student devices and control their focus remotely</li>
       </ul>
-      <p class="product-who" data-i18n="prod1_who">For any Windows laptop or PC. Open it and you're ready — nothing to configure.</p>
+      <p class="product-who" data-i18n="prod1_who">Windows now · Mac coming soon. Open it and you're ready — nothing to configure.</p>
     </div>
     <div class="product-card">
       <span class="product-num">02</span>
@@ -443,6 +504,25 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <li data-i18n="prod2_f6">Connects to the teacher's classroom for live controls</li>
       </ul>
       <p class="product-who" data-i18n="prod2_who">Works in any browser. Free — no account or sign-up needed.</p>
+    </div>
+    <!-- Mac Coming Soon Card -->
+    <div class="product-card mac-soon">
+      <span class="product-num" style="color:rgba(46,213,115,0.07);">03</span>
+      <div class="product-badge" style="background:rgba(46,213,115,0.1);border-color:rgba(46,213,115,0.25);color:var(--green);">For Mac · Coming Soon</div>
+      <h3>Layers <span style="color:var(--green);">Mac</span></h3>
+      <p style="color:var(--muted);font-size:0.95rem;line-height:1.65;margin-bottom:24px;">The full Layers experience on macOS — floats above Keynote, Safari, YouTube, and any full-screen app. Built with Electron, supports Intel and Apple Silicon.</p>
+      <ul class="feature-list">
+        <li>Identical feature set to the Windows app</li>
+        <li>Always-on-top over Keynote and macOS full-screen</li>
+        <li>Classroom Sync, Schedule, noise meter</li>
+        <li>Push-to-talk translation and floating captions</li>
+        <li>Distributed as a signed .dmg</li>
+      </ul>
+      <div class="mac-soon-overlay">
+        <span class="mac-soon-badge">🍎 In development</span>
+        <p class="mac-soon-text">The first build is running. Drop your email to be notified when it's ready.</p>
+        <a href="mailto:questions@thelayersapp.com?subject=Mac — notify me" class="mac-soon-notify">Notify me when it's ready →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -529,6 +609,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <li data-i18n="sync_f2">Block any website instantly — it disappears from every student's screen</li>
           <li data-i18n="sync_f3">Trigger Internet Lockdown — cuts all browsing on every student's device</li>
           <li data-i18n="sync_f4">Set a PIN so students cannot undo your controls</li>
+          <li data-i18n="sync_f4b">Schedule Focus Mode and Lockdown by time — enforces automatically, even after you disconnect</li>
           <li data-i18n="sync_f5">See exactly how many students are connected right now</li>
           <li data-i18n="sync_f6">Room codes are permanent — students join once and auto-rejoin every class</li>
         </ul>
@@ -536,7 +617,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <div class="sync-box">
         <div class="sync-row">
           <span class="si">🖥</span>
-          <div><div class="st" data-i18n="sync_box1_title">Teacher — Layers on Windows</div><div class="sd" data-i18n="sync_box1_sub">Focus Mode, Site Blocking, Internet Lockdown, PIN</div></div>
+          <div><div class="st" data-i18n="sync_box1_title">Teacher — Layers on Windows or Mac</div><div class="sd" data-i18n="sync_box1_sub">Focus Mode, Site Blocking, Internet Lockdown, Schedule, PIN</div></div>
         </div>
         <div class="sync-arrow" data-i18n="sync_arrow1">↓ sends instantly</div>
         <div class="sync-row" style="background:rgba(91,127,255,0.1);border-color:rgba(91,127,255,0.2);">
