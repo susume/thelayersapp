@@ -202,11 +202,15 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 40p
   <div class="fade-up fade-up-4">
     <div class="warn-box">
       <span class="wi">&#x26A0;&#xFE0F;</span>
-      <p data-i18n="warn_ss"><strong>Windows SmartScreen warning?</strong> This is normal for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it just isn't signed with an expensive Microsoft certificate. Questions? Email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.</p>
+      <p data-i18n="warn_ss"><strong>Windows SmartScreen warning?</strong> This is normal for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it just isn't signed with an expensive Microsoft certificate. Questions? Email <a href="/cdn-cgi/l/email-protection#6e1f1b0b1d1a0701001d2e1a060b020f170b1c1d0f1e1e400d0103" style="color:var(--accent2)"><span class="__cf_email__" data-cfemail="2352564650574a4c4d5063574b464f425a4651504253530d404c4e">[email&#160;protected]</span></a>.</p>
     </div>
     <div class="warn-box blue">
       <span class="wi">&#x1F4E5;</span>
       <p data-i18n="warn_gd"><strong>Google Drive virus scan warning?</strong> Files over ~40 MB trigger a scan notice. Click <strong>"Download anyway"</strong> — this is a Google limitation, not a problem with the file.</p>
+    </div>
+    <div class="warn-box">
+      <span class="wi">&#x1F3EB;</span>
+      <p data-i18n="warn_school"><strong>On a school or work computer?</strong> Some managed Windows machines block running files downloaded from the internet. If the app won't open: <strong>copy the .exe to your Desktop first, then run it from there.</strong> This bypasses AppLocker restrictions on the Downloads folder.</p>
     </div>
   </div>
 
@@ -225,7 +229,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 40p
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 var T = {
   en: {
     nav_back:"← Back to site", nav_contact:"Contact",
@@ -250,6 +254,7 @@ var T = {
     b4:"Paste the key into the activation dialog. Done — the app is yours forever, with free updates.",
     warn_ss:'<strong>Windows SmartScreen warning?</strong> This is normal for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it just isn\'t signed with an expensive Microsoft certificate. Questions? Email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
     warn_gd:'<strong>Google Drive virus scan warning?</strong> Files over ~40 MB trigger a scan notice. Click <strong>"Download anyway"</strong> — this is a Google limitation, not a problem with the file.',
+    warn_school:'<strong>On a school or work computer?</strong> Some managed Windows machines block running files downloaded from the internet. If the app won\'t open: <strong>copy the .exe to your Desktop first, then run it from there.</strong> This bypasses AppLocker restrictions on the Downloads folder.',
     f_home:"Home", f_contact:"Contact", f_privacy:"Privacy Policy"
   },
   ja: {
@@ -275,6 +280,7 @@ var T = {
     b4:"アクティベーションダイアログにキーを貼り付けてください。完了 — 永久に使えます。無料アップデート付き。",
     warn_ss:'<strong>Windows SmartScreenの警告？</strong> 個人開発ソフトでは通常のことです。<strong>「詳細情報」</strong>→<strong>「実行」</strong>をクリック。アプリは安全です。ご不明な点は <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a> まで。',
     warn_gd:'<strong>Google Driveのウイルススキャン警告？</strong> 40MB以上のファイルではスキャン通知が表示されます。<strong>「ダウンロード」</strong>をクリック — Googleの仕様であり、ファイルに問題はありません。',
+    warn_school:'<strong>学校や職場のパソコンをお使いですか？</strong> 管理されたWindowsではインターネットからダウンロードしたファイルの実行がブロックされる場合があります。アプリが開かない場合：<strong>まず.exeをデスクトップにコピーしてから、デスクトップから実行してください。</strong>ダウンロードフォルダのAppLocker制限を回避できます。',
     f_home:"ホーム", f_contact:"お問い合わせ", f_privacy:"プライバシーポリシー"
   },
   zh: {
@@ -300,6 +306,7 @@ var T = {
     b4:"将密钥粘贴到激活对话框中。完成——永久使用，包含免费更新。",
     warn_ss:'<strong>Windows SmartScreen警告？</strong> 独立软件出现此提示是正常的。点击<strong>"更多信息"</strong>然后<strong>"仍要运行"</strong>。应用是安全的。有疑问请发邮件至 <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>。',
     warn_gd:'<strong>Google Drive病毒扫描警告？</strong> 超过40MB的文件会触发扫描提示。点击<strong>"仍然下载"</strong>——这是Google的限制，文件本身没有问题。',
+    warn_school:'<strong>在学校或工作电脑上？</strong> 某些受管理的Windows系统会阻止运行从互联网下载的文件。如果应用无法打开：<strong>先将.exe复制到桌面，然后从桌面运行。</strong>这可以绕过下载文件夹的AppLocker限制。',
     f_home:"主页", f_contact:"联系我们", f_privacy:"隐私政策"
   },
   vi: {
@@ -325,6 +332,7 @@ var T = {
     b4:"Dán giấy phép vào hộp kích hoạt. Xong — ứng dụng là của bạn mãi mãi, kèm cập nhật miễn phí.",
     warn_ss:'<strong>Cảnh báo Windows SmartScreen?</strong> Đây là bình thường với phần mềm độc lập. Nhấp <strong>"Xem thêm"</strong> rồi <strong>"Chạy bất chấp"</strong>. Ứng dụng an toàn. Thắc mắc? Email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
     warn_gd:'<strong>Cảnh báo quét virus Google Drive?</strong> File trên 40MB sẽ hiện cảnh báo quét. Nhấp <strong>"Vẫn tải xuống"</strong> — đây là giới hạn của Google, không phải vấn đề với file.',
+    warn_school:'<strong>Đang dùng máy tính trường học hoặc nơi làm việc?</strong> Một số máy Windows được quản lý sẽ chặn chạy file tải từ internet. Nếu ứng dụng không mở được: <strong>hãy sao chép .exe ra Desktop trước, rồi chạy từ Desktop.</strong> Cách này bỏ qua giới hạn AppLocker trong thư mục Downloads.',
     f_home:"Trang chủ", f_contact:"Liên hệ", f_privacy:"Chính sách bảo mật"
   }
 };
@@ -344,12 +352,4 @@ function setLang(lang) {
 
 (function() {
   var saved; try { saved = localStorage.getItem('layers_lang'); } catch(e) {}
-  var bl = (navigator.language || '').toLowerCase();
-  var lang = saved || (bl.startsWith('ja') ? 'ja' : bl.startsWith('zh') ? 'zh' : bl.startsWith('vi') ? 'vi' : 'en');
-  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
-  if (lang !== 'en') setLang(lang);
-})();
-</script>
-
-</body>
-</html>
+  var bl = (navigator.language || '').toLowerCas
