@@ -474,10 +474,11 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <h2 data-i18n="prod_h2">One for teachers.<br>One for <em>students.</em></h2>
     <p class="intro" data-i18n="prod_intro">The teacher app floats on Windows. The student tool lives in the browser. They work together out of the box.</p>
   </div>
-  <div class="products-grid reveal">
+  <div class="products-grid reveal" style="grid-template-columns:1fr 1fr;">
+    <!-- Teacher card: Windows + Mac -->
     <div class="product-card featured">
       <span class="product-num">01</span>
-      <div class="product-badge blue" data-i18n="prod1_badge">For Teachers &amp; Presenters · Windows &amp; Mac</div>
+      <div class="product-badge blue" data-i18n="prod1_badge">For Teachers &amp; Presenters</div>
       <h3>Layers</h3>
       <p data-i18n="prod1_desc">A floating toolbar that sits on top of your slides and apps. Every tool you need is one click away — no minimizing, no switching.</p>
       <ul class="feature-list">
@@ -486,8 +487,12 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <li data-i18n="prod1_f6">Connect to student devices and control their focus remotely</li>
       </ul>
       <p class="product-who" data-i18n="prod1_who">Windows &amp; Mac · Open it and you're ready — nothing to configure.</p>
-      <a href="get.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--accent);color:#fff;padding:10px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;" data-i18n="prod1_cta">⬇ Try Free — Windows &amp; Mac</a>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <a href="get.html" style="display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;" data-i18n="prod1_cta">⬇ Try Free — Windows</a>
+        <a href="get.html" style="display:inline-flex;align-items:center;gap:7px;background:#a78bfa;color:#0d0d12;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;" data-i18n="prod1_cta_mac">🍎 Download for Mac</a>
+      </div>
     </div>
+    <!-- Student card -->
     <div class="product-card">
       <span class="product-num">02</span>
       <div class="product-badge" data-i18n="prod2_badge">For Students · Free Forever</div>
@@ -500,19 +505,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       </ul>
       <p class="product-who" data-i18n="prod2_who">Works in any browser. Free — no account or sign-up needed.</p>
       <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--green);color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;" data-i18n="prod2_cta">+ Add to Chrome — Free</a>
-    </div>
-    <!-- Mac Card -->
-    <div class="product-card mac-soon" style="border-color:rgba(167,139,250,0.35);background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(26,26,36,0.9));">
-      <span class="product-num" style="color:rgba(167,139,250,0.07);">03</span>
-      <div class="product-badge" style="background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.3);color:#c4b5fd;">🍎 Mac · New</div>
-      <h3>Layers <span style="color:#c4b5fd;">Mac</span></h3>
-      <p style="color:var(--muted);font-size:0.95rem;line-height:1.65;margin-bottom:20px;">The full Layers teacher app for macOS — floats above Keynote, Safari, and YouTube. Intel + Apple Silicon.</p>
-      <ul class="feature-list">
-        <li>Every feature from the Windows app</li>
-        <li>Always-on-top over Keynote &amp; full-screen apps</li>
-        <li>14-day free trial · $29 one-time after</li>
-      </ul>
-      <a href="get.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:#a78bfa;color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;">⬇ Download for Mac</a>
     </div>
   </div>
 </section>
@@ -790,7 +782,8 @@ var T = {
     prod_intro:"The teacher app floats on Windows. The student tool lives in the browser. They work together out of the box.",
     prod1_badge:"For Teachers &amp; Presenters · Windows &amp; Mac",
     prod1_desc:"A floating toolbar that sits on top of your slides and apps. Every tool you need is one click away — no minimizing, no switching.",
-    prod1_cta:"⬇ Try Free — Windows &amp; Mac",
+    prod1_cta:"⬇ Try Free — Windows",
+    prod1_cta_mac:"🍎 Download for Mac",
     prod1_f1:"Floats above your slides, videos, or any app — always visible, always ready",
     prod1_f2:"Timer with presets, a student picker, and a live noise monitor",
     prod1_f3:"Draw, highlight, and annotate directly over anything on your screen",
@@ -911,7 +904,8 @@ var T = {
     prod_intro:"教師用アプリはWindowsで動作。生徒用ツールはブラウザで動作。すぐに連携できます。",
     prod1_badge:"教師・プレゼンター向け · Windows &amp; Mac",
     prod1_desc:"スライドやアプリの上に浮かぶツールバー。必要なツールがワンクリックで — 最小化も切り替えも不要。",
-    prod1_cta:"⬇ 無料で試す — Windows &amp; Mac",
+    prod1_cta:"⬇ 無料で試す — Windows",
+    prod1_cta_mac:"🍎 Macでダウンロード",
     prod1_f1:"スライド、動画、あらゆるアプリの上に表示 — 常に見える場所に",
     prod1_f2:"プリセット付きタイマー、生徒ピッカー、ライブ騒音モニター",
     prod1_f3:"画面上のどこにでも直接描画・強調・注釈",
@@ -1032,7 +1026,8 @@ var T = {
     prod_intro:"教师应用在 Windows 上运行。学生工具在浏览器中运行。开箱即用，无缝协作。",
     prod1_badge:"教师和演讲者专用 · Windows &amp; Mac",
     prod1_desc:"悬浮在幻灯片和应用上方的工具栏。所需工具一键即达——无需最小化，无需切换。",
-    prod1_cta:"⬇ 免费试用 — Windows &amp; Mac",
+    prod1_cta:"⬇ 免费试用 — Windows",
+    prod1_cta_mac:"🍎 下载 Mac 版",
     prod1_f1:"悬浮于幻灯片、视频或任何应用上方——始终可见，随时待命",
     prod1_f2:"带预设的计时器、学生选取器和实时噪音监测",
     prod1_f3:"在屏幕上任何内容上直接绘图、高亮和注释",
@@ -1153,7 +1148,8 @@ var T = {
     prod_intro:"Ứng dụng giáo viên chạy trên Windows. Công cụ học sinh chạy trên trình duyệt. Chúng phối hợp với nhau ngay từ đầu.",
     prod1_badge:"Dành cho giáo viên và người thuyết trình · Windows &amp; Mac",
     prod1_desc:"Thanh công cụ nổi phía trên slide và ứng dụng. Mọi công cụ chỉ một cú nhấp — không thu nhỏ, không chuyển tab.",
-    prod1_cta:"⬇ Dùng thử miễn phí — Windows &amp; Mac",
+    prod1_cta:"⬇ Dùng thử miễn phí — Windows",
+    prod1_cta_mac:"🍎 Tải cho Mac",
     prod1_f1:"Nổi trên slide, video hoặc bất kỳ ứng dụng nào — luôn hiển thị, luôn sẵn sàng",
     prod1_f2:"Hẹn giờ với cài đặt sẵn, chọn học sinh ngẫu nhiên và màn hình đo tiếng ồn trực tiếp",
     prod1_f3:"Vẽ, tô sáng và chú thích trực tiếp lên mọi thứ trên màn hình",
