@@ -362,8 +362,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
 <div class="announce-bar" id="announce-bar">
   <span class="ab-tag">New</span>
-  <span><strong>Layers v3.8 is out</strong> — Scheduled Focus Mode, smarter Classroom Sync, and the Mac app is coming.</span>
-  <a href="blog/whats-new-v38-mac.html" class="ab-link">Read what's new →</a>
+  <span><strong>Layers for Mac is here</strong> — Download the .dmg and try it free for 14 days.</span>
+  <a href="get.html" class="ab-link">Download now →</a>
   <button class="ab-dismiss" onclick="document.getElementById('announce-bar').style.display='none'" aria-label="Dismiss">×</button>
 </div>
 
@@ -377,7 +377,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" class="btn-secondary" data-i18n="hero_btn_student">Free Student Extension</a>
   </div>
   <p style="margin-top:14px;font-size:0.78rem;color:var(--dim);letter-spacing:0.03em;">
-    🖥️ <strong style="color:var(--muted);">Windows</strong> &nbsp;·&nbsp; 🍎 <a href="blog/whats-new-v38-mac.html" style="color:var(--green);text-decoration:none;font-weight:600;">Mac coming soon</a> &nbsp;·&nbsp; <a href="#pricing" style="color:var(--accent2);text-decoration:none;" data-i18n="hero_see_pricing">See pricing</a>
+    🖥️ <strong style="color:var(--muted);">Windows</strong> &nbsp;·&nbsp; 🍎 <a href="get.html" style="color:var(--green);text-decoration:none;font-weight:600;">Mac available now</a> &nbsp;·&nbsp; <a href="#pricing" style="color:var(--accent2);text-decoration:none;" data-i18n="hero_see_pricing">See pricing</a>
   </p>
   <div class="toolbar-demo">
     <div class="toolbar-wrap">
@@ -488,7 +488,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <li data-i18n="prod1_f5">Open a clean, focused browser without exposing your personal tabs</li>
         <li data-i18n="prod1_f6">Connect to student devices and control their focus remotely</li>
       </ul>
-      <p class="product-who" data-i18n="prod1_who">Windows now · Mac coming soon. Open it and you're ready — nothing to configure.</p>
+      <p class="product-who" data-i18n="prod1_who">Windows &amp; Mac · Open it and you're ready — nothing to configure.</p>
     </div>
     <div class="product-card">
       <span class="product-num">02</span>
@@ -505,24 +505,21 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       </ul>
       <p class="product-who" data-i18n="prod2_who">Works in any browser. Free — no account or sign-up needed.</p>
     </div>
-    <!-- Mac Coming Soon Card -->
-    <div class="product-card mac-soon">
-      <span class="product-num" style="color:rgba(46,213,115,0.07);">03</span>
-      <div class="product-badge" style="background:rgba(46,213,115,0.1);border-color:rgba(46,213,115,0.25);color:var(--green);">For Mac · Coming Soon</div>
-      <h3>Layers <span style="color:var(--green);">Mac</span></h3>
+    <!-- Mac Card -->
+    <div class="product-card mac-soon" style="border-color:rgba(167,139,250,0.35);background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(26,26,36,0.9));">
+      <span class="product-num" style="color:rgba(167,139,250,0.07);">03</span>
+      <div class="product-badge" style="background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.3);color:#c4b5fd;">🍎 Mac · New</div>
+      <h3>Layers <span style="color:#c4b5fd;">Mac</span></h3>
       <p style="color:var(--muted);font-size:0.95rem;line-height:1.65;margin-bottom:24px;">The full Layers experience on macOS — floats above Keynote, Safari, YouTube, and any full-screen app. Built with Electron, supports Intel and Apple Silicon.</p>
-      <ul class="feature-list">
-        <li>Identical feature set to the Windows app</li>
+      <ul class="feature-list" style="--accent:#a78bfa;">
+        <li style="--accent:#a78bfa;">Identical feature set to the Windows app</li>
         <li>Always-on-top over Keynote and macOS full-screen</li>
         <li>Classroom Sync, Schedule, noise meter</li>
         <li>Push-to-talk translation and floating captions</li>
-        <li>Distributed as a signed .dmg</li>
+        <li>Intel + Apple Silicon (M1/M2/M3/M4)</li>
       </ul>
-      <div class="mac-soon-overlay">
-        <span class="mac-soon-badge">🍎 In development</span>
-        <p class="mac-soon-text">The first build is running. Drop your email to be notified when it's ready.</p>
-        <a href="mailto:questions@thelayersapp.com?subject=Mac — notify me" class="mac-soon-notify">Notify me when it's ready →</a>
-      </div>
+      <p class="product-who" style="margin-top:16px;">macOS 12+ · 14-day free trial · $29 one-time after.</p>
+      <a href="get.html" style="display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:#a78bfa;color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;">⬇ Download for Mac</a>
     </div>
   </div>
 </section>
@@ -672,7 +669,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
         <div class="p-save" data-i18n="p2_save">Pay once · yours to keep · free updates included</div>
         <div class="p-divider"></div>
         <ul class="p-features">
-          <li><span class="ck">✓</span> <span data-i18n="p2_f1">Floating toolbar on one Windows PC</span></li>
+          <li><span class="ck">✓</span> <span data-i18n="p2_f1">Floating toolbar — Windows &amp; Mac</span></li>
           <li><span class="ck">✓</span> <span data-i18n="p2_f2">Timer, student picker, noise monitor</span></li>
           <li><span class="ck">✓</span> <span data-i18n="p2_f3">Screen drawing &amp; annotation</span></li>
           <li><span class="ck">✓</span> <span data-i18n="p2_f4">Live speech translation — 46 languages</span></li>
@@ -780,15 +777,15 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 var T = {
   en: {
     nav_features:"For Teachers", nav_students:"For Students", nav_pricing:"Pricing", nav_cta:"Get Started",
     hero_badge:"🖥️ The floating toolkit for teachers & presenters",
     hero_h1:"Everything you need,<br><em>floating over your slides.</em>",
     hero_sub:"Layers floats on top of your slides, videos, and apps — giving you instant access to timers, annotation, translation, and classroom tools without ever leaving your presentation.",
-    hero_btn_teacher:"Get the Teacher App — $29 · Windows", hero_btn_student:"Free Student Extension",
-    hero_btn_try:"Try Free for 14 Days — Windows", hero_see_pricing:"See pricing",
+    hero_btn_teacher:"Get the Teacher App — $29 · Windows &amp; Mac", hero_btn_student:"Free Student Extension",
+    hero_btn_try:"Try Free for 14 Days — Windows &amp; Mac", hero_see_pricing:"See pricing",
     toolbar_label:"// always on top · floats over any app · drag to reposition",
     prob_tag:"// The problem", prob_h2:"Presentations shouldn't<br>require <em>juggling apps.</em>",
     prob_intro:"But every time you need a tool, you're forced to stop, minimize your slides, find what you need, then try to pick up where you left off. By then, you've already lost the room.",
@@ -798,7 +795,7 @@ var T = {
     prob_works_on:"Works on top of", prob_any_website:"Any website",
     prod_tag:"// Two tools, one classroom", prod_h2:"One for teachers.<br>One for <em>students.</em>",
     prod_intro:"The teacher app floats on Windows. The student tool lives in the browser. They work together out of the box.",
-    prod1_badge:"For Teachers & Presenters · Windows",
+    prod1_badge:"For Teachers &amp; Presenters · Windows &amp; Mac",
     prod1_desc:"A compact floating toolbar that sits on top of everything on your screen. Every tool you need during a lesson or presentation is one click away — no minimizing, no switching, no losing your place.",
     prod1_f1:"Floats above your slides, videos, or any app — always visible, always ready",
     prod1_f2:"Timer with presets, a student picker, and a live noise monitor",
@@ -806,7 +803,7 @@ var T = {
     prod1_f4:"Speak and have your words translated live into 46 languages",
     prod1_f5:"Open a clean, focused browser without exposing your personal tabs",
     prod1_f6:"Connect to student devices and control their focus remotely",
-    prod1_who:"For any Windows laptop or PC. Open it and you're ready — nothing to configure.",
+    prod1_who:"Windows &amp; Mac · Open it and you're ready — nothing to configure.",
     prod2_badge:"For Students · Free Forever",
     prod2_desc:"A toolbar that lives in the browser, giving students access to productivity and study tools on any page they're working on — without opening a new tab or interrupting the lesson.",
     prod2_f1:"Translate any word or sentence into their language — on any website",
@@ -856,7 +853,7 @@ var T = {
     sync_f4:"Set a PIN so students cannot undo your controls",
     sync_f5:"See exactly how many students are connected right now",
     sync_f6:"Room codes are permanent — students join once and auto-rejoin every class",
-    sync_box1_title:"Teacher — Layers on Windows", sync_box1_sub:"Focus Mode, Site Blocking, Internet Lockdown, PIN",
+    sync_box1_title:"Teacher — Layers on Windows or Mac", sync_box1_sub:"Focus Mode, Site Blocking, Internet Lockdown, Schedule, PIN",
     sync_arrow1:"↓ sends instantly", sync_box2_title:"Secure connection", sync_box2_sub:"Your room code keeps it private to your class",
     sync_arrow2:"↓ arrives instantly", sync_box3_title:"Students — Layers in the browser", sync_box3_sub:"Receives and applies instructions immediately",
     sync_note:"Works with any Chromebook, laptop, or desktop in your classroom",
@@ -868,7 +865,7 @@ var T = {
     p1_f5:"Countdown timer", p1_f6:"Focus Mode", p1_f7:"Connect to teacher's classroom", p1_btn:"Add to Chrome — Free",
     p2_tag:"One-time", p2_tier:"For Teachers & Presenters", p2_name:"Personal",
     p2_save:"Pay once · yours to keep · free updates included",
-    p2_f1:"Floating toolbar on one Windows PC", p2_f2:"Timer, student picker, noise monitor",
+    p2_f1:"Floating toolbar — Windows &amp; Mac", p2_f2:"Timer, student picker, noise monitor",
     p2_f3:"Screen drawing & annotation", p2_f4:"Live speech translation — 46 languages",
     p2_f5:"Focused browser window", p2_f6:"Quick file launcher", p2_f7:"Classroom connection & student controls",
     p2_btn:"Buy Now — $29",
@@ -880,7 +877,7 @@ var T = {
     no_ads:"<strong>No ads. Ever.</strong> Students and teachers will never see an advertisement inside Layers. Your purchase keeps the app improving — nothing else.",
     cta_h2:"Stop switching windows.<br><em>Start presenting.</em>",
     cta_p:"Everything you need, right on top of your presentation. The student tool is free — the teacher app is a one-time purchase.",
-    cta_btn_teacher:"Get the Teacher App — $29 · Windows", cta_btn_student:"Free Student Extension",
+    cta_btn_teacher:"Get the Teacher App — $29 · Windows &amp; Mac", cta_btn_student:"Free Student Extension",
     footer_tagline:"The Floating Toolkit for Presenters", footer_contact:"Contact", footer_privacy:"Privacy Policy",
     nav_blog:"Blog",
     nav_support:"☕ Support",
@@ -906,8 +903,8 @@ var T = {
     hero_badge:"🖥️ 教師・プレゼンターのためのフローティングツールキット",
     hero_h1:"スライドの上に、<br><em>必要なものがすべて。</em>",
     hero_sub:"Layersはスライド、動画、アプリの上に浮かび上がり、タイマー、注釈、翻訳、授業ツールへ即アクセス。プレゼンを離れる必要はありません。",
-    hero_btn_teacher:"教師用アプリを入手 — $29 · Windows", hero_btn_student:"生徒用拡張機能（無料）",
-    hero_btn_try:"14日間無料体験 — Windows", hero_see_pricing:"料金を見る",
+    hero_btn_teacher:"教師用アプリを入手 — $29 · Windows &amp; Mac", hero_btn_student:"生徒用拡張機能（無料）",
+    hero_btn_try:"14日間無料体験 — Windows &amp; Mac", hero_see_pricing:"料金を見る",
     toolbar_label:"// 常に最前面 · どのアプリの上にも表示 · ドラッグで移動",
     prob_tag:"// 課題", prob_h2:"プレゼン中に<br>アプリを<em>切り替える必要はない。</em>",
     prob_intro:"でも実際には、ツールが必要になるたびにスライドを最小化して、必要なものを探して、元の場所に戻ろうとする。その間に、聴衆の集中は途切れてしまいます。",
@@ -917,7 +914,7 @@ var T = {
     prob_works_on:"対応ソフトウェア", prob_any_website:"あらゆるウェブサイト",
     prod_tag:"// 2つのツール、1つの教室", prod_h2:"教師向けと<br><em>生徒向け。</em>",
     prod_intro:"教師用アプリはWindowsで動作。生徒用ツールはブラウザで動作。すぐに連携できます。",
-    prod1_badge:"教師・プレゼンター向け · Windows",
+    prod1_badge:"教師・プレゼンター向け · Windows &amp; Mac",
     prod1_desc:"画面上のすべての上に浮かぶコンパクトなツールバー。授業やプレゼン中に必要なツールはワンクリックで。最小化も切り替えも不要です。",
     prod1_f1:"スライド、動画、あらゆるアプリの上に表示 — 常に見える場所に",
     prod1_f2:"プリセット付きタイマー、生徒ピッカー、ライブ騒音モニター",
@@ -925,7 +922,7 @@ var T = {
     prod1_f4:"話した言葉をリアルタイムで46言語に翻訳",
     prod1_f5:"個人のタブを見せずにクリーンなブラウザを開く",
     prod1_f6:"生徒のデバイスに接続し、集中状態をリモートで管理",
-    prod1_who:"WindowsのノートPCやデスクトップで動作。開くだけで準備完了。",
+    prod1_who:"Windows &amp; Mac対応。開くだけで準備完了。",
     prod2_badge:"生徒向け · 永久無料",
     prod2_desc:"ブラウザに常駐するツールバー。新しいタブを開かずに、作業中のページ上で翻訳、メモ、タイマー、描画ツールを使用できます。",
     prod2_f1:"あらゆるウェブサイトで単語や文章を瞬時に翻訳",
@@ -975,7 +972,7 @@ var T = {
     sync_f4:"\u751f\u5f92\u304c\u64cd\u4f5c\u3092\u53d6\u308a\u6d88\u305b\u306a\u3044\u3088\u3046\u306bPIN\u3092\u8a2d\u5b9a",
     sync_f5:"\u4eca\u63a5\u7d9a\u3057\u3066\u3044\u308b\u751f\u5f92\u6570\u3092\u6b63\u78ba\u306b\u78ba\u8a8d",
     sync_f6:"\u30eb\u30fc\u30e0\u30b3\u30fc\u30c9\u306f\u6c38\u7d9a\u7684 \u2014 \u751f\u5f92\u306f\u4e00\u5ea6\u53c2\u52a0\u3059\u308c\u3070\u6bce\u56de\u81ea\u52d5\u518d\u63a5\u7d9a",
-    sync_box1_title:"教師 — WindowsのLayers", sync_box1_sub:"\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3001\u30b5\u30a4\u30c8\u30d6\u30ed\u30c3\u30af\u3001\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u3001PIN\u8a2d\u5b9a",
+    sync_box1_title:"教師 — Windows/MacのLayers", sync_box1_sub:"\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3001\u30b5\u30a4\u30c8\u30d6\u30ed\u30c3\u30af\u3001\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u3001PIN\u8a2d\u5b9a",
     sync_arrow1:"↓ 即座に送信", sync_box2_title:"セキュアな接続", sync_box2_sub:"ルームコードがクラスのプライバシーを守ります",
     sync_arrow2:"↓ 即座に受信", sync_box3_title:"生徒 — ブラウザのLayers", sync_box3_sub:"指示を受信して即座に適用",
     sync_note:"教室内のあらゆるChromebook、ラップトップ、デスクトップに対応",
@@ -987,7 +984,7 @@ var T = {
     p1_f5:"カウントダウンタイマー", p1_f6:"フォーカスモード", p1_f7:"教師の教室に接続", p1_btn:"Chromeに追加 — 無料",
     p2_tag:"買い切り", p2_tier:"教師・プレゼンター向け", p2_name:"個人プラン",
     p2_save:"一度の支払いで永久使用 · 無料アップデート付き",
-    p2_f1:"1台のWindows PCにフローティングツールバー", p2_f2:"タイマー、生徒ピッカー、騒音モニター",
+    p2_f1:"フローティングツールバー — Windows &amp; Mac", p2_f2:"タイマー、生徒ピッカー、騒音モニター",
     p2_f3:"画面描画・注釈", p2_f4:"リアルタイム音声翻訳 — 46言語",
     p2_f5:"フォーカスブラウザウィンドウ", p2_f6:"クイックファイルランチャー", p2_f7:"教室接続・生徒コントロール",
     p2_btn:"今すぐ購入 — $29",
@@ -999,7 +996,7 @@ var T = {
     no_ads:"<strong>広告は一切なし。</strong> 生徒も教師もLayersの中で広告を見ることはありません。購入費用はアプリの改善にのみ使われます。",
     cta_h2:"ウィンドウの切り替えをやめて<br><em>プレゼンを始めよう。</em>",
     cta_p:"プレゼンの上に必要なものすべてが揃っています。生徒用ツールは無料 — 教師用アプリは買い切りです。",
-    cta_btn_teacher:"教師用アプリを入手 — $29 · Windows", cta_btn_student:"生徒用拡張機能（無料）",
+    cta_btn_teacher:"教師用アプリを入手 — $29 · Windows &amp; Mac", cta_btn_student:"生徒用拡張機能（無料）",
     footer_tagline:"プレゼンターのためのフローティングツールキット", footer_contact:"お問い合わせ", footer_privacy:"プライバシーポリシー",
     nav_blog:"ブログ",
     nav_support:"☕ 応援する",
@@ -1025,8 +1022,8 @@ var T = {
     hero_badge:"🖥️ 专为教师和演讲者设计的浮动工具栏",
     hero_h1:"所有工具，<br><em>浮在幻灯片上方。</em>",
     hero_sub:"Layers 悬浮在您的幻灯片、视频和应用上方，无需离开演示即可立即使用计时器、注释、翻译和课堂工具。",
-    hero_btn_teacher:"获取教师应用 — $29 · Windows", hero_btn_student:"免费学生插件",
-    hero_btn_try:"14天免费试用 — Windows", hero_see_pricing:"查看价格",
+    hero_btn_teacher:"获取教师应用 — $29 · Windows &amp; Mac", hero_btn_student:"免费学生插件",
+    hero_btn_try:"14天免费试用 — Windows &amp; Mac", hero_see_pricing:"查看价格",
     toolbar_label:"// 始终置顶 · 悬浮于任何应用上方 · 拖动移位",
     prob_tag:"// 问题所在", prob_h2:"演示不应该需要<br><em>不断切换应用。</em>",
     prob_intro:"但每次需要工具时，您都被迫停下来，最小化幻灯片，找到所需内容，再试图回到原来的地方。此时，您已经失去了听众的注意力。",
@@ -1036,7 +1033,7 @@ var T = {
     prob_works_on:"适用于", prob_any_website:"任何网站",
     prod_tag:"// 两款工具，一个课堂", prod_h2:"一款给教师。<br>一款给<em>学生。</em>",
     prod_intro:"教师应用在 Windows 上运行。学生工具在浏览器中运行。开箱即用，无缝协作。",
-    prod1_badge:"教师和演讲者专用 · Windows",
+    prod1_badge:"教师和演讲者专用 · Windows &amp; Mac",
     prod1_desc:"悬浮在屏幕上所有内容上方的紧凑工具栏。课堂或演示中所需的每个工具均可一键访问——无需最小化、无需切换、不会迷失方向。",
     prod1_f1:"悬浮于幻灯片、视频或任何应用上方——始终可见，随时待命",
     prod1_f2:"带预设的计时器、学生选取器和实时噪音监测",
@@ -1044,7 +1041,7 @@ var T = {
     prod1_f4:"实时将您的话语翻译成46种语言",
     prod1_f5:"打开干净的专注浏览器，不暴露个人标签页",
     prod1_f6:"连接学生设备，远程管理其专注状态",
-    prod1_who:"适用于任何 Windows 笔记本或台式机。打开即用——无需配置。",
+    prod1_who:"Windows &amp; Mac 均可使用。打开即用——无需配置。",
     prod2_badge:"学生专用 · 永久免费",
     prod2_desc:"浏览器内的工具栏，让学生在任何页面上使用生产力和学习工具——无需打开新标签页或打断课程。",
     prod2_f1:"在任何网站上将任何单词或句子翻译成其语言",
@@ -1094,7 +1091,7 @@ var T = {
     sync_f4:"设置PIN使学生无法撤销您的控制",
     sync_f5:"准确查看当前连接的学生数量",
     sync_f6:"房间码是永久的——学生加入一次后每节课自动重新连接",
-    sync_box1_title:"教师 — Windows 上的 Layers", sync_box1_sub:"专注模式、网站屏蔽、网络封锁、PIN",
+    sync_box1_title:"教师 — Windows 或 Mac 上的 Layers", sync_box1_sub:"专注模式、网站屏蔽、网络封锁、PIN",
     sync_arrow1:"↓ 即时发送", sync_box2_title:"安全连接", sync_box2_sub:"您的房间码使其对您的班级保持私密",
     sync_arrow2:"↓ 即时到达", sync_box3_title:"学生 — 浏览器中的 Layers", sync_box3_sub:"立即接收并应用指令",
     sync_note:"适用于教室中任何 Chromebook、笔记本或台式机",
@@ -1106,7 +1103,7 @@ var T = {
     p1_f5:"倒计时器", p1_f6:"专注模式", p1_f7:"连接教师课堂", p1_btn:"添加到 Chrome——免费",
     p2_tag:"一次性购买", p2_tier:"教师和演讲者专用", p2_name:"个人版",
     p2_save:"一次付费 · 永久使用 · 包含免费更新",
-    p2_f1:"一台 Windows PC 上的浮动工具栏", p2_f2:"计时器、学生选取器、噪音监测",
+    p2_f1:"浮动工具栏 — Windows &amp; Mac", p2_f2:"计时器、学生选取器、噪音监测",
     p2_f3:"屏幕绘图和注释", p2_f4:"实时语音翻译——46种语言",
     p2_f5:"专注浏览器窗口", p2_f6:"快速文件启动器", p2_f7:"课堂连接和学生控制",
     p2_btn:"立即购买——$29",
@@ -1118,7 +1115,7 @@ var T = {
     no_ads:"<strong>永不显示广告。</strong> 学生和教师在 Layers 中永远不会看到广告。您的购买仅用于改进应用。",
     cta_h2:"停止切换窗口。<br><em>开始演示。</em>",
     cta_p:"您需要的一切都在演示上方。学生工具免费——教师应用一次性购买。",
-    cta_btn_teacher:"获取教师应用 — $29 · Windows", cta_btn_student:"免费学生插件",
+    cta_btn_teacher:"获取教师应用 — $29 · Windows &amp; Mac", cta_btn_student:"免费学生插件",
     footer_tagline:"演讲者的浮动工具套件", footer_contact:"联系我们", footer_privacy:"隐私政策",
     nav_blog:"博客",
     nav_support:"☕ 支持我们",
@@ -1144,8 +1141,8 @@ var T = {
     hero_badge:"🖥️ Bộ công cụ nổi dành cho giáo viên và người thuyết trình",
     hero_h1:"Thuyết trình không<br><em>bị gián đoạn.</em>",
     hero_sub:"Layers nổi trên các slide, video và ứng dụng của bạn — giúp bạn truy cập ngay vào bộ hẹn giờ, chú thích, dịch thuật và công cụ lớp học mà không cần rời khỏi bài thuyết trình.",
-    hero_btn_teacher:"Tải ứng dụng giáo viên — $29 · Windows", hero_btn_student:"Tiện ích miễn phí cho học sinh",
-    hero_btn_try:"Dùng thử miễn phí 14 ngày — Windows", hero_see_pricing:"Xem giá",
+    hero_btn_teacher:"Tải ứng dụng giáo viên — $29 · Windows &amp; Mac", hero_btn_student:"Tiện ích miễn phí cho học sinh",
+    hero_btn_try:"Dùng thử miễn phí 14 ngày — Windows &amp; Mac", hero_see_pricing:"Xem giá",
     toolbar_label:"// Luôn ở trên cùng · Nổi trên mọi ứng dụng · Kéo để di chuyển",
     prob_tag:"// Vấn đề", prob_h2:"Thuyết trình không nên<br>cần <em>chuyển đổi ứng dụng.</em>",
     prob_intro:"Nhưng mỗi khi cần một công cụ, bạn buộc phải dừng lại, thu nhỏ slide, tìm những gì cần, rồi cố gắng tiếp tục từ chỗ đã dừng. Lúc đó, bạn đã mất sự chú ý của khán giả rồi.",
@@ -1155,7 +1152,7 @@ var T = {
     prob_works_on:"Hoạt động trên", prob_any_website:"Bất kỳ trang web nào",
     prod_tag:"// Hai công cụ, một lớp học", prod_h2:"Một dành cho giáo viên.<br>Một dành cho <em>học sinh.</em>",
     prod_intro:"Ứng dụng giáo viên chạy trên Windows. Công cụ học sinh chạy trên trình duyệt. Chúng phối hợp với nhau ngay từ đầu.",
-    prod1_badge:"Dành cho giáo viên và người thuyết trình · Windows",
+    prod1_badge:"Dành cho giáo viên và người thuyết trình · Windows &amp; Mac",
     prod1_desc:"Thanh công cụ nổi nhỏ gọn đặt trên mọi thứ trên màn hình. Mọi công cụ bạn cần trong bài học hoặc thuyết trình đều chỉ một cú nhấp — không cần thu nhỏ, không cần chuyển đổi, không bị lạc chỗ.",
     prod1_f1:"Nổi trên slide, video hoặc bất kỳ ứng dụng nào — luôn hiển thị, luôn sẵn sàng",
     prod1_f2:"Hẹn giờ với cài đặt sẵn, chọn học sinh ngẫu nhiên và màn hình đo tiếng ồn trực tiếp",
@@ -1163,7 +1160,7 @@ var T = {
     prod1_f4:"Nói và dịch lời nói thành 46 ngôn ngữ theo thời gian thực",
     prod1_f5:"Mở trình duyệt sạch, tập trung mà không tiết lộ tab cá nhân",
     prod1_f6:"Kết nối với thiết bị học sinh và kiểm soát sự tập trung của họ từ xa",
-    prod1_who:"Dành cho máy tính xách tay hoặc PC Windows. Mở ra là sẵn sàng — không cần cấu hình.",
+    prod1_who:"Windows &amp; Mac · Mở ra là sẵn sàng — không cần cấu hình.",
     prod2_badge:"Dành cho học sinh · Miễn phí mãi mãi",
     prod2_desc:"Thanh công cụ trong trình duyệt, cung cấp cho học sinh các công cụ học tập trên bất kỳ trang nào — không cần mở tab mới hoặc làm gián đoạn bài học.",
     prod2_f1:"Dịch bất kỳ từ hoặc câu nào sang ngôn ngữ của họ — trên bất kỳ trang web nào",
@@ -1213,7 +1210,7 @@ var T = {
     sync_f4:"Đặt PIN để học sinh không thể hoàn tác điều khiển của bạn",
     sync_f5:"Xem chính xác có bao nhiêu học sinh đang kết nối ngay bây giờ",
     sync_f6:"Mã phòng là vĩnh viễn — học sinh tham gia một lần và tự động kết nối lại mỗi buổi học",
-    sync_box1_title:"Giáo viên — Layers trên Windows", sync_box1_sub:"Chế độ Tập trung, Chặn trang, Chặn Internet, PIN",
+    sync_box1_title:"Giáo viên — Layers trên Windows hoặc Mac", sync_box1_sub:"Chế độ Tập trung, Chặn trang, Chặn Internet, PIN",
     sync_arrow1:"↓ gửi ngay lập tức", sync_box2_title:"Kết nối bảo mật", sync_box2_sub:"Mã phòng của bạn giữ cho lớp học riêng tư",
     sync_arrow2:"↓ nhận ngay lập tức", sync_box3_title:"Học sinh — Layers trên trình duyệt", sync_box3_sub:"Nhận và áp dụng hướng dẫn ngay lập tức",
     sync_note:"Hoạt động với bất kỳ Chromebook, laptop hoặc máy tính bàn nào trong lớp học của bạn",
@@ -1225,7 +1222,7 @@ var T = {
     p1_f5:"Hẹn giờ đếm ngược", p1_f6:"Chế độ tập trung", p1_f7:"Kết nối với lớp học của giáo viên", p1_btn:"Thêm vào Chrome — Miễn phí",
     p2_tag:"Mua một lần", p2_tier:"Dành cho giáo viên và người thuyết trình", p2_name:"Gói cá nhân",
     p2_save:"Trả một lần · Dùng mãi mãi · Bao gồm cập nhật miễn phí",
-    p2_f1:"Thanh công cụ nổi trên một PC Windows", p2_f2:"Hẹn giờ, chọn học sinh, màn hình đo tiếng ồn",
+    p2_f1:"Thanh công cụ nổi — Windows &amp; Mac", p2_f2:"Hẹn giờ, chọn học sinh, màn hình đo tiếng ồn",
     p2_f3:"Vẽ và chú thích màn hình", p2_f4:"Dịch giọng nói trực tiếp — 46 ngôn ngữ",
     p2_f5:"Cửa sổ trình duyệt tập trung", p2_f6:"Khởi chạy file nhanh", p2_f7:"Kết nối lớp học và kiểm soát học sinh",
     p2_btn:"Mua ngay — $29",
@@ -1237,7 +1234,7 @@ var T = {
     no_ads:"<strong>Không có quảng cáo. Mãi mãi.</strong> Học sinh và giáo viên sẽ không bao giờ thấy quảng cáo trong Layers. Khoản mua của bạn chỉ dùng để cải thiện ứng dụng.",
     cta_h2:"Ngừng chuyển đổi cửa sổ.<br><em>Bắt đầu thuyết trình.</em>",
     cta_p:"Mọi thứ bạn cần, ngay trên bài thuyết trình. Công cụ học sinh miễn phí — ứng dụng giáo viên mua một lần.",
-    cta_btn_teacher:"Tải ứng dụng giáo viên — $29 · Windows", cta_btn_student:"Tiện ích miễn phí cho học sinh",
+    cta_btn_teacher:"Tải ứng dụng giáo viên — $29 · Windows &amp; Mac", cta_btn_student:"Tiện ích miễn phí cho học sinh",
     footer_tagline:"Bộ công cụ nổi dành cho người thuyết trình", footer_contact:"Liên hệ", footer_privacy:"Chính sách bảo mật",
     nav_blog:"Blog",
     nav_support:"☕ Ủng hộ",
@@ -1476,14 +1473,4 @@ async function sendMessage() {
     appendMsg('bot', reply);
   } catch(err) {
     hideTyping();
-    appendMsg('bot', 'Connection error. Please email questions@thelayersapp.com for help.');
-  }
-
-  document.getElementById('chat-send').disabled = false;
-  input.focus();
-}
-</script>
-<!-- ===================== END CHAT WIDGET ===================== -->
-
-</body>
-</html>
+    appendMsg('bot', 'Connection error. Please email questions@thelayersapp.com for hel
