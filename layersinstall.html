@@ -108,7 +108,7 @@
   /* ── Audience Tabs ── */
   .tabs {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 10px;
     margin-bottom: 36px;
   }
@@ -135,6 +135,7 @@
   .tag-chromebook { background: var(--green-dim); color: var(--green); }
   .tag-windows { background: var(--purple-dim); color: var(--purple); }
   .tag-student { background: var(--blue-dim); color: var(--blue); }
+  .tag-mac { background: rgba(167,139,250,0.15); color: #c4b5fd; }
 
   .tab h3 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
   .tab p { font-size: 11px; color: var(--muted); line-height: 1.5; }
@@ -518,7 +519,7 @@
       <div class="route-card route-teacher" onclick="showPanel('student'); scrollToTabs();">
         <div class="route-emoji">🧑‍🏫</div>
         <h3 data-i18n="route_teacher_h">I'm a teacher</h3>
-        <p data-i18n="route_teacher_p">Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.</p>
+        <p data-i18n="route_teacher_p">Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves. Mac users: see the <strong>Mac Teacher App</strong> tab.</p>
         <span class="route-action" data-i18n="route_teacher_action">→ Go to Self-Install guide</span>
       </div>
       <div class="route-card route-it" onclick="showPanel('chromebook'); scrollToTabs();">
@@ -541,6 +542,11 @@
       <span class="tab-tag tag-windows">Windows</span>
       <h3 data-i18n="tab_win_h">Windows Admin</h3>
       <p data-i18n="tab_win_p">Force-install via registry on Windows 10/11 PCs</p>
+    </div>
+    <div class="tab" onclick="showPanel('mac')">
+      <span class="tab-tag tag-mac">macOS</span>
+      <h3 data-i18n="tab_mac_h">Mac Teacher App</h3>
+      <p data-i18n="tab_mac_p">Download &amp; first-launch setup for macOS</p>
     </div>
     <div class="tab active" onclick="showPanel('student')">
       <span class="tab-tag tag-student" data-i18n="tag_student">Self-Install</span>
@@ -820,6 +826,70 @@ pause</pre>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
+  <!--  MAC PANEL                                   -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div id="panel-mac" class="panel">
+    <div class="intro-box" style="background:rgba(167,139,250,0.1);border-color:#a78bfa;">
+      <span class="icon">🍎</span>
+      <span data-i18n="mac_intro">Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.</span>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="line"></div>
+        <div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">1</div>
+        <div class="step-body">
+          <h2 data-i18n="mac_s1_h">Download the .dmg from Google Drive</h2>
+          <p data-i18n="mac_s1_p">Open the folder and download the <strong>Layers Teacher.dmg</strong> file.</p>
+          <a href="https://drive.google.com/drive/folders/1zKE7chL3ivQT3JtGHBS0TjfqSmFZgXjX?usp=drive_link" target="_blank" rel="noopener noreferrer" class="download-btn" style="background:#a78bfa;text-decoration:none;">⬇ Open Google Drive folder</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="line"></div>
+        <div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">2</div>
+        <div class="step-body">
+          <h2 data-i18n="mac_s2_h">Open the .dmg and drag the app to Applications</h2>
+          <p data-i18n="mac_s2_p">Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="line"></div>
+        <div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">3</div>
+        <div class="step-body">
+          <h2 data-i18n="mac_s3_h">First launch — right-click to open</h2>
+          <p data-i18n="mac_s3_p">Because the app is not yet code-signed, macOS will block it on the first launch with the message: <em>"Layers Teacher.app cannot be opened because it is from an unidentified developer."</em></p>
+          <div class="note" style="margin-top:10px;margin-bottom:10px;">
+            <span>🖱️</span>
+            <span data-i18n="mac_s3_note"><strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong> — after that, the app opens normally.</span>
+          </div>
+          <div class="note" style="background:var(--green-dim);border-color:var(--green);">
+            <span>💡</span>
+            <span data-i18n="mac_s3_alt">Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong> next to the Layers warning.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num" style="border-color:var(--green);color:var(--green);">✓</div>
+        <div class="step-body">
+          <h2 data-i18n="mac_done_h">Done — Layers is running</h2>
+          <div class="done-box">
+            <span class="icon">🎉</span>
+            <div>
+              <h3 data-i18n="mac_done_title">The toolbar is floating on your screen</h3>
+              <p data-i18n="mac_done_p">From now on, double-click the app to open it normally. Layers floats above Keynote, Safari, YouTube, and any full-screen app. A 14-day free trial starts automatically — no license key needed to begin.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
   <!--  STUDENT PANEL                               -->
   <!-- ═══════════════════════════════════════════ -->
   <div id="panel-student" class="panel visible">
@@ -970,8 +1040,21 @@ const i18n = {
   cb_done_title:{ en: 'Extension auto-installs on all student devices', ja: 'すべての生徒端末に自動インストールされます', zh: '扩展程序会自动安装到所有学生设备', vi: 'Tiện ích sẽ tự động cài đặt trên tất cả thiết bị học sinh' },
   cb_done_p:   { en: 'Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.', ja: '次回 Chrome にサインインするか再起動すると、生徒のツールバーに Layers アイコンが表示されます。生徒側の操作は不要です。ポリシーが有効な間、生徒は拡張機能を削除できません。', zh: '学生下次登录或重启 Chrome 时，工具栏会出现 Layers 图标。无需学生操作。策略生效期间，学生无法删除该扩展程序。', vi: 'Học sinh sẽ thấy biểu tượng Layers trên thanh công cụ Chrome khi đăng nhập hoặc khởi động lại Chrome lần sau. Không cần học sinh thao tác. Tiện ích không thể bị gỡ bỏ khi chính sách còn hiệu lực.' },
 
-  // Windows
-  win_intro:      { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。生徒は削除できません。', zh: '此操作会添加一个注册表项，让 Chrome 在 Windows PC 上强制安装 Layers 扩展程序。学生无法删除。', vi: 'Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows. Học sinh không thể gỡ bỏ.' },
+  tab_mac_h:   { en: 'Mac Teacher App', ja: 'Mac 教師アプリ', zh: 'Mac 教师应用', vi: 'Ứng dụng giáo viên Mac' },
+  tab_mac_p:   { en: 'Download & first-launch setup for macOS', ja: 'macOS向けダウンロードと初回起動の設定', zh: '下载及 macOS 首次启动设置', vi: 'Tải xuống và thiết lập lần đầu cho macOS' },
+  mac_intro:   { en: 'Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.', ja: 'Mac用Layers教師アプリ（.dmg）をダウンロードします。アプリはまだコード署名されていないため、初回起動時に一手順追加が必要です。', zh: '下载 Mac 版 Layers 教师应用（.dmg）。该应用尚未经过代码签名，因此首次启动需要一个额外步骤。', vi: 'Tải ứng dụng Layers dành cho giáo viên trên Mac (.dmg). Ứng dụng chưa được ký mã, vì vậy lần khởi động đầu tiên cần thêm một bước.' },
+  mac_s1_h:    { en: 'Download the .dmg from Google Drive', ja: 'Google Driveから.dmgをダウンロード', zh: '从 Google Drive 下载 .dmg', vi: 'Tải .dmg từ Google Drive' },
+  mac_s1_p:    { en: 'Open the folder and download the <strong>Layers Teacher.dmg</strong> file.', ja: 'フォルダを開いて<strong>Layers Teacher.dmg</strong>をダウンロードしてください。', zh: '打开文件夹并下载 <strong>Layers Teacher.dmg</strong> 文件。', vi: 'Mở thư mục và tải file <strong>Layers Teacher.dmg</strong>.' },
+  mac_s2_h:    { en: 'Open the .dmg and drag the app to Applications', ja: '.dmgを開いてアプリをApplicationsにドラッグ', zh: '打开 .dmg 并将应用拖到 Applications 文件夹', vi: 'Mở .dmg và kéo ứng dụng vào thư mục Applications' },
+  mac_s2_p:    { en: 'Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.', ja: 'ダウンロードした.dmgをダブルクリック。<strong>Layers Teacher.app</strong>をApplicationsフォルダにドラッグしてください。', zh: '双击下载的 .dmg 文件。将 <strong>Layers Teacher.app</strong> 拖到 Applications 文件夹。', vi: 'Nhấp đúp vào file .dmg đã tải. Kéo <strong>Layers Teacher.app</strong> vào thư mục Applications.' },
+  mac_s3_h:    { en: 'First launch — right-click to open', ja: '初回起動 — 右クリックして開く', zh: '首次启动——右键点击打开', vi: 'Lần đầu khởi động — nhấp chuột phải để mở' },
+  mac_s3_p:    { en: 'Because the app is not yet code-signed, macOS will block it on the first launch with the message: <em>"Layers Teacher.app cannot be opened because it is from an unidentified developer."</em>', ja: 'アプリはまだコード署名されていないため、macOSが初回起動時に<em>「"Layers Teacher.app"は、身元不明の開発元からのものであるため開けません。」</em>とブロックします。', zh: '由于应用尚未经过代码签名，macOS 首次启动时会拦截并显示：<em>"无法打开"Layers Teacher.app"，因为它来自身份不明的开发者。"</em>', vi: 'Vì ứng dụng chưa được ký mã, macOS sẽ chặn khi khởi động lần đầu với thông báo: <em>"Layers Teacher.app không thể mở vì đến từ nhà phát triển chưa được xác định."</em>' },
+  mac_s3_note: { en: '<strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong> — after that, the app opens normally.', ja: 'ApplicationsフォルダでアプリをRight-click→<strong>開く</strong>をクリック→ダイアログで<strong>開く</strong>をクリック。これは<strong>1回だけ</strong>必要です — 以降は通常通り開きます。', zh: '在 Applications 中<strong>右键点击</strong>应用 → 点击<strong>打开</strong> → 在对话框中点击<strong>打开</strong>。只需操作<strong>一次</strong>——之后即可正常打开。', vi: '<strong>Nhấp chuột phải</strong> vào ứng dụng trong Applications → nhấp <strong>Mở</strong> → nhấp <strong>Mở</strong> trong hộp thoại. Chỉ cần làm điều này <strong>một lần</strong> — sau đó ứng dụng mở bình thường.' },
+  mac_s3_alt:  { en: 'Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong> next to the Layers warning.', ja: '別の方法：<strong>システム設定 → プライバシーとセキュリティ</strong>を開き、Layersの警告の横にある<strong>このまま開く</strong>をクリック。', zh: '替代方法：前往<strong>系统设置 → 隐私与安全性</strong>，向下滚动，点击 Layers 警告旁边的<strong>仍然打开</strong>。', vi: 'Cách khác: vào <strong>Cài đặt hệ thống → Quyền riêng tư &amp; Bảo mật</strong>, kéo xuống và nhấp <strong>Vẫn mở</strong> bên cạnh cảnh báo Layers.' },
+  mac_done_h:  { en: 'Done — Layers is running', ja: '完了 — Layersが起動しました', zh: '完成——Layers 正在运行', vi: 'Hoàn tất — Layers đang chạy' },
+  mac_done_title:{ en: 'The toolbar is floating on your screen', ja: 'ツールバーが画面に表示されています', zh: '工具栏正悬浮在屏幕上', vi: 'Thanh công cụ đang nổi trên màn hình của bạn' },
+  mac_done_p:  { en: 'From now on, double-click the app to open it normally. Layers floats above Keynote, Safari, YouTube, and any full-screen app. A 14-day free trial starts automatically — no license key needed to begin.', ja: '以降はアプリをダブルクリックするだけで開きます。LayersはKeynote、Safari、YouTube、フルスクリーンアプリの上に浮かびます。14日間の無料体験が自動的に開始されます — ライセンスキー不要。', zh: '从现在起，双击应用即可正常打开。Layers 会悬浮在 Keynote、Safari、YouTube 及任何全屏应用上方。14 天免费试用自动开始——无需许可证密钥。', vi: 'Từ bây giờ, nhấp đúp vào ứng dụng để mở bình thường. Layers nổi phía trên Keynote, Safari, YouTube và mọi ứng dụng toàn màn hình. 14 ngày dùng thử miễn phí tự động bắt đầu — không cần khóa giấy phép.' },
+  win_intro:   { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。生徒は削除できません。', zh: '此操作会添加一个注册表项，让 Chrome 在 Windows PC 上强制安装 Layers 扩展程序。学生无法删除。', vi: 'Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows. Học sinh không thể gỡ bỏ.' },
   win_recommended:{ en: 'Recommended', ja: '推奨', zh: '推荐', vi: 'Khuyến nghị' },
   win_fastest:    { en: 'Fastest', ja: '最速', zh: '最快', vi: 'Nhanh nhất' },
   win_m1_h:       { en: '⚙️ Registry (.reg file)', ja: '⚙️ レジストリ (.reg ファイル)', zh: '⚙️ 注册表（.reg 文件）', vi: '⚙️ Registry (tệp .reg)' },
