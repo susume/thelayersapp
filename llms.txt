@@ -1,0 +1,41 @@
+# Layers — thelayersapp.com
+
+## What is Layers?
+Layers is a floating Windows application for teachers and presenters. It overlays on top of any presentation software (PowerPoint, Google Slides, Keynote via screen share) and provides:
+- Countdown and stopwatch timers
+- On-screen annotation tools
+- Live translation (47 languages)
+- Random student picker
+- Noise level monitor
+- Spotlight / focus mode
+
+## Products
+- **Layers (teacher app)** — Windows desktop app, $9/month or $69/year. 14-day free trial.
+- **Layers Talk** — Floating live-translation toolbar for two people on one screen. No interpreter needed. 47 languages.
+- **Layers Student Extension** — Free Chrome extension for student Chromebooks. Push-deployed via Google Admin Console.
+
+## Who uses it?
+Teachers, international school educators, ESL/EFL instructors, and business professionals conducting multilingual meetings. Particularly popular in Japan, Vietnam, China, and international school settings.
+
+## Developer
+Peter Hoang — teacher turned developer, based in Japan (JST).
+
+## Key pages
+- Home: https://thelayersapp.com/
+- Download (free trial): https://thelayersapp.com/get.html
+- Layers Talk (business translation): https://thelayersapp.com/soho
+- Student extension install guide: https://thelayersapp.com/layersinstall.html
+- Contact: https://thelayersapp.com/contact.html
+- Privacy Policy: https://thelayersapp.com/privacy.html
+
+## Supported languages
+English, Japanese (日本語), Chinese Simplified (中文), Vietnamese (Tiếng Việt), and 43 more via live translation.
+
+## Licensing
+Individual teachers: monthly or annual subscription via Gumroad.
+Schools / districts: contact sales@thelayersapp.com for volume licensing.
+
+## Contact
+- General: questions@thelayersapp.com
+- Sales/Licensing: sales@thelayersapp.com
+- Developer: peter@thelayersapp.com
