@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><base href="https://thelayersapp.com/"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dùng thử Layers miễn phí — Tải xuống cho Windows &amp; Mac</title>
+<meta content="Tải Layers và Layers Talk cho Windows và Mac. Dùng thử miễn phí 14 ngày — không cần khóa bản quyền." name="description"/>
+<meta content="#5b7fff" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="https://thelayersapp.com/vi/get.html" property="og:url"/>
+<meta content="Dùng thử Layers miễn phí — Tải xuống cho Windows &amp; Mac" property="og:title"/>
+<meta content="Tải Layers và Layers Talk cho Windows và Mac. Dùng thử miễn phí 14 ngày — không cần khóa bản quyền." property="og:description"/>
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Outfit:wght@300;400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#0d0d12;--bg2:#131318;--accent:#5b7fff;--accent2:#7c9fff;
+  --green:#2ed573;--green2:#52e88a;--text:#ffffff;--muted:#a0a0b0;
+  --dim:#555568;--border:rgba(91,127,255,0.15);--card-bg:rgba(26,26,36,0.8);
+  --pill:#252530;--red:#ff4757;--orange:#ffa502;
+  --mac:#a78bfa;--mac2:#c4b5fd;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-weight:400;line-height:1.6;overflow-x:hidden;min-height:100vh}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(91,127,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(91,127,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+section,nav,footer,div,main{position:relative;z-index:1}
+nav{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(13,13,18,0.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:100}
+.nav-brand{display:flex;align-items:center;gap:10px;font-family:'DM Serif Display',serif;font-size:1.4rem;color:var(--text);text-decoration:none}
+.brand-dot{width:10px;height:10px;background:var(--accent);border-radius:50%;box-shadow:0 0 12px var(--accent);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 8px var(--accent)}50%{box-shadow:0 0 20px var(--accent),0 0 40px rgba(91,127,255,0.3)}}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-right a{color:var(--muted);text-decoration:none;font-size:0.875rem;font-weight:500;transition:color 0.2s}
+.nav-right a:hover{color:var(--text)}
+.lang-switcher{display:flex;align-items:center;gap:4px;background:var(--pill);border-radius:100px;padding:3px;border:1px solid var(--border)}
+.lang-btn{padding:4px 10px;border-radius:100px;border:none;background:transparent;color:var(--muted);font-size:0.75rem;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.15s;letter-spacing:0.03em}
+.lang-btn:hover{color:var(--text)}
+.lang-btn.active{background:var(--bg2);color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.4)}
+main{max-width:1100px;margin:0 auto;padding:110px 40px 80px}
+.label-tag{display:inline-block;font-family:'DM Mono',monospace;font-size:0.7rem;font-weight:500;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:14px;opacity:0.8}
+.page-header{margin-bottom:48px}
+.page-header h1{font-family:'DM Serif Display',serif;font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.1;letter-spacing:-0.02em;margin-bottom:12px}
+.page-header h1 em{font-style:italic;color:var(--accent)}
+.page-header p{color:var(--muted);font-size:1rem;font-weight:300;max-width:640px}
+
+/* Trial banner */
+.trial-banner{background:rgba(46,213,115,0.08);border:1px solid rgba(46,213,115,0.25);border-radius:14px;padding:20px 28px;margin-bottom:48px;display:flex;align-items:flex-start;gap:14px}
+.trial-banner .tb-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+.trial-banner h3{font-size:1rem;font-weight:700;color:var(--green);margin-bottom:4px}
+.trial-banner p{font-size:0.88rem;color:var(--muted);line-height:1.65}
+.trial-banner strong{color:var(--text)}
+
+/* Download cards grid */
+.dl-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:48px}
+.dl-card{border-radius:20px;padding:32px;position:relative;overflow:hidden}
+.dl-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.dl-card.layers{background:linear-gradient(135deg,rgba(91,127,255,0.1),rgba(26,26,36,0.95));border:1px solid rgba(91,127,255,0.35)}
+.dl-card.layers::before{background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.dl-card.talk{background:linear-gradient(135deg,rgba(46,213,115,0.1),rgba(26,26,36,0.95));border:1px solid rgba(46,213,115,0.35)}
+.dl-card.talk::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.dl-card.mac{background:linear-gradient(135deg,rgba(167,139,250,0.1),rgba(26,26,36,0.95));border:1px solid rgba(167,139,250,0.35)}
+.dl-card.mac::before{background:linear-gradient(90deg,transparent,var(--mac),transparent)}
+.dl-badge{display:inline-flex;align-items:center;gap:6px;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;margin-bottom:14px}
+.dl-card.layers .dl-badge{background:rgba(91,127,255,0.12);border:1px solid rgba(91,127,255,0.3);color:var(--accent2)}
+.dl-card.talk .dl-badge{background:rgba(46,213,115,0.12);border:1px solid rgba(46,213,115,0.3);color:var(--green)}
+.dl-card.mac .dl-badge{background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:var(--mac2)}
+.dl-card h2{font-family:'DM Serif Display',serif;font-size:1.6rem;margin-bottom:4px}
+.dl-card.talk h2{color:var(--green2)}
+.dl-card.mac h2{color:var(--mac2)}
+.dl-card .dl-ver{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--dim);margin-bottom:6px}
+.dl-card .dl-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:20px}
+.dl-card .dl-meta{font-size:0.75rem;color:var(--dim);font-family:'DM Mono',monospace;margin-bottom:16px}
+.dl-btns{display:flex;flex-direction:column;gap:8px}
+.btn-dl{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;cursor:pointer}
+.dl-card.layers .btn-dl.primary{background:var(--accent);color:#fff;box-shadow:0 0 20px rgba(91,127,255,0.25)}
+.dl-card.layers .btn-dl.primary:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(91,127,255,0.45)}
+.dl-card.talk .btn-dl.primary{background:var(--green);color:#0d0d12;box-shadow:0 0 20px rgba(46,213,115,0.25)}
+.dl-card.talk .btn-dl.primary:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(46,213,115,0.45)}
+.dl-card.mac .btn-dl.primary{background:var(--mac);color:#0d0d12;box-shadow:0 0 20px rgba(167,139,250,0.25)}
+.dl-card.mac .btn-dl.primary:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(167,139,250,0.45)}
+.btn-dl.secondary{background:var(--pill);color:var(--muted);border:1px solid var(--border);font-weight:600;font-size:0.82rem}
+.btn-dl.secondary:hover{border-color:var(--accent);color:var(--text)}
+.dl-card .dl-note{font-size:0.72rem;color:var(--dim);margin-top:8px;line-height:1.5}
+.dl-card .dl-price{font-size:0.82rem;color:var(--dim);margin-top:12px}
+.dl-card .dl-price strong{color:var(--accent2)}
+.dl-card.talk .dl-price strong{color:var(--green2)}
+.dl-card.mac .dl-price strong{color:var(--mac2)}
+
+/* Info cards */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:48px}
+.info-card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:24px 28px}
+.info-card h3{font-size:0.95rem;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.info-card ol{list-style:none;display:flex;flex-direction:column;gap:10px}
+.info-card li{display:flex;gap:10px;font-size:0.85rem;color:var(--muted);align-items:flex-start}
+.info-card li strong{color:var(--text)}
+.sn{width:20px;height:20px;border-radius:50%;background:var(--pill);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.6rem;font-weight:700;color:var(--accent);flex-shrink:0;margin-top:1px}
+.info-card.buy-card h3{color:var(--green)}
+.info-card.buy-card .sn{color:var(--green)}
+
+/* Warnings */
+.warn-box{background:rgba(255,165,2,0.07);border:1px solid rgba(255,165,2,0.25);border-radius:10px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.warn-box.blue{background:rgba(91,127,255,0.07);border-color:rgba(91,127,255,0.25)}
+.warn-box.purple{background:rgba(167,139,250,0.07);border-color:rgba(167,139,250,0.25)}
+.warn-box .wi{font-size:1rem;flex-shrink:0;margin-top:2px}
+.warn-box p{font-size:0.82rem;color:var(--muted);line-height:1.6}
+.warn-box strong{color:var(--orange)}
+.warn-box.blue strong{color:var(--accent2)}
+.warn-box.purple strong{color:var(--mac2)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 40px;margin-top:40px}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-brand{font-family:'DM Serif Display',serif;font-size:1.2rem}
+.footer-brand span{color:var(--accent)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:0.875rem;transition:color 0.2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{color:var(--dim);font-size:0.8rem;width:100%}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.5s ease both}
+.fade-up-1{animation-delay:0.05s}.fade-up-2{animation-delay:0.1s}.fade-up-3{animation-delay:0.15s}.fade-up-4{animation-delay:0.2s}
+@media(max-width:900px){.dl-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:0 20px}main{padding:90px 20px 60px}.dl-grid,.info-grid{grid-template-columns:1fr}.dl-card{padding:24px 20px}footer{padding:32px 20px}}
+</style>
+<link href="https://thelayersapp.com/vi/get.html" rel="canonical"/><link href="https://thelayersapp.com/get.html" hreflang="en" rel="alternate"/><link href="https://thelayersapp.com/ja/get.html" hreflang="ja" rel="alternate"/><link href="https://thelayersapp.com/zh/get.html" hreflang="zh" rel="alternate"/><link href="https://thelayersapp.com/vi/get.html" hreflang="vi" rel="alternate"/><link href="https://thelayersapp.com/get.html" hreflang="x-default" rel="alternate"/><meta content="vi_VN" property="og:locale"/></head>
+<body>
+<nav>
+<a class="nav-brand" href="index.html"><div class="brand-dot"></div>Layers</a>
+<div class="nav-right">
+<div class="lang-switcher">
+<button class="lang-btn" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('ja')">日本語</button>
+<button class="lang-btn" onclick="setLang('zh')">中文</button>
+<button class="lang-btn active" onclick="setLang('vi')">Tiếng Việt</button>
+</div>
+<a data-i18n="nav_back" href="index.html">← Trở về trang web</a>
+<a data-i18n="nav_contact" href="contact.html">Liên hệ</a>
+</div>
+</nav>
+<main>
+<div class="page-header fade-up">
+<span class="label-tag" data-i18n="label">// Dùng thử miễn phí 14 ngày</span>
+<h1 data-i18n="h1">Tải xuống <em>Layers</em></h1>
+<p data-i18n="sub">Dùng thử đầy đủ miễn phí 14 ngày — không cần giấy phép, không cần đăng ký. Chỉ cần tải xuống, mở và bắt đầu sử dụng.</p>
+</div>
+<!-- Trial banner -->
+<div class="trial-banner fade-up fade-up-1">
+<span class="tb-icon">✅</span>
+<div>
+<h3 data-i18n="trial_h">Dùng thử 14 ngày — đầy đủ tính năng, không giới hạn</h3>
+<p data-i18n="trial_p">Cả hai ứng dụng hoạt động đầy đủ trong <strong>14 ngày</strong> mà không cần giấy phép. Sau 14 ngày, nhập giấy phép để tiếp tục. Không có tính năng nào bị khóa trong thời gian dùng thử.</p>
+</div>
+</div>
+<!-- Download cards -->
+<div class="dl-grid fade-up fade-up-2">
+<!-- Layers (Windows) -->
+<div class="dl-card layers">
+<div class="dl-badge" data-i18n="l_badge">Dành cho giáo viên &amp; người thuyết trình</div>
+<h2>Layers</h2>
+<div class="dl-ver">v3.7 · Windows 10/11 · ~55 MB</div>
+<p class="dl-desc" data-i18n="l_desc">Thanh công cụ nổi cho lớp học và bài thuyết trình. Hẹn giờ, chọn học sinh, đo tiếng ồn, vẽ màn hình, dịch trực tiếp và điều khiển học sinh từ xa.</p>
+<div class="dl-btns">
+<a class="btn-dl primary" data-i18n="l_dl" href="https://drive.google.com/drive/folders/1B1ZFVMaFI7cXIey5bR2DsVPoocZV9wv_?usp=drive_link" rel="noopener noreferrer" target="_blank">⬇ Tải Layers</a>
+<div class="dl-note" data-i18n="l_note">Thư mục chứa cả <strong>.exe</strong> và <strong>.zip</strong> — dùng .zip nếu Windows chặn tải .exe</div>
+</div>
+<div class="dl-price" data-i18n="l_price">Sau dùng thử: <strong>$29 một lần</strong></div>
+</div>
+<!-- Layers Talk (Windows) -->
+<div class="dl-card talk">
+<div class="dl-badge" data-i18n="t_badge">Dành cho cuộc họp kinh doanh</div>
+<h2>Layers Talk</h2>
+<div class="dl-ver">v1.5 · Windows 10/11 · ~55 MB</div>
+<p class="dl-desc" data-i18n="t_desc">Trình dịch hai chiều cho cuộc họp trực tiếp. Màn hình chia đôi, 47 ngôn ngữ, máy tính, xem tài liệu, xuất biên bản họp.</p>
+<div class="dl-btns">
+<a class="btn-dl primary" data-i18n="t_dl" href="https://drive.google.com/drive/folders/145-hZShoUwinL7wQRgVgm4YVRyFeLILe?usp=drive_link" rel="noopener noreferrer" target="_blank">⬇ Tải Layers Talk</a>
+<div class="dl-note" data-i18n="t_note">Thư mục chứa cả <strong>.exe</strong> và <strong>.zip</strong> — dùng .zip nếu Windows chặn tải .exe</div>
+</div>
+<div class="dl-price" data-i18n="t_price">Sau dùng thử: <strong>$49 một lần</strong> · rẻ hơn một giờ thuê phiên dịch</div>
+</div>
+<!-- Layers (Mac) -->
+<div class="dl-card mac">
+<div class="dl-badge" data-i18n="m_badge">Dành cho giáo viên &amp; người thuyết trình</div>
+<h2>Layers <span style="font-size:0.9rem;font-family:'Outfit',sans-serif;font-weight:500;color:var(--mac);"> Mac</span></h2>
+<div class="dl-ver">v1.0 · macOS 12+ · Apple &amp; Intel</div>
+<p class="dl-desc" data-i18n="m_desc">Thanh công cụ Layers đầy đủ, được xây dựng cho Mac. Nổi phía trên Keynote, Safari và YouTube. Các tính năng giống hệt ứng dụng Windows — hẹn giờ, đo tiếng ồn, vẽ màn hình, dịch trực tiếp, đồng bộ Firebase.</p>
+<div class="dl-btns">
+<a class="btn-dl primary" data-i18n="m_dl" href="https://drive.google.com/drive/folders/1zKE7chL3ivQT3JtGHBS0TjfqSmFZgXjX?usp=drive_link" rel="noopener noreferrer" target="_blank">⬇ Tải Layers cho Mac</a>
+<div class="dl-note" data-i18n="m_note"><strong>Lần khởi động đầu tiên:</strong> nhấp chuột phải vào ứng dụng → <strong>Mở</strong> → nhấp <strong>Mở</strong>. Đây là thao tác bình thường với ứng dụng tải ngoài App Store.</div>
+</div>
+<div class="dl-price" data-i18n="m_price">Sau dùng thử: <strong>$29 một lần</strong></div>
+</div>
+</div>
+<!-- Info cards: Setup + How to buy -->
+<div class="info-grid fade-up fade-up-3">
+<div class="info-card">
+<h3 data-i18n="setup_h">🖥 Bắt đầu</h3>
+<ol>
+<li><span class="sn">1</span><span data-i18n="s1">Mở thư mục Google Drive và tải xuống file <strong>.zip</strong> (khuyến nghị) hoặc <strong>.exe</strong> trực tiếp.</span></li>
+<li><span class="sn">2</span><span data-i18n="s2">Nếu tải .zip, giải nén trước. Nhấp đúp .exe để chạy — <strong>không cần cài đặt</strong>.</span></li>
+<li><span class="sn">3</span><span data-i18n="s3">Ứng dụng khởi động ngay ở <strong>chế độ dùng thử</strong>. Tất cả tính năng hoạt động — không cần giấy phép trong 14 ngày.</span></li>
+<li><span class="sn">4</span><span data-i18n="s4">Thanh công cụ hiển thị số ngày dùng thử còn lại.</span></li>
+</ol>
+</div>
+<div class="info-card buy-card">
+<h3 data-i18n="buy_h">🔑 Sau khi dùng thử</h3>
+<ol>
+<li><span class="sn">1</span><span data-i18n="b1">Sau 14 ngày, ứng dụng sẽ yêu cầu giấy phép khi khởi động.</span></li>
+<li><span class="sn">2</span><span data-i18n="b2">Mua giấy phép: <strong><a href="https://thelayersapp.gumroad.com/l/v29eng" rel="noopener noreferrer" style="color:var(--accent2)" target="_blank">Layers — $29</a></strong> hoặc <strong><a href="https://thelayersapp.gumroad.com/l/ltalk" rel="noopener noreferrer" style="color:var(--green)" target="_blank">Layers Talk — $49</a></strong></span></li>
+<li><span class="sn">3</span><span data-i18n="b3">Giấy phép được gửi ngay qua email từ Gumroad.</span></li>
+<li><span class="sn">4</span><span data-i18n="b4">Dán giấy phép vào hộp kích hoạt. Xong — ứng dụng là của bạn mãi mãi, kèm cập nhật miễn phí.</span></li>
+</ol>
+</div>
+</div>
+<!-- Warnings -->
+<div class="fade-up fade-up-4">
+<div class="warn-box purple">
+<span class="wi">🍎</span>
+<p data-i18n="warn_mac"><strong>Mac: "không thể mở vì đến từ nhà phát triển chưa được xác định"?</strong> Ứng dụng chưa được ký mã. Nhấp chuột phải vào ứng dụng → <strong>Mở</strong> → nhấp <strong>Mở</strong>. Chỉ cần làm một lần — sau đó mở bình thường.</p>
+</div>
+<div class="warn-box">
+<span class="wi">⚠️</span>
+<p data-i18n="warn_ss"><strong>Cảnh báo Windows SmartScreen?</strong> Đây là bình thường với phần mềm độc lập. Nhấp <strong>"Xem thêm"</strong> rồi <strong>"Chạy bất chấp"</strong>. Ứng dụng an toàn. Thắc mắc? Email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.</p>
+</div>
+<div class="warn-box blue">
+<span class="wi">📥</span>
+<p data-i18n="warn_gd"><strong>Cảnh báo quét virus Google Drive?</strong> File trên 40MB sẽ hiện cảnh báo quét. Nhấp <strong>"Vẫn tải xuống"</strong> — đây là giới hạn của Google, không phải vấn đề với file.</p>
+</div>
+<div class="warn-box">
+<span class="wi">🏫</span>
+<p data-i18n="warn_school"><strong>Đang dùng máy tính trường học hoặc nơi làm việc?</strong> Một số máy Windows được quản lý sẽ chặn chạy file tải từ internet. Nếu ứng dụng không mở được: <strong>hãy sao chép .exe ra Desktop trước, rồi chạy từ Desktop.</strong> Cách này bỏ qua giới hạn AppLocker trong thư mục Downloads.</p>
+</div>
+</div>
+</main>
+<footer>
+<div class="footer-inner">
+<div class="footer-brand">Layers<span>.</span></div>
+<div class="footer-links">
+<a data-i18n="f_home" href="index.html">Trang chủ</a>
+<a href="soho.html">Layers Talk</a>
+<a data-i18n="f_contact" href="contact.html">Liên hệ</a>
+<a data-i18n="f_privacy" href="privacy.html">Chính sách bảo mật</a>
+</div>
+<p class="footer-copy">© 2026 Layers · Peter Hoang · Japan</p>
+</div>
+</footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var T = {
+  en: {
+    nav_back:"← Back to site", nav_contact:"Contact",
+    label:"// Try free for 14 days",
+    h1:"Download <em>Layers</em>",
+    sub:"Try the full app free for 14 days — no license key, no sign-up. Just download, open, and start using it.",
+    trial_h:"14-day free trial — full features, no limits",
+    trial_p:'Both apps work fully for <strong>14 days</strong> without a license key. After 14 days, enter a license key to continue. No features are locked during the trial — you get the complete experience from day one.',
+    l_badge:"For Teachers &amp; Presenters", l_desc:"Floating toolbar for classrooms and presentations. Timer, student picker, noise monitor, screen drawing, live translation, and remote student controls.",
+    l_dl:"⬇ Download Layers", l_note:'Folder contains both <strong>.exe</strong> and <strong>.zip</strong> — use the .zip if Windows blocks the .exe download', l_price:'After trial: <strong>$29 one-time</strong>',
+    t_badge:"For Business Meetings", t_desc:"Two-way conversation translator for face-to-face meetings. Split-screen, 47 languages, calculator, document viewer, meeting transcript export.",
+    t_dl:"⬇ Download Layers Talk", t_note:'Folder contains both <strong>.exe</strong> and <strong>.zip</strong> — use the .zip if Windows blocks the .exe download', t_price:'After trial: <strong>$49 one-time</strong> · less than one hour with an interpreter',
+    m_badge:"For Teachers &amp; Presenters", m_desc:"The full Layers toolbar, built for Mac. Floats over Keynote, Safari, and YouTube. Same features as the Windows app — timer, noise monitor, screen drawing, live translation, Firebase sync.",
+    m_dl:"⬇ Download Layers for Mac", m_note:'<strong>First launch:</strong> right-click the app → <strong>Open</strong> → click <strong>Open</strong>. This is normal for apps downloaded outside the App Store.', m_price:'After trial: <strong>$29 one-time</strong>',
+    setup_h:"🖥 Getting started",
+    s1:'Open the Google Drive folder and download the <strong>.zip</strong> file (recommended) or the <strong>.exe</strong> directly.',
+    s2:'If you downloaded the .zip, extract it first. Then double-click the .exe to run — <strong>no installation needed</strong>.',
+    s3:'The app starts immediately in <strong>trial mode</strong>. All features work — no license key required for 14 days.',
+    s4:'A small banner on the toolbar shows how many trial days remain.',
+    buy_h:"🔑 After your trial",
+    b1:"After 14 days, the app will ask for a license key on launch.",
+    b2:'Purchase your key: <strong><a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">Layers — $29</a></strong> or <strong><a href="https://thelayersapp.gumroad.com/l/ltalk" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Layers Talk — $49</a></strong>',
+    b3:"Your license key arrives instantly by email from Gumroad.",
+    b4:"Paste the key into the activation dialog. Done — the app is yours forever, with free updates.",
+    warn_mac:'<strong>Mac: "cannot be opened because it is from an unidentified developer"?</strong> The app isn\'t code-signed yet. Right-click the app → <strong>Open</strong> → click <strong>Open</strong>. You only need to do this once — after that it opens normally.',
+    warn_ss:'<strong>Windows SmartScreen warning?</strong> This is normal for independent software. Click <strong>"More info"</strong> then <strong>"Run anyway"</strong>. The app is safe — it just isn\'t signed with an expensive Microsoft certificate. Questions? Email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    warn_gd:'<strong>Google Drive virus scan warning?</strong> Files over ~40 MB trigger a scan notice. Click <strong>"Download anyway"</strong> — this is a Google limitation, not a problem with the file.',
+    warn_school:'<strong>On a school or work computer?</strong> Some managed Windows machines block running files downloaded from the internet. If the app won\'t open: <strong>copy the .exe to your Desktop first, then run it from there.</strong> This bypasses AppLocker restrictions on the Downloads folder.',
+    f_home:"Home", f_contact:"Contact", f_privacy:"Privacy Policy"
+  },
+  ja: {
+    nav_back:"← サイトに戻る", nav_contact:"お問い合わせ",
+    label:"// 14日間無料でお試し",
+    h1:"<em>Layers</em>をダウンロード",
+    sub:"14日間すべての機能を無料でお試しいただけます。ライセンスキー不要、登録不要。ダウンロードして、開いて、すぐに使い始めてください。",
+    trial_h:"14日間無料体験 — 全機能、制限なし",
+    trial_p:'両方のアプリは<strong>14日間</strong>ライセンスキーなしで完全に動作します。14日後、継続するにはライセンスキーを入力してください。体験期間中に制限される機能はありません。',
+    l_badge:"教師・プレゼンター向け", l_desc:"教室やプレゼンテーション用のフローティングツールバー。タイマー、生徒ピッカー、騒音モニター、画面描画、リアルタイム翻訳、リモート生徒管理。",
+    l_dl:"⬇ Layersをダウンロード", l_note:'フォルダには<strong>.exe</strong>と<strong>.zip</strong>の両方があります。Windowsが.exeのダウンロードをブロックする場合は.zipをお使いください', l_price:'体験後: <strong>$29（買い切り）</strong>',
+    t_badge:"ビジネスミーティング向け", t_desc:"対面会議用の双方向翻訳ツール。分割画面、47言語、電卓、ドキュメントビューア、会議記録のエクスポート。",
+    t_dl:"⬇ Layers Talkをダウンロード", t_note:'フォルダには<strong>.exe</strong>と<strong>.zip</strong>の両方があります。Windowsが.exeのダウンロードをブロックする場合は.zipをお使いください', t_price:'体験後: <strong>$49（買い切り）</strong> · 通訳1時間分以下',
+    m_badge:"教師・プレゼンター向け", m_desc:"Mac向けに作られたLayersの完全版ツールバー。Keynote、Safari、YouTubeの上に浮かびます。Windowsアプリと同じ機能 — タイマー、騒音モニター、画面描画、リアルタイム翻訳、Firebase同期。",
+    m_dl:"⬇ Layers for Macをダウンロード", m_note:'<strong>初回起動:</strong> アプリを右クリック → <strong>開く</strong> → <strong>開く</strong>をクリック。App Store以外からダウンロードしたアプリでは通常の手順です。', m_price:'体験後: <strong>$29（買い切り）</strong>',
+    setup_h:"🖥 はじめ方",
+    s1:'Google Driveフォルダを開き、<strong>.zip</strong>ファイル（推奨）または<strong>.exe</strong>を直接ダウンロードしてください。',
+    s2:'.zipをダウンロードした場合は、まず解凍してください。.exeをダブルクリックで起動 — <strong>インストール不要</strong>。',
+    s3:'アプリはすぐに<strong>体験モード</strong>で起動します。14日間ライセンスキー不要で全機能が使えます。',
+    s4:'ツールバーに残りの体験日数が表示されます。',
+    buy_h:"🔑 体験期間後",
+    b1:"14日後、起動時にライセンスキーの入力が求められます。",
+    b2:'キーを購入: <strong><a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">Layers — $29</a></strong> または <strong><a href="https://thelayersapp.gumroad.com/l/ltalk" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Layers Talk — $49</a></strong>',
+    b3:"ライセンスキーはGumroadからメールで即座に届きます。",
+    b4:"アクティベーションダイアログにキーを貼り付けてください。完了 — 永久に使えます。無料アップデート付き。",
+    warn_mac:'<strong>Mac: 「開発元が未確認のため開けません」と表示される場合?</strong> アプリはまだコード署名されていません。アプリを右クリック → <strong>開く</strong> → <strong>開く</strong>をクリックしてください。この操作は初回のみ必要です — 次回以降は通常通り開きます。',
+    warn_ss:'<strong>Windows SmartScreenの警告？</strong> 個人開発ソフトでは通常のことです。<strong>「詳細情報」</strong>→<strong>「実行」</strong>をクリック。アプリは安全です。ご不明な点は <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a> まで。',
+    warn_gd:'<strong>Google Driveのウイルススキャン警告？</strong> 40MB以上のファイルではスキャン通知が表示されます。<strong>「ダウンロード」</strong>をクリック — Googleの仕様であり、ファイルに問題はありません。',
+    warn_school:'<strong>学校や職場のパソコンをお使いですか？</strong> 管理されたWindowsではインターネットからダウンロードしたファイルの実行がブロックされる場合があります。アプリが開かない場合：<strong>まず.exeをデスクトップにコピーしてから、デスクトップから実行してください。</strong>ダウンロードフォルダのAppLocker制限を回避できます。',
+    f_home:"ホーム", f_contact:"お問い合わせ", f_privacy:"プライバシーポリシー"
+  },
+  zh: {
+    nav_back:"← 返回网站", nav_contact:"联系我们",
+    label:"// 免费试用14天",
+    h1:"下载 <em>Layers</em>",
+    sub:"免费试用完整应用14天——无需许可证密钥，无需注册。下载、打开、立即开始使用。",
+    trial_h:"14天免费试用——全部功能，无限制",
+    trial_p:'两款应用均可在<strong>14天</strong>内无需许可证密钥完整运行。14天后输入许可证密钥即可继续使用。试用期间所有功能均无限制。',
+    l_badge:"教师和演讲者专用", l_desc:"适用于课堂和演示的浮动工具栏。计时器、学生选取器、噪音监测、屏幕绘图、实时翻译和远程学生控制。",
+    l_dl:"⬇ 下载 Layers", l_note:'文件夹包含<strong>.exe</strong>和<strong>.zip</strong>两种格式——如果Windows阻止下载.exe，请使用.zip', l_price:'试用后: <strong>$29 一次性购买</strong>',
+    t_badge:"商务会议专用", t_desc:"面对面会议双向翻译器。分屏显示、47种语言、计算器、文档查看器、会议记录导出。",
+    t_dl:"⬇ 下载 Layers Talk", t_note:'文件夹包含<strong>.exe</strong>和<strong>.zip</strong>两种格式——如果Windows阻止下载.exe，请使用.zip', t_price:'试用后: <strong>$49 一次性购买</strong> · 不到一小时的口译费用',
+    m_badge:"教师和演讲者专用", m_desc:"专为Mac打造的完整Layers工具栏。悬浮于Keynote、Safari和YouTube之上。与Windows版功能相同——计时器、噪音监测、屏幕绘图、实时翻译、Firebase同步。",
+    m_dl:"⬇ 下载 Layers Mac版", m_note:'<strong>首次启动:</strong> 右键点击应用 → <strong>打开</strong> → 点击<strong>打开</strong>。这是从App Store以外下载应用的正常步骤。', m_price:'试用后: <strong>$29 一次性购买</strong>',
+    setup_h:"🖥 开始使用",
+    s1:'打开Google Drive文件夹，下载<strong>.zip</strong>文件（推荐）或直接下载<strong>.exe</strong>。',
+    s2:'如果下载了.zip，请先解压。然后双击.exe运行——<strong>无需安装</strong>。',
+    s3:'应用立即以<strong>试用模式</strong>启动。14天内无需许可证密钥，所有功能均可使用。',
+    s4:'工具栏上会显示剩余试用天数。',
+    buy_h:"🔑 试用结束后",
+    b1:"14天后，应用启动时会要求输入许可证密钥。",
+    b2:'购买密钥: <strong><a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">Layers — $29</a></strong> 或 <strong><a href="https://thelayersapp.gumroad.com/l/ltalk" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Layers Talk — $49</a></strong>',
+    b3:"许可证密钥会通过Gumroad邮件即时送达。",
+    b4:"将密钥粘贴到激活对话框中。完成——永久使用，包含免费更新。",
+    warn_mac:'<strong>Mac: 显示"无法打开，因为它来自身份不明的开发者"?</strong> 该应用尚未经过代码签名。右键点击应用 → <strong>打开</strong> → 点击<strong>打开</strong>。只需操作一次——之后即可正常打开。',
+    warn_ss:'<strong>Windows SmartScreen警告？</strong> 独立软件出现此提示是正常的。点击<strong>"更多信息"</strong>然后<strong>"仍要运行"</strong>。应用是安全的。有疑问请发邮件至 <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>。',
+    warn_gd:'<strong>Google Drive病毒扫描警告？</strong> 超过40MB的文件会触发扫描提示。点击<strong>"仍然下载"</strong>——这是Google的限制，文件本身没有问题。',
+    warn_school:'<strong>在学校或工作电脑上？</strong> 某些受管理的Windows系统会阻止运行从互联网下载的文件。如果应用无法打开：<strong>先将.exe复制到桌面，然后从桌面运行。</strong>这可以绕过下载文件夹的AppLocker限制。',
+    f_home:"主页", f_contact:"联系我们", f_privacy:"隐私政策"
+  },
+  vi: {
+    nav_back:"← Trở về trang web", nav_contact:"Liên hệ",
+    label:"// Dùng thử miễn phí 14 ngày",
+    h1:"Tải xuống <em>Layers</em>",
+    sub:"Dùng thử đầy đủ miễn phí 14 ngày — không cần giấy phép, không cần đăng ký. Chỉ cần tải xuống, mở và bắt đầu sử dụng.",
+    trial_h:"Dùng thử 14 ngày — đầy đủ tính năng, không giới hạn",
+    trial_p:'Cả hai ứng dụng hoạt động đầy đủ trong <strong>14 ngày</strong> mà không cần giấy phép. Sau 14 ngày, nhập giấy phép để tiếp tục. Không có tính năng nào bị khóa trong thời gian dùng thử.',
+    l_badge:"Dành cho giáo viên &amp; người thuyết trình", l_desc:"Thanh công cụ nổi cho lớp học và bài thuyết trình. Hẹn giờ, chọn học sinh, đo tiếng ồn, vẽ màn hình, dịch trực tiếp và điều khiển học sinh từ xa.",
+    l_dl:"⬇ Tải Layers", l_note:'Thư mục chứa cả <strong>.exe</strong> và <strong>.zip</strong> — dùng .zip nếu Windows chặn tải .exe', l_price:'Sau dùng thử: <strong>$29 một lần</strong>',
+    t_badge:"Dành cho cuộc họp kinh doanh", t_desc:"Trình dịch hai chiều cho cuộc họp trực tiếp. Màn hình chia đôi, 47 ngôn ngữ, máy tính, xem tài liệu, xuất biên bản họp.",
+    t_dl:"⬇ Tải Layers Talk", t_note:'Thư mục chứa cả <strong>.exe</strong> và <strong>.zip</strong> — dùng .zip nếu Windows chặn tải .exe', t_price:'Sau dùng thử: <strong>$49 một lần</strong> · rẻ hơn một giờ thuê phiên dịch',
+    m_badge:"Dành cho giáo viên &amp; người thuyết trình", m_desc:"Thanh công cụ Layers đầy đủ, được xây dựng cho Mac. Nổi phía trên Keynote, Safari và YouTube. Các tính năng giống hệt ứng dụng Windows — hẹn giờ, đo tiếng ồn, vẽ màn hình, dịch trực tiếp, đồng bộ Firebase.",
+    m_dl:"⬇ Tải Layers cho Mac", m_note:'<strong>Lần khởi động đầu tiên:</strong> nhấp chuột phải vào ứng dụng → <strong>Mở</strong> → nhấp <strong>Mở</strong>. Đây là thao tác bình thường với ứng dụng tải ngoài App Store.', m_price:'Sau dùng thử: <strong>$29 một lần</strong>',
+    setup_h:"🖥 Bắt đầu",
+    s1:'Mở thư mục Google Drive và tải xuống file <strong>.zip</strong> (khuyến nghị) hoặc <strong>.exe</strong> trực tiếp.',
+    s2:'Nếu tải .zip, giải nén trước. Nhấp đúp .exe để chạy — <strong>không cần cài đặt</strong>.',
+    s3:'Ứng dụng khởi động ngay ở <strong>chế độ dùng thử</strong>. Tất cả tính năng hoạt động — không cần giấy phép trong 14 ngày.',
+    s4:'Thanh công cụ hiển thị số ngày dùng thử còn lại.',
+    buy_h:"🔑 Sau khi dùng thử",
+    b1:"Sau 14 ngày, ứng dụng sẽ yêu cầu giấy phép khi khởi động.",
+    b2:'Mua giấy phép: <strong><a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer" style="color:var(--accent2)">Layers — $29</a></strong> hoặc <strong><a href="https://thelayersapp.gumroad.com/l/ltalk" target="_blank" rel="noopener noreferrer" style="color:var(--green)">Layers Talk — $49</a></strong>',
+    b3:"Giấy phép được gửi ngay qua email từ Gumroad.",
+    b4:"Dán giấy phép vào hộp kích hoạt. Xong — ứng dụng là của bạn mãi mãi, kèm cập nhật miễn phí.",
+    warn_mac:'<strong>Mac: "không thể mở vì đến từ nhà phát triển chưa được xác định"?</strong> Ứng dụng chưa được ký mã. Nhấp chuột phải vào ứng dụng → <strong>Mở</strong> → nhấp <strong>Mở</strong>. Chỉ cần làm một lần — sau đó mở bình thường.',
+    warn_ss:'<strong>Cảnh báo Windows SmartScreen?</strong> Đây là bình thường với phần mềm độc lập. Nhấp <strong>"Xem thêm"</strong> rồi <strong>"Chạy bất chấp"</strong>. Ứng dụng an toàn. Thắc mắc? Email <a href="mailto:questions@thelayersapp.com" style="color:var(--accent2)">questions@thelayersapp.com</a>.',
+    warn_gd:'<strong>Cảnh báo quét virus Google Drive?</strong> File trên 40MB sẽ hiện cảnh báo quét. Nhấp <strong>"Vẫn tải xuống"</strong> — đây là giới hạn của Google, không phải vấn đề với file.',
+    warn_school:'<strong>Đang dùng máy tính trường học hoặc nơi làm việc?</strong> Một số máy Windows được quản lý sẽ chặn chạy file tải từ internet. Nếu ứng dụng không mở được: <strong>hãy sao chép .exe ra Desktop trước, rồi chạy từ Desktop.</strong> Cách này bỏ qua giới hạn AppLocker trong thư mục Downloads.',
+    f_home:"Trang chủ", f_contact:"Liên hệ", f_privacy:"Chính sách bảo mật"
+  }
+};
+
+function setLang(lang) {
+  var t = T[lang] || T['en'];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  try { localStorage.setItem('layers_lang', lang); } catch(e) {}
+}
+
+(function() {
+  var saved; try { saved = localStorage.</script></body></html>

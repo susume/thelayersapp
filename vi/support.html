@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><base href="https://thelayersapp.com/"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ủng hộ Layers — Buy Me a Coffee</title>
+<meta content="Ủng hộ sự phát triển của Layers — bộ công cụ giáo dục miễn phí do một giáo viên xây dựng cho học sinh và giáo viên trên toàn thế giới." name="description"/>
+<meta content="#5b7fff" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="https://thelayersapp.com/vi/support.html" property="og:url"/>
+<meta content="Ủng hộ Layers — Buy Me a Coffee" property="og:title"/>
+<meta content="Ủng hộ sự phát triển của Layers — bộ công cụ giáo dục miễn phí do một giáo viên xây dựng cho học sinh và giáo viên trên toàn thế giới." property="og:description"/>
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Outfit:wght@300;400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+  --amber:   #ffbe30;
+  --amber2:  #ffd873;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div { position: relative; z-index: 1; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 8px var(--accent); } 50% { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(91,127,255,0.3); } }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+.lang-switcher { display: flex; align-items: center; gap: 4px; background: var(--pill); border-radius: 100px; padding: 3px; border: 1px solid var(--border); margin-right: 8px; }
+.lang-btn { padding: 4px 10px; border-radius: 100px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.15s; letter-spacing: 0.03em; }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { background: var(--bg2); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+
+/* PAGE */
+.page-wrap { max-width: 800px; margin: 0 auto; padding: 130px 40px 80px; }
+.hero-glow { position: fixed; width: 700px; height: 700px; background: radial-gradient(circle, rgba(91,127,255,0.08) 0%, transparent 70%); top: 0; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 0; }
+.label-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.8; }
+
+/* HERO */
+.support-hero { text-align: center; margin-bottom: 56px; }
+.support-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.1; margin-bottom: 16px; }
+.support-hero h1 em { font-style: italic; color: var(--amber); }
+.support-hero p { color: var(--muted); font-size: 1.1rem; font-weight: 300; max-width: 560px; margin: 0 auto; }
+
+/* COFFEE CARD */
+.coffee-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 44px; margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+}
+.coffee-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #3d5afe);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; margin: 0 auto 20px;
+  box-shadow: 0 0 24px rgba(91,127,255,0.25);
+}
+.coffee-name { font-family: 'DM Serif Display', serif; font-size: 1.5rem; text-align: center; margin-bottom: 4px; }
+.coffee-role { text-align: center; color: var(--muted); font-size: 0.85rem; font-weight: 500; margin-bottom: 28px; }
+.coffee-message { color: var(--muted); font-size: 0.95rem; line-height: 1.85; font-weight: 300; }
+.coffee-message p { margin-bottom: 18px; }
+.coffee-message strong { color: var(--text); font-weight: 600; }
+.coffee-message .hl { color: var(--accent2); }
+
+/* CTA */
+.cta-section { text-align: center; margin: 48px 0; }
+.coffee-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--amber); color: #1a0e00;
+  padding: 16px 40px; border-radius: 100px;
+  font-size: 1.15rem; font-weight: 700;
+  text-decoration: none; transition: all 0.2s;
+  box-shadow: 0 0 30px rgba(255,190,48,0.3);
+  font-family: 'Outfit', sans-serif;
+}
+.coffee-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(255,190,48,0.5); background: var(--amber2); }
+.coffee-alt { margin-top: 16px; color: var(--dim); font-size: 0.82rem; }
+.coffee-alt a { color: var(--accent2); text-decoration: none; }
+.coffee-alt a:hover { text-decoration: underline; }
+
+/* IMPACT CARDS */
+.impact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px; }
+.impact-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: border-color 0.2s, transform 0.2s; }
+.impact-card:hover { border-color: rgba(91,127,255,0.3); transform: translateY(-2px); }
+.impact-icon { font-size: 1.5rem; margin-bottom: 10px; display: block; }
+.impact-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+.impact-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+
+/* NUMBERS */
+.numbers-row { display: flex; justify-content: center; gap: 48px; margin: 48px 0; flex-wrap: wrap; }
+.num-item { text-align: center; }
+.num-item .num { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--accent); }
+.num-item .num-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+/* PROMISE */
+.promise { background: rgba(46,213,115,0.06); border: 1px solid rgba(46,213,115,0.2); border-radius: 16px; padding: 24px 28px; margin-top: 40px; display: flex; align-items: flex-start; gap: 14px; }
+.promise-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.promise h4 { font-size: 0.95rem; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+.promise p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeUp 0.6s ease both; }
+.fade-up-1 { animation-delay: 0.05s; }
+.fade-up-2 { animation-delay: 0.1s; }
+.fade-up-3 { animation-delay: 0.15s; }
+
+@media (max-width: 600px) {
+  nav { padding: 0 20px; }
+  .page-wrap { padding: 120px 24px 60px; }
+  .coffee-card { padding: 28px 22px; }
+  .impact-grid { grid-template-columns: 1fr; }
+  .numbers-row { gap: 28px; }
+}
+</style>
+<link href="https://thelayersapp.com/vi/support.html" rel="canonical"/><link href="https://thelayersapp.com/support.html" hreflang="en" rel="alternate"/><link href="https://thelayersapp.com/ja/support.html" hreflang="ja" rel="alternate"/><link href="https://thelayersapp.com/zh/support.html" hreflang="zh" rel="alternate"/><link href="https://thelayersapp.com/vi/support.html" hreflang="vi" rel="alternate"/><link href="https://thelayersapp.com/support.html" hreflang="x-default" rel="alternate"/><meta content="vi_VN" property="og:locale"/></head>
+<body>
+<div class="hero-glow"></div>
+<nav>
+<a class="nav-brand" href="index.html"><div class="brand-dot"></div>Layers</a>
+<div class="nav-links">
+<div class="lang-switcher">
+<button class="lang-btn" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('ja')">日本語</button>
+<button class="lang-btn" onclick="setLang('zh')">中文</button>
+<button class="lang-btn active" onclick="setLang('vi')">Tiếng Việt</button>
+</div>
+<a data-i18n="nav_features" href="index.html#features">Dành cho giáo viên</a>
+<a data-i18n="nav_pricing" href="index.html#pricing">Giá cả</a>
+<a data-i18n="footer_contact" href="contact.html">Liên hệ</a>
+<a class="nav-cta" data-i18n="nav_cta" href="https://thelayersapp.gumroad.com/l/v29eng" rel="noopener noreferrer" target="_blank">Bắt đầu</a>
+</div>
+</nav>
+<div class="page-wrap">
+<!-- HERO -->
+<div class="support-hero fade-up">
+<span class="label-tag" data-i18n="s_tag">// Ủng hộ dự án</span>
+<h1 data-i18n="s_h1">Giữ Layers<br/><em>miễn phí cho mọi người.</em></h1>
+<p data-i18n="s_sub">Layers được xây dựng bởi một giáo viên, dành cho mọi học sinh và giáo viên cần nó. Sự ủng hộ của bạn giúp dự án tiếp tục.</p>
+</div>
+<!-- LETTER -->
+<div class="coffee-card fade-up fade-up-1">
+<div class="coffee-avatar">👨‍🏫</div>
+<div class="coffee-name">Peter Hoang</div>
+<div class="coffee-role" data-i18n="s_role">Giáo viên &amp; Nhà phát triển · Nhật Bản</div>
+<div class="coffee-message" data-i18n="s_letter"><p>Tôi là Peter Hoang, một giáo viên sống tại Nhật Bản.</p><p>Tôi dạy ở một trường mà hầu hết học sinh là người Nhật, nhưng trong vài năm qua, mọi thứ đang thay đổi. Ngày càng nhiều học sinh đến từ Việt Nam, Trung Quốc, Nepal, Philippines và các quốc gia khác — những gia đình đang cố gắng xây dựng cuộc sống mới tại Nhật Bản. Họ ngồi trong lớp học nơi bài giảng bằng tiếng Nhật, đôi khi bằng tiếng Anh, và họ hiểu rất ít cả hai.</p><p>Tôi nhìn họ vật lộn, và tôi nhận ra điều gì đó quen thuộc.</p><p>Bốn mươi năm trước, bố mẹ tôi là người tị nạn. Họ rời Việt Nam với hai bàn tay trắng và tái định cư tại Úc — một đất nước nơi họ không nói được ngôn ngữ, không hiểu văn hóa, và không có ai giải thích những gì đang xảy ra xung quanh. Mẹ tôi ngồi trong các cơ quan chính phủ mà không hiểu những giấy tờ mình đang ký. Bố tôi nhận bất kỳ công việc nào tìm được, gật đầu theo những hướng dẫn mà ông không thể hiểu. Họ vẫn xây dựng được cuộc sống — bằng sự bướng bỉnh, hy sinh, và lòng tốt của những người dành thời gian giúp đỡ.</p><p>Tôi lớn lên chứng kiến cái giá phải trả khi sống bằng một ngôn ngữ không phải của mình. Sự bối rối. Sự cô lập. Nỗi xấu hổ thầm lặng khi không hiểu điều mà mọi người khác dường như đều hiểu.</p><p>Bây giờ tôi thấy điều tương tự trong lớp học của mình. Một học sinh Việt Nam nhìn chằm chằm vào sách giáo khoa tiếng Nhật, lạc lõng. Một em Nepal quá ngại để nhờ thầy nhắc lại lần thứ ba. Một học sinh Philippines thông minh và có năng lực nhưng bị tụt lại vì bài học chạy nhanh hơn khả năng ngôn ngữ của em.</p><p>Những đứa trẻ này nhắc tôi nhớ đến bố mẹ tôi. Chúng nhắc tôi nhớ đến đứa trẻ mà tôi có thể đã trở thành nếu gia đình tôi đặt chân đến một nơi khác.</p><p><strong>Đó là lý do tôi tạo ra Layers.</strong></p><p>Tiện ích Chrome hoàn toàn <strong>miễn phí</strong> — không quảng cáo, không thu thập dữ liệu, không cần tài khoản. Bởi vì những học sinh cần nó nhất là những em có gia đình ít có khả năng chi trả nhất.</p><p>Nhưng việc xây dựng và duy trì Layers tốn thời gian, và tôi làm điều đó <span class="hl">hoàn toàn một mình</span> — trước giờ học, sau giờ học, vào cuối tuần. Mỗi ly cà phê bạn mua là một lời động viên nói rằng <em>"hãy tiếp tục"</em>.</p><p><strong>Sự ủng hộ của bạn được sử dụng cho:</strong></p><p>☕ <strong>Giữ Layers miễn phí và không quảng cáo</strong> — mãi mãi.<br/>🌍 <strong>Hỗ trợ dịch thuật và ngôn ngữ tốt hơn</strong> — chính xác hơn, nhiều ngôn ngữ hơn, nhanh hơn.<br/>📚 <strong>Các công cụ mới mà học sinh thực sự cần</strong> — được xây dựng từ phản hồi thực tế trong lớp học.<br/>🔧 <strong>Chi phí máy chủ và bảo trì</strong> — Firebase, hosting, những thứ giữ cho tính năng đồng bộ hoạt động.<br/>💛 <strong>Động lực của tôi</strong> — biết rằng ai đó thấy điều này hữu ích có ý nghĩa rất lớn với tôi.</p><p>Nếu bạn từng là người trong phòng không hiểu chuyện gì đang xảy ra — hoặc nếu bạn biết ai đó như vậy — bạn hiểu tại sao điều này quan trọng.</p><p>Cảm ơn bạn đã ở đây.</p><p style="color:var(--text);font-weight:500;">— Peter</p></div>
+</div>
+<!-- CTA -->
+<div class="cta-section fade-up fade-up-2">
+<a class="coffee-btn" href="https://buymeacoffee.com/layersapp" rel="noopener noreferrer" target="_blank">
+<span>☕</span>
+<span data-i18n="s_btn">Mua cho tôi một ly cà phê</span>
+</a>
+<div class="coffee-alt" data-i18n="s_alt">Hoặc chia sẻ Layers với một giáo viên cần nó — điều đó cũng giúp ích không kém.<br/><a href="https://chromewebstore.google.com/detail/layers/iclfdiolilnmjeimkdoeloeiioaongnh" rel="noopener noreferrer" target="_blank">Chrome Web Store</a> · <a href="https://thelayersapp.gumroad.com/l/v29eng" rel="noopener noreferrer" target="_blank">Ứng dụng Windows cho giáo viên</a></div>
+</div>
+<!-- NUMBERS -->
+<div class="numbers-row fade-up fade-up-2">
+<div class="num-item"><div class="num">46</div><div class="num-label" data-i18n="s_n1">Ngôn ngữ hỗ trợ</div></div>
+<div class="num-item"><div class="num">1</div><div class="num-label" data-i18n="s_n2">Nhà phát triển</div></div>
+<div class="num-item"><div class="num">0</div><div class="num-label" data-i18n="s_n3">Quảng cáo hiển thị</div></div>
+<div class="num-item"><div class="num" style="color:var(--green)">Free</div><div class="num-label" data-i18n="s_n4">Chi phí cho học sinh</div></div>
+</div>
+<!-- IMPACT -->
+<div class="impact-grid fade-up fade-up-3">
+<div class="impact-card">
+<span class="impact-icon">🎓</span>
+<h3 data-i18n="s_i1_h">Cho Học sinh</h3>
+<p data-i18n="s_i1_p">Dịch thuật thời gian thực, từ điển, ghi chú, và công cụ tập trung — nổi trên mọi trang web. Miễn phí mãi mãi.</p>
+</div>
+<div class="impact-card">
+<span class="impact-icon">👩‍🏫</span>
+<h3 data-i18n="s_i2_h">Cho Giáo viên</h3>
+<p data-i18n="s_i2_p">Bộ hẹn giờ, chọn ngẫu nhiên, giám sát tiếng ồn, chú thích màn hình, dịch trực tiếp, Chặn Internet và đồng bộ lớp học — ngay trên slide của bạn.</p>
+</div>
+<div class="impact-card">
+<span class="impact-icon">👨‍👩‍👧</span>
+<h3 data-i18n="s_i3_h">Cho Phụ huynh</h3>
+<p data-i18n="s_i3_p">Chặn trang web gây mất tập trung, kích hoạt Chặn Internet, gửi liên kết bài tập, và đặt khóa PIN — tất cả từ PC Windows của bạn.</p>
+</div>
+<div class="impact-card">
+<span class="impact-icon">🌏</span>
+<h3 data-i18n="s_i4_h">Cho Mọi người</h3>
+<p data-i18n="s_i4_p">Rào cản ngôn ngữ không nên ngăn cản ai học tập. Sự ủng hộ của bạn biến điều đó thành hiện thực.</p>
+</div>
+</div>
+<!-- PROMISE -->
+<div class="promise fade-up fade-up-3">
+<span class="promise-icon">🤝</span>
+<div>
+<h4 data-i18n="s_promise_h">Lời hứa của Layers</h4>
+<p data-i18n="s_promise_p">Tiện ích Chrome sẽ luôn miễn phí. Không quảng cáo. Không theo dõi. Không thu thập dữ liệu. Quyền riêng tư của học sinh là ưu tiên hàng đầu. Sự ủng hộ của bạn tài trợ cho phát triển, không phải lợi nhuận — mỗi ly cà phê đều trực tiếp giúp Layers trở nên tốt hơn.</p>
+</div>
+</div>
+</div>
+<footer>
+<div class="footer-inner">
+<div class="footer-brand">Layers<span>.</span></div>
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a data-i18n="footer_contact" href="contact.html">Liên hệ</a>
+<a data-i18n="footer_privacy" href="privacy.html">Chính sách bảo mật</a>
+</div>
+<p class="footer-copy">© 2026 Layers · Built by Peter Hoang · Japan</p>
+</div>
+</footer>
+<script>
+var T = {
+  en: {
+    nav_features:"For Teachers", nav_pricing:"Pricing", nav_cta:"Get Started",
+    footer_contact:"Contact", footer_privacy:"Privacy Policy",
+    s_tag:"// Support the project",
+    s_h1:"Keep Layers<br><em>free for everyone.</em>",
+    s_sub:"Layers is built by one teacher, for every student and teacher who needs it. Your support helps keep it going.",
+    s_role:"Teacher & Solo Developer · Japan",
+    s_letter:'<p>I\'m Peter Hoang, a teacher living in Japan.</p><p>I teach at a school where most of my students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where the lessons are in Japanese, sometimes English, and they understand very little of either.</p><p>I watch them struggle, and I see something I recognise.</p><p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn\'t speak the language, didn\'t understand the culture, and had no one to explain what was happening around them. My mother sat in government offices not understanding the forms she was signing. My father took whatever work he could find, nodding along to instructions he couldn\'t follow. They built a life anyway — through stubbornness, sacrifice, and the kindness of people who took the time to help.</p><p>I grew up watching what it costs to live in a language that isn\'t yours. The confusion. The isolation. The quiet shame of not understanding something everyone else seems to get.</p><p>Now I see the same thing in my classroom. A student from Vietnam staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who\'s bright and capable but falls behind because the lesson moves faster than their language skills allow.</p><p>These kids remind me of my parents. They remind me of the kid I would have been if my family had landed somewhere else.</p><p><strong>That\'s why I built Layers.</strong></p><p>The Chrome extension is <strong>completely free</strong> — no ads, no data collection, no account required. Because the students who need it most are the ones whose families can least afford to pay for it.</p><p>But building and maintaining Layers takes time, and I do it <span class="hl">entirely on my own</span> — before school, after school, on weekends. Every coffee you buy is a vote of confidence that says <em>"keep going"</em>.</p><p><strong>Here\'s what your support goes toward:</strong></p><p>☕ <strong>Keeping Layers free and ad-free</strong> — forever.<br>🌍 <strong>Better translation and language support</strong> — more accurate, more languages, faster.<br>📚 <strong>New tools students actually need</strong> — built from real classroom feedback.<br>🔧 <strong>Server costs and maintenance</strong> — Firebase, hosting, the things that keep the sync features running.<br>💛 <strong>My motivation</strong> — knowing someone out there finds this useful means the world to me.</p><p>If you\'ve ever been the person in the room who doesn\'t understand what\'s going on — or if you know someone who has — you know why this matters.</p><p>Thank you for being here.</p><p style="color:var(--text);font-weight:500;">— Peter</p>',
+    s_btn:"Buy Me a Coffee",
+    s_alt:'Or share Layers with a teacher who needs it — that helps just as much.<br><a href="https://chromewebstore.google.com/detail/layers/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer">Chrome Web Store</a> · <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer">Windows Teacher App</a>',
+    s_n1:"Languages supported", s_n2:"Developer", s_n3:"Ads shown", s_n4:"Cost for students",
+    s_i1_h:"For Students", s_i1_p:"Real-time translation, dictionary, notes, and focus tools — floating over any webpage. Free forever.",
+    s_i2_h:"For Teachers", s_i2_p:"Timer, student picker, noise monitor, screen annotation, live translation, Internet Lockdown, and classroom sync — all on top of your slides.",
+    s_i3_h:"For Parents", s_i3_p:"Block distracting sites, trigger Internet Lockdown, push homework links, and set a PIN lock — all from your Windows PC.",
+    s_i4_h:"For Everyone", s_i4_p:"Language barriers shouldn't stop anyone from learning. Your support makes that possible.",
+    s_promise_h:"The Layers Promise",
+    s_promise_p:"The Chrome extension will always be free. No ads. No tracking. No data collection. Student privacy comes first. Your support funds development, not profit — every coffee goes directly toward making Layers better for the people who use it."
+  },
+  ja: {
+    nav_features:"先生向け", nav_pricing:"料金", nav_cta:"はじめる",
+    footer_contact:"お問い合わせ", footer_privacy:"プライバシーポリシー",
+    s_tag:"// プロジェクトを応援",
+    s_h1:"Layersを<br><em>みんなのために無料で。</em>",
+    s_sub:"Layersは一人の教師が、すべての生徒と教師のために作りました。あなたの応援が開発を支えます。",
+    s_role:"教師 & 個人開発者 · 日本",
+    s_letter:'<p>Peter Hoangです。日本で教師をしています。</p><p>私が教えている学校では、ほとんどの生徒が日本人ですが、ここ数年で変化が起きています。ベトナム、中国、ネパール、フィリピンなど、さまざまな国から生徒が増えてきました。日本で新しい生活を築こうとしている家族たちです。彼らは日本語、時には英語で行われる授業に座っていますが、どちらもほとんど理解できません。</p><p>彼らが苦労しているのを見ると、見覚えのあるものを感じます。</p><p>40年前、私の両親は難民でした。ベトナムから何も持たずに逃れ、オーストラリアに再定住しました。言葉もわからず、文化も理解できず、周りで何が起きているか説明してくれる人もいない国でした。母は政府の窓口で、署名している書類の内容がわからないまま座っていました。父はどんな仕事でも引き受け、理解できない指示にうなずいていました。それでも彼らは生活を築きました——頑固さと犠牲、そして助けてくれた人々の優しさによって。</p><p>自分の言語ではない世界で生きることの代償を、私は子供の頃からずっと見てきました。混乱。孤立。他の人が当たり前に理解していることがわからない、静かな恥ずかしさ。</p><p>今、教室で同じことを目にしています。日本語の教科書を前に途方に暮れるベトナムの生徒。3回目のお願いをするのが恥ずかしくて聞けないネパールの生徒。優秀で能力があるのに、授業のスピードが言語能力を超えているために遅れをとるフィリピンの生徒。</p><p>この子たちを見ると、両親を思い出します。もし家族が別の場所にたどり着いていたら、自分がなっていたかもしれない子供を思い出します。</p><p><strong>だからLayersを作りました。</strong></p><p>Chrome拡張機能は<strong>完全無料</strong>です。広告なし、データ収集なし、アカウント登録不要。最も必要としている生徒たちの家族こそ、お金を払う余裕が最もない人たちだからです。</p><p>でも、Layersの開発と維持には時間がかかります。私は<span class="hl">完全に一人で</span>、学校の前後や週末に開発しています。一杯のコーヒーを買っていただくことは、「続けて」という応援のメッセージです。</p><p><strong>あなたの応援はこう使われます：</strong></p><p>☕ <strong>Layersを永久に無料・広告なしに。</strong><br>🌍 <strong>翻訳と言語サポートの改善</strong> — より正確に、より多くの言語を、より速く。<br>📚 <strong>生徒が本当に必要とするツール</strong> — 実際の教室のフィードバックから開発。<br>🔧 <strong>サーバー費用と保守</strong> — Firebase、ホスティング、同期機能を支えるもの。<br>💛 <strong>モチベーション</strong> — 誰かの役に立っていると知ることが何よりの励みです。</p><p>周りで何が起きているかわからない、という経験をしたことがある方——あるいは、そういう人を知っている方——なぜこれが大切かわかると思います。</p><p>ここまで読んでくださりありがとうございます。</p><p style="color:var(--text);font-weight:500;">— Peter</p>',
+    s_btn:"コーヒーをおごる",
+    s_alt:'または、必要としている先生にLayersをシェアしてください — それも同じくらい助けになります。<br><a href="https://chromewebstore.google.com/detail/layers/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer">Chrome ウェブストア</a> · <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer">Windows 教師アプリ</a>',
+    s_n1:"対応言語", s_n2:"開発者", s_n3:"表示される広告", s_n4:"生徒の費用",
+    s_i1_h:"生徒向け", s_i1_p:"リアルタイム翻訳、辞書、メモ、集中ツール — あらゆるウェブページの上に浮かぶ。永久無料。",
+    s_i2_h:"教師向け", s_i2_p:"タイマー、ランダム指名、騒音モニター、画面注釈、リアルタイム翻訳、インターネットロックダウン、教室同期 — スライドの上で。",
+    s_i3_h:"保護者向け", s_i3_p:"気が散るサイトのブロック、インターネットロックダウン、宿題リンクの送信、PINロック — すべてWindows PCから。",
+    s_i4_h:"すべての人へ", s_i4_p:"言語の壁が学びを止めるべきではありません。あなたの応援がそれを可能にします。",
+    s_promise_h:"Layersの約束",
+    s_promise_p:"Chrome拡張機能は永久に無料です。広告なし。トラッキングなし。データ収集なし。生徒のプライバシーが最優先です。あなたの応援は利益ではなく開発に使われます — すべてのコーヒーがLayersをより良くするために直接使われます。"
+  },
+  zh: {
+    nav_features:"教师专区", nav_pricing:"价格", nav_cta:"立即开始",
+    footer_contact:"联系我们", footer_privacy:"隐私政策",
+    s_tag:"// 支持项目",
+    s_h1:"让 Layers<br><em>永远免费。</em>",
+    s_sub:"Layers 由一位教师开发，为每一位需要它的学生和教师服务。您的支持帮助它继续发展。",
+    s_role:"教师 & 独立开发者 · 日本",
+    s_letter:'<p>我是 Peter Hoang，住在日本的一名教师。</p><p>我所在的学校大部分学生是日本人，但过去几年情况在变化。越来越多的学生从越南、中国、尼泊尔、菲律宾等国家来到这里——他们的家庭在尝试在日本建立新生活。他们坐在用日语、有时用英语授课的教室里，两种语言都几乎听不懂。</p><p>看着他们挣扎，我看到了一些熟悉的东西。</p><p>四十年前，我的父母是难民。他们一无所有地逃离越南，在澳大利亚重新定居——一个他们不会说语言、不理解文化、没有人解释周围发生什么的国家。我母亲坐在政府办公室里，不明白她正在签署的表格。我父亲接受任何能找到的工作，对着听不懂的指令点头。他们还是建立了生活——凭借倔强、牺牲，以及愿意花时间帮助他们的人的善意。</p><p>我从小就看着用不属于自己的语言生活需要付出什么代价。困惑。孤立。当别人都能理解的事情你却不懂时，那种安静的羞耻感。</p><p>现在我在教室里看到了同样的事情。一个越南学生盯着日语课本，茫然无措。一个尼泊尔孩子太尴尬了，不好意思让老师第三次重复。一个菲律宾学生聪明能干，却因为课程进度超过了她的语言能力而落后。</p><p>这些孩子让我想起我的父母。他们让我想起，如果我的家庭当初去了别的地方，我可能成为的那个孩子。</p><p><strong>这就是我创建 Layers 的原因。</strong></p><p>Chrome 扩展程序<strong>完全免费</strong>——没有广告，不收集数据，无需注册账户。因为最需要它的学生，来自最负担不起费用的家庭。</p><p>但开发和维护 Layers 需要时间，我<span class="hl">完全靠自己一个人</span>——上课前、放学后、周末。您买的每一杯咖啡都是在告诉我"继续加油"。</p><p><strong>您的支持将用于：</strong></p><p>☕ <strong>让 Layers 永远免费无广告。</strong><br>🌍 <strong>更好的翻译和语言支持</strong>——更准确、更多语言、更快。<br>📚 <strong>学生真正需要的新工具</strong>——基于真实课堂反馈开发。<br>🔧 <strong>服务器费用和维护</strong>——Firebase、托管，维持同步功能运行的一切。<br>💛 <strong>我的动力</strong>——知道有人觉得这个有用，对我来说意味着一切。</p><p>如果您曾经是房间里不明白正在发生什么的那个人——或者您认识这样的人——您就知道为什么这很重要。</p><p>感谢您的到来。</p><p style="color:var(--text);font-weight:500;">— Peter</p>',
+    s_btn:"请我喝杯咖啡",
+    s_alt:'或者将 Layers 分享给需要它的老师——这同样有帮助。<br><a href="https://chromewebstore.google.com/detail/layers/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer">Chrome 网上应用店</a> · <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer">Windows 教师应用</a>',
+    s_n1:"支持的语言", s_n2:"开发者", s_n3:"展示的广告", s_n4:"学生费用",
+    s_i1_h:"面向学生", s_i1_p:"实时翻译、词典、笔记和专注工具——浮在任何网页上。永远免费。",
+    s_i2_h:"面向教师", s_i2_p:"计时器、随机点名、噪音监控、屏幕注释、实时翻译、网络封锁和课堂同步——在您的幻灯片上方。",
+    s_i3_h:"面向家长", s_i3_p:"阻止分散注意力的网站、触发网络封锁、推送作业链接、设置 PIN 锁——全部从 Windows 电脑操控。",
+    s_i4_h:"面向所有人", s_i4_p:"语言障碍不应阻止任何人学习。您的支持使这成为可能。",
+    s_promise_h:"Layers 的承诺",
+    s_promise_p:"Chrome 扩展程序将永远免费。没有广告。没有追踪。没有数据收集。学生隐私至上。您的支持用于开发而非利润——每一杯咖啡都直接用于让 Layers 变得更好。"
+  },
+  vi: {
+    nav_features:"Dành cho giáo viên", nav_pricing:"Giá cả", nav_cta:"Bắt đầu",
+    footer_contact:"Liên hệ", footer_privacy:"Chính sách bảo mật",
+    s_tag:"// Ủng hộ dự án",
+    s_h1:"Giữ Layers<br><em>miễn phí cho mọi người.</em>",
+    s_sub:"Layers được xây dựng bởi một giáo viên, dành cho mọi học sinh và giáo viên cần nó. Sự ủng hộ của bạn giúp dự án tiếp tục.",
+    s_role:"Giáo viên & Nhà phát triển · Nhật Bản",
+    s_letter:'<p>Tôi là Peter Hoang, một giáo viên sống tại Nhật Bản.</p><p>Tôi dạy ở một trường mà hầu hết học sinh là người Nhật, nhưng trong vài năm qua, mọi thứ đang thay đổi. Ngày càng nhiều học sinh đến từ Việt Nam, Trung Quốc, Nepal, Philippines và các quốc gia khác — những gia đình đang cố gắng xây dựng cuộc sống mới tại Nhật Bản. Họ ngồi trong lớp học nơi bài giảng bằng tiếng Nhật, đôi khi bằng tiếng Anh, và họ hiểu rất ít cả hai.</p><p>Tôi nhìn họ vật lộn, và tôi nhận ra điều gì đó quen thuộc.</p><p>Bốn mươi năm trước, bố mẹ tôi là người tị nạn. Họ rời Việt Nam với hai bàn tay trắng và tái định cư tại Úc — một đất nước nơi họ không nói được ngôn ngữ, không hiểu văn hóa, và không có ai giải thích những gì đang xảy ra xung quanh. Mẹ tôi ngồi trong các cơ quan chính phủ mà không hiểu những giấy tờ mình đang ký. Bố tôi nhận bất kỳ công việc nào tìm được, gật đầu theo những hướng dẫn mà ông không thể hiểu. Họ vẫn xây dựng được cuộc sống — bằng sự bướng bỉnh, hy sinh, và lòng tốt của những người dành thời gian giúp đỡ.</p><p>Tôi lớn lên chứng kiến cái giá phải trả khi sống bằng một ngôn ngữ không phải của mình. Sự bối rối. Sự cô lập. Nỗi xấu hổ thầm lặng khi không hiểu điều mà mọi người khác dường như đều hiểu.</p><p>Bây giờ tôi thấy điều tương tự trong lớp học của mình. Một học sinh Việt Nam nhìn chằm chằm vào sách giáo khoa tiếng Nhật, lạc lõng. Một em Nepal quá ngại để nhờ thầy nhắc lại lần thứ ba. Một học sinh Philippines thông minh và có năng lực nhưng bị tụt lại vì bài học chạy nhanh hơn khả năng ngôn ngữ của em.</p><p>Những đứa trẻ này nhắc tôi nhớ đến bố mẹ tôi. Chúng nhắc tôi nhớ đến đứa trẻ mà tôi có thể đã trở thành nếu gia đình tôi đặt chân đến một nơi khác.</p><p><strong>Đó là lý do tôi tạo ra Layers.</strong></p><p>Tiện ích Chrome hoàn toàn <strong>miễn phí</strong> — không quảng cáo, không thu thập dữ liệu, không cần tài khoản. Bởi vì những học sinh cần nó nhất là những em có gia đình ít có khả năng chi trả nhất.</p><p>Nhưng việc xây dựng và duy trì Layers tốn thời gian, và tôi làm điều đó <span class="hl">hoàn toàn một mình</span> — trước giờ học, sau giờ học, vào cuối tuần. Mỗi ly cà phê bạn mua là một lời động viên nói rằng <em>"hãy tiếp tục"</em>.</p><p><strong>Sự ủng hộ của bạn được sử dụng cho:</strong></p><p>☕ <strong>Giữ Layers miễn phí và không quảng cáo</strong> — mãi mãi.<br>🌍 <strong>Hỗ trợ dịch thuật và ngôn ngữ tốt hơn</strong> — chính xác hơn, nhiều ngôn ngữ hơn, nhanh hơn.<br>📚 <strong>Các công cụ mới mà học sinh thực sự cần</strong> — được xây dựng từ phản hồi thực tế trong lớp học.<br>🔧 <strong>Chi phí máy chủ và bảo trì</strong> — Firebase, hosting, những thứ giữ cho tính năng đồng bộ hoạt động.<br>💛 <strong>Động lực của tôi</strong> — biết rằng ai đó thấy điều này hữu ích có ý nghĩa rất lớn với tôi.</p><p>Nếu bạn từng là người trong phòng không hiểu chuyện gì đang xảy ra — hoặc nếu bạn biết ai đó như vậy — bạn hiểu tại sao điều này quan trọng.</p><p>Cảm ơn bạn đã ở đây.</p><p style="color:var(--text);font-weight:500;">— Peter</p>',
+    s_btn:"Mua cho tôi một ly cà phê",
+    s_alt:'Hoặc chia sẻ Layers với một giáo viên cần nó — điều đó cũng giúp ích không kém.<br><a href="https://chromewebstore.google.com/detail/layers/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer">Chrome Web Store</a> · <a href="https://thelayersapp.gumroad.com/l/v29eng" target="_blank" rel="noopener noreferrer">Ứng dụng Windows cho giáo viên</a>',
+    s_n1:"Ngôn ngữ hỗ trợ", s_n2:"Nhà phát triển", s_n3:"Quảng cáo hiển thị", s_n4:"Chi phí cho học sinh",
+    s_i1_h:"Cho Học sinh", s_i1_p:"Dịch thuật thời gian thực, từ điển, ghi chú, và công cụ tập trung — nổi trên mọi trang web. Miễn phí mãi mãi.",
+    s_i2_h:"Cho Giáo viên", s_i2_p:"Bộ hẹn giờ, chọn ngẫu nhiên, giám sát tiếng ồn, chú thích màn hình, dịch trực tiếp, Chặn Internet và đồng bộ lớp học — ngay trên slide của bạn.",
+    s_i3_h:"Cho Phụ huynh", s_i3_p:"Chặn trang web gây mất tập trung, kích hoạt Chặn Internet, gửi liên kết bài tập, và đặt khóa PIN — tất cả từ PC Windows của bạn.",
+    s_i4_h:"Cho Mọi người", s_i4_p:"Rào cản ngôn ngữ không nên ngăn cản ai học tập. Sự ủng hộ của bạn biến điều đó thành hiện thực.",
+    s_promise_h:"Lời hứa của Layers",
+    s_promise_p:"Tiện ích Chrome sẽ luôn miễn phí. Không quảng cáo. Không theo dõi. Không thu thập dữ liệu. Quyền riêng tư của học sinh là ưu tiên hàng đầu. Sự ủng hộ của bạn tài trợ cho phát triển, không phải lợi nhuận — mỗi ly cà phê đều trực tiếp giúp Layers trở nên tốt hơn."
+  }
+};
+
+function setLang(lang) {
+  var t = T[lang] || T['en'];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  try { localStorage.setItem('layers_lang', lang); } catch(e) {}
+}
+
+(function() {
+  var saved; try { saved = localStorage.getItem('layers_lang'); } catch(e) {}
+  var bl = (navigator.language || '').toLowerCase();
+  var lang = saved || (bl.startsWith('ja') ? 'ja' : bl.startsWith('zh') ? 'zh' : bl.startsWith('vi') ? 'vi' : 'en');
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  setLang('vi');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><base href="https://thelayersapp.com/"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Layers — Hướng dẫn cài đặt</title><meta content="Hướng dẫn cài đặt tiện ích Chrome Layers. Triển khai hàng loạt cho Chromebook của học sinh qua Google Admin Console." name="description"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #0e0f14;
+    --surface: #16181f;
+    --border: #2a2d38;
+    --blue: #4f8ef7;
+    --blue-dim: #1e2d50;
+    --green: #3ecf8e;
+    --green-dim: #12362a;
+    --amber: #f5a623;
+    --amber-dim: #3a2900;
+    --red: #f76f6f;
+    --red-dim: #2e1010;
+    --purple: #a78bfa;
+    --purple-dim: #1e1a3a;
+    --text: #e8eaf0;
+    --muted: #6b7080;
+    --mono: 'DM Mono', monospace;
+    --sans: 'Sora', 'Noto Sans JP', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    width: 36px; height: 36px;
+    background: var(--blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+
+  .header-text h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .header-text p { font-size: 13px; color: var(--muted); margin-top: 1px; }
+
+  .header-right {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .badge {
+    background: var(--green-dim);
+    color: var(--green);
+    border: 1px solid var(--green);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--mono);
+    letter-spacing: 0.5px;
+  }
+
+  .lang-toggle {
+    display: inline-flex;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+    gap: 2px;
+    flex-wrap: wrap;
+  }
+  .lang-btn {
+    background: none; border: none;
+    padding: 5px 14px; border-radius: 6px;
+    font-family: var(--sans); font-size: 12px; font-weight: 600;
+    color: var(--muted); cursor: pointer;
+    transition: all 0.15s;
+  }
+  .lang-btn.active {
+    background: var(--blue-dim);
+    color: var(--blue);
+  }
+
+  /* ── Main Layout ── */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 36px 32px 80px;
+  }
+
+  /* ── Audience Tabs ── */
+  .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .tab {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: left;
+  }
+  .tab:hover { border-color: #3a3d4a; }
+  .tab.active { border-color: var(--blue); }
+
+  .tab-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; font-family: var(--mono);
+    padding: 2px 8px; border-radius: 4px;
+    margin-bottom: 8px; letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .tag-chromebook { background: var(--green-dim); color: var(--green); }
+  .tag-windows { background: var(--purple-dim); color: var(--purple); }
+  .tag-student { background: var(--blue-dim); color: var(--blue); }
+  .tag-mac { background: rgba(167,139,250,0.15); color: #c4b5fd; }
+
+  .tab h3 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .tab p { font-size: 11px; color: var(--muted); line-height: 1.5; }
+  .tab .tab-icon { font-size: 16px; float: right; margin-top: -2px; }
+
+  /* ── Section Panels ── */
+  .panel { display: none; }
+  .panel.visible { display: block; }
+
+  /* ── Shared Components ── */
+  .intro-box {
+    background: var(--blue-dim);
+    border: 1px solid var(--blue);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    font-size: 13px;
+    color: #a8c4ff;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .intro-box .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .steps { display: flex; flex-direction: column; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 0 16px;
+    position: relative;
+  }
+
+  .step:not(:last-child) .line {
+    position: absolute;
+    left: 21px; top: 42px; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .step-num {
+    width: 44px; height: 44px;
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 14px; font-weight: 500;
+    color: var(--blue);
+    background: var(--bg);
+    flex-shrink: 0;
+    position: relative; z-index: 1;
+  }
+
+  .step-body { padding: 8px 0 32px; }
+  .step-body h2 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.2px; }
+  .step-body p { color: #9aa0b8; font-size: 13px; margin-bottom: 10px; }
+
+  .path {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 12px;
+    color: var(--amber);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .path .sep { color: var(--muted); }
+
+  .copy-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    display: flex; align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .copy-box code {
+    font-family: var(--mono);
+    font-size: 12px; color: var(--green);
+    word-break: break-all;
+  }
+
+  .copy-btn {
+    background: var(--border); border: none;
+    border-radius: 5px; color: var(--muted);
+    font-family: var(--mono); font-size: 11px;
+    padding: 5px 10px; cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+  .copy-btn:hover { background: var(--blue); color: #fff; }
+  .copy-btn.copied { background: var(--green-dim); color: var(--green); }
+
+  .note {
+    background: var(--amber-dim);
+    border: 1px solid var(--amber);
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-size: 12px; color: #f0c97a;
+    display: flex; gap: 8px;
+    align-items: flex-start;
+    margin-top: 8px;
+  }
+
+  .warn {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: 7px;
+    padding: 10px 14px;
+    font-size: 12px; color: #ffaaaa;
+    display: flex; gap: 8px;
+    margin-top: 8px;
+  }
+
+  .setting-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+  }
+  .setting-row .label { color: var(--muted); }
+  .setting-row .val { font-family: var(--mono); color: var(--green); }
+
+  .done-box {
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex; gap: 12px;
+    align-items: flex-start;
+    margin-top: 6px;
+  }
+  .done-box .icon { font-size: 20px; }
+  .done-box h3 { font-size: 14px; font-weight: 700; color: var(--green); margin-bottom: 3px; }
+  .done-box p { font-size: 12px; color: #5db88e; }
+
+  .code-block {
+    background: #0a0b10;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .code-block pre {
+    font-family: var(--mono);
+    font-size: 12px; color: var(--green);
+    white-space: pre-wrap;
+    word-break: break-all;
+    padding-right: 56px;
+  }
+  .code-block .copy-btn {
+    position: absolute;
+    top: 8px; right: 8px;
+  }
+
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--blue); border: none;
+    border-radius: 8px; color: #fff;
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    padding: 10px 18px; cursor: pointer;
+    transition: opacity 0.15s;
+    margin-bottom: 8px;
+  }
+  .download-btn:hover { opacity: 0.85; }
+
+  /* ── Windows sub-methods ── */
+  .sub-methods {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 28px;
+  }
+  .sub-method {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px; cursor: pointer;
+    transition: border-color 0.15s;
+    font-size: 12px;
+  }
+  .sub-method.active { border-color: var(--purple); }
+  .sub-method h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .sub-method p { color: var(--muted); font-size: 11px; }
+
+  .sub-panel { display: none; }
+  .sub-panel.visible { display: block; }
+
+  /* ── Student Section ── */
+  .student-card {
+    background: #fff;
+    border-radius: 20px;
+    max-width: 460px;
+    margin: 0 auto;
+    padding: 36px 32px 32px;
+    text-align: center;
+    color: #1a1f36;
+  }
+
+  .student-card .s-logo {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-bottom: 4px;
+  }
+  .student-card .s-logo-icon {
+    width: 40px; height: 40px;
+    background: #4f8ef7; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .student-card .s-logo-text {
+    font-size: 26px; font-weight: 900;
+    color: #1a1f36; letter-spacing: -1px;
+  }
+  .student-card .s-tagline {
+    font-size: 12px; color: #8892a4;
+    margin-bottom: 24px;
+  }
+
+  .student-steps {
+    text-align: left;
+    display: flex; flex-direction: column;
+    gap: 12px; margin-bottom: 24px;
+  }
+  .s-step {
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .s-step-num {
+    width: 28px; height: 28px;
+    background: #4f8ef7; color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .s-step-text {
+    font-size: 13px; color: #2d3452; line-height: 1.7;
+  }
+  .s-step-text strong { color: #1a1f36; }
+
+  .qr-section {
+    background: #f7f9ff;
+    border: 2px dashed #c3d0f5;
+    border-radius: 14px;
+    padding: 20px 16px 16px;
+    margin-bottom: 20px;
+  }
+  .qr-label {
+    font-size: 11px; font-weight: 700;
+    color: #8892a4; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 14px;
+  }
+  #qrcode { display: flex; justify-content: center; margin-bottom: 10px; }
+  #qrcode canvas, #qrcode img { border-radius: 8px; }
+  .qr-url {
+    font-size: 10px; color: #aab4cc;
+    word-break: break-all; font-family: monospace;
+  }
+
+  .store-link {
+    display: block;
+    background: #4f8ef7; color: #fff;
+    text-decoration: none; border-radius: 10px;
+    padding: 12px; font-size: 13px; font-weight: 700;
+    transition: background 0.15s;
+  }
+  .store-link:hover { background: #3a7be0; }
+
+  .store-hint {
+    font-size: 11px; color: #aab4cc; margin-top: 8px;
+  }
+
+  /* ── Ref section ── */
+  .ref-label {
+    color: var(--muted); font-size: 12px;
+    margin-bottom: 10px; margin-top: 24px;
+  }
+
+  /* ── Routing Guide ── */
+  .routing-guide {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(79,142,247,0.06) 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 24px 20px;
+    margin-bottom: 28px;
+  }
+  .routing-guide h2 {
+    font-size: 16px; font-weight: 700; color: #fff;
+    margin-bottom: 14px;
+  }
+  .routing-paths {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .route-card {
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .route-card:hover { transform: translateY(-2px); }
+  .route-teacher {
+    background: var(--blue-dim);
+    border: 1.5px solid var(--blue);
+  }
+  .route-teacher:hover { border-color: #7aabff; }
+  .route-it {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+  }
+  .route-it:hover { border-color: var(--muted); }
+  .route-card .route-emoji { font-size: 22px; margin-bottom: 8px; }
+  .route-card h3 {
+    font-size: 14px; font-weight: 700; color: #fff;
+    margin-bottom: 4px;
+  }
+  .route-card p {
+    font-size: 12px; color: var(--muted); line-height: 1.55;
+  }
+  .route-card .route-action {
+    display: inline-block; margin-top: 10px;
+    font-size: 12px; font-weight: 600;
+    color: var(--blue); cursor: pointer;
+  }
+  .route-teacher .route-action { color: var(--blue); }
+  .route-it .route-action { color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .routing-paths { grid-template-columns: 1fr; }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    header { padding: 18px 20px; }
+    main { padding: 24px 18px 60px; }
+    .tabs { grid-template-columns: 1fr; }
+    .sub-methods { grid-template-columns: 1fr; }
+    .student-card { padding: 28px 22px 24px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #000; }
+    .lang-toggle, .tabs, .routing-guide { display: none; }
+    .panel { display: block !important; }
+    .panel + .panel { page-break-before: always; }
+  }
+</style>
+<link href="https://thelayersapp.com/vi/layersinstall.html" rel="canonical"/><link href="https://thelayersapp.com/layersinstall.html" hreflang="en" rel="alternate"/><link href="https://thelayersapp.com/ja/layersinstall.html" hreflang="ja" rel="alternate"/><link href="https://thelayersapp.com/zh/layersinstall.html" hreflang="zh" rel="alternate"/><link href="https://thelayersapp.com/vi/layersinstall.html" hreflang="vi" rel="alternate"/><link href="https://thelayersapp.com/layersinstall.html" hreflang="x-default" rel="alternate"/><meta content="vi_VN" property="og:locale"/></head>
+<body>
+<header>
+<div class="logo">🗂️</div>
+<div class="header-text">
+<h1 data-i18n="header_title">Layers — Hướng dẫn cài đặt</h1>
+<p data-i18n="header_sub">Triển khai hoặc cài đặt tiện ích mở rộng Layers Chrome</p>
+</div>
+<div class="header-right">
+<div class="lang-toggle">
+<button class="lang-btn" onclick="setLang('en')">EN</button>
+<button class="lang-btn" onclick="setLang('ja')">日本語</button>
+<button class="lang-btn" onclick="setLang('zh')">中文</button>
+<button class="lang-btn active" onclick="setLang('vi')">Tiếng Việt</button>
+</div>
+<span class="badge">v1.3.3</span>
+</div>
+</header>
+<main>
+<!-- ── Routing Guide ── -->
+<div class="routing-guide">
+<h2 data-i18n="route_h">👋 Bạn cần hướng dẫn nào?</h2>
+<div class="routing-paths">
+<div class="route-card route-teacher" onclick="showPanel('student'); scrollToTabs();">
+<div class="route-emoji">🧑‍🏫</div>
+<h3 data-i18n="route_teacher_h">Tôi là giáo viên</h3>
+<p data-i18n="route_teacher_p">Sử dụng tùy chọn <strong>Tự cài đặt</strong> để thêm Layers vào trình duyệt của bạn, hoặc chia sẻ mã QR cho học sinh để các em tự cài đặt.</p>
+<span class="route-action" data-i18n="route_teacher_action">→ Đến hướng dẫn Tự cài đặt</span>
+</div>
+<div class="route-card route-it" onclick="showPanel('chromebook'); scrollToTabs();">
+<div class="route-emoji">🔧</div>
+<h3 data-i18n="route_it_h">Tôi là quản trị viên IT / trường học</h3>
+<p data-i18n="route_it_p">Triển khai Layers đến tất cả thiết bị học sinh cùng lúc — không cần học sinh thao tác. Yêu cầu quyền quản trị Google Workspace hoặc máy tính Windows.</p>
+<span class="route-action" data-i18n="route_it_action">→ Đến hướng dẫn triển khai</span>
+</div>
+</div>
+</div>
+<!-- ── Audience Tabs ── -->
+<div class="tabs" id="guide-tabs">
+<div class="tab" onclick="showPanel('chromebook')">
+<span class="tab-tag tag-chromebook">ChromeOS</span>
+<h3 data-i18n="tab_cb_h">Quản trị Chromebook</h3>
+<p data-i18n="tab_cb_p">Cài đặt bắt buộc qua Google Workspace Admin Console</p>
+</div>
+<div class="tab" onclick="showPanel('windows')">
+<span class="tab-tag tag-windows">Windows</span>
+<h3 data-i18n="tab_win_h">Quản trị Windows</h3>
+<p data-i18n="tab_win_p">Cài đặt bắt buộc qua registry trên Windows 10/11</p>
+</div>
+<div class="tab" onclick="showPanel('mac')">
+<span class="tab-tag tag-mac">macOS</span>
+<h3 data-i18n="tab_mac_h">Ứng dụng giáo viên Mac</h3>
+<p data-i18n="tab_mac_p">Tải xuống và thiết lập lần đầu cho macOS</p>
+</div>
+<div class="tab active" onclick="showPanel('student')">
+<span class="tab-tag tag-student" data-i18n="tag_student">Tự cài đặt</span>
+<h3 data-i18n="tab_st_h">Giáo viên / Tự cài đặt</h3>
+<p data-i18n="tab_st_p">Cài đặt trên trình duyệt của bạn hoặc chia sẻ cho học sinh</p>
+</div>
+</div>
+<!-- ═══════════════════════════════════════════ -->
+<!--  CHROMEBOOK PANEL                            -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="panel" id="panel-chromebook">
+<div class="note" style="margin-bottom:16px;">
+<span>🔒</span>
+<span data-i18n="admin_note_cb">Hướng dẫn này yêu cầu <strong>quyền quản trị Google Workspace</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.</span>
+</div>
+<div class="intro-box">
+<span class="icon">ℹ️</span>
+<span data-i18n="cb_intro">Thao tác này sẽ tự động cài đặt tiện ích Layers Chrome trên <strong>tất cả Chromebook của học sinh</strong> — không cần học sinh thao tác. Tiện ích sẽ xuất hiện ngay lập tức và học sinh không thể gỡ bỏ.</span>
+</div>
+<div class="steps">
+<div class="step">
+<div class="line"></div>
+<div class="step-num">1</div>
+<div class="step-body">
+<h2 data-i18n="cb_s1_h">Mở Google Admin Console</h2>
+<p data-i18n="cb_s1_p">Đăng nhập bằng tài khoản quản trị Google Workspace.</p>
+<div class="copy-box">
+<code>https://admin.google.com</code>
+<button class="copy-btn" onclick="copyText(this, 'https://admin.google.com')">Copy</button>
+</div>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">2</div>
+<div class="step-body">
+<h2 data-i18n="cb_s2_h">Điều hướng đến Quản lý ứng dụng Chrome</h2>
+<p data-i18n="cb_s2_p">Theo đường dẫn này trên thanh bên trái:</p>
+<div class="path">
+<span data-i18n="cb_s2_nav1">Thiết bị</span><span class="sep">›</span>
+<span>Chrome</span><span class="sep">›</span>
+<span data-i18n="cb_s2_nav3">Ứng dụng &amp; Tiện ích</span><span class="sep">›</span>
+<span data-i18n="cb_s2_nav4">Người dùng &amp; Trình duyệt</span>
+</div>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">3</div>
+<div class="step-body">
+<h2 data-i18n="cb_s3_h">Chọn Đơn vị tổ chức học sinh</h2>
+<p data-i18n="cb_s3_p">Trong bảng bên trái, nhấp vào OU chứa học sinh của bạn (ví dụ: <em>Học sinh</em> hoặc <em>Lớp 1</em>). Điều này đảm bảo tiện ích chỉ được cài đặt cho học sinh, không phải nhân viên.</p>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">4</div>
+<div class="step-body">
+<h2 data-i18n="cb_s4_h">Thêm tiện ích Layers</h2>
+<p data-i18n="cb_s4_p">Nhấp nút <strong>＋</strong> (góc dưới bên phải) → <strong>Thêm từ Chrome Web Store</strong>. Tìm "Layers", hoặc dán ID tiện ích:</p>
+<div class="copy-box">
+<code>iclfdiolilnmjeimkdoeloeiioaongnh</code>
+<button class="copy-btn" onclick="copyText(this, 'iclfdiolilnmjeimkdoeloeiioaongnh')">Copy</button>
+</div>
+<p data-i18n="cb_s4_p2">Chọn tiện ích Layers và nhấp <strong>Chọn</strong>.</p>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">5</div>
+<div class="step-body">
+<h2 data-i18n="cb_s5_h">Đặt chính sách cài đặt thành Cài đặt bắt buộc</h2>
+<p data-i18n="cb_s5_p">Sau khi thêm tiện ích, bảng cài đặt sẽ xuất hiện. Thiết lập:</p>
+<div class="setting-row">
+<span class="label" data-i18n="cb_s5_policy">Chính sách cài đặt</span>
+<span class="val" data-i18n="cb_s5_force">Cài đặt bắt buộc</span>
+</div>
+<div class="setting-row">
+<span class="label" data-i18n="cb_s5_pin">Ghim vào thanh công cụ</span>
+<span class="val" data-i18n="cb_s5_enabled">Bật (khuyến nghị)</span>
+</div>
+<div class="note">
+<span>⚠️</span>
+<span data-i18n="cb_s5_note"><strong>Không</strong> chọn "Cho phép cài đặt" — học sinh không được phép gỡ bỏ. Hãy chọn <strong>Cài đặt bắt buộc</strong>.</span>
+</div>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">6</div>
+<div class="step-body">
+<h2 data-i18n="cb_s6_h">Lưu</h2>
+<p data-i18n="cb_s6_p">Nhấp <strong>Lưu</strong> ở góc trên bên phải. Chính sách sẽ được triển khai ngay lập tức.</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">✓</div>
+<div class="step-body">
+<h2 data-i18n="cb_done_h">Hoàn tất — Điều gì xảy ra tiếp theo</h2>
+<div class="done-box">
+<span class="icon">🎉</span>
+<div>
+<h3 data-i18n="cb_done_title">Tiện ích sẽ tự động cài đặt trên tất cả thiết bị học sinh</h3>
+<p data-i18n="cb_done_p">Học sinh sẽ thấy biểu tượng Layers trên thanh công cụ Chrome khi đăng nhập hoặc khởi động lại Chrome lần sau. Không cần học sinh thao tác. Tiện ích không thể bị gỡ bỏ khi chính sách còn hiệu lực.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ═══════════════════════════════════════════ -->
+<!--  WINDOWS PANEL                               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="panel" id="panel-windows">
+<div class="note" style="margin-bottom:16px;">
+<span>🔒</span>
+<span data-i18n="admin_note_win">Hướng dẫn này yêu cầu <strong>quyền quản trị viên Windows</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.</span>
+</div>
+<div class="intro-box">
+<span class="icon">ℹ️</span>
+<span data-i18n="win_intro">Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows. Học sinh không thể gỡ bỏ.</span>
+</div>
+<div class="sub-methods">
+<div class="sub-method active" onclick="showSubMethod('reg')">
+<span class="tab-tag" data-i18n="win_recommended" style="background:var(--green-dim);color:var(--green);font-size:10px;padding:2px 7px;border-radius:4px;margin-bottom:6px;display:inline-block">Khuyến nghị</span>
+<h4 data-i18n="win_m1_h">⚙️ Registry (tệp .reg)</h4>
+<p data-i18n="win_m1_p">Nhấp đúp để cài đặt. 30 giây mỗi máy.</p>
+</div>
+<div class="sub-method" onclick="showSubMethod('bat')">
+<span class="tab-tag" data-i18n="win_fastest" style="background:var(--blue-dim);color:var(--blue);font-size:10px;padding:2px 7px;border-radius:4px;margin-bottom:6px;display:inline-block">Nhanh nhất</span>
+<h4 data-i18n="win_m2_h">💻 Script .bat tự động</h4>
+<p data-i18n="win_m2_p">Chạy từ USB hoặc ổ đĩa mạng. Không cần nhấp chuột.</p>
+</div>
+</div>
+<!-- REG sub-panel -->
+<div class="sub-panel visible" id="sub-reg">
+<div class="steps">
+<div class="step">
+<div class="line"></div>
+<div class="step-num">1</div>
+<div class="step-body">
+<h2 data-i18n="win_reg_s1_h">Tải tệp .reg</h2>
+<p data-i18n="win_reg_s1_p">Lưu vào bất kỳ đâu trên máy tính mục tiêu.</p>
+<button class="download-btn" onclick="downloadReg()">⬇ Download layers-install.reg</button>
+<div class="note">
+<span>⚠️</span>
+<span data-i18n="win_reg_s1_note">Windows có thể cảnh báo "Nhà phát hành không xác định" — nhấp <strong>Yes</strong> để tiếp tục. Đây là bình thường với tệp .reg.</span>
+</div>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">2</div>
+<div class="step-body">
+<h2 data-i18n="win_reg_s2_h">Chạy với quyền Quản trị viên</h2>
+<p data-i18n="win_reg_s2_p">Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (hoặc nhấp đúp). Chấp nhận yêu cầu UAC.</p>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">3</div>
+<div class="step-body">
+<h2 data-i18n="win_s3_h">Khởi động lại Chrome</h2>
+<p data-i18n="win_s3_p">Đóng và mở lại Chrome. Tiện ích sẽ tự động cài đặt trong vài giây.</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">✓</div>
+<div class="step-body">
+<h2 data-i18n="win_done_h">Hoàn tất</h2>
+<div class="done-box">
+<span class="icon">🎉</span>
+<div>
+<h3 data-i18n="win_done_title">Layers đã được cài đặt bắt buộc</h3>
+<p data-i18n="win_done_p">Biểu tượng 🗂️ sẽ xuất hiện trên thanh công cụ Chrome. Tiện ích không thể bị gỡ bỏ khi mục registry còn tồn tại.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p class="ref-label" data-i18n="win_ref">Nội dung tệp .reg (tham khảo):</p>
+<div class="code-block">
+<pre>Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist]
+"1"="iclfdiolilnmjeimkdoeloeiioaongnh;https://clients2.google.com/service/update2/crx"</pre>
+<button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+</div>
+<div class="note">
+<span>💡</span>
+<span data-i18n="win_reg_note2">Nếu giá trị <code style="font-family:var(--mono)">"1"</code> đã được tiện ích khác sử dụng, hãy đổi thành <code style="font-family:var(--mono)">"2"</code> hoặc số chưa dùng.</span>
+</div>
+</div>
+<!-- BAT sub-panel -->
+<div class="sub-panel" id="sub-bat">
+<div class="steps">
+<div class="step">
+<div class="line"></div>
+<div class="step-num">1</div>
+<div class="step-body">
+<h2 data-i18n="win_bat_s1_h">Tải script .bat</h2>
+<button class="download-btn" onclick="downloadBat()">⬇ Download layers-install.bat</button>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">2</div>
+<div class="step-body">
+<h2 data-i18n="win_bat_s2_h">Chạy với quyền Quản trị viên</h2>
+<p data-i18n="win_bat_s2_p">Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. Cửa sổ đen sẽ xuất hiện thoáng qua.</p>
+<div class="warn">
+<span>⚠️</span>
+<span data-i18n="win_bat_s2_warn">Phải chạy với quyền Quản trị viên, nếu không việc ghi registry sẽ thất bại mà không báo lỗi.</span>
+</div>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num">3</div>
+<div class="step-body">
+<h2 data-i18n="win_s3_h">Khởi động lại Chrome</h2>
+<p data-i18n="win_s3_p">Đóng và mở lại Chrome. Tiện ích sẽ tự động cài đặt trong vài giây.</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">✓</div>
+<div class="step-body">
+<h2 data-i18n="win_done_h">Hoàn tất</h2>
+<div class="done-box">
+<span class="icon">🎉</span>
+<div>
+<h3 data-i18n="win_bat_done_title">Layers đã được cài đặt bắt buộc</h3>
+<p data-i18n="win_bat_done_p">Sao chép tệp .bat vào USB và chạy trên từng máy tính học sinh, mỗi máy chưa đến 60 giây.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p class="ref-label" data-i18n="win_bat_ref">Nội dung tệp .bat:</p>
+<div class="code-block">
+<pre>@echo off
+reg add "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist" ^
+  /v 1 ^
+  /t REG_SZ ^
+  /d "iclfdiolilnmjeimkdoeloeiioaongnh;https://clients2.google.com/service/update2/crx" ^
+  /f
+echo Layers extension force-install policy applied.
+pause</pre>
+<button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+</div>
+</div>
+</div>
+<!-- ═══════════════════════════════════════════ -->
+<!--  MAC PANEL                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="panel" id="panel-mac">
+<div class="intro-box" style="background:rgba(167,139,250,0.1);border-color:#a78bfa;">
+<span class="icon">🍎</span>
+<span data-i18n="mac_intro">Tải ứng dụng Layers dành cho giáo viên trên Mac (.dmg). Ứng dụng chưa được ký mã, vì vậy lần khởi động đầu tiên cần thêm một bước.</span>
+</div>
+<div class="steps">
+<div class="step">
+<div class="line"></div>
+<div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">1</div>
+<div class="step-body">
+<h2 data-i18n="mac_s1_h">Tải .dmg từ Google Drive</h2>
+<p data-i18n="mac_s1_p">Mở thư mục và tải file <strong>Layers Teacher.dmg</strong>.</p>
+<a class="download-btn" href="https://drive.google.com/drive/folders/1zKE7chL3ivQT3JtGHBS0TjfqSmFZgXjX?usp=drive_link" rel="noopener noreferrer" style="background:#a78bfa;text-decoration:none;" target="_blank">⬇ Open Google Drive folder</a>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">2</div>
+<div class="step-body">
+<h2 data-i18n="mac_s2_h">Mở .dmg và kéo ứng dụng vào thư mục Applications</h2>
+<p data-i18n="mac_s2_p">Nhấp đúp vào file .dmg đã tải. Kéo <strong>Layers Teacher.app</strong> vào thư mục Applications.</p>
+</div>
+</div>
+<div class="step">
+<div class="line"></div>
+<div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">3</div>
+<div class="step-body">
+<h2 data-i18n="mac_s3_h">Lần đầu khởi động — nhấp chuột phải để mở</h2>
+<p data-i18n="mac_s3_p">Vì ứng dụng chưa được ký mã, macOS sẽ chặn khi khởi động lần đầu với thông báo: <em>"Layers Teacher.app không thể mở vì đến từ nhà phát triển chưa được xác định."</em></p>
+<div class="note" style="margin-top:10px;margin-bottom:10px;">
+<span>🖱️</span>
+<span data-i18n="mac_s3_note"><strong>Nhấp chuột phải</strong> vào ứng dụng trong Applications → nhấp <strong>Mở</strong> → nhấp <strong>Mở</strong> trong hộp thoại. Chỉ cần làm điều này <strong>một lần</strong> — sau đó ứng dụng mở bình thường.</span>
+</div>
+<div class="note" style="background:var(--green-dim);border-color:var(--green);">
+<span>💡</span>
+<span data-i18n="mac_s3_alt">Cách khác: vào <strong>Cài đặt hệ thống → Quyền riêng tư &amp; Bảo mật</strong>, kéo xuống và nhấp <strong>Vẫn mở</strong> bên cạnh cảnh báo Layers.</span>
+</div>
+</div>
+</div>
+<div class="step">
+<div class="step-num" style="border-color:var(--green);color:var(--green);">✓</div>
+<div class="step-body">
+<h2 data-i18n="mac_done_h">Hoàn tất — Layers đang chạy</h2>
+<div class="done-box">
+<span class="icon">🎉</span>
+<div>
+<h3 data-i18n="mac_done_title">Thanh công cụ đang nổi trên màn hình của bạn</h3>
+<p data-i18n="mac_done_p">Từ bây giờ, nhấp đúp vào ứng dụng để mở bình thường. Layers nổi phía trên Keynote, Safari, YouTube và mọi ứng dụng toàn màn hình. 14 ngày dùng thử miễn phí tự động bắt đầu — không cần khóa giấy phép.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ═══════════════════════════════════════════ -->
+<!--  STUDENT PANEL                               -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="panel visible" id="panel-student">
+<div class="student-card">
+<div class="s-logo">
+<div class="s-logo-icon">🗂️</div>
+<span class="s-logo-text">Layers</span>
+</div>
+<p class="s-tagline" data-i18n="st_tagline">Dịch thuật, từ điển, ghi chú &amp; hẹn giờ — nổi trên mọi trang web</p>
+<div class="student-steps" id="student-steps"></div>
+<div class="qr-section">
+<div class="qr-label" data-i18n="st_qr_label">Quét mã QR</div>
+<div id="qrcode"></div>
+<div class="qr-url">chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh</div>
+</div>
+<a class="store-link" data-i18n="st_link" href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" id="store-link" target="_blank">🔗 Mở Chrome Web Store</a>
+<p class="store-hint" data-i18n="st_hint">Không quét được? Nhấp vào liên kết phía trên</p>
+</div>
+</div>
+</main>
+<script>
+const EXT_ID = 'iclfdiolilnmjeimkdoeloeiioaongnh';
+const UPDATE_URL = 'https://clients2.google.com/service/update2/crx';
+const STORE_URL = 'https://chromewebstore.google.com/detail/' + EXT_ID;
+
+// ── QR Code ──
+new QRCode(document.getElementById('qrcode'), {
+  text: STORE_URL, width: 160, height: 160,
+  colorDark: '#1a1f36', colorLight: '#f7f9ff',
+  correctLevel: QRCode.CorrectLevel.M
+});
+
+// ── Tab switching ──
+function scrollToTabs() {
+  document.getElementById('guide-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('visible');
+  // Highlight the matching tab
+  const tabs = document.querySelectorAll('.tab');
+  const tabMap = { chromebook: 0, windows: 1, student: 2 };
+  if (tabMap[id] !== undefined) tabs[tabMap[id]].classList.add('active');
+}
+
+function showSubMethod(id) {
+  document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('.sub-method').forEach(m => m.classList.remove('active'));
+  document.getElementById('sub-' + id).classList.add('visible');
+  event.currentTarget.classList.add('active');
+}
+
+// ── Copy ──
+function copyText(btn, text) {
+  const copiedLabels = { en: 'Copied!', ja: 'コピー済み！', zh: '已复制！', vi: 'Đã sao chép!' };
+  const copyLabels = { en: 'Copy', ja: 'コピー', zh: '复制', vi: 'Sao chép' };
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = copiedLabels[currentLang] || 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = copyLabels[currentLang] || 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function copyBlock(btn) {
+  const copiedLabels = { en: 'Copied!', ja: 'コピー済み！', zh: '已复制！', vi: 'Đã sao chép!' };
+  const pre = btn.previousElementSibling;
+  navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+    btn.textContent = copiedLabels[currentLang] || 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── Downloads ──
+function downloadReg() {
+  const c = `Windows Registry Editor Version 5.00\r\n\r\n[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Google\\Chrome\\ExtensionInstallForcelist]\r\n"1"="${EXT_ID};${UPDATE_URL}"\r\n`;
+  dl('layers-install.reg', c);
+}
+function downloadBat() {
+  const c = `@echo off\r\nreg add "HKLM\\SOFTWARE\\Policies\\Google\\Chrome\\ExtensionInstallForcelist" /v 1 /t REG_SZ /d "${EXT_ID};${UPDATE_URL}" /f\r\necho Layers extension force-install policy applied.\r\npause\r\n`;
+  dl('layers-install.bat', c);
+}
+function dl(name, content) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type: 'text/plain' }));
+  a.download = name; a.click();
+}
+
+// ── i18n ──
+let currentLang = 'en';
+
+const i18n = {
+  // Header
+  header_title:   { en: 'Layers — Installation Guide', ja: 'Layers — インストールガイド', zh: 'Layers — 安装指南', vi: 'Layers — Hướng dẫn cài đặt' },
+  header_sub:     { en: 'Deploy or install the Layers Chrome extension', ja: 'Layers Chrome 拡張機能の導入・インストール', zh: '部署或安装 Layers Chrome 扩展程序', vi: 'Triển khai hoặc cài đặt tiện ích mở rộng Layers Chrome' },
+
+  // Routing guide
+  route_h:              { en: '👋 Which guide do you need?', ja: '👋 どのガイドが必要ですか？', zh: '👋 您需要哪个指南？', vi: '👋 Bạn cần hướng dẫn nào?' },
+  route_teacher_h:      { en: "I'm a teacher", ja: '教員の方', zh: '我是教师', vi: 'Tôi là giáo viên' },
+  route_teacher_p:      { en: 'Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.', ja: '<strong>セルフインストール</strong>で自分のブラウザに追加するか、QRコードを生徒に共有してインストールしてもらいましょう。', zh: '使用<strong>自助安装</strong>将 Layers 添加到您的浏览器，或将二维码分享给学生让他们自行安装。', vi: 'Sử dụng tùy chọn <strong>Tự cài đặt</strong> để thêm Layers vào trình duyệt của bạn, hoặc chia sẻ mã QR cho học sinh để các em tự cài đặt.' },
+  route_teacher_action: { en: '→ Go to Self-Install guide', ja: '→ セルフインストールガイドへ', zh: '→ 前往自助安装指南', vi: '→ Đến hướng dẫn Tự cài đặt' },
+  route_it_h:           { en: "I'm IT / school admin", ja: 'IT管理者・学校管理者の方', zh: 'IT / 学校管理员', vi: 'Tôi là quản trị viên IT / trường học' },
+  route_it_p:           { en: 'Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.', ja: 'すべての生徒端末に一括導入します。生徒側の操作は不要です。Google Workspace または Windows PC の管理者権限が必要です。', zh: '一次性将 Layers 部署到所有学生设备——无需学生操作。需要 Google Workspace 或 Windows PC 的管理员权限。', vi: 'Triển khai Layers đến tất cả thiết bị học sinh cùng lúc — không cần học sinh thao tác. Yêu cầu quyền quản trị Google Workspace hoặc máy tính Windows.' },
+  route_it_action:      { en: '→ Go to deployment guides', ja: '→ 一括導入ガイドへ', zh: '→ 前往部署指南', vi: '→ Đến hướng dẫn triển khai' },
+
+  // Tabs
+  tab_cb_h:  { en: 'Chromebook Admin', ja: 'Chromebook 管理者', zh: 'Chromebook 管理员', vi: 'Quản trị Chromebook' },
+  tab_cb_p:  { en: 'Force-install via Google Workspace Admin Console', ja: 'Google Workspace 管理コンソールで一括インストール', zh: '通过 Google Workspace 管理控制台强制安装', vi: 'Cài đặt bắt buộc qua Google Workspace Admin Console' },
+  tab_win_h: { en: 'Windows Admin', ja: 'Windows 管理者', zh: 'Windows 管理员', vi: 'Quản trị Windows' },
+  tab_win_p: { en: 'Force-install via registry on Windows 10/11 PCs', ja: 'レジストリを使って Windows 10/11 に強制インストール', zh: '通过注册表在 Windows 10/11 上强制安装', vi: 'Cài đặt bắt buộc qua registry trên Windows 10/11' },
+  tag_student: { en: 'Self-Install', ja: 'セルフ', zh: '自助安装', vi: 'Tự cài đặt' },
+  tab_st_h:  { en: 'Teacher / Self-Install', ja: '教員 / セルフインストール', zh: '教师 / 自助安装', vi: 'Giáo viên / Tự cài đặt' },
+  tab_st_p:  { en: 'Install on your own browser or share with students', ja: '自分のブラウザにインストール、または生徒に共有', zh: '安装到您的浏览器或分享给学生', vi: 'Cài đặt trên trình duyệt của bạn hoặc chia sẻ cho học sinh' },
+
+  // Chromebook
+  admin_note_cb: { en: 'This guide requires <strong>Google Workspace admin access</strong>. If you\'re a teacher without admin rights, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Google Workspace 管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。', zh: '本指南需要 <strong>Google Workspace 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>自助安装</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị Google Workspace</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.' },
+  admin_note_win: { en: 'This guide requires <strong>Windows administrator rights</strong>. If you\'re a teacher without admin access, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Windows の管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。', zh: '本指南需要 <strong>Windows 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>自助安装</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị viên Windows</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.' },
+  cb_intro:    { en: 'This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.', ja: 'このガイドに従うと、<strong>すべての生徒の Chromebook に Layers 拡張機能を自動インストール</strong>できます。生徒側の操作は一切不要です。インストール後、生徒は拡張機能を削除できません。', zh: '此操作会在<strong>所有学生 Chromebook 上自动安装</strong> Layers Chrome 扩展程序——无需学生操作。扩展程序会立即显示，学生无法删除。', vi: 'Thao tác này sẽ tự động cài đặt tiện ích Layers Chrome trên <strong>tất cả Chromebook của học sinh</strong> — không cần học sinh thao tác. Tiện ích sẽ xuất hiện ngay lập tức và học sinh không thể gỡ bỏ.' },
+  cb_s1_h:     { en: 'Open Google Admin Console', ja: 'Google 管理コンソールを開く', zh: '打开 Google 管理控制台', vi: 'Mở Google Admin Console' },
+  cb_s1_p:     { en: 'Sign in with your Google Workspace admin account.', ja: 'Google Workspace の管理者アカウントでサインインします。', zh: '使用 Google Workspace 管理员帐号登录。', vi: 'Đăng nhập bằng tài khoản quản trị Google Workspace.' },
+  cb_s2_h:     { en: 'Navigate to Chrome App Management', ja: 'Chrome アプリ管理ページに移動する', zh: '导航到 Chrome 应用管理', vi: 'Điều hướng đến Quản lý ứng dụng Chrome' },
+  cb_s2_p:     { en: 'Follow this path in the left sidebar:', ja: '左サイドバーで次の順にクリックします：', zh: '在左侧栏按以下路径点击：', vi: 'Theo đường dẫn này trên thanh bên trái:' },
+  cb_s2_nav1:  { en: 'Devices', ja: 'デバイス', zh: '设备', vi: 'Thiết bị' },
+  cb_s2_nav3:  { en: 'Apps & Extensions', ja: 'アプリと拡張機能', zh: '应用和扩展程序', vi: 'Ứng dụng & Tiện ích' },
+  cb_s2_nav4:  { en: 'Users & Browsers', ja: 'ユーザーとブラウザ', zh: '用户和浏览器', vi: 'Người dùng & Trình duyệt' },
+  cb_s3_h:     { en: 'Select the Student Organisational Unit', ja: '生徒の組織部門（OU）を選択する', zh: '选择学生组织单位', vi: 'Chọn Đơn vị tổ chức học sinh' },
+  cb_s3_p:     { en: 'In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.', ja: '左パネルで生徒が所属する組織部門（例：<em>生徒</em>、<em>1年生</em>）をクリックします。これにより、教職員ではなく生徒だけにインストールされます。', zh: '在左侧面板中，点击包含学生的组织单位（如 <em>学生</em> 或 <em>一年级</em>）。这样可以确保扩展程序只安装在学生设备上，不会影响教职工。', vi: 'Trong bảng bên trái, nhấp vào OU chứa học sinh của bạn (ví dụ: <em>Học sinh</em> hoặc <em>Lớp 1</em>). Điều này đảm bảo tiện ích chỉ được cài đặt cho học sinh, không phải nhân viên.' },
+  cb_s4_h:     { en: 'Add the Layers Extension', ja: 'Layers 拡張機能を追加する', zh: '添加 Layers 扩展程序', vi: 'Thêm tiện ích Layers' },
+  cb_s4_p:     { en: 'Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:', ja: '右下の <strong>＋ ボタン</strong> をクリック → <strong>Chrome ウェブストアから追加</strong> を選択します。「Layers」で検索するか、拡張機能 ID を直接貼り付けます：', zh: '点击右下角的 <strong>＋ 按钮</strong> → <strong>从 Chrome 网上应用店添加</strong>。搜索"Layers"，或直接粘贴扩展程序 ID：', vi: 'Nhấp nút <strong>＋</strong> (góc dưới bên phải) → <strong>Thêm từ Chrome Web Store</strong>. Tìm "Layers", hoặc dán ID tiện ích:' },
+  cb_s4_p2:    { en: 'Select the Layers extension and click <strong>Select</strong>.', ja: 'Layers 拡張機能を選択して <strong>選択</strong> をクリックします。', zh: '选择 Layers 扩展程序，然后点击<strong>选择</strong>。', vi: 'Chọn tiện ích Layers và nhấp <strong>Chọn</strong>.' },
+  cb_s5_h:     { en: 'Set Installation Policy to Force Install', ja: 'インストールポリシーを「強制インストール」に設定する', zh: '将安装策略设为强制安装', vi: 'Đặt chính sách cài đặt thành Cài đặt bắt buộc' },
+  cb_s5_p:     { en: 'After adding the extension, a settings panel appears. Set:', ja: '拡張機能を追加すると、右側に設定パネルが表示されます。次のように設定します：', zh: '添加扩展程序后，会出现设置面板。设置如下：', vi: 'Sau khi thêm tiện ích, bảng cài đặt sẽ xuất hiện. Thiết lập:' },
+  cb_s5_policy:{ en: 'Installation policy', ja: 'インストールポリシー', zh: '安装策略', vi: 'Chính sách cài đặt' },
+  cb_s5_force: { en: 'Force install', ja: '強制インストール', zh: '强制安装', vi: 'Cài đặt bắt buộc' },
+  cb_s5_pin:   { en: 'Pin to toolbar', ja: 'ツールバーにピン留め', zh: '固定到工具栏', vi: 'Ghim vào thanh công cụ' },
+  cb_s5_enabled:{ en: 'Enabled (recommended)', ja: '有効（推奨）', zh: '已启用（推荐）', vi: 'Bật (khuyến nghị)' },
+  cb_s5_note:  { en: '<strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.', ja: '「インストールを許可」は選ばないでください。生徒が削除できてしまいます。必ず<strong>強制インストール</strong>を選択してください。', zh: '<strong>不要</strong>选择"允许安装"——学生不能自行删除。请选择<strong>强制安装</strong>。', vi: '<strong>Không</strong> chọn "Cho phép cài đặt" — học sinh không được phép gỡ bỏ. Hãy chọn <strong>Cài đặt bắt buộc</strong>.' },
+  cb_s6_h:     { en: 'Save', ja: '保存する', zh: '保存', vi: 'Lưu' },
+  cb_s6_p:     { en: 'Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.', ja: '右上の <strong>保存</strong> をクリックします。ポリシーはすぐに反映されます。', zh: '点击右上角的<strong>保存</strong>。策略会立即生效。', vi: 'Nhấp <strong>Lưu</strong> ở góc trên bên phải. Chính sách sẽ được triển khai ngay lập tức.' },
+  cb_done_h:   { en: 'Done — What Happens Next', ja: '完了 — この後の動作', zh: '完成 — 接下来会发生什么', vi: 'Hoàn tất — Điều gì xảy ra tiếp theo' },
+  cb_done_title:{ en: 'Extension auto-installs on all student devices', ja: 'すべての生徒端末に自動インストールされます', zh: '扩展程序会自动安装到所有学生设备', vi: 'Tiện ích sẽ tự động cài đặt trên tất cả thiết bị học sinh' },
+  cb_done_p:   { en: 'Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.', ja: '次回 Chrome にサインインするか再起動すると、生徒のツールバーに Layers アイコンが表示されます。生徒側の操作は不要です。ポリシーが有効な間、生徒は拡張機能を削除できません。', zh: '学生下次登录或重启 Chrome 时，工具栏会出现 Layers 图标。无需学生操作。策略生效期间，学生无法删除该扩展程序。', vi: 'Học sinh sẽ thấy biểu tượng Layers trên thanh công cụ Chrome khi đăng nhập hoặc khởi động lại Chrome lần sau. Không cần học sinh thao tác. Tiện ích không thể bị gỡ bỏ khi chính sách còn hiệu lực.' },
+
+  tab_mac_h:   { en: 'Mac Teacher App', ja: 'Mac 教師アプリ', zh: 'Mac 教师应用', vi: 'Ứng dụng giáo viên Mac' },
+  tab_mac_p:   { en: 'Download & first-launch setup for macOS', ja: 'macOS向けダウンロードと初回起動の設定', zh: '下载及 macOS 首次启动设置', vi: 'Tải xuống và thiết lập lần đầu cho macOS' },
+  mac_intro:   { en: 'Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.', ja: 'Mac用Layers教師アプリ（.dmg）をダウンロードします。アプリはまだコード署名されていないため、初回起動時に一手順追加が必要です。', zh: '下载 Mac 版 Layers 教师应用（.dmg）。该应用尚未经过代码签名，因此首次启动需要一个额外步骤。', vi: 'Tải ứng dụng Layers dành cho giáo viên trên Mac (.dmg). Ứng dụng chưa được ký mã, vì vậy lần khởi động đầu tiên cần thêm một bước.' },
+  mac_s1_h:    { en: 'Download the .dmg from Google Drive', ja: 'Google Driveから.dmgをダウンロード', zh: '从 Google Drive 下载 .dmg', vi: 'Tải .dmg từ Google Drive' },
+  mac_s1_p:    { en: 'Open the folder and download the <strong>Layers Teacher.dmg</strong> file.', ja: 'フォルダを開いて<strong>Layers Teacher.dmg</strong>をダウンロードしてください。', zh: '打开文件夹并下载 <strong>Layers Teacher.dmg</strong> 文件。', vi: 'Mở thư mục và tải file <strong>Layers Teacher.dmg</strong>.' },
+  mac_s2_h:    { en: 'Open the .dmg and drag the app to Applications', ja: '.dmgを開いてアプリをApplicationsにドラッグ', zh: '打开 .dmg 并将应用拖到 Applications 文件夹', vi: 'Mở .dmg và kéo ứng dụng vào thư mục Applications' },
+  mac_s2_p:    { en: 'Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.', ja: 'ダウンロードした.dmgをダブルクリック。<strong>Layers Teacher.app</strong>をApplicationsフォルダにドラッグしてください。', zh: '双击下载的 .dmg 文件。将 <strong>Layers Teacher.app</strong> 拖到 Applications 文件夹。', vi: 'Nhấp đúp vào file .dmg đã tải. Kéo <strong>Layers Teacher.app</strong> vào thư mục Applications.' },
+  mac_s3_h:    { en: 'First launch — right-click to open', ja: '初回起動 — 右クリックして開く', zh: '首次启动——右键点击打开', vi: 'Lần đầu khởi động — nhấp chuột phải để mở' },
+  mac_s3_p:    { en: 'Because the app is not yet code-signed, macOS will block it on the first launch with the message: <em>"Layers Teacher.app cannot be opened because it is from an unidentified developer."</em>', ja: 'アプリはまだコード署名されていないため、macOSが初回起動時に<em>「"Layers Teacher.app"は、身元不明の開発元からのものであるため開けません。」</em>とブロックします。', zh: '由于应用尚未经过代码签名，macOS 首次启动时会拦截并显示：<em>"无法打开"Layers Teacher.app"，因为它来自身份不明的开发者。"</em>', vi: 'Vì ứng dụng chưa được ký mã, macOS sẽ chặn khi khởi động lần đầu với thông báo: <em>"Layers Teacher.app không thể mở vì đến từ nhà phát triển chưa được xác định."</em>' },
+  mac_s3_note: { en: '<strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong> — after that, the app opens normally.', ja: 'ApplicationsフォルダでアプリをRight-click→<strong>開く</strong>をクリック→ダイアログで<strong>開く</strong>をクリック。これは<strong>1回だけ</strong>必要です — 以降は通常通り開きます。', zh: '在 Applications 中<strong>右键点击</strong>应用 → 点击<strong>打开</strong> → 在对话框中点击<strong>打开</strong>。只需操作<strong>一次</strong>——之后即可正常打开。', vi: '<strong>Nhấp chuột phải</strong> vào ứng dụng trong Applications → nhấp <strong>Mở</strong> → nhấp <strong>Mở</strong> trong hộp thoại. Chỉ cần làm điều này <strong>một lần</strong> — sau đó ứng dụng mở bình thường.' },
+  mac_s3_alt:  { en: 'Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong> next to the Layers warning.', ja: '別の方法：<strong>システム設定 → プライバシーとセキュリティ</strong>を開き、Layersの警告の横にある<strong>このまま開く</strong>をクリック。', zh: '替代方法：前往<strong>系统设置 → 隐私与安全性</strong>，向下滚动，点击 Layers 警告旁边的<strong>仍然打开</strong>。', vi: 'Cách khác: vào <strong>Cài đặt hệ thống → Quyền riêng tư &amp; Bảo mật</strong>, kéo xuống và nhấp <strong>Vẫn mở</strong> bên cạnh cảnh báo Layers.' },
+  mac_done_h:  { en: 'Done — Layers is running', ja: '完了 — Layersが起動しました', zh: '完成——Layers 正在运行', vi: 'Hoàn tất — Layers đang chạy' },
+  mac_done_title:{ en: 'The toolbar is floating on your screen', ja: 'ツールバーが画面に表示されています', zh: '工具栏正悬浮在屏幕上', vi: 'Thanh công cụ đang nổi trên màn hình của bạn' },
+  mac_done_p:  { en: 'From now on, double-click the app to open it normally. Layers floats above Keynote, Safari, YouTube, and any full-screen app. A 14-day free trial starts automatically — no license key needed to begin.', ja: '以降はアプリをダブルクリックするだけで開きます。LayersはKeynote、Safari、YouTube、フルスクリーンアプリの上に浮かびます。14日間の無料体験が自動的に開始されます — ライセンスキー不要。', zh: '从现在起，双击应用即可正常打开。Layers 会悬浮在 Keynote、Safari、YouTube 及任何全屏应用上方。14 天免费试用自动开始——无需许可证密钥。', vi: 'Từ bây giờ, nhấp đúp vào ứng dụng để mở bình thường. Layers nổi phía trên Keynote, Safari, YouTube và mọi ứng dụng toàn màn hình. 14 ngày dùng thử miễn phí tự động bắt đầu — không cần khóa giấy phép.' },
+  win_intro:   { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。生徒は削除できません。', zh: '此操作会添加一个注册表项，让 Chrome 在 Windows PC 上强制安装 Layers 扩展程序。学生无法删除。', vi: 'Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows. Học sinh không thể gỡ bỏ.' },
+  win_recommended:{ en: 'Recommended', ja: '推奨', zh: '推荐', vi: 'Khuyến nghị' },
+  win_fastest:    { en: 'Fastest', ja: '最速', zh: '最快', vi: 'Nhanh nhất' },
+  win_m1_h:       { en: '⚙️ Registry (.reg file)', ja: '⚙️ レジストリ (.reg ファイル)', zh: '⚙️ 注册表（.reg 文件）', vi: '⚙️ Registry (tệp .reg)' },
+  win_m1_p:       { en: 'Double-click to install. 30 sec per machine.', ja: 'ダブルクリックでインストール。1台30秒。', zh: '双击安装。每台机器 30 秒。', vi: 'Nhấp đúp để cài đặt. 30 giây mỗi máy.' },
+  win_m2_h:       { en: '💻 Silent .bat Script', ja: '💻 サイレント .bat スクリプト', zh: '💻 静默 .bat 脚本', vi: '💻 Script .bat tự động' },
+  win_m2_p:       { en: 'Run from USB or network share. No clicks.', ja: 'USB やネットワーク共有から実行。クリック不要。', zh: '从 USB 或网络共享运行。无需点击。', vi: 'Chạy từ USB hoặc ổ đĩa mạng. Không cần nhấp chuột.' },
+  win_reg_s1_h:   { en: 'Download the .reg file', ja: '.reg ファイルをダウンロード', zh: '下载 .reg 文件', vi: 'Tải tệp .reg' },
+  win_reg_s1_p:   { en: 'Save it anywhere on the target PC.', ja: '対象 PC の任意の場所に保存します。', zh: '保存到目标电脑的任意位置。', vi: 'Lưu vào bất kỳ đâu trên máy tính mục tiêu.' },
+  win_reg_s1_note:{ en: 'Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue. This is normal for .reg files.', ja: 'Windows が「不明な発行元」と警告する場合があります — <strong>はい</strong> をクリックして続行してください。.reg ファイルでは通常の動作です。', zh: 'Windows 可能会警告"未知发布者"——点击<strong>是</strong>继续。这对 .reg 文件是正常的。', vi: 'Windows có thể cảnh báo "Nhà phát hành không xác định" — nhấp <strong>Yes</strong> để tiếp tục. Đây là bình thường với tệp .reg.' },
+  win_reg_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
+  win_reg_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> を右クリック → <strong>結合</strong>（またはダブルクリック）。UAC プロンプトを承認します。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>合并</strong>（或双击）。接受 UAC 提示。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (hoặc nhấp đúp). Chấp nhận yêu cầu UAC.' },
+  win_s3_h:       { en: 'Restart Chrome', ja: 'Chrome を再起動', zh: '重启 Chrome', vi: 'Khởi động lại Chrome' },
+  win_s3_p:       { en: 'Close and reopen Chrome. The extension installs automatically within seconds.', ja: 'Chrome を閉じて再度開きます。数秒で拡張機能が自動インストールされます。', zh: '关闭并重新打开 Chrome。扩展程序会在几秒内自动安装。', vi: 'Đóng và mở lại Chrome. Tiện ích sẽ tự động cài đặt trong vài giây.' },
+  win_done_h:     { en: 'Done', ja: '完了', zh: '完成', vi: 'Hoàn tất' },
+  win_done_title: { en: 'Layers is now force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
+  win_done_p:     { en: 'The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.', ja: 'Chrome ツールバーに 🗂️ アイコンが表示されます。レジストリキーが存在する限り、拡張機能を削除できません。', zh: 'Chrome 工具栏会出现 🗂️ 图标。只要注册表项存在，扩展程序就无法被删除。', vi: 'Biểu tượng 🗂️ sẽ xuất hiện trên thanh công cụ Chrome. Tiện ích không thể bị gỡ bỏ khi mục registry còn tồn tại.' },
+  win_ref:        { en: "What's inside the .reg file (for reference):", ja: '.reg ファイルの内容（参考）：', zh: '.reg 文件内容（参考）：', vi: 'Nội dung tệp .reg (tham khảo):' },
+  win_reg_note2:  { en: 'If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.', ja: '値 <code style="font-family:var(--mono)">"1"</code> が他の拡張機能で使用中の場合は、<code style="font-family:var(--mono)">"2"</code> など未使用の番号に変更してください。', zh: '如果值 <code style="font-family:var(--mono)">"1"</code> 已被其他扩展程序占用，请改为 <code style="font-family:var(--mono)">"2"</code> 或其他未使用的数字。', vi: 'Nếu giá trị <code style="font-family:var(--mono)">"1"</code> đã được tiện ích khác sử dụng, hãy đổi thành <code style="font-family:var(--mono)">"2"</code> hoặc số chưa dùng.' },
+  win_bat_s1_h:   { en: 'Download the .bat script', ja: '.bat スクリプトをダウンロード', zh: '下载 .bat 脚本', vi: 'Tải script .bat' },
+  win_bat_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
+  win_bat_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. A black window flashes briefly.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> を右クリック → <strong>管理者として実行</strong>。黒い画面が一瞬表示されます。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>以管理员身份运行</strong>。黑色窗口会短暂闪烁。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. Cửa sổ đen sẽ xuất hiện thoáng qua.' },
+  win_bat_s2_warn:{ en: 'Must be run as Administrator or the registry write will fail silently.', ja: '管理者として実行しないと、レジストリの書き込みがサイレントに失敗します。', zh: '必须以管理员身份运行，否则注册表写入会静默失败。', vi: 'Phải chạy với quyền Quản trị viên, nếu không việc ghi registry sẽ thất bại mà không báo lỗi.' },
+  win_bat_done_title:{ en: 'Layers is force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
+  win_bat_done_p: { en: 'Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.', ja: '.bat を USB にコピーし、各生徒 PC で実行してください。1台あたり60秒以内で完了します。', zh: '将 .bat 复制到 U 盘，在每台学生电脑上运行，每台不到 60 秒。', vi: 'Sao chép tệp .bat vào USB và chạy trên từng máy tính học sinh, mỗi máy chưa đến 60 giây.' },
+  win_bat_ref:    { en: "What's inside the .bat file:", ja: '.bat ファイルの内容：', zh: '.bat 文件内容：', vi: 'Nội dung tệp .bat:' },
+
+  // Student
+  st_tagline:  { en: 'Translation, dictionary, notes & timer — floats over any page', ja: '翻訳・辞書・メモ・タイマー — どのページにも表示', zh: '翻译、词典、笔记和计时器 — 悬浮在任何页面上', vi: 'Dịch thuật, từ điển, ghi chú & hẹn giờ — nổi trên mọi trang web' },
+  st_qr_label: { en: 'Scan the QR code', ja: 'QRコードをスキャン', zh: '扫描二维码', vi: 'Quét mã QR' },
+  st_link:     { en: '🔗 Open Chrome Web Store', ja: '🔗 Chrome ウェブストアを開く', zh: '🔗 打开 Chrome 网上应用店', vi: '🔗 Mở Chrome Web Store' },
+  st_hint:     { en: "Can't scan? Click the link above", ja: 'スキャンできない場合はこちら', zh: '无法扫描？点击上方链接', vi: 'Không quét được? Nhấp vào liên kết phía trên' },
+};
+
+const studentSteps = {
+  en: [
+    '<strong>Scan the QR code</strong> with your phone, or open this page on your Chromebook',
+    'Click <strong>"Add to Chrome"</strong>',
+    'Click <strong>"Add extension"</strong> in the confirmation dialog',
+    'Done! You\'ll see the <strong>🗂️ icon</strong> in the top-right of your browser',
+  ],
+  ja: [
+    'このQRコードを<strong>スマホでスキャン</strong>するか、Chromebookでこのページを開く',
+    '<strong>「Chromeに追加」</strong>ボタンをクリック',
+    '確認ダイアログで<strong>「拡張機能を追加」</strong>をクリック',
+    'ブラウザ右上に <strong>🗂️ アイコン</strong>が表示されれば完了！',
+  ],
+  zh: [
+    '用手机<strong>扫描二维码</strong>，或在 Chromebook 上打开此页面',
+    '点击<strong>"添加到 Chrome"</strong>',
+    '在确认对话框中点击<strong>"添加扩展程序"</strong>',
+    '完成！您会在浏览器右上角看到 <strong>🗂️ 图标</strong>',
+  ],
+  vi: [
+    '<strong>Quét mã QR</strong> bằng điện thoại, hoặc mở trang này trên Chromebook',
+    'Nhấp <strong>"Thêm vào Chrome"</strong>',
+    'Nhấp <strong>"Thêm tiện ích"</strong> trong hộp thoại xác nhận',
+    'Hoàn tất! Bạn sẽ thấy <strong>biểu tượng 🗂️</strong> ở góc trên bên phải trình duyệt',
+  ]
+};
+
+function renderStudentSteps(lang) {
+  const el = document.getElementById('student-steps');
+  el.innerHTML = studentSteps[lang].map((s, i) =>
+    `<div class="s-step"><div class="s-step-num">${i+1}</div><div class="s-step-text">${s}</div></div>`
+  ).join('');
+}
+
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[key] && i18n[key][lang]) {
+      el.innerHTML = i18n[key][lang];
+    }
+  });
+
+  // Update copy buttons text
+  const copyLabels = { en: 'Copy', ja: 'コピー', zh: '复制', vi: 'Sao chép' };
+  document.querySelectorAll('.copy-btn:not(.copied)').forEach(btn => {
+    if (!btn.classList.contains('copied') && !btn.closest('.code-block')) {
+      btn.textContent = copyLabels[lang] || 'Copy';
+    }
+  });
+
+  renderStudentSteps(lang);
+}
+
+// Init
+renderStudentSteps('vi');
+</script>
+</body>
+</html>
