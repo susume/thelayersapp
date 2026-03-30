@@ -27,15 +27,15 @@
   </url>
 
   <url>
-    <loc>https://thelayersapp.com/soho</loc>
+    <loc>https://thelayersapp.com/soho.html</loc>
     <lastmod>2026-03-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/soho"/>
-    <xhtml:link rel="alternate" hreflang="ja"        href="https://thelayersapp.com/ja/soho"/>
-    <xhtml:link rel="alternate" hreflang="zh"        href="https://thelayersapp.com/zh/soho"/>
-    <xhtml:link rel="alternate" hreflang="vi"        href="https://thelayersapp.com/vi/soho"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/soho"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/soho.html"/>
+    <xhtml:link rel="alternate" hreflang="ja"        href="https://thelayersapp.com/ja/soho.html"/>
+    <xhtml:link rel="alternate" hreflang="zh"        href="https://thelayersapp.com/zh/soho.html"/>
+    <xhtml:link rel="alternate" hreflang="vi"        href="https://thelayersapp.com/vi/soho.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/soho.html"/>
   </url>
 
   <url>
@@ -75,6 +75,42 @@
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/privacy.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/privacy.html"/>
+  </url>
+
+  <url>
+    <loc>https://thelayersapp.com/blog/</loc>
+    <lastmod>2026-03-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/blog/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/blog/"/>
+  </url>
+
+  <url>
+    <loc>https://thelayersapp.com/blog/whats-new-v38-mac.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/blog/whats-new-v38-mac.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/blog/whats-new-v38-mac.html"/>
+  </url>
+
+  <url>
+    <loc>https://thelayersapp.com/blog/why-i-built-layers.html</loc>
+    <lastmod>2026-04-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/blog/why-i-built-layers.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/blog/why-i-built-layers.html"/>
+  </url>
+
+  <url>
+    <loc>https://thelayersapp.com/blog/5-invisible-barriers-international-students.html</loc>
+    <lastmod>2026-04-03</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://thelayersapp.com/blog/5-invisible-barriers-international-students.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://thelayersapp.com/blog/5-invisible-barriers-international-students.html"/>
   </url>
 
 </urlset>
