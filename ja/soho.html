@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head><base href="https://thelayersapp.com/"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Layers Talk — 通訳なしで商談できる双方向翻訳ツール</title>
+<meta content="Layers Talkは1つの画面で2人が異なる言語で会話できるフローティングツールバー。47言語対応。通訳不要。" name="description"/>
+<meta content="#2ed573" name="theme-color"/>
+<meta content="website" property="og:type"/>
+<meta content="https://thelayersapp.com/ja/soho" property="og:url"/>
+<meta content="Layers Talk — 通訳なしで商談できる双方向翻訳ツール" property="og:title"/>
+<meta content="Layers Talkは1つの画面で2人が異なる言語で会話できるフローティングツールバー。47言語対応。通訳不要。" property="og:description"/>
+<meta content="https://thelayersapp.com/og-image-soho.png" property="og:image"/>
+
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=Outfit:wght@300;400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+/* ── Design tokens (matching main site) ──────────────────────────── */
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --accent2: #7c9fff;
+  --green:   #2ed573;
+  --green2:  #52e88a;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --gborder: rgba(46,213,115,0.2);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+  /* SOHO-specific: green as the primary accent */
+  --soho:    #2ed573;
+  --soho2:   #52e88a;
+  --soho-glow: rgba(46,213,115,0.18);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+
+/* Grid overlay */
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(46,213,115,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46,213,115,0.025) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div { position: relative; z-index: 1; }
+
+/* ── Nav ───────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.94); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-brand-text { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text); }
+.nav-brand-text span { color: var(--accent); }
+.brand-dot { width: 10px; height: 10px; background: var(--soho); border-radius: 50%;
+  box-shadow: 0 0 12px var(--soho); animation: gpulse 2s ease-in-out infinite; }
+@keyframes gpulse {
+  0%,100% { box-shadow: 0 0 8px var(--soho); }
+  50% { box-shadow: 0 0 24px var(--soho), 0 0 48px rgba(46,213,115,0.3); }
+}
+.nav-soho-pill {
+  background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3);
+  color: var(--soho); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-left: 6px;
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.lang-switcher { display: flex; align-items: center; gap: 4px; background: var(--pill); border-radius: 100px; padding: 3px; border: 1px solid var(--border); margin-right: 4px; }
+.lang-btn { padding: 4px 10px; border-radius: 100px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'Outfit', sans-serif; transition: all 0.15s; letter-spacing: 0.03em; }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { background: var(--bg2); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+.nav-cta {
+  background: var(--soho) !important; color: #0d0d12 !important;
+  padding: 8px 20px; border-radius: 100px; font-weight: 700 !important;
+  transition: all 0.2s; box-shadow: 0 0 20px rgba(46,213,115,0.25);
+}
+.nav-cta:hover { box-shadow: 0 0 36px rgba(46,213,115,0.45) !important; transform: translateY(-1px); }
+.nav-back { color: var(--muted) !important; font-size: 0.8rem !important; }
+.nav-back:hover { color: var(--accent) !important; }
+
+/* ── Animations ────────────────────────────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Shared layout ──────────────────────────────────────────────────── */
+.wrap  { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+.band  { padding: 100px 40px; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.band-inner { max-width: 1200px; margin: 0 auto; }
+.label-tag {
+  display: inline-block; font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; font-weight: 500; color: var(--soho);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.85;
+}
+h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
+h2 em { font-style: italic; color: var(--soho); }
+.intro { color: var(--muted); font-size: 1.05rem; margin-top: 16px; font-weight: 300; line-height: 1.7; }
+
+/* ── Hero ───────────────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding: 100px 60px 80px; max-width: 1280px; margin: 0 auto;
+}
+.hero-glow {
+  position: fixed; width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(46,213,115,0.08) 0%, transparent 68%);
+  top: 40%; left: 30%; transform: translate(-50%,-50%); pointer-events: none;
+}
+.hero-left {
+  flex: 1; min-width: 0; padding-right: 60px;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-right {
+  flex: 0 0 480px; animation: fadeUp 0.6s ease 0.2s both;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.3);
+  padding: 6px 18px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; color: var(--soho2);
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.2rem, 3.5vw, 3.6rem);
+  line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.hero h1 em { font-style: italic; color: var(--soho); }
+.hero-sub {
+  font-size: 1.05rem; color: var(--muted);
+  max-width: 520px; font-weight: 300; line-height: 1.75; margin-bottom: 40px;
+}
+.hero-actions {
+  display: flex; gap: 14px; flex-wrap: wrap;
+}
+.btn-primary {
+  background: var(--soho); color: #0d0d12; padding: 14px 34px;
+  border-radius: 100px; font-size: 1rem; font-weight: 700;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.2s; box-shadow: 0 0 32px rgba(46,213,115,0.3);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 56px rgba(46,213,115,0.5); }
+.btn-secondary {
+  background: transparent; color: var(--text); padding: 14px 32px;
+  border-radius: 100px; font-size: 1rem; font-weight: 500;
+  text-decoration: none; border: 1px solid var(--dim);
+  display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--soho); color: var(--soho); }
+
+/* ── Dual-panel mockup ─────────────────────────────────────────────── */
+.mockup-wrap { width: 100%; }
+.mockup {
+  background: #0a0a0f; border: 1px solid rgba(46,213,115,0.2);
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(46,213,115,0.08);
+}
+/* Top bar (Person B — inverted) */
+.mock-bar-top {
+  background: #131318; border-bottom: 2px solid var(--soho);
+  padding: 10px 18px; display: flex; align-items: center;
+  justify-content: space-between; gap: 10px; transform: rotate(180deg);
+}
+.mock-bar-bottom {
+  background: #131318; border-top: 2px solid var(--accent);
+  padding: 10px 18px; display: flex; align-items: center;
+  justify-content: space-between; gap: 10px;
+}
+.mock-brand { display: flex; flex-direction: column; line-height: 1.1; }
+.mock-brand .mb1 { font-weight: 800; font-size: 0.6rem; letter-spacing: 0.12em; color: var(--soho); }
+.mock-brand .mb2 { font-size: 0.42rem; color: var(--muted); font-family: 'DM Mono',monospace; }
+.mock-lang-row { display: flex; align-items: center; gap: 6px; }
+.mock-lang { background: var(--pill); border-radius: 8px; padding: 3px 10px; font-size: 0.55rem; font-weight: 600; color: var(--text); border: 1px solid rgba(255,255,255,0.06); }
+.mock-talk-btn {
+  background: #ffdd00; color: #1a1200; border-radius: 8px;
+  padding: 4px 14px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em;
+}
+.mock-tools { display: flex; gap: 4px; }
+.mock-tool {
+  background: var(--pill); border-radius: 7px; width: 26px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; color: var(--muted);
+}
+.mock-tool.active { background: var(--accent); color: white; }
+.mock-status { font-size: 0.45rem; color: var(--soho); font-weight: 600; font-family: 'DM Mono',monospace; letter-spacing: 0.06em; }
+
+/* Caption area between bars */
+.mock-captions {
+  background: #090910; padding: 16px 24px;
+  min-height: 100px; display: flex; flex-direction: column;
+  justify-content: space-between; gap: 8px;
+}
+.mock-caption-top {
+  transform: rotate(180deg); text-align: center;
+}
+.mock-caption-bottom { text-align: center; }
+.mock-caption-prev { font-size: 0.6rem; color: #3a6648; margin-bottom: 4px; font-style: italic; }
+.mock-caption-current {
+  font-size: 1.05rem; font-weight: 700; color: var(--soho);
+  font-family: 'DM Serif Display', serif; letter-spacing: -0.01em;
+}
+.mock-caption-current.blue { color: #5b9fff; }
+.mock-divider { height: 1px; background: rgba(255,255,255,0.04); margin: 0 24px; }
+.mock-label {
+  text-align: center; padding: 6px;
+  font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--dim);
+  letter-spacing: 0.05em;
+}
+
+/* Person labels */
+.person-labels {
+  display: flex; justify-content: space-between; margin-top: 16px;
+  padding: 0 4px;
+}
+.person-label {
+  font-family: 'DM Mono', monospace; font-size: 0.72rem;
+  color: var(--dim); display: flex; align-items: center; gap: 6px;
+}
+.person-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--soho); }
+.person-dot.blue { background: var(--accent); }
+
+/* ── Problem section ──────────────────────────────────────────────── */
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 48px; }
+.problem-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.problem-list li {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: rgba(255,80,80,0.05); border: 1px solid rgba(255,80,80,0.14);
+  border-radius: 12px; padding: 14px 18px;
+  font-size: 0.95rem; color: var(--muted); line-height: 1.5;
+}
+.problem-list li .px { font-size: 1.1rem; flex-shrink: 0; }
+.problem-quote {
+  background: linear-gradient(135deg, rgba(46,213,115,0.07), rgba(26,26,36,0.9));
+  border: 1px solid rgba(46,213,115,0.2); border-radius: 20px; padding: 36px;
+}
+.problem-quote blockquote {
+  font-family: 'DM Serif Display', serif; font-style: italic;
+  font-size: 1.2rem; line-height: 1.6; color: var(--text); margin-bottom: 16px;
+}
+.problem-quote cite { font-size: 0.85rem; color: var(--muted); font-style: normal; }
+
+/* ── How it works ─────────────────────────────────────────────────── */
+.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top: 60px; overflow: visible; }
+.step {
+  padding: 36px 32px; position: relative;
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 0;
+  transition: border-color 0.2s;
+}
+.steps-grid .step:not(:last-child) { border-right: none; }
+.steps-grid .step:first-child { border-radius: 20px 0 0 20px; }
+.steps-grid .step:last-child  { border-radius: 0 20px 20px 0; }
+.step:not(:last-child)::after {
+  content: '→'; position: absolute; right: -11px; top: 50%; transform: translateY(-50%);
+  color: var(--soho); font-size: 1rem; z-index: 2;
+  background: var(--bg2); padding: 2px 0; line-height: 1;
+}
+.step-num {
+  font-family: 'DM Serif Display', serif; font-size: 3.5rem;
+  color: rgba(46,213,115,0.08); line-height: 1; margin-bottom: 16px;
+  user-select: none;
+}
+.step h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+.step p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+.step-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+
+/* ── The Insight section ──────────────────────────────────────────── */
+.insight-band {
+  padding: 100px 40px;
+  background: linear-gradient(160deg, rgba(46,213,115,0.05) 0%, rgba(13,13,18,1) 60%);
+  border-top: 1px solid var(--gborder); border-bottom: 1px solid var(--gborder);
+}
+.insight-inner { max-width: 1200px; width: 100%; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.insight-diagram {
+  background: #0a0a10; border: 1px solid rgba(46,213,115,0.18);
+  border-radius: 20px; padding: 28px; position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.diagram-person {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--pill); border-radius: 10px; padding: 12px 16px;
+  margin-bottom: 10px;
+}
+.diagram-person.inverted { flex-direction: row-reverse; transform: rotate(180deg); }
+.diagram-avatar { font-size: 1.4rem; }
+.diagram-bubble {
+  flex: 1; background: rgba(255,255,255,0.04);
+  border-radius: 8px; padding: 8px 12px;
+  font-size: 0.8rem; color: var(--muted);
+}
+.diagram-lang {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.diagram-lang.green { color: var(--soho); }
+.diagram-lang.blue  { color: var(--accent2); }
+.diagram-arrow {
+  text-align: center; padding: 8px 0; font-size: 0.75rem;
+  color: var(--soho); font-family: 'DM Mono',monospace; letter-spacing: 0.06em;
+}
+.diagram-center {
+  background: rgba(46,213,115,0.06); border: 1px solid rgba(46,213,115,0.2);
+  border-radius: 10px; padding: 12px 16px; text-align: center; margin: 8px 0;
+}
+.diagram-center .dc-icon { font-size: 1.2rem; }
+.diagram-center .dc-text { font-size: 0.72rem; color: var(--soho2); font-weight: 600; margin-top: 4px; }
+.diagram-center .dc-langs { font-size: 0.6rem; color: var(--dim); margin-top: 2px; }
+
+/* ── Features grid ────────────────────────────────────────────────── */
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 56px; }
+.feat-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 28px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.feat-card:hover { transform: translateY(-3px); border-color: rgba(46,213,115,0.3); }
+.feat-card.highlight { border-color: rgba(46,213,115,0.25); background: linear-gradient(140deg, rgba(46,213,115,0.06), rgba(26,26,36,0.95)); }
+.feat-icon { font-size: 1.8rem; margin-bottom: 16px; display: block; }
+.feat-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.feat-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
+.feat-tag {
+  display: inline-block; margin-top: 12px;
+  background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25);
+  color: var(--soho); font-size: 0.65rem; font-weight: 700;
+  padding: 2px 10px; border-radius: 100px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ── Languages ────────────────────────────────────────────────────── */
+.lang-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+.lang-tag {
+  background: var(--pill); padding: 6px 14px; border-radius: 100px;
+  font-size: 0.8rem; color: var(--muted); border: 1px solid rgba(255,255,255,0.05);
+  transition: all 0.2s;
+}
+.lang-tag:hover { background: rgba(46,213,115,0.12); color: var(--soho2); border-color: rgba(46,213,115,0.3); }
+
+/* ── Export section ────────────────────────────────────────────────── */
+.export-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-top: 60px; }
+.export-preview {
+  background: #0a0a10; border: 1px solid rgba(46,213,115,0.15);
+  border-radius: 16px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.export-preview-header {
+  background: #131318; padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center; gap: 8px;
+}
+.export-preview-header .dot { width: 8px; height: 8px; border-radius: 50%; }
+.export-rows { padding: 20px; font-family: 'DM Mono', monospace; font-size: 0.72rem; }
+.export-row { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.export-row:last-child { border-bottom: none; }
+.er-time { color: var(--dim); }
+.er-who { color: var(--accent2); font-weight: 600; }
+.er-who.green { color: var(--soho); }
+.er-said { color: var(--muted); margin-top: 2px; }
+.er-trans { color: var(--text); margin-top: 2px; font-weight: 500; }
+.export-format-pills { display: flex; gap: 8px; margin-top: 14px; }
+.format-pill {
+  background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25);
+  color: var(--soho); font-size: 0.7rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 100px; letter-spacing: 0.06em;
+}
+
+/* ── Who uses it ──────────────────────────────────────────────────── */
+.who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
+.who-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px; display: flex; align-items: flex-start;
+  gap: 14px; transition: border-color 0.2s, transform 0.2s;
+}
+.who-card:hover { border-color: rgba(46,213,115,0.3); transform: translateY(-2px); }
+.who-icon { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
+.who-text { font-size: 0.9rem; font-weight: 600; }
+.who-sub { font-size: 0.73rem; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+
+/* ── Pricing ──────────────────────────────────────────────────────── */
+.pricing-wrap { max-width: 960px; margin: 48px auto 0; }
+.price-card-soho {
+  background: linear-gradient(160deg, rgba(46,213,115,0.1), rgba(26,26,36,0.95));
+  border: 1px solid rgba(46,213,115,0.35); border-radius: 24px;
+  padding: 48px; position: relative; overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+}
+.price-col-left { display: flex; flex-direction: column; }
+.price-col-right { display: flex; flex-direction: column; }
+.price-card-soho::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--soho), transparent);
+}
+.p-tier { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.p-name { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 8px; }
+.p-once { display: inline-flex; align-items: center; gap: 6px; background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3); color: var(--soho); font-size: 0.7rem; font-weight: 700; padding: 3px 12px; border-radius: 100px; margin-bottom: 24px; letter-spacing: 0.08em; text-transform: uppercase; }
+.p-amount { display: flex; align-items: flex-end; gap: 4px; margin-bottom: 6px; }
+.p-currency { font-size: 1.2rem; font-weight: 600; color: var(--muted); margin-bottom: 8px; }
+.p-num { font-size: 4rem; font-weight: 700; line-height: 1; letter-spacing: -0.03em; color: var(--text); }
+.p-save { font-size: 0.85rem; color: var(--soho2); margin-bottom: 28px; }
+.p-divider { width: 100%; height: 1px; background: var(--gborder); margin: 24px 0; }
+.p-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.p-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--muted); }
+.ck { color: var(--soho); font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+.btn-buy {
+  display: block; text-align: center; background: var(--soho);
+  color: #0d0d12; padding: 16px; border-radius: 14px;
+  font-size: 1rem; font-weight: 700; text-decoration: none;
+  transition: all 0.2s; box-shadow: 0 0 28px rgba(46,213,115,0.25);
+  margin-top: auto;
+}
+.btn-buy:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(46,213,115,0.45); }
+.no-ads {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(46,213,115,0.06); border: 1px solid rgba(46,213,115,0.18);
+  border-radius: 12px; padding: 16px 24px; max-width: 960px; margin: 28px auto 0;
+}
+.no-ads p { font-size: 0.875rem; color: var(--muted); }
+.no-ads strong { color: var(--soho); }
+
+/* ── CTA ──────────────────────────────────────────────────────────── */
+.cta-section { padding: 100px 40px; text-align: center; }
+.cta-inner { max-width: 860px; margin: 0 auto; }
+.cta-section h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 2.8vw, 2.8rem); line-height: 1.12; margin-bottom: 20px; }
+.cta-section h2 em { color: var(--soho); }
+.cta-section p { color: var(--muted); font-size: 1.05rem; margin-bottom: 40px; font-weight: 300; max-width: 640px; margin-left: auto; margin-right: auto; }
+.cta-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+
+/* ── Footer ───────────────────────────────────────────────────────── */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.2rem; }
+.footer-brand span { color: var(--accent); }
+.footer-brand .soho-tag { color: var(--soho); font-size: 0.8rem; font-family: 'Outfit',sans-serif; font-weight: 600; margin-left: 6px; }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .problem-grid, .insight-inner, .export-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .step:first-child { border-radius: 20px 20px 0 0; }
+  .step:last-child  { border-radius: 0 0 20px 20px; }
+  .step:not(:last-child) { border-right: 1px solid var(--border); border-bottom: none; }
+  .step:not(:last-child)::after { content: '↓'; right: auto; left: 50%; transform: translateX(-50%); bottom: -14px; top: auto; background: var(--bg); padding: 2px 4px; font-size: 0.9rem; }
+  .who-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta):not(.nav-back) { display: none; }
+  .wrap, .band, .insight-band { padding: 60px 24px; }
+  .hero { flex-direction: column; padding: 100px 24px 60px; text-align: center; }
+  .hero-left { padding-right: 0; margin-bottom: 48px; }
+  .hero-left .hero-sub { max-width: 100%; }
+  .hero-actions { justify-content: center; }
+  .hero-right { flex: none; width: 100%; }
+  .mock-tools { display: none; }
+}
+@media (max-width: 768px) {
+  .price-card-soho { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 600px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .who-grid { grid-template-columns: 1fr; }
+  .mock-captions { min-height: 80px; padding: 12px 16px; }
+  .mock-caption-current { font-size: 0.85rem; }
+  .steps-grid .step:not(:last-child) { border-right: 1px solid var(--border); border-bottom: none; }
+}
+</style>
+<link href="https://thelayersapp.com/ja/soho" rel="canonical"/><link href="https://thelayersapp.com/soho" hreflang="en" rel="alternate"/><link href="https://thelayersapp.com/ja/soho" hreflang="ja" rel="alternate"/><link href="https://thelayersapp.com/zh/soho" hreflang="zh" rel="alternate"/><link href="https://thelayersapp.com/vi/soho" hreflang="vi" rel="alternate"/><link href="https://thelayersapp.com/soho" hreflang="x-default" rel="alternate"/><meta content="ja_JP" property="og:locale"/></head>
+<body>
+<!-- ── NAV ── -->
+<nav>
+<a class="nav-brand" href="/">
+<div class="brand-dot"></div>
+<span class="nav-brand-text"><span>Layers</span></span>
+<span class="nav-soho-pill">Talk</span>
+</a>
+<div class="nav-links">
+<div class="lang-switcher">
+<button class="lang-btn" onclick="setLang('en')">EN</button>
+<button class="lang-btn active" onclick="setLang('ja')">日本語</button>
+<button class="lang-btn" onclick="setLang('zh')">中文</button>
+<button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
+</div>
+<a data-i18n="nav_features" href="#features">機能</a>
+<a data-i18n="nav_languages" href="#languages">対応言語</a>
+<a data-i18n="nav_pricing" href="#pricing">料金</a>
+<a data-i18n="nav_contact" href="contact.html">お問い合わせ</a>
+<a class="nav-back" data-i18n="nav_back" href="/">← 教師向けアプリ</a>
+<a class="nav-cta" data-i18n="nav_cta" href="#pricing">ダウンロード</a>
+</div>
+</nav>
+<!-- ── HERO ── -->
+<section class="hero">
+<div class="hero-glow"></div>
+<div class="hero-left">
+<div class="hero-badge" data-i18n="hero_badge">💼 言語の壁を越えて、商談を成立させる</div>
+<h1 data-i18n="hero_h1">次の海外ビジネスを、<br/><em>運任せ</em>にしないでください。</h1>
+<p class="hero-sub" data-i18n="hero_sub">Layers Talkは、あなたと取引先の間にあるノートパソコンの画面を、リアルタイム通訳デスクに変えます。話すだけで、相手には自分の言語で即座に表示されます。</p>
+<div class="hero-actions">
+<a class="btn-primary" data-i18n="hero_btn" href="get.html">14日間無料体験</a>
+<a class="btn-secondary" data-i18n="hero_btn2" href="#how-it-works">成果を見る ↓</a>
+</div>
+</div>
+<div class="hero-right">
+<!-- Dual-panel mockup -->
+<div class="mockup-wrap">
+<div class="mockup">
+<!-- Top bar (Person B side — displayed inverted) -->
+<div class="mock-bar-top">
+<div class="mock-lang-row">
+<div class="mock-talk-btn">F6</div>
+<div class="mock-lang">日本語</div>
+</div>
+<div class="mock-tools">
+<div class="mock-tool">⏱</div>
+<div class="mock-tool">✏</div>
+<div class="mock-tool">🧮</div>
+<div class="mock-tool active">⚙</div>
+</div>
+<div class="mock-brand"><span class="mb1">LAYERS TALK</span><span class="mb2">v1.5</span></div>
+</div>
+<!-- Top caption (Person B reads — their translation) -->
+<div class="mock-captions">
+<div class="mock-caption-top">
+<div class="mock-caption-prev">前の翻訳がここに表示されます</div>
+<div class="mock-caption-current">はい、この価格で同意します</div>
+</div>
+</div>
+<div class="mock-divider"></div>
+<div class="mock-label">// shared screen · both sides visible · drag to reposition</div>
+<div class="mock-divider"></div>
+<!-- Bottom caption (Person A reads — their translation) -->
+<div class="mock-captions">
+<div class="mock-caption-bottom">
+<div class="mock-caption-prev">Previous translation appears here</div>
+<div class="mock-caption-current blue">Yes, I agree to this price</div>
+</div>
+</div>
+<!-- Bottom bar (Person A side) -->
+<div class="mock-bar-bottom">
+<div class="mock-brand"><span class="mb1">LAYERS TALK</span><span class="mb2">v1.5</span></div>
+<div class="mock-tools">
+<div class="mock-tool">⏱</div>
+<div class="mock-tool">📂</div>
+<div class="mock-tool">✏</div>
+<div class="mock-tool">🧮</div>
+</div>
+<div class="mock-lang-row">
+<div class="mock-lang">English</div>
+<div class="mock-talk-btn">F5</div>
+</div>
+</div>
+</div>
+<div class="person-labels">
+<div class="person-label"><div class="person-dot blue"></div>Person A — faces screen normally (English)</div>
+<div class="person-label">Person B — reads from the other side (Japanese) <div class="person-dot"></div></div>
+</div>
+</div><!-- end mockup-wrap -->
+</div><!-- end hero-right -->
+</section>
+<!-- ── THE PROBLEM ── -->
+<div class="band" id="problem">
+<div class="band-inner">
+<div class="reveal">
+<span class="label-tag" data-i18n="prob_tag">// 誤解の代償</span>
+<h2 data-i18n="prob_h2">言語が止まれば、<br/>商談も<em>止まる。</em></h2>
+</div>
+<div class="problem-grid reveal">
+<div>
+<p class="intro" data-i18n="prob_intro" style="margin-bottom:32px;">準備は整っている。関係も良好だ。しかし共通言語がなければ、あらゆるやり取りにリスクが伴います—誤読された価格、訳しきれなかった条件、「何に合意したのか」が曖昧なまま来ないフォローアップ。</p>
+<ul class="problem-list">
+<li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li1">スマートフォンを差し出す行為は、この商談に備えていなかったというメッセージを伝える</span></li>
+<li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li2">翻訳ツールを探している間は、相手が商談を再評価している時間</span></li>
+<li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li3">誤解された価格や条件は、契約書に署名されてから初めて表面化する</span></li>
+<li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li4">聴き返しを求めることは、商談に持ち込んだプロとしての権威を損なう</span></li>
+<li><span class="px" style="font-size:1rem;font-weight:700;color:var(--dim);">—</span> <span data-i18n="prob_li5">プロの通訳者は、一度の商談だけで多くの案件の利益を超える費用がかかる</span></li>
+</ul>
+</div>
+<div class="problem-quote">
+<div style="margin-top:0;padding-top:0;border-top:none;">
+<div style="font-size:0.8rem;color:var(--dim);margin-bottom:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;">Works on top of</div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;">
+<span style="background:var(--pill);padding:5px 12px;border-radius:100px;font-size:0.75rem;color:var(--muted);">Any Windows laptop</span>
+<span style="background:var(--pill);padding:5px 12px;border-radius:100px;font-size:0.75rem;color:var(--muted);">PDFs &amp; documents</span>
+<span style="background:var(--pill);padding:5px 12px;border-radius:100px;font-size:0.75rem;color:var(--muted);">Spreadsheets</span>
+<span style="background:var(--pill);padding:5px 12px;border-radius:100px;font-size:0.75rem;color:var(--muted);">Any website</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ── HOW IT HELPS ── -->
+<section class="wrap" id="how-it-works">
+<div class="reveal">
+<span class="label-tag" data-i18n="how_tag">// 商談を成立させる3つの効果</span>
+<h2 data-i18n="how_h2">商談の結果を変える、<br/><em>3つのポイント。</em></h2>
+<p class="intro" data-i18n="how_intro">言語の壁は商談を遅らせるだけでなく、案件を失わせます。Layers Talkは、国際商談が突崩する3つの具体的な場面を取り除きます。</p>
+</div>
+<div class="steps-grid reveal">
+<div class="step">
+<div class="step-num">01</div>
+<h4 data-i18n="how1_h">準備万全の印象で臨む</h4>
+<p data-i18n="how1_p">ノートパソコンを開いた瞬間、相手の言語が画面に表示されています—相手側に向いて、相手のために。一言も発する前に、あなたはこの商談に備えていたというメッセージを伝えています。その第一印象が、商談全体のトーンを決めます。</p>
+</div>
+<div class="step">
+<div class="step-num">02</div>
+<h4 data-i18n="how2_h">価格が正確に伝わる</h4>
+<p data-i18n="how2_p">価格、条件、契約内容が、言ったその瞬間に相手の言語で画面に表示されます—言い換えなし、概訳なし、訳誤なし。双方が全く同じ内容を読むことで、握手後に紛争になる誤解は生まれません。</p>
+</div>
+<div class="step">
+<div class="step-num">03</div>
+<h4 data-i18n="how3_h">合意内容の記録を持って退出できる</h4>
+<p data-i18n="how3_p">すべてのやり取りが自動記録されます—原文と翻訳、タイムスタンプ付きで。商談後、ワンクリックで両者が争えない文書記録を入手できます。「あのとき何を言ったか」を確認するフォローアップメールは不要。商談の内容は相手が席を立つ前に文書化されています。</p>
+</div>
+</div>
+</section>
+<!-- ── FEATURES ── -->
+<div class="band" id="features">
+<div class="band-inner">
+<div class="reveal">
+<span class="label-tag" data-i18n="feat_tag">// ビジネス商談に特化した設計</span>
+<h2 data-i18n="feat_h2">「合意」を引き出すために<br/>必要なものが<em>すべて</em>揃っています。</h2>
+<p class="intro" data-i18n="feat_intro">Layers Talkのすべての機能は、実際のビジネス商談で何かがうまくいかなかった具体的な瞬間のために作られました。</p>
+</div>
+<div class="features-grid">
+<div class="feat-card highlight reveal">
+<span class="feat-icon">🎙️</span>
+<h4 data-i18n="feat1_h">話し終わる前に、取引先があなたの提案を読んでいる</h4>
+<p data-i18n="feat1_p">普通に話すだけです。数秒後、あなたの言葉が相手の言語でテーブルを挟んでも読める大きさで表示されます。価格、条件、納期 — 初回から明確に伝わります。47言語に対応しているため、どんな取引先との商談でも安心です。</p>
+<span class="feat-tag">Core feature</span>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">🖥️</span>
+<h4 data-i18n="feat2_h">言葉を発する前に、プロフェッショナルな印象を与える</h4>
+<p data-i18n="feat2_p">ノートパソコンを開いた瞬間、相手の言語がすでに画面の上部で待ち構えています。取引先の前で設定に手間取ることも、「少しお待ちください」と言うこともありません。準備ができた状態で商談に臨めます。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">✏️</span>
+<h4 data-i18n="feat3_h">同意した条項を丸で囲む — 疑念が生まれる前に</h4>
+<p data-i18n="feat3_p">言語が完全でない時こそ、視覚的な正確さが重要になります。価格を丸で囲む。納期に矢印を引く。双方が合意した条項をハイライトする。議論している内容が視覚的に明確になれば、誤解はほぼ不可能になります。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">🧮</span>
+<h4 data-i18n="feat4_h">割引額を一緒に計算する — 後の争いがなくなるように</h4>
+<p data-i18n="feat4_p">取引先が価格を交渉します。あなたは画面上で電卓を開き、相手も数字が見える状態で一緒に計算します。この透明性が信頼を生みます。結果は双方で確認できます。「数字を勘違いしていたかもしれない」という不安は残りません。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">📂</span>
+<h4 data-i18n="feat5_h">商談の流れを止めずに、商品カタログを見せる</h4>
+<p data-i18n="feat5_p">ワンクリックで提案書、商品リスト、価格表を開けます。翻訳を最小化する必要も、フォルダを探し回る必要もありません。あなたの資料は、会話がそれを必要とする瞬間に現れます。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">⏱️</span>
+<h4 data-i18n="feat6_h">どちらもスマートフォンを確認せずに、商談を進める</h4>
+<p data-i18n="feat6_p">「そろそろ終わりにしましょうか」と最初に言い出しにくい雰囲気の中で、画面上のカウントダウンがそれを自然に示してくれます。開始時に設定するだけです。トピックに集中できます。商談は時間通りに、良い雰囲気で終わります。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">⌨️</span>
+<h4 data-i18n="feat7_h">音声認識が難しい時も、入力して続ける</h4>
+<p data-i18n="feat7_p">騒がしいカフェ。珍しい発音の商品名。マイクが何度も間違える専門用語。タイプするだけです。Enterを押せば、書いた通りに正確に翻訳されます。会話は止まりません。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">💾</span>
+<h4 data-i18n="feat8_h">退室前に、合意事項の記録が完成している</h4>
+<p data-i18n="feat8_p">交わされたすべての言葉、すべての翻訳、すべての合意の瞬間が — タイムスタンプ付きで記録されます。取引先が駐車場を出る前に、完全な記録が手元にあります。フォローアップのメールをすぐに書けます。同席しなかった同僚にも共有できます。</p>
+<span class="feat-tag">New — CSV export</span>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">🌐</span>
+<h4 data-i18n="feat9_h">プライベートな画面を見せずに、商品ページや地図を表示する</h4>
+<p data-i18n="feat9_p">メーカーのウェブサイトで商品を表示する。地図で場所を示す。リアルタイムの為替レートを開く。ツールバーの間に清潔感のあるウィンドウが開き、アドレスバーも個人タブも表示されません。</p>
+</div>
+<div class="feat-card reveal">
+<span class="feat-icon">🔆</span>
+<h4 data-i18n="feat10_h">ハイコントラストモード — 日差しの強い会議室でも読める</h4>
+<p data-i18n="feat10_p">設定でハイコントラストをオンにすると、字幕は太字の白黒表示になり、不透明度も上がります。ガラス張りの会議室、明るいカンファレンスセンター、屋外カフェ——どんな照明でも翻訳が読みやすい。30秒無音が続くと字幕は自動的にフェードアウトし、画面をすっきり保ちます。</p>
+<span class="feat-tag">New</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ── LANGUAGES ── -->
+<section class="wrap" id="languages">
+<div class="reveal">
+<span class="label-tag" data-i18n="lang_tag">// 対応言語</span>
+<h2 data-i18n="lang_h2">47言語。<br/>世界の主要な<em>ビジネス</em>をカバー。</h2>
+<p class="intro" data-i18n="lang_intro">国際的なビジネスミーティングを行っているなら、取引先の言語はほぼ確実にここにあります。アップデートのたびに追加されます。</p>
+</div>
+<div class="lang-grid reveal">
+<span class="lang-tag">🇯🇵 Japanese</span>
+<span class="lang-tag">🇬🇧 English</span>
+<span class="lang-tag">🇨🇳 Chinese (Simplified)</span>
+<span class="lang-tag">🇹🇼 Chinese (Traditional)</span>
+<span class="lang-tag">🇰🇷 Korean</span>
+<span class="lang-tag">🇻🇳 Vietnamese</span>
+<span class="lang-tag">🇹🇭 Thai</span>
+<span class="lang-tag">🇮🇩 Indonesian</span>
+<span class="lang-tag">🇲🇾 Malay</span>
+<span class="lang-tag">🇵🇭 Filipino</span>
+<span class="lang-tag">🇮🇳 Hindi</span>
+<span class="lang-tag">🇧🇩 Bengali</span>
+<span class="lang-tag">🇳🇵 Nepali</span>
+<span class="lang-tag">🇱🇰 Sinhala</span>
+<span class="lang-tag">🇲🇲 Burmese</span>
+<span class="lang-tag">🇰🇭 Khmer</span>
+<span class="lang-tag">🇱🇦 Lao</span>
+<span class="lang-tag">🇮🇳 Tamil</span>
+<span class="lang-tag">🇵🇰 Urdu</span>
+<span class="lang-tag">🇸🇦 Arabic</span>
+<span class="lang-tag">🇮🇷 Persian</span>
+<span class="lang-tag">🇮🇱 Hebrew</span>
+<span class="lang-tag">🇹🇷 Turkish</span>
+<span class="lang-tag">🇪🇸 Spanish</span>
+<span class="lang-tag">🇵🇹 Portuguese</span>
+<span class="lang-tag">🇫🇷 French</span>
+<span class="lang-tag">🇩🇪 German</span>
+<span class="lang-tag">🇮🇹 Italian</span>
+<span class="lang-tag">🇷🇺 Russian</span>
+<span class="lang-tag">🇺🇦 Ukrainian</span>
+<span class="lang-tag">🇵🇱 Polish</span>
+<span class="lang-tag">🇳🇱 Dutch</span>
+<span class="lang-tag">🇸🇪 Swedish</span>
+<span class="lang-tag">🇩🇰 Danish</span>
+<span class="lang-tag">🇫🇮 Finnish</span>
+<span class="lang-tag">🇳🇴 Norwegian</span>
+<span class="lang-tag">🇨🇿 Czech</span>
+<span class="lang-tag">🇸🇰 Slovak</span>
+<span class="lang-tag">🇭🇺 Hungarian</span>
+<span class="lang-tag">🇷🇴 Romanian</span>
+<span class="lang-tag">🇬🇷 Greek</span>
+<span class="lang-tag">🇧🇬 Bulgarian</span>
+<span class="lang-tag">🇷🇸 Serbian</span>
+<span class="lang-tag">🇭🇷 Croatian</span>
+<span class="lang-tag">🇰🇪 Swahili</span>
+<span class="lang-tag">🏳 Catalan</span>
+</div>
+</section>
+<!-- ── EXPORT ── -->
+<div class="band">
+<div class="band-inner">
+<div class="export-grid reveal">
+<div>
+<span class="label-tag" data-i18n="exp_tag">// 商談後</span>
+<h2 data-i18n="exp_h2">記憶ではなく、<br/><em>記録</em>を持って退室する。</h2>
+<p class="intro" data-i18n="exp_intro" style="margin-bottom:24px;">双方が「自分たちが合意した内容」について異なる記憶を持って退室したために、頓挫した商談はいくつあったでしょうか？Layers Talkでは、すべての翻訳が自動的に記録されます。</p>
+<ul class="feature-list" style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+<li style="display:flex;align-items:flex-start;gap:10px;font-size:0.9rem;color:var(--muted);">
+<span style="color:var(--soho);flex-shrink:0;">↗</span>
+<span data-i18n="exp_li1">双方の言語で、発言した順に完全な筆記録</span>
+</li>
+<li style="display:flex;align-items:flex-start;gap:10px;font-size:0.9rem;color:var(--muted);">
+<span style="color:var(--soho);flex-shrink:0;">↗</span>
+<span data-i18n="exp_li2">フォローアップメール用の読みやすい要約またはCRM用構造データとしてエクスポート</span>
+</li>
+<li style="display:flex;align-items:flex-start;gap:10px;font-size:0.9rem;color:var(--muted);">
+<span style="color:var(--soho);flex-shrink:0;">↗</span>
+<span data-i18n="exp_li3">全行にタイムスタンプと発言者属性が付き、契約概要にそのまま貼り付けられる形式</span>
+</li>
+<li style="display:flex;align-items:flex-start;gap:10px;font-size:0.9rem;color:var(--muted);">
+<span style="color:var(--soho);flex-shrink:0;">↗</span>
+<span data-i18n="exp_li4">同席しなかった同倣2分で共有。一通のメールで争点となった条項を解決。</span>
+</li>
+</ul>
+</div>
+<div>
+<div class="export-preview">
+<div class="export-preview-header">
+<div class="dot" style="background:#ff5f57;"></div>
+<div class="dot" style="background:#ffbd2e;"></div>
+<div class="dot" style="background:#28c840;"></div>
+<span style="color:var(--dim);font-size:0.7rem;font-family:'DM Mono',monospace;margin-left:8px;">layers_talk_20260321_143022.csv</span>
+</div>
+<div class="export-rows">
+<div class="export-row">
+<div><span class="er-time">14:30:22</span>   <span class="er-who green">Person A</span></div>
+<div class="er-said">Said: "Our minimum order is five hundred units."</div>
+<div class="er-trans">Translated: 最低注文数量は500ユニットです。</div>
+</div>
+<div class="export-row">
+<div><span class="er-time">14:30:41</span>   <span class="er-who">Person B</span></div>
+<div class="er-said">Said: 「300ユニットから始められますか？」</div>
+<div class="er-trans">Translated: "Can we start with 300 units?"</div>
+</div>
+<div class="export-row">
+<div><span class="er-time">14:31:05</span>   <span class="er-who green">Person A</span></div>
+<div class="er-said">Said: "We can do 400 with a 10% discount."</div>
+<div class="er-trans">Translated: 10%割引で400ユニットなら対応できます。</div>
+</div>
+</div>
+</div>
+<div class="export-format-pills">
+<span class="format-pill">.txt plain text</span>
+<span class="format-pill">.csv for Excel</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ── WHO USES IT ── -->
+<section class="wrap">
+<div class="reveal">
+<span class="label-tag" data-i18n="who_tag">// 対象ユーザー</span>
+<h2 data-i18n="who_h2">誤解が許されない<br/>あらゆる<em>商談</em>のために。</h2>
+<p class="intro" data-i18n="who_intro">Layers Talkは、誤解が絶対に許されないのに、1時間数万円の通訳者を呼ぶ余裕がない商談のために作られています。</p>
+</div>
+<div class="who-grid reveal">
+<div class="who-card"><span class="who-icon">🛒</span><div><div class="who-text"><span data-i18n="who1_text">輸出入業者</span></div><div class="who-sub"><span data-i18n="who1_sub">中間業者なしで単価交渉を決める</span></div></div></div>
+<div class="who-card"><span class="who-icon">🏠</span><div><div class="who-text"><span data-i18n="who2_text">不動産エージェント</span></div><div class="who-sub"><span data-i18n="who2_sub">商談に苦労せず、物件の魅力を会話の中心に</span></div></div></div>
+<div class="who-card"><span class="who-icon">📋</span><div><div class="who-text"><span data-i18n="who3_text">コンサルタント＆アドバイザー</span></div><div class="who-sub"><span data-i18n="who3_sub">最初の商談が継続契約につながる信頼を構築する</span></div></div></div>
+<div class="who-card"><span class="who-icon">👔</span><div><div class="who-text"><span data-i18n="who4_text">営業プロフェッショナル</span></div><div class="who-sub"><span data-i18n="who4_sub">「検討します」でなく、注文書を持って退室する</span></div></div></div>
+<div class="who-card"><span class="who-icon">⚖️</span><div><div class="who-text"><span data-i18n="who5_text">法律＆金融アドバイザー</span></div><div class="who-sub"><span data-i18n="who5_sub">一度目の商談から信頼関係を構築する</span></div></div></div>
+<div class="who-card"><span class="who-icon">🏨</span><div><div class="who-text"><span data-i18n="who6_text">ホスピタリティ＆観光</span></div><div class="who-sub"><span data-i18n="who6_sub">当惑した訪問者を满足したリピーター客に変える</span></div></div></div>
+</div>
+</section>
+<!-- ── PRICING ── -->
+<div class="band" id="pricing">
+<div class="band-inner">
+<div class="reveal" style="text-align:center;max-width:960px;margin:0 auto;">
+<span class="label-tag" data-i18n="price_tag">// 料金</span>
+<h2 data-i18n="price_h2">シンプル。<em>誠実。</em>買い切り。</h2>
+<p class="intro" data-i18n="price_intro" style="margin:16px auto 0;max-width:640px;">サブスクリプションなし。月額費用なし。使用回数の制限なし。一度支払えば、無料アップデート付きで永久に使えます。</p>
+</div>
+<div class="pricing-wrap reveal">
+<div class="price-card-soho">
+<!-- Left col: identity + price + CTA -->
+<div class="price-col-left">
+<div class="p-tier">Layers Talk</div>
+<div class="p-name">Personal</div>
+<div class="p-once">✓ One-time purchase</div>
+<div class="p-amount">
+<span class="p-currency">$</span>
+<span class="p-num">49</span>
+</div>
+<div class="p-save"><span data-i18n="p_save">通訳1時間分以下の価格 · 一度買えば永久に使えます</span></div>
+<div class="p-divider"></div>
+<p style="font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:28px;"><span data-i18n="p_desc">プロの通訳は1回の商談で$200〜400。Layers Talkは$49の一度きりで、その後のすべての商談で使えます。サブスクリプションなし。相手は何もインストール不要。</span></p>
+<a class="btn-buy" data-i18n="price_btn" href="get.html">14日間無料体験</a>
+<p data-i18n="price_trial" style="text-align:center;font-size:0.75rem;color:var(--dim);margin-top:12px;">14日間無料体験 · ライセンス不要ですぐ使えます</p>
+<p style="text-align:center;margin-top:8px;"><a data-i18n="price_buy_link" href="https://thelayersapp.gumroad.com/l/ltalk" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--green2);text-decoration:none;" target="_blank">体験済みの方はこちら — $49で購入</a></p>
+</div>
+<!-- Right col: feature list -->
+<div class="price-col-right">
+<div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;"><span data-i18n="p_incl">全機能含む</span></div>
+<ul class="p-features">
+<li><span class="ck">✓</span> <span data-i18n="pf1">取引先は即座に自分の言語であなたの提案を読む</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf2">電話渡しもアプリインストールも不要なプロの共有画面セットアップ</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf3">共同で拡大している条項に丸を付け・価格をハイライト—言葉不足を视覚的に補う</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf4">画面上で共同に数値を確認—全员が同じ数字に同意した状態で進める</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf5">提案書または商品シートをワンクリックで表示、テーブル両側から間覧できる</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf6">商談をペースアップ—急いで終わらせず、良い雰囲気のまま終了する</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf7">商談の完全な筆記録—双方が退室する前に完成</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf8">マイクが苦手なときはタイプ—会話は止まらない</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf9">自分の画面を振りを見せず、商品ページや価格をクリーンに表示</span></li>
+<li><span class="ck">✓</span> <span data-i18n="pf10">たった1台のノートパソコンで動作—新たな機器は不要</span></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="no-ads reveal">
+<span style="font-size:1.4rem;">🚫</span>
+<p><strong data-i18n="no_ads_bold">広告なし。永遠に。</strong> <span data-i18n="no_ads_text">Layers Talkは広告を表示しません。お買い上げはアプリの改善にのみ使われます。</span></p>
+</div>
+</div>
+</div>
+<!-- ── CTA ── -->
+<section class="cta-section">
+<div class="cta-inner reveal">
+<h2 data-i18n="cta_h2">次の商談を、<br/><em>言語</em>で失わないでください。</h2>
+<p data-i18n="cta_p">ノートパソコンを開く。言語を選ぶ。画面を相手に向ける。話す。数秒後、相手はあなたの言葉を自分の言語で読んでいます。ずっと目指してきた商談が、ようやくうまくいく瞬間です。</p>
+<div class="cta-actions">
+<a class="btn-primary" data-i18n="cta_btn" href="get.html">14日間無料体験</a>
+<a class="btn-secondary" href="/">← See the Teacher App</a>
+</div>
+<p data-i18n="cta_after" style="margin-top:14px;font-size:0.78rem;color:var(--dim);">体験後: $49（買い切り）· <a href="https://thelayersapp.gumroad.com/l/ltalk" rel="noopener noreferrer" style="color:var(--green2);text-decoration:none;" target="_blank">ライセンス購入</a></p>
+</div>
+</section>
+<!-- ── FOOTER ── -->
+<footer>
+<div class="footer-inner">
+<div class="footer-brand">
+<span>Layers</span>
+<span class="soho-tag">Talk</span>
+</div>
+<div class="footer-links">
+<a href="#features">Features</a>
+<a href="#languages">Languages</a>
+<a href="#pricing">Pricing</a>
+<a href="contact.html">Contact</a>
+<a href="support.html">☕ Support</a>
+<a href="privacy.html">Privacy Policy</a>
+<a href="/">Teacher App</a>
+</div>
+<p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+</div>
+</footer>
+<script>
+var T = {
+  en: {
+    nav_features:"Features", nav_languages:"Languages", nav_pricing:"Pricing",
+    nav_contact:"Contact", nav_back:"← Teacher App", nav_cta:"Download",
+
+    hero_badge:"💼 Close the deal — even when you don't share a language",
+    hero_h1:"Your next international<br>deal shouldn't depend<br>on <em>luck.</em>",
+    hero_sub:"Layers Talk sits on your laptop screen between you and your client. You speak. They read it in their language — immediately, in large text, on their side of the screen. They reply. You read theirs. The deal moves forward.",
+    hero_btn:"Try Free for 14 Days",
+    hero_btn2:"See how it helps ↓",
+
+    prob_tag:"// The cost of being misunderstood",
+    prob_h2:"The deal stalls the moment<br>the language does.",
+    prob_intro:"You’ve done the work. The relationship is there. But without a shared language, every exchange carries risk — a price misread, a condition lost in translation, a follow-up that never comes because neither side was certain what was agreed.",
+    prob_li1:"Holding out your phone to a client signals you weren’t prepared for this conversation",
+    prob_li2:"Every pause while you search for the right app is a moment they’re reassessing the meeting",
+    prob_li3:"A price or term that was misunderstood doesn’t surface until after the contract is signed",
+    prob_li4:"Asking someone to repeat themselves undermines the professional authority you walked in with",
+    prob_li5:"A professional interpreter costs more for a single meeting than many deals are worth",
+    prob_quote:"\"I used to dread the price negotiation part of meetings with my Japanese suppliers. Now they read my offer in Japanese before I've finished speaking. The deal gets done in one meeting instead of three.\"",
+
+    how_tag:"// How it helps you close the deal",
+    how_h2:"Three things that change<br>the outcome of the <em>meeting.</em>",
+    how_intro:"Language barriers don’t just slow a conversation down — they cost you deals. Layers Talk removes three specific moments where international meetings fall apart.",
+    how1_h:"You walk in looking prepared",
+    how1_p:"The moment you open the laptop, their language is already on screen — facing them, waiting for them, no setup required on their side. Before you’ve said a word, you’ve signalled that you came ready for this conversation. That first impression changes the entire tone of the meeting.",
+    how2_h:"Your price is understood exactly as stated",
+    how2_p:"Prices, terms, and conditions appear in their language, word for word, the moment you say them — not paraphrased, not approximated, not lost between languages. The misunderstandings that turn into disputes after the handshake don’t happen when both sides read exactly the same thing.",
+    how3_h:"You leave with a record of what was agreed",
+    how3_p:"Every exchange is logged automatically — the original and the translation, with timestamps. One click after the meeting and you have a written record that neither side can dispute. No more follow-up emails trying to reconstruct what was said. The deal is documented before they’ve reached the car park.",
+
+    ins_tag:"// Why it works differently",
+    ins_h2:"Your client feels like<br>you came <em>prepared.</em>",
+    ins_intro:"When you open Layers Talk, your client doesn't see you scrambling with a phone app. They see a professional setup — their language already on screen, ready for them. That first impression changes the entire tone of the meeting.",
+
+    feat_tag:"// Built for business meetings",
+    feat_h2:"Everything you need<br>to walk out with a <em>yes.</em>",
+    feat_intro:"Every tool in Layers Talk was put there because of a specific moment in a business meeting that used to go wrong. These are the moments it fixes.",
+    feat1_h:"Your client reads your offer before you've finished saying it",
+    feat1_p:"Speak normally. Within seconds, your words appear on their side of the screen — in their language, large enough to read from across the table. Price, terms, timeline — understood clearly, the first time. No re-explaining. No misread expressions. 47 languages, so whoever you're meeting, you're covered.",
+    feat2_h:"They see a professional setup before you say a word",
+    feat2_p:"The moment you open the laptop, their language is already waiting for them at the top of the screen. No fumbling with settings in front of the client. No \"hold on, let me set this up.\" You walk in looking ready — and that confidence sets the tone for everything that follows.",
+    feat3_h:"Circle the exact clause you're agreeing to — before doubt creeps in",
+    feat3_p:"When language is imperfect, precision matters even more. Draw a circle around the price. Draw an arrow to the delivery date. Highlight the clause you're both agreeing to. When both sides can see exactly what's being discussed — visually, unambiguously — misunderstandings become almost impossible.",
+    feat4_h:"Work out the discount together — visibly, so there's no dispute later",
+    feat4_p:"They counter your price. You pull up the calculator right on screen — they can see the numbers — and work through the margin together. The transparency builds trust. The result is visible to both of you. Nobody leaves the meeting wondering if they misunderstood a figure.",
+    feat5_h:"Show your product catalogue without breaking the flow of the conversation",
+    feat5_p:"One click opens your proposal, product sheet, or price list — sized to fit between both toolbars, visible from both sides of the table. No Alt-Tab. No minimising the translation. No rummaging through folders while they wait. Your materials appear exactly when the conversation calls for them.",
+    feat6_h:"Keep the meeting moving without either side checking their phone",
+    feat6_p:"When you're both being polite and neither side wants to be the first to say \"we should wrap up,\" a visible countdown does it for you — without the awkwardness. Set it at the start: \"We have 20 minutes.\" Everyone stays on topic. The meeting ends on time and on a high note.",
+    feat7_h:"When the room is quiet or the mic struggles — type it and move on",
+    feat7_p:"A noisy café. A product name with unusual pronunciation. A technical spec that the microphone keeps mangling. Just type it. Hit Enter. It translates exactly as you wrote it, precisely. The conversation doesn't stall — it keeps moving.",
+    feat8_h:"A written record of everything agreed — before either of you leaves the room",
+    feat8_p:"Every word said, every translation, every moment of agreement — all logged with a timestamp. Before the client has reached the car park, you have a complete written record. Use it to write the follow-up email in minutes. Share it with your colleague who wasn't in the room. Or keep it on file in case a term is ever disputed.",
+    feat9_h:"Show them a product page or a map — without exposing your whole screen",
+    feat9_p:"Pull up your product on the manufacturer's website. Show them the location on a map. Open a live exchange rate. A clean, minimal window opens between the toolbars — no address bar, no personal tabs visible, nothing to distract from the point you're making. Professional, contained, deliberate.",
+    feat10_h:"High-contrast mode — readable even in a sun-drenched meeting room",
+    feat10_p:"Toggle high-contrast in settings and the captions switch to bold white-on-black with increased opacity. Glass-walled meeting rooms, bright conference centres, outdoor cafés — the translation stays legible no matter the lighting. Captions also auto-fade after 30 seconds of silence to keep the screen uncluttered between exchanges.",
+
+    lang_tag:"// Supported languages",
+    lang_h2:"47 languages.<br>Most of the world's <em>business.</em>",
+    lang_intro:"If you're conducting international business meetings, the language your client speaks is almost certainly here. More are added with each update.",
+
+    exp_tag:"// After the meeting",
+    exp_h2:"Walk out with a record.<br>Not just a <em>memory.</em>",
+    exp_intro:"How many deals have stalled because two people left the meeting with different memories of what was agreed? Every translation in Layers Talk is logged automatically. One click after the meeting and you have a record neither side can dispute.",
+    exp_li1:"A complete transcript — what was said, in both languages, in the order it happened",
+    exp_li2:"Export as a readable summary for your follow-up email, or structured data for your CRM",
+    exp_li3:"Every row is timestamped, attributed, and ready to paste into a contract summary",
+    exp_li4:"Brief the colleague who wasn’t there in 2 minutes. Settle a disputed term with a single email.",
+    who1_text:"Importers & Exporters",
+    who1_sub:"Nail the unit price without a middleman in the room",
+    who2_text:"Real Estate Agents",
+    who2_sub:"Let the buyer fall in love with the property, not struggle with the pitch",
+    who3_text:"Consultants & Advisors",
+    who3_sub:"Build the trust that turns a first meeting into a retained client",
+    who4_text:"Sales Professionals",
+    who4_sub:"Walk out with the signed order, not a “we’ll think about it”",
+    who5_text:"Legal & Financial Advisors",
+    who5_sub:"Build trust from the first conversation, not the third",
+    who6_text:"Hospitality & Tourism",
+    who6_sub:"Turn a confused visitor into a delighted returning guest",
+    pf1:"Your client reads your offer in their language — instantly",
+    pf2:"Professional shared-screen setup — no phone passing, no app for them to download",
+    pf3:"Circle the clause, highlight the price — visual clarity when words aren’t enough",
+    pf4:"Work through the numbers together, on screen, so everyone agrees on the figure",
+    pf5:"Your proposal or product sheet, one click away, visible from both sides of the table",
+    pf6:"Keep the meeting on track — end on a high note, not a rushed one",
+    pf7:"Full meeting transcript — a written record before they’ve reached the car park",
+    pf8:"Type it when the mic struggles — the conversation never stalls",
+    pf9:"Show a product page or live price — cleanly, without exposing your desktop",
+    pf10:"Works on the laptop you’re already carrying — nothing new to buy",
+    p_save:"Less than one hour with an interpreter · yours forever",
+    p_incl:"Everything included",
+    p_desc:"A professional interpreter costs $200–400 per meeting. Layers Talk costs $49 once — then works in every meeting, forever. No subscription. Your client doesn’t install a thing.",
+    no_ads_bold:"No ads. Ever.",
+    no_ads_text:"Layers Talk will never show you an advertisement. Your purchase keeps the app improving — nothing else.",
+
+    who_tag:"// Who it's for",
+    who_h2:"Any meeting where the<br>stakes are too high<br>to <em>miscommunicate.</em>",
+    who_intro:"Layers Talk is for the meeting where you absolutely cannot afford to be misunderstood — and you can't justify $400 an hour for an interpreter to be in the room with you.",
+
+    price_tag:"// Pricing",
+    price_h2:"Simple. <em>Honest.</em> One-time.",
+    price_intro:"No subscription. No monthly fee. No limits on how many meetings you use it in. Pay once — it's yours, with free updates included.",
+    price_btn:"Try Free for 14 Days",
+    price_buy_link:"Already tried it? Buy license — $49",
+    price_trial:"14-day free trial · no license needed to start",
+
+    cta_h2:"The next deal shouldn't<br>fall apart over <em>language.</em>",
+    cta_p:"Open your laptop. Choose your languages. Face the screen toward them. Speak. Within seconds, they're reading your words in theirs — and the meeting you've been working toward finally goes the way it should.",
+    cta_btn:"Try Free for 14 Days",
+    cta_after:"After trial: $49 one-time · <a href=\"https://thelayersapp.gumroad.com/l/ltalk\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:var(--green2);text-decoration:none;\">Buy license</a>"
+  },
+
+  ja: {
+    nav_features:"機能", nav_languages:"対応言語", nav_pricing:"料金",
+    nav_contact:"お問い合わせ", nav_back:"← 教師向けアプリ", nav_cta:"ダウンロード",
+
+    hero_badge:"💼 言語の壁を越えて、商談を成立させる",
+    hero_h1:"次の海外ビジネスを、<br><em>運任せ</em>にしないでください。",
+    hero_sub:"Layers Talkは、あなたと取引先の間にあるノートパソコンの画面を、リアルタイム通訳デスクに変えます。話すだけで、相手には自分の言語で即座に表示されます。",
+    hero_btn:"14日間無料体験",
+    hero_btn2:"成果を見る ↓",
+
+    prob_tag:"// 誤解の代償",
+    prob_h2:"言語が止まれば、<br>商談も<em>止まる。</em>",
+    prob_intro:"準備は整っている。関係も良好だ。しかし共通言語がなければ、あらゆるやり取りにリスクが伴います—誤読された価格、訳しきれなかった条件、「何に合意したのか」が曖昧なまま来ないフォローアップ。",
+    prob_li1:"スマートフォンを差し出す行為は、この商談に備えていなかったというメッセージを伝える",
+    prob_li2:"翻訳ツールを探している間は、相手が商談を再評価している時間",
+    prob_li3:"誤解された価格や条件は、契約書に署名されてから初めて表面化する",
+    prob_li4:"聴き返しを求めることは、商談に持ち込んだプロとしての権威を損なう",
+    prob_li5:"プロの通訳者は、一度の商談だけで多くの案件の利益を超える費用がかかる",
+    prob_quote:"「以前は日本の取引先との価格交渉が憂鬱でした。今は、私が話し終わる前に相手が日本語で内容を読んでいます。三回に分けていた商談が、一回で決まるようになりました。」",
+
+    how_tag:"// 商談を成立させる3つの効果",
+    how_h2:"商談の結果を変える、<br><em>3つのポイント。</em>",
+    how_intro:"言語の壁は商談を遅らせるだけでなく、案件を失わせます。Layers Talkは、国際商談が突崩する3つの具体的な場面を取り除きます。",
+    how1_h:"準備万全の印象で臨む",
+    how1_p:"ノートパソコンを開いた瞬間、相手の言語が画面に表示されています—相手側に向いて、相手のために。一言も発する前に、あなたはこの商談に備えていたというメッセージを伝えています。その第一印象が、商談全体のトーンを決めます。",
+    how2_h:"価格が正確に伝わる",
+    how2_p:"価格、条件、契約内容が、言ったその瞬間に相手の言語で画面に表示されます—言い換えなし、概訳なし、訳誤なし。双方が全く同じ内容を読むことで、握手後に紛争になる誤解は生まれません。",
+    how3_h:"合意内容の記録を持って退出できる",
+    how3_p:"すべてのやり取りが自動記録されます—原文と翻訳、タイムスタンプ付きで。商談後、ワンクリックで両者が争えない文書記録を入手できます。「あのとき何を言ったか」を確認するフォローアップメールは不要。商談の内容は相手が席を立つ前に文書化されています。",
+
+    ins_tag:"// なぜ他とは違うのか",
+    ins_h2:"取引先は、あなたが<br><em>準備万端</em>で来たと感じる。",
+    ins_intro:"Layers Talkを開いた瞬間、取引先の目に映るのはスマートフォンを慌てて操作するあなたではありません。相手の言語がすでに画面に用意されているプロフェッショナルなセットアップです。その第一印象が、商談全体のトーンを決めます。",
+
+    feat_tag:"// ビジネス商談に特化した設計",
+    feat_h2:"「合意」を引き出すために<br>必要なものが<em>すべて</em>揃っています。",
+    feat_intro:"Layers Talkのすべての機能は、実際のビジネス商談で何かがうまくいかなかった具体的な瞬間のために作られました。",
+    feat1_h:"話し終わる前に、取引先があなたの提案を読んでいる",
+    feat1_p:"普通に話すだけです。数秒後、あなたの言葉が相手の言語でテーブルを挟んでも読める大きさで表示されます。価格、条件、納期 — 初回から明確に伝わります。47言語に対応しているため、どんな取引先との商談でも安心です。",
+    feat2_h:"言葉を発する前に、プロフェッショナルな印象を与える",
+    feat2_p:"ノートパソコンを開いた瞬間、相手の言語がすでに画面の上部で待ち構えています。取引先の前で設定に手間取ることも、「少しお待ちください」と言うこともありません。準備ができた状態で商談に臨めます。",
+    feat3_h:"同意した条項を丸で囲む — 疑念が生まれる前に",
+    feat3_p:"言語が完全でない時こそ、視覚的な正確さが重要になります。価格を丸で囲む。納期に矢印を引く。双方が合意した条項をハイライトする。議論している内容が視覚的に明確になれば、誤解はほぼ不可能になります。",
+    feat4_h:"割引額を一緒に計算する — 後の争いがなくなるように",
+    feat4_p:"取引先が価格を交渉します。あなたは画面上で電卓を開き、相手も数字が見える状態で一緒に計算します。この透明性が信頼を生みます。結果は双方で確認できます。「数字を勘違いしていたかもしれない」という不安は残りません。",
+    feat5_h:"商談の流れを止めずに、商品カタログを見せる",
+    feat5_p:"ワンクリックで提案書、商品リスト、価格表を開けます。翻訳を最小化する必要も、フォルダを探し回る必要もありません。あなたの資料は、会話がそれを必要とする瞬間に現れます。",
+    feat6_h:"どちらもスマートフォンを確認せずに、商談を進める",
+    feat6_p:"「そろそろ終わりにしましょうか」と最初に言い出しにくい雰囲気の中で、画面上のカウントダウンがそれを自然に示してくれます。開始時に設定するだけです。トピックに集中できます。商談は時間通りに、良い雰囲気で終わります。",
+    feat7_h:"音声認識が難しい時も、入力して続ける",
+    feat7_p:"騒がしいカフェ。珍しい発音の商品名。マイクが何度も間違える専門用語。タイプするだけです。Enterを押せば、書いた通りに正確に翻訳されます。会話は止まりません。",
+    feat8_h:"退室前に、合意事項の記録が完成している",
+    feat8_p:"交わされたすべての言葉、すべての翻訳、すべての合意の瞬間が — タイムスタンプ付きで記録されます。取引先が駐車場を出る前に、完全な記録が手元にあります。フォローアップのメールをすぐに書けます。同席しなかった同僚にも共有できます。",
+    feat9_h:"プライベートな画面を見せずに、商品ページや地図を表示する",
+    feat9_p:"メーカーのウェブサイトで商品を表示する。地図で場所を示す。リアルタイムの為替レートを開く。ツールバーの間に清潔感のあるウィンドウが開き、アドレスバーも個人タブも表示されません。",
+    feat10_h:"ハイコントラストモード — 日差しの強い会議室でも読める",
+    feat10_p:"設定でハイコントラストをオンにすると、字幕は太字の白黒表示になり、不透明度も上がります。ガラス張りの会議室、明るいカンファレンスセンター、屋外カフェ——どんな照明でも翻訳が読みやすい。30秒無音が続くと字幕は自動的にフェードアウトし、画面をすっきり保ちます。",
+
+    lang_tag:"// 対応言語",
+    lang_h2:"47言語。<br>世界の主要な<em>ビジネス</em>をカバー。",
+    lang_intro:"国際的なビジネスミーティングを行っているなら、取引先の言語はほぼ確実にここにあります。アップデートのたびに追加されます。",
+
+    exp_tag:"// 商談後",
+    exp_h2:"記憶ではなく、<br><em>記録</em>を持って退室する。",
+    exp_intro:"双方が「自分たちが合意した内容」について異なる記憶を持って退室したために、頓挫した商談はいくつあったでしょうか？Layers Talkでは、すべての翻訳が自動的に記録されます。",
+    exp_li1:"双方の言語で、発言した順に完全な筆記録",
+    exp_li2:"フォローアップメール用の読みやすい要約またはCRM用構造データとしてエクスポート",
+    exp_li3:"全行にタイムスタンプと発言者属性が付き、契約概要にそのまま貼り付けられる形式",
+    exp_li4:"同席しなかった同倣2分で共有。一通のメールで争点となった条項を解決。",
+    who1_text:"輸出入業者",
+    who1_sub:"中間業者なしで単価交渉を決める",
+    who2_text:"不動産エージェント",
+    who2_sub:"商談に苦労せず、物件の魅力を会話の中心に",
+    who3_text:"コンサルタント＆アドバイザー",
+    who3_sub:"最初の商談が継続契約につながる信頼を構築する",
+    who4_text:"営業プロフェッショナル",
+    who4_sub:"「検討します」でなく、注文書を持って退室する",
+    who5_text:"法律＆金融アドバイザー",
+    who5_sub:"一度目の商談から信頼関係を構築する",
+    who6_text:"ホスピタリティ＆観光",
+    who6_sub:"当惑した訪問者を满足したリピーター客に変える",
+    pf1:"取引先は即座に自分の言語であなたの提案を読む",
+    pf2:"電話渡しもアプリインストールも不要なプロの共有画面セットアップ",
+    pf3:"共同で拡大している条項に丸を付け・価格をハイライト—言葉不足を视覚的に補う",
+    pf4:"画面上で共同に数値を確認—全员が同じ数字に同意した状態で進める",
+    pf5:"提案書または商品シートをワンクリックで表示、テーブル両側から間覧できる",
+    pf6:"商談をペースアップ—急いで終わらせず、良い雰囲気のまま終了する",
+    pf7:"商談の完全な筆記録—双方が退室する前に完成",
+    pf8:"マイクが苦手なときはタイプ—会話は止まらない",
+    pf9:"自分の画面を振りを見せず、商品ページや価格をクリーンに表示",
+    pf10:"たった1台のノートパソコンで動作—新たな機器は不要",
+    p_save:"通訳1時間分以下の価格 · 一度買えば永久に使えます",
+    p_incl:"全機能含む",
+    p_desc:"プロの通訳は1回の商談で$200〜400。Layers Talkは$49の一度きりで、その後のすべての商談で使えます。サブスクリプションなし。相手は何もインストール不要。",
+    no_ads_bold:"広告なし。永遠に。",
+    no_ads_text:"Layers Talkは広告を表示しません。お買い上げはアプリの改善にのみ使われます。",
+
+    who_tag:"// 対象ユーザー",
+    who_h2:"誤解が許されない<br>あらゆる<em>商談</em>のために。",
+    who_intro:"Layers Talkは、誤解が絶対に許されないのに、1時間数万円の通訳者を呼ぶ余裕がない商談のために作られています。",
+
+    price_tag:"// 料金",
+    price_h2:"シンプル。<em>誠実。</em>買い切り。",
+    price_intro:"サブスクリプションなし。月額費用なし。使用回数の制限なし。一度支払えば、無料アップデート付きで永久に使えます。",
+    price_btn:"14日間無料体験",
+    price_buy_link:"体験済みの方はこちら — $49で購入",
+    price_trial:"14日間無料体験 · ライセンス不要ですぐ使えます",
+
+    cta_h2:"次の商談を、<br><em>言語</em>で失わないでください。",
+    cta_p:"ノートパソコンを開く。言語を選ぶ。画面を相手に向ける。話す。数秒後、相手はあなたの言葉を自分の言語で読んでいます。ずっと目指してきた商談が、ようやくうまくいく瞬間です。",
+    cta_btn:"14日間無料体験",
+    cta_after:"体験後: $49（買い切り）· <a href=\"https://thelayersapp.gumroad.com/l/ltalk\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:var(--green2);text-decoration:none;\">ライセンス購入</a>"
+  },
+
+  zh: {
+    nav_features:"功能", nav_languages:"支持语言", nav_pricing:"定价",
+    nav_contact:"联系我们", nav_back:"← 教师应用", nav_cta:"立即下载",
+
+    hero_badge:"💼 跨越语言障碍，成功拿下每一单",
+    hero_h1:"下一笔国际生意，<br>不应该靠<em>运气。</em>",
+    hero_sub:"Layers Talk 将您的笔记本电脑变成实时翻译台。您说话，对方即刻在屏幕上看到自己语言的翻译。对方回应，您立刻读懂。交易就此推进。",
+    hero_btn:"14天免费试用",
+    hero_btn2:"查看效果 ↓",
+
+    prob_tag:"// 误解的代价",
+    prob_h2:"语言一旦卡壳，<br>商谈也随之<em>停滞。</em>",
+    prob_intro:"工作已经做到。关系也够到位。但没有共同语言，每次交流都存在风险—被误读的报价、丢失在翻译中的条款、因为双方都不确定达成了什么而迟迟不来的后续跨进。",
+    prob_li1:"向客户伸出手机，传递的是您没有为这次对话做好准备的信号",
+    prob_li2:"您寻找工具时的每次延迫，都是对方重新评估这次会议的时机",
+    prob_li3:"被误解的价格或条款，在合同签署后才会浮出水面",
+    prob_li4:"请对方重复会削弱您走进会议时带来的专业权威",
+    prob_li5:"专业口译员一次会议的费用，往往超过许多商务的利润",
+    prob_quote:"\"以前我最怕和日本供应商谈价格。现在，我话还没说完，对方就已经在读日文报价了。原来需要三次会议才能谈成的单，现在一次就搞定。\"",
+
+    how_tag:"// 帮您谈成交易的三个效果",
+    how_h2:"三个关键改变<br><em>会谈结果。</em>",
+    how_intro:"语言障碍不只是让对话变慢，它会让您失去商务。Layers Talk消除三个导致国际会谈失败的关键节点。",
+    how1_h:"你走进去就是一种准备充分的姿态",
+    how1_p:"笔记本一开屏，对方的语言就已显示在屏幕上—面向他们，为他们准备好了。还没开口，您已经传递出一个信号：您为这次对话做好了准备。这个第一印象，将改变整场会谈的基调。",
+    how2_h:"您的报价被如实理解",
+    how2_p:"价格、条款、合同内容在您说出的瞬间，就以对方语言出现—逐字逆送，不进行改述、概括或展内。当双方读到的是完全相同的内容，握手后演变成纠纷的误解就不会发生。",
+    how3_h:"离开时有合同内容的书面记录",
+    how3_p:"每次交流均被自动记录—原文和译文，带时间戳。会议结束后，一键导出完整书面记录。双方都无法就此开展争议。再也不用发邮件试图还原谈话内容。合同都已文字化。",
+
+    ins_tag:"// 为什么与众不同",
+    ins_h2:"客户感受到的，是您<br><em>有备而来。</em>",
+    ins_intro:"打开 Layers Talk 的那一刻，客户看到的不是您慌乱地操作手机应用，而是一套专业的设置——他们的语言已经显示在屏幕上，为他们准备好了。这第一印象，决定了整场会议的基调。",
+
+    feat_tag:"// 专为商务会议打造",
+    feat_h2:"让您满载<em>肯定</em>而归<br>所需的一切。",
+    feat_intro:"Layers Talk 的每一个功能，都源于商务会议中某个曾经出错的具体时刻。这些，正是它要解决的问题。",
+    feat1_h:"话还没说完，客户已经读到了您的报价",
+    feat1_p:"正常说话就好。几秒内，您的话以对方语言出现在屏幕上，大到隔桌都能看清。价格、条款、交货期——第一次就说清楚。覆盖47种语言，无论面对哪位客户，您都有备无患。",
+    feat2_h:"还没开口，就已经留下专业印象",
+    feat2_p:"打开笔记本电脑的那一刻，对方的语言已经在屏幕顶部等待着他们。不需要在客户面前摸索设置，不需要说\"稍等，我来配置一下\"。您进门就是准备好的状态——这份自信奠定了接下来一切的基调。",
+    feat3_h:"圈出正在确认的条款——趁疑虑还没产生",
+    feat3_p:"语言不够精准时，视觉上的准确就更加重要。圈出价格，标注交货日期，高亮双方正在确认的条款。当双方都能清楚看到正在讨论的内容时，误解几乎不可能发生。",
+    feat4_h:"一起算出折扣——让结果可见，事后不再有争议",
+    feat4_p:"对方还价。您直接在屏幕上打开计算器——对方也看得到数字——一起过一遍利润空间。这种透明建立信任。结果双方都确认过。没有人离开会议时还在疑惑自己是不是理解错了哪个数字。",
+    feat5_h:"展示产品目录，不打断谈话的节奏",
+    feat5_p:"一键打开提案、产品表或价格单——大小恰好嵌在两个工具栏之间，桌子两侧都能看到。不需要切换窗口，不需要最小化翻译，不需要在对方等待时翻找文件夹。您的资料在对话需要时即刻出现。",
+    feat6_h:"让会议顺利推进，双方都不用低头看手机",
+    feat6_p:"当双方都在客气，谁也不想第一个说\"我们该收尾了\"时，屏幕上可见的倒计时会自然而然地替您说出来——不带任何尴尬。开场时设好时间，大家就能专注主题。会议准时结束，氛围好。",
+    feat7_h:"环境嘈杂或麦克风识别有误——打字继续",
+    feat7_p:"嘈杂的咖啡馆。发音特别的产品名称。麦克风反复识别错误的专业术语。直接打出来，按回车，就会按您打的内容精确翻译。对话不会停滞，继续推进。",
+    feat8_h:"离开会议室之前，合意事项已有书面记录",
+    feat8_p:"每一句话、每一条翻译、每一个达成共识的时刻——都带时间戳记录下来。在客户走出停车场之前，您已经有了一份完整的书面记录。几分钟内写好跟进邮件。分享给没有参会的同事。或作为存档，以备条款争议时使用。",
+    feat9_h:"展示产品页或地图——不暴露您的整个桌面",
+    feat9_p:"打开厂商网站上的产品页，在地图上标注位置，查看实时汇率。工具栏之间弹出一个简洁的窗口——没有地址栏，没有个人标签页可见，没有任何分散焦点的内容。专业、克制、目的明确。",
+    feat10_h:"高对比度模式——即使在阳光充足的会议室也清晰可读",
+    feat10_p:"在设置中启用高对比度，字幕会切换为加粗的黑底白字并增加不透明度。玻璃幕墙会议室、明亮的会议中心、户外咖啡厅——无论光线如何，翻译始终清晰可读。沉默30秒后字幕会自动淡出，保持屏幕整洁。",
+
+    lang_tag:"// 支持语言",
+    lang_h2:"47种语言，<br>覆盖全球主要<em>商业</em>市场。",
+    lang_intro:"如果您从事国际商务会议，您客户所说的语言几乎可以肯定在这里。每次更新都会增加更多语言。",
+
+    exp_tag:"// 会议结束后",
+    exp_h2:"带走的是记录，<br>而不只是<em>记忆。</em>",
+    exp_intro:"有多少笔生意因为双方带着对\"已达成共识内容\"的不同记忆离开会议室而陷入僵局？Layers Talk 会自动记录每一条翻译。会议结束后一键导出，双方都无法争辩的记录就在手边。",
+    exp_li1:"双语完整记录，按事件发生顺序排列",
+    exp_li2:"导出为跟进邮件的可读摘要，或导入CRM的结构化数据",
+    exp_li3:"每行带时间戳和发言人属性，可直接粘贴入合同摘要",
+    exp_li4:"2分钟内将未出席同事带入情况。用一封邮件解决争议条款。",
+    who1_text:"进出口商",
+    who1_sub:"无需中间商，直接谈定单价",
+    who2_text:"房地产中介",
+    who2_sub:"让买家爱上房产，而不是斗与介绍词",
+    who3_text:"顾问和小企业主",
+    who3_sub:"让第一次会谈变成长期合作的基石",
+    who4_text:"销售专业人士",
+    who4_sub:"带着签单离开，而不是“我们再考虑”",
+    who5_text:"法律和财务顾问",
+    who5_sub:"从第一次对话起建立信任",
+    who6_text:"酒店与旅游业",
+    who6_sub:"将迣惑的访客变为开心的回头客",
+    pf1:"客户即刻以其语言读到您的方案",
+    pf2:"专业共享屏幕设置，无需传手机或下载任何东西",
+    pf3:"圈出条款、标注价格，语言不废时的视觉清晰度",
+    pf4:"屏幕共见地一起算折扣，不留数字争议余地",
+    pf5:"提案书或产品资料一键调出，桂子两側均可查阅",
+    pf6:"控制会谈节奏，高潮结束，而非仓係走人",
+    pf7:"完整会谈记录，在客户离开会议室前就已完成",
+    pf8:"麦克风出问题就改用打字，对话永不中断",
+    pf9:"展示产品页或实时价格，不暴露桌面",
+    pf10:"就用您已有的笔记本，无需购置新设备",
+    p_save:"不到一小时的口译费用 · 一次购买永久使用",
+    p_incl:"包含全部功能",
+    p_desc:"专业口译每次会议收费$200–400。Layers Talk只需$49一次性购买，之后每次会议都能用。无订阅。客户无需安装任何东西。",
+    no_ads_bold:"没有广告。永远。",
+    no_ads_text:"Layers Talk不会向您展示广告。您的购买专用于改善个人应用。",
+
+    who_tag:"// 适合人群",
+    who_h2:"任何一场误解代价<br>过于高昂的<em>会议。</em>",
+    who_intro:"Layers Talk 是为那些绝对不能被误解、却又没有理由花每小时数百美元请口译员的会议而生的。",
+
+    price_tag:"// 定价",
+    price_h2:"简单。<em>诚实。</em>买断。",
+    price_intro:"无订阅，无月费，无使用次数限制。一次付费，永久使用，免费更新。",
+    price_btn:"14天免费试用",
+    price_buy_link:"已试用？购买许可证 — $49",
+    price_trial:"14天免费试用 · 无需许可证即可开始",
+
+    cta_h2:"别让下一笔生意，<br>输在<em>语言</em>上。",
+    cta_p:"打开笔记本电脑，选择语言，将屏幕对向对方，开口说话。几秒内，对方正在用自己的语言读您说的话——那场您一直在期待的会议，终于按您希望的方式进行了。",
+    cta_btn:"14天免费试用",
+    cta_after:"试用后: $49 一次性购买 · <a href=\"https://thelayersapp.gumroad.com/l/ltalk\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:var(--green2);text-decoration:none;\">购买许可证</a>"
+  },
+
+  vi: {
+    nav_features:"Tính năng", nav_languages:"Ngôn ngữ", nav_pricing:"Giá",
+    nav_contact:"Liên hệ", nav_back:"← Ứng dụng giáo viên", nav_cta:"Tải về",
+
+    hero_badge:"💼 Chốt hợp đồng — dù bạn không nói cùng ngôn ngữ",
+    hero_h1:"Thương vụ quốc tế tiếp theo<br>của bạn không nên phụ thuộc<br>vào <em>may mắn.</em>",
+    hero_sub:"Layers Talk biến màn hình laptop thành bàn phiên dịch trực tiếp. Bạn nói — đối tác đọc ngay bằng ngôn ngữ của họ, trên chính màn hình này. Họ trả lời — bạn hiểu ngay. Thương vụ tiến về phía trước.",
+    hero_btn:"Dùng thử miễn phí 14 ngày",
+    hero_btn2:"Xem lợi ích ↓",
+
+    prob_tag:"// Chi phí của sự hiểu lầm",
+    prob_h2:"Ngôn ngữ tắc nghẽ<br>là lúc thương vụ<br><em>dừng lại.</em>",
+    prob_intro:"Bạn đã chuẩn bị xong. Mối quan hệ đúng chỗ. Nhưng không có ngôn ngữ chung, mỗi trao đổi đều mang rủi ro—một con số bị đọc sai, một điều khoản bị bỏ sót, một email theo dõi không bao giờ đến vì không bên nào chắc chắn điều gì đã được thống nhất.",
+    prob_li1:"Chìa điện thoại cho khách là tín hiệu bạn không chuẩn bị cho cuộc trò chuyện này",
+    prob_li2:"Mỗi lần dừng lại để tìm ứng dụng là lúc họ đang đánh giá lại cuộc họn",
+    prob_li3:"Một mức giá hay điều khoản bị hiểu sai sẽ không lộ ra cho đến sau khi hợp đồng được ký",
+    prob_li4:"Nhờ nhắc lại sẽ làm giảm quyền uy chuyên nghiệp mà bạn mang vào cuộc họn",
+    prob_li5:"Phiên dịch viên chuyên nghiệp cho một buổi họn có thể tốn nhiều hơn lợi nhuận của nhiều thương vụ",
+    prob_quote:"\"Trước đây tôi rất ngại phần thương lượng giá với đối tác Nhật Bản. Bây giờ họ đọc báo giá bằng tiếng Nhật trước khi tôi nói xong câu. Thương vụ chốt trong một buổi thay vì ba.\"",
+
+    how_tag:"// Cách giúp bạn chốt được thương vụ",
+    how_h2:"Ba điều thay đổi<br><em>kết quả cuộc họn.</em>",
+    how_intro:"Rào cản ngôn ngữ không chỉ làm chận đị cuộc trò chuyện—nó khiến bạn mất thương vụ. Layers Talk loại bỏ ba thời điểm cụ thể khiến cuộc họn kinh doanh quốc tế thất bại.",
+    how1_h:"Bạn bước vào với hình ảnh chuẩn bị kỹ",
+    how1_p:"Người mở laptop ra, ngôn ngữ của họ đã hiện trên màn hình—hướng về phía họ, sẵn sàng cho họ. Trước khi bạn nói một lời, bạn đã gửi tín hiệu rằng mình đã chuẩn bị sẵn cho cuộc trò chuyện này. Ấn tượng đầu tiên đó thay đổi toàn bộ tone của buổi họn.",
+    how2_h:"Báo giá của bạn được hiểu chính xác",
+    how2_p:"Giá, điều khoản, nội dung hợp đồng xuất hiện bằng ngôn ngữ của họ, từng chữ, ngay khi bạn nói—không diễn đạt lại, không tóm tắt, không bị thất lạc giữa hai ngôn ngữ. Khi cả hai đọc đúng một nội dung, những hiểu lầm biến thành tranh chấp sau bắt tay sẽ không xảy ra.",
+    how3_h:"Bạn rời đi với bằng chứng về điều đã thống nhất",
+    how3_p:"Mọi trao đổi được ghi lại tự động—bản gốc và bản dịch, có dấu thời gian. Một cú nhấp sau buổi họn và bạn có biên bản mà không bên nào có thể phủ nhận. Không cần email hỏi lại xem ai đã nói gì. Thương vụ được ghi chép trước khi họ về đến nhà.",
+
+    ins_tag:"// Tại sao khác biệt",
+    ins_h2:"Khách hàng cảm nhận được<br>bạn đến <em>chuẩn bị kỹ.</em>",
+    ins_intro:"Khi bạn mở Layers Talk, khách hàng không thấy bạn loay hoay với ứng dụng điện thoại. Họ thấy một thiết lập chuyên nghiệp — ngôn ngữ của họ đã sẵn sàng trên màn hình. Ấn tượng đầu tiên đó thay đổi toàn bộ không khí buổi họp.",
+
+    feat_tag:"// Thiết kế riêng cho buổi họp kinh doanh",
+    feat_h2:"Mọi thứ cần thiết<br>để ra về với lời <em>đồng ý.</em>",
+    feat_intro:"Mỗi tính năng trong Layers Talk được tạo ra vì một khoảnh khắc cụ thể trong buổi họp kinh doanh từng bị hỏng. Đây là những khoảnh khắc nó sửa chữa.",
+    feat1_h:"Khách hàng đọc được báo giá trước khi bạn nói xong",
+    feat1_p:"Cứ nói tự nhiên. Trong vài giây, lời bạn xuất hiện ở phần màn hình của họ — bằng ngôn ngữ của họ, đủ lớn để đọc từ bên kia bàn. Giá, điều khoản, thời gian giao hàng — truyền đạt rõ ràng ngay lần đầu. 47 ngôn ngữ, dù bạn gặp ai, bạn đều được đảm bảo.",
+    feat2_h:"Họ thấy sự chuyên nghiệp trước khi bạn nói một lời",
+    feat2_p:"Ngay khi mở laptop, ngôn ngữ của họ đã chờ sẵn ở phần trên màn hình. Không lúng túng cài đặt trước mặt khách. Không \"chờ tôi một chút\". Bạn bước vào với phong thái sẵn sàng — và sự tự tin đó định hình mọi thứ tiếp theo.",
+    feat3_h:"Khoanh tròn đúng điều khoản đang được đồng ý — trước khi nghi ngờ nảy sinh",
+    feat3_p:"Khi ngôn ngữ không hoàn hảo, sự chính xác thị giác càng quan trọng hơn. Khoanh tròn giá. Vẽ mũi tên vào ngày giao hàng. Tô sáng điều khoản cả hai đang đồng ý. Khi cả hai bên thấy rõ điều đang được thảo luận, hiểu lầm gần như không thể xảy ra.",
+    feat4_h:"Cùng tính toán mức chiết khấu — công khai, để không có tranh chấp sau",
+    feat4_p:"Họ trả giá. Bạn mở máy tính ngay trên màn hình — họ thấy được các con số — và cùng tính toán biên lợi nhuận. Sự minh bạch này tạo niềm tin. Kết quả cả hai đều thấy. Không ai rời cuộc họp với thắc mắc liệu mình có hiểu nhầm con số nào không.",
+    feat5_h:"Trình bày danh mục sản phẩm mà không làm gián đoạn cuộc trò chuyện",
+    feat5_p:"Một cú nhấp mở đề xuất, bảng sản phẩm hoặc bảng giá — vừa khít giữa hai thanh công cụ, nhìn thấy từ cả hai phía bàn. Không Alt-Tab, không thu nhỏ bản dịch, không lục lọ thư mục trong khi họ chờ. Tài liệu của bạn xuất hiện đúng lúc cuộc trò chuyện cần.",
+    feat6_h:"Giữ buổi họp đúng tiến độ mà không ai phải nhìn điện thoại",
+    feat6_p:"Khi cả hai đều lịch sự và không ai muốn là người đầu tiên nói \"chúng ta nên kết thúc thôi\", đồng hồ đếm ngược hiển thị trên màn hình sẽ làm điều đó — không gây khó xử. Đặt ngay từ đầu: \"Chúng ta có 20 phút.\" Mọi người tập trung. Buổi họp kết thúc đúng giờ, với tâm trạng tốt.",
+    feat7_h:"Phòng yên hay mic nhận sai — cứ gõ và tiếp tục",
+    feat7_p:"Quán cà phê ồn ào. Tên sản phẩm phát âm lạ. Thuật ngữ kỹ thuật mà mic cứ nhận nhầm. Chỉ cần gõ vào. Nhấn Enter. Dịch chính xác theo những gì bạn viết. Cuộc trò chuyện không dừng lại.",
+    feat8_h:"Biên bản hợp ý đã hoàn thành trước khi ai rời phòng",
+    feat8_p:"Mọi lời nói, mọi bản dịch, mọi khoảnh khắc đồng thuận — đều được ghi lại với dấu thời gian. Trước khi khách hàng ra đến bãi xe, bạn đã có một biên bản đầy đủ. Viết email theo dõi trong vài phút. Chia sẻ cho đồng nghiệp không tham dự. Hoặc lưu lại đề phòng khi có tranh chấp điều khoản.",
+    feat9_h:"Cho họ xem trang sản phẩm hay bản đồ — mà không lộ toàn bộ màn hình",
+    feat9_p:"Mở trang sản phẩm trên website nhà sản xuất. Chỉ vị trí trên bản đồ. Xem tỷ giá thực tế. Một cửa sổ gọn gàng mở ra giữa hai thanh công cụ — không có thanh địa chỉ, không có tab cá nhân hiển thị, không có gì làm phân tâm. Chuyên nghiệp, gọn gàng, có chủ đích.",
+    feat10_h:"Chế độ tương phản cao — đọc rõ ngay cả phòng họp tràn ngập ánh sáng",
+    feat10_p:"Bật tương phản cao trong cài đặt, phụ đề chuyển sang trắng đậm trên nền đen với độ mờ tăng. Phòng họp kính, trung tâm hội nghị sáng, quán cà phê ngoài trời — bản dịch luôn dễ đọc dù điều kiện ánh sáng nào. Phụ đề cũng tự động mờ dần sau 30 giây im lặng để giữ màn hình gọn gàng.",
+
+    lang_tag:"// Ngôn ngữ hỗ trợ",
+    lang_h2:"47 ngôn ngữ.<br>Hầu hết các thị trường <em>kinh doanh</em> thế giới.",
+    lang_intro:"Nếu bạn đang thực hiện các cuộc họn kinh doanh quốc tế, ngôn ngữ của khách hàng gần như chắc chắn có trong danh sách này. Thêm ngôn ngữ với mỗi lần cập nhật.",
+
+    exp_tag:"// Sau buổi họp",
+    exp_h2:"Ra về với biên bản,<br>không chỉ là <em>ký ức.</em>",
+    exp_intro:"Có bao nhiêu thương vụ bị trì hoãn vì hai bên rời cuộc họp với ký ức khác nhau về những gì đã được đồng ý? Layers Talk tự động ghi lại mọi bản dịch. Một cú nhấp sau cuộc họp — bạn có biên bản mà không ai có thể tranh luận.",
+    exp_li1:"Biên bản đầy đủ — những gì đã được nói, bằng cả hai ngôn ngữ, theo đúng thứ tự",
+    exp_li2:"Xuất dưới dạng tóm tắt dễ đọc cho email theo dõi, hoặc dữ liệu cấu trúc cho CRM",
+    exp_li3:"Mỗi dòng có dấu thời gian, tên người nói, sẵn sàng dán vào tóm tắt hợp đồng",
+    exp_li4:"Thông báo cho đồng nghiệp vắng mặt trong 2 phút. Giải quyết điều khoản tranh chấp bằng một email.",
+    who1_text:"Nhà nhập khẩu & xuất khẩu",
+    who1_sub:"Chốt đơn giá không cần trung gian",
+    who2_text:"Môi giới bất động sản",
+    who2_sub:"Khách hàng yêu thích căn nhà, không phải vật lộn với lời giới thiệu",
+    who3_text:"Tư vấn & cố vấn",
+    who3_sub:"Xây dựng lòng tin biến buổi họn đầu thành khách hàng lâu dài",
+    who4_text:"Chuyên viên kinh doanh",
+    who4_sub:"Ra về với đơn hàng đã ký, không phải lời hứa sẽ suy nghĩ",
+    who5_text:"Tư vấn pháp lý & tài chính",
+    who5_sub:"Xây dựng niềm tin ngay từ cuộc trò chuyện đầu tiên",
+    who6_text:"Khách sạn & du lịch",
+    who6_sub:"Biến khách bối rối thành khách hàng hài lòng quay trở lại",
+    pf1:"Khách hàng đọc báo giá của bạn bằng ngôn ngữ của họ — ngay lập tức",
+    pf2:"Màn hình chia sẻ chuyên nghiệp — không đưa điện thoại, không cài ứng dụng",
+    pf3:"Khoanh tròn điều khoản, đánh dấu giá — rõ ràng bằng hình ảnh khi ngôn ngữ không đủ",
+    pf4:"Cùng nhau tính toán trực tiếp — không tranh cãi về con số sau này",
+    pf5:"Xuất hiện đề xuất hoặc bảng giá chỉ với một cú nhấp, cả hai bên cùng thấy",
+    pf6:"Giữ cuộc họn đúng hướng — kết thúc ở đỉnh cao, không vội vàng",
+    pf7:"Biên bản đầy đủ — hoàn thành trước khi họ ra khỏi phòng họn",
+    pf8:"Khi micro gặp sực — gõ vào là xong, cuộc trò chuyện không ngừng",
+    pf9:"Hiển thị trang sản phẩm hoặc giá trực tiếp — không lộ màn hình cá nhân",
+    pf10:"Chạy trên laptop bạn đang dùng — không cần mua thêm gì",
+    p_save:"Rẻ hơn một giờ thuê phiên dịch · dùng mãi mãi",
+    p_incl:"Bao gồm tất cả",
+    p_desc:"Phiên dịch chuyên nghiệp tốn $200–400 mỗi cuộc họp. Layers Talk chỉ $49 một lần — sau đó dùng được cho mọi cuộc họp, mãi mãi. Không đăng ký. Khách không cần cài gì.",
+    no_ads_bold:"Không quảng cáo. Bãi.",
+    no_ads_text:"Layers Talk sẽ không bao giờ hiển thị quảng cáo. Tiền bạn mua chỉ dùng để cải thiện ứng dụng.",
+
+    who_tag:"// Dành cho ai",
+    who_h2:"Bất kỳ cuộc họp nào mà<br>hiểu lầm là <em>quá đắt giá.</em>",
+    who_intro:"Layers Talk dành cho những cuộc họp mà bạn tuyệt đối không thể bị hiểu lầm — nhưng không thể biện minh cho chi phí vài triệu đồng mỗi giờ thuê phiên dịch viên.",
+
+    price_tag:"// Giá",
+    price_h2:"Đơn giản. <em>Minh bạch.</em> Mua một lần.",
+    price_intro:"Không đăng ký. Không phí hàng tháng. Không giới hạn số buổi họp. Trả một lần — dùng mãi mãi, kèm cập nhật miễn phí.",
+    price_btn:"Dùng thử miễn phí 14 ngày",
+    price_buy_link:"Đã dùng thử? Mua giấy phép — $49",
+    price_trial:"Dùng thử miễn phí 14 ngày · không cần giấy phép để bắt đầu",
+
+    cta_h2:"Đừng để thương vụ tiếp theo<br>thất bại vì <em>ngôn ngữ.</em>",
+    cta_p:"Mở laptop. Chọn ngôn ngữ. Xoay màn hình về phía họ. Nói. Trong vài giây, họ đang đọc lời bạn bằng ngôn ngữ của mình — và cuộc họp bạn đã nỗ lực chuẩn bị cuối cùng diễn ra theo cách bạn mong muốn.",
+    cta_btn:"Dùng thử miễn phí 14 ngày",
+    cta_after:"Sau dùng thử: $49 một lần · <a href=\"https://thelayersapp.gumroad.com/l/ltalk\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:var(--green2);text-decoration:none;\">Mua giấy phép</a>"
+  }
+};
+
+function setLang(lang) {
+  var t = T[lang] || T['en'];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.classList.toggle('active', btn.getAttribute('onclick') === "setLang('" + lang + "')");
+  });
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  try { localStorage.setItem('soho_lang', lang); } catch(e) {}
+}
+
+(function() {
+  var saved; try { saved = localStorage.getItem('soho_lang'); } catch(e) {}
+  var bl = (navigator.language || '').toLowerCase();
+  var lang = saved || (bl.startsWith('ja') ? 'ja' : bl.startsWith('zh') ? 'zh' : bl.startsWith('vi') ? 'vi' : 'en');
+  document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+  setLang('ja');
+})();
+</script>
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Lang tags hover scale
+document.querySelectorAll('.lang-tag').forEach(tag => {
+  tag.addEventListener('mouseenter', () => { tag.style.transform = 'scale(1.05)'; });
+  tag.addEventListener('mouseleave', () => { tag.style.transform = ''; });
+});
+
+// Talk button pulse
+const talkBtns = document.querySelectorAll('.mock-talk-btn');
+talkBtns.forEach(btn => {
+  setInterval(() => {
+    btn.style.boxShadow = '0 0 14px rgba(255,221,0,0.6)';
+    setTimeout(() => { btn.style.boxShadow = ''; }, 700);
+  }, 3000);
+});
+</script>
+</body>
+</html>
