@@ -160,6 +160,47 @@ nav {
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--text); }
 .nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+/* ── Products dropdown ── */
+.nav-dropdown { position: relative; }
+.nav-dropdown-btn {
+  background: none; border: none; cursor: pointer; padding: 0;
+  color: var(--muted); font-size: 0.875rem; font-weight: 500;
+  font-family: 'Outfit', sans-serif; display: flex; align-items: center; gap: 5px;
+  transition: color 0.2s;
+}
+.nav-dropdown-btn:hover { color: var(--text); }
+.nav-dropdown-btn svg { transition: transform 0.2s; }
+.nav-dropdown:hover .nav-dropdown-btn svg,
+.nav-dropdown.open .nav-dropdown-btn svg { transform: rotate(180deg); }
+.nav-dropdown-panel {
+  position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
+  background: #131318; border: 1px solid rgba(91,127,255,0.2);
+  border-radius: 16px; padding: 8px; min-width: 280px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 200;
+  opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.nav-dropdown:hover .nav-dropdown-panel,
+.nav-dropdown.open .nav-dropdown-panel {
+  opacity: 1; pointer-events: auto; transform: translateX(-50%) translateY(0);
+}
+.ndp-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 14px; border-radius: 10px; text-decoration: none;
+  transition: background 0.15s; color: var(--text);
+}
+.ndp-item:hover { background: rgba(91,127,255,0.08); }
+.ndp-icon {
+  width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 17px;
+}
+.ndp-icon.blue   { background: rgba(91,127,255,0.15);  border: 1px solid rgba(91,127,255,0.25); }
+.ndp-icon.green  { background: rgba(46,213,115,0.12);  border: 1px solid rgba(46,213,115,0.25); }
+.ndp-icon.purple { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25); }
+.ndp-name { font-size: 0.9rem; font-weight: 600; line-height: 1.2; }
+.ndp-sub  { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+.ndp-divider { height: 1px; background: rgba(91,127,255,0.1); margin: 6px 8px; }
+.ndp-free { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: var(--green); background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.25); padding: 1px 7px; border-radius: 100px; margin-left: auto; flex-shrink: 0; }
 .lang-select-wrap { position: relative; display: flex; align-items: center; margin-right: 8px; }
 .lang-select-wrap::before { content: '🌐'; position: absolute; left: 10px; font-size: 0.75rem; pointer-events: none; z-index: 1; }
 .lang-select {
@@ -435,7 +476,7 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 .footer-links a:hover { color: var(--text); }
 .footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
 @media (max-width: 1000px) { .pricing-top { grid-template-columns: 1fr 1fr; } .products-grid { grid-template-columns: 1fr 1fr; } .price-school-body { grid-template-columns: 1fr; } .price-school-header { flex-direction: column; align-items: flex-start; } .price-school-header-right { align-items: flex-start; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } .sync-layout { grid-template-columns: 1fr; } .problem-grid { grid-template-columns: 1fr; } nav { padding: 0 20px; } .nav-links a:not(.nav-cta):not(:last-child) { display: none; } .wrap, .band { padding: 60px 24px; } }
+@media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } .sync-layout { grid-template-columns: 1fr; } .problem-grid { grid-template-columns: 1fr; } nav { padding: 0 20px; } .nav-links a:not(.nav-cta):not(:last-child) { display: none; } .nav-dropdown { display: flex; } .wrap, .band { padding: 60px 24px; } }
 @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } .student-grid { grid-template-columns: 1fr; } .pricing-top { grid-template-columns: 1fr; } .who-grid { grid-template-columns: 1fr; } .price-school-feats { grid-template-columns: 1fr; } }
 </style>
 <script type="application/ld+json">
@@ -482,7 +523,32 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     </div>
     <a href="#features" data-i18n="nav_features">Features</a>
     <a href="#students" data-i18n="nav_students">For Students</a>
-    <a href="soho.html" style="color:#52e88a;">Layers Talk</a>
+    <div class="nav-dropdown" id="nav-products-dd">
+      <button class="nav-dropdown-btn" id="nav-products-btn" aria-haspopup="true" aria-expanded="false">
+        Products
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="nav-dropdown-panel" role="menu">
+        <a href="index.html" class="ndp-item" role="menuitem">
+          <div class="ndp-icon blue">🏫</div>
+          <div><div class="ndp-name">Layers</div><div class="ndp-sub">Classroom toolbar · Windows &amp; Mac</div></div>
+        </a>
+        <a href="soho.html" class="ndp-item" role="menuitem">
+          <div class="ndp-icon green">🗣</div>
+          <div><div class="ndp-name">Layers Talk</div><div class="ndp-sub">Face-to-face translator · Windows &amp; Mac</div></div>
+        </a>
+        <a href="guard.html" class="ndp-item" role="menuitem">
+          <div class="ndp-icon purple">🛡</div>
+          <div><div class="ndp-name">Layers Guard</div><div class="ndp-sub">Parental web filter · Chrome &amp; Edge</div></div>
+        </a>
+        <div class="ndp-divider"></div>
+        <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer" class="ndp-item" role="menuitem">
+          <div class="ndp-icon blue">🎓</div>
+          <div><div class="ndp-name">Layers Student</div><div class="ndp-sub">Study toolkit · Chrome extension</div></div>
+          <span class="ndp-free">FREE</span>
+        </a>
+      </div>
+    </div>
     <a href="contact.html" data-i18n="footer_contact">Contact</a>
     <a href="blog/" data-i18n="nav_blog">Blog</a>
     <a href="#pricing" class="nav-cta" data-i18n="nav_cta">Get Started</a>
@@ -881,7 +947,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     <div class="footer-links">
       <a href="#features" data-i18n="nav_features">Features</a>
       <a href="#students" data-i18n="nav_students">For Students</a>
-      <a href="soho.html" style="color:#52e88a;">Layers Talk</a>
+      <a href="soho.html" style="color:#2ed573;">Layers Talk</a>
+      <a href="guard.html" style="color:#a78bfa;">Layers Guard</a>
       <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
       <a href="contact.html" data-i18n="footer_contact">Contact</a>
       <a href="blog/" data-i18n="nav_blog">Blog</a>
@@ -1408,6 +1475,23 @@ var obs = new IntersectionObserver(function(entries) {
   entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
+
+// PRODUCTS DROPDOWN — click toggle (touch/mobile support)
+(function() {
+  var dd  = document.getElementById('nav-products-dd');
+  var btn = document.getElementById('nav-products-btn');
+  if (!dd || !btn) return;
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var open = dd.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', function() {
+    dd.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  });
+  dd.addEventListener('click', function(e) { e.stopPropagation(); });
+})();
 </script>
 
 <!-- ===================== LAYERS AI CHAT WIDGET ===================== -->

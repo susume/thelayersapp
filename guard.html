@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers Guard — Free Parental Web Filter for Chrome &amp; Edge</title>
+<meta name="description" content="Block websites, set internet schedules, and cut off internet access at bedtime. Free parental controls extension for Chrome and Microsoft Edge. Built by a parent and teacher. Works in incognito.">
+<meta name="theme-color" content="#a78bfa">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thelayersapp.com/guard.html">
+<meta property="og:title" content="Layers Guard — Free Parental Web Filter for Chrome &amp; Edge">
+<meta property="og:description" content="Block any website instantly. Set bedtime internet curfews. Lock settings with a PIN your children can't touch. Free for Chrome and Edge.">
+<meta property="og:image" content="https://thelayersapp.com/og-image-guard.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Layers Guard — Free Parental Web Filter">
+<meta name="twitter:description" content="Block sites, set schedules, cut internet at bedtime. Free Chrome &amp; Edge extension. Built by a teacher and father of four.">
+<meta name="twitter:image" content="https://thelayersapp.com/og-image-guard.png">
+<link rel="canonical" href="https://thelayersapp.com/guard.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Layers Guard",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Chrome, Microsoft Edge",
+  "description": "A free browser extension for parents that blocks websites by domain, enforces internet schedules, and cuts all internet access during set hours. PIN-protected so children cannot change settings. Works in incognito mode.",
+  "url": "https://thelayersapp.com/guard.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "description": "Free forever"
+  },
+  "featureList": [
+    "Block any website by domain name",
+    "Schedule when specific sites are blocked",
+    "Lockout mode — cut all internet at bedtime",
+    "PIN-protected parent settings",
+    "Works in incognito mode",
+    "No account or subscription required"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Peter Hoang",
+    "jobTitle": "Teacher, Father of four",
+    "address": { "@type": "PostalAddress", "addressCountry": "JP" }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Layers",
+    "url": "https://thelayersapp.com"
+  },
+  "inLanguage": ["en", "ja", "zh-CN", "vi"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens ──────────────────────────────────────────────── */
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+  /* Guard-specific */
+  --guard:   #a78bfa;
+  --guard2:  #c4b5fd;
+  --gborder: rgba(167,139,250,0.2);
+  --glow:    rgba(167,139,250,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(167,139,250,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,139,250,0.025) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div { position: relative; z-index: 1; }
+
+/* ── Nav ────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.94); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-brand-text { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text); }
+.brand-dot {
+  width: 10px; height: 10px; background: var(--guard);
+  border-radius: 50%; box-shadow: 0 0 12px var(--guard);
+  animation: gpulse 2s ease-in-out infinite;
+}
+@keyframes gpulse {
+  0%,100% { box-shadow: 0 0 8px var(--guard); }
+  50%      { box-shadow: 0 0 24px var(--guard), 0 0 48px rgba(167,139,250,0.3); }
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-back { color: var(--muted) !important; font-size: 0.8rem !important; }
+.nav-back:hover { color: var(--guard) !important; }
+.nav-cta {
+  background: var(--guard) !important; color: #0d0d12 !important;
+  padding: 8px 20px; border-radius: 100px; font-weight: 700 !important;
+  transition: all 0.2s; box-shadow: 0 0 20px rgba(167,139,250,0.25);
+}
+.nav-cta:hover { box-shadow: 0 0 36px rgba(167,139,250,0.5) !important; transform: translateY(-1px); }
+
+/* ── Animations ─────────────────────────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.wrap   { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+.band   { padding: 100px 40px; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.band-inner { max-width: 1200px; margin: 0 auto; }
+.center { text-align: center; }
+.label-tag {
+  display: inline-block; font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; font-weight: 500; color: var(--guard);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.85;
+}
+h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
+h2 em { font-style: italic; color: var(--guard); }
+.intro { color: var(--muted); font-size: 1.05rem; margin-top: 16px; font-weight: 300; line-height: 1.7; }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero-glow {
+  position: fixed; width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 68%);
+  top: 40%; left: 30%; transform: translate(-50%,-50%); pointer-events: none;
+}
+.hero-section {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 120px 40px 80px; text-align: center;
+}
+.hero-inner { max-width: 760px; animation: fadeUp 0.6s ease both; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3);
+  padding: 6px 18px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; color: var(--guard2);
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.hero h1 em { font-style: italic; color: var(--guard); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
+  font-weight: 300; line-height: 1.7; max-width: 580px; margin: 0 auto 40px;
+}
+
+/* ── Store buttons ──────────────────────────────────────────────── */
+.store-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+.store-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 24px; border-radius: 14px;
+  text-decoration: none; transition: all 0.2s; border: 1px solid transparent;
+  min-width: 210px;
+}
+.store-btn-chrome {
+  background: #ffffff; color: #0d0d12;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+.store-btn-chrome:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+.store-btn-edge {
+  background: #0078d4; color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0,120,212,0.25);
+}
+.store-btn-edge:hover { transform: translateY(-2px); background: #106ebe; box-shadow: 0 8px 32px rgba(0,120,212,0.4); }
+.store-btn-icon { flex-shrink: 0; width: 28px; height: 28px; }
+.store-btn-text { text-align: left; }
+.store-btn-sub { display: block; font-size: 0.65rem; font-weight: 500; opacity: 0.7; letter-spacing: 0.04em; }
+.store-btn-name { display: block; font-size: 0.95rem; font-weight: 700; line-height: 1.2; }
+.hero-note { font-size: 0.82rem; color: var(--dim); }
+.hero-note span { color: var(--guard); font-weight: 600; }
+
+/* ── Features grid ──────────────────────────────────────────────── */
+.features-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 20px; margin-top: 56px;
+}
+.feat-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px 28px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.feat-card:hover { border-color: var(--gborder); transform: translateY(-3px); }
+.feat-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--glow); border: 1px solid var(--gborder);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+}
+.feat-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.feat-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; font-weight: 300; }
+.feat-pill {
+  display: inline-block; margin-top: 14px;
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25);
+  color: var(--guard2); font-size: 0.7rem; font-weight: 700;
+  padding: 3px 12px; border-radius: 100px; letter-spacing: 0.06em;
+}
+
+/* ── Steps ──────────────────────────────────────────────────────── */
+.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 56px; }
+.step-card { text-align: center; padding: 16px; }
+.step-num {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--glow); border: 1px solid var(--gborder);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 700;
+  color: var(--guard); margin: 0 auto 16px;
+}
+.step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.step-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; font-weight: 300; }
+.step-arrow { display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 1.4rem; padding-top: 32px; }
+
+/* ── Story band ─────────────────────────────────────────────────── */
+.story-card {
+  background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(26,26,36,0.9) 60%);
+  border: 1px solid rgba(167,139,250,0.2); border-radius: 24px;
+  padding: 52px 56px; position: relative; overflow: hidden; max-width: 780px; margin: 0 auto;
+}
+.story-card::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.story-quote {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  line-height: 1.5; font-style: italic; margin-bottom: 28px; color: var(--text);
+}
+.story-quote em { color: var(--guard); font-style: normal; }
+.story-sign { font-size: 0.92rem; color: var(--muted); font-weight: 500; }
+.story-sign strong { color: var(--text); }
+
+/* ── Final CTA ──────────────────────────────────────────────────── */
+.cta-section { padding: 100px 40px; text-align: center; }
+.cta-inner { max-width: 640px; margin: 0 auto; }
+.cta-section h2 { margin-bottom: 16px; }
+.cta-section p { color: var(--muted); font-size: 1rem; font-weight: 300; margin-bottom: 40px; line-height: 1.7; }
+.platform-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+.platform-pill {
+  background: var(--pill); border: 1px solid var(--border);
+  color: var(--muted); font-size: 0.75rem; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer { padding: 40px; border-top: 1px solid var(--border); }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta):not(.nav-back) { display: none; }
+  .wrap, .band, .cta-section { padding: 60px 24px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .step-arrow { display: none; }
+  .story-card { padding: 36px 28px; }
+  .store-btns { flex-direction: column; align-items: center; }
+  .store-btn { width: 100%; max-width: 280px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-glow"></div>
+
+<!-- ── Nav ─────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="/" class="nav-brand">
+    <div class="brand-dot"></div>
+    <span class="nav-brand-text">Layers</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html" class="nav-back">← All Products</a>
+    <!-- TODO: replace # with Chrome Web Store URL after publishing -->
+    <a href="#" class="nav-cta">Add to Chrome — Free</a>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────────── -->
+<section class="hero-section">
+  <div class="hero-inner">
+    <div class="hero-badge">🛡 For Parents &amp; Families</div>
+    <h1>A safer internet<br>for your <em>children.</em></h1>
+    <p class="hero-sub">
+      Block distracting and harmful websites. Set bedtime internet curfews.
+      Lock your settings with a PIN your children can't touch.
+      Free to install — no account, no subscription.
+    </p>
+
+    <div class="store-btns">
+      <!-- TODO: replace href="#" with Chrome Web Store URL after publishing -->
+      <a href="#" class="store-btn store-btn-chrome" rel="noopener">
+        <svg class="store-btn-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="14" cy="14" r="6.5" fill="#4285F4"/>
+          <circle cx="14" cy="14" r="4" fill="white"/>
+          <path d="M14 7.5 H26" stroke="#EA4335" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M14 7.5 L8 18" stroke="#FBBC05" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M8 18 H20" stroke="#34A853" stroke-width="2.8" stroke-linecap="round"/>
+        </svg>
+        <div class="store-btn-text">
+          <span class="store-btn-sub">Available on the</span>
+          <span class="store-btn-name">Chrome Web Store</span>
+        </div>
+      </a>
+      <!-- TODO: replace href="#" with Microsoft Edge Add-ons URL after publishing -->
+      <a href="#" class="store-btn store-btn-edge" rel="noopener">
+        <svg class="store-btn-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 18C4 18 6 24 14 24C20 24 24 20 24 14C24 9 21 6 17 5C14 4.5 10 5.5 8 8C6 10.5 6 14 8 16C10 18 14 18 16 15" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M4 14 C6 10 10 8 14 10 C18 12 18 16 16 17 C12 19 8 17 8 14" fill="white" fill-opacity="0.2"/>
+        </svg>
+        <div class="store-btn-text">
+          <span class="store-btn-sub">Get it from</span>
+          <span class="store-btn-name">Microsoft Edge Add-ons</span>
+        </div>
+      </a>
+    </div>
+    <p class="hero-note">Free forever · <span>Works in incognito mode</span> · No sign-up needed</p>
+  </div>
+</section>
+
+<!-- ── Features ────────────────────────────────────────────────────── -->
+<div class="band">
+  <div class="band-inner">
+    <div class="reveal center">
+      <span class="label-tag">// What it does</span>
+      <h2>Simple controls.<br><em>Real protection.</em></h2>
+      <p class="intro" style="max-width:560px;margin:16px auto 0;">Four tools that cover how children actually try to get around limits — all managed from one PIN-protected panel.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">🚫</div>
+        <h3>Block any website</h3>
+        <p>Type a domain name and it's blocked immediately — every page on that site, on every tab. Works on YouTube, TikTok, gaming sites, or any URL you choose.</p>
+        <span class="feat-pill">Instant · No restart needed</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⏰</div>
+        <h3>Schedule site blocks</h3>
+        <p>Block YouTube only on school nights. Allow gaming sites on weekends but not after dinner. Set a time window once — Layers Guard enforces it automatically every day.</p>
+        <span class="feat-pill">Daily schedule · Overnight ranges</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌐</div>
+        <h3>Lockout mode</h3>
+        <p>Cut all internet access between set hours. No exceptions — every website is blocked during lockout time. Perfect for bedtime, study sessions, or family meals.</p>
+        <span class="feat-pill">Blocks all sites at once</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔑</div>
+        <h3>PIN-protected settings</h3>
+        <p>Your settings panel requires a 4-digit PIN every time it's opened. Children cannot view, change, or remove blocks. Works even if they know the extension is installed.</p>
+        <span class="feat-pill">Parent access only</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── How it works ─────────────────────────────────────────────────── -->
+<section class="wrap">
+  <div class="reveal center">
+    <span class="label-tag">// Setup in minutes</span>
+    <h2>Three steps.<br><em>That's it.</em></h2>
+  </div>
+  <div class="steps-grid reveal">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <h3>Install free</h3>
+      <p>Add Layers Guard from the Chrome Web Store or Microsoft Edge Add-ons. No account needed. No credit card.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <h3>Set your PIN and add sites</h3>
+      <p>Choose a 4-digit PIN only you know. Type in the domains you want to block — like youtube.com or roblox.com. Optional: set time schedules.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <h3>Done — it runs itself</h3>
+      <p>Blocks are active immediately and survive browser restarts. Schedules enforce automatically every day without any action from you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Final CTA ──────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <span class="label-tag">// Free for every family</span>
+    <h2>Protect your children<br><em>today.</em></h2>
+    <p>No subscription. No account. No personal data collected.<br>Install in 30 seconds and it works immediately.</p>
+    <div class="store-btns">
+      <a href="#" class="store-btn store-btn-chrome" rel="noopener">
+        <svg class="store-btn-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="14" cy="14" r="6.5" fill="#4285F4"/>
+          <circle cx="14" cy="14" r="4" fill="white"/>
+          <path d="M14 7.5 H26" stroke="#EA4335" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M14 7.5 L8 18" stroke="#FBBC05" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M8 18 H20" stroke="#34A853" stroke-width="2.8" stroke-linecap="round"/>
+        </svg>
+        <div class="store-btn-text">
+          <span class="store-btn-sub">Available on the</span>
+          <span class="store-btn-name">Chrome Web Store</span>
+        </div>
+      </a>
+      <a href="#" class="store-btn store-btn-edge" rel="noopener">
+        <svg class="store-btn-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M4 18C4 18 6 24 14 24C20 24 24 20 24 14C24 9 21 6 17 5C14 4.5 10 5.5 8 8C6 10.5 6 14 8 16C10 18 14 18 16 15" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <path d="M4 14 C6 10 10 8 14 10 C18 12 18 16 16 17 C12 19 8 17 8 14" fill="white" fill-opacity="0.2"/>
+        </svg>
+        <div class="store-btn-text">
+          <span class="store-btn-sub">Get it from</span>
+          <span class="store-btn-name">Microsoft Edge Add-ons</span>
+        </div>
+      </a>
+    </div>
+    <div class="platform-pills">
+      <span class="platform-pill">✓ Chrome</span>
+      <span class="platform-pill">✓ Microsoft Edge</span>
+      <span class="platform-pill">✓ Incognito blocking</span>
+      <span class="platform-pill">✓ Free forever</span>
+      <span class="platform-pill">✓ No data collected</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">Protect · Teach · Translate</span></div>
+    <div class="footer-links">
+      <a href="index.html">Layers Classroom</a>
+      <a href="soho.html" style="color:#52e88a;">Layers Talk</a>
+      <a href="guard.html" style="color:var(--guard);">Layers Guard</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+var revealEls = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(function(el) { io.observe(el); });
+</script>
+</body>
+</html>
