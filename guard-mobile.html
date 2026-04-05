@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers Guard Mobile — Free Parental Controls for Android</title>
+<meta name="description" content="Protect your child's Android phone with VPN-based site blocking, bedtime lockout, chat monitoring, and on-device AI — all free, no account needed. Built by a teacher and father of four.">
+<meta name="theme-color" content="#a78bfa">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thelayersapp.com/guard-mobile.html">
+<meta property="og:title" content="Layers Guard Mobile — Free Parental Controls for Android">
+<meta property="og:description" content="VPN-based site blocking, bedtime lockout, chat monitoring with on-device AI. Free Android app for parents. No account, no subscription.">
+<meta property="og:image" content="https://thelayersapp.com/og-image-guard-mobile.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Layers Guard Mobile — Free Parental Controls for Android">
+<meta name="twitter:description" content="Block sites, lock internet at bedtime, monitor chats with on-device AI. Free Android app built by a teacher and father of four.">
+<meta name="twitter:image" content="https://thelayersapp.com/og-image-guard-mobile.png">
+<link rel="canonical" href="https://thelayersapp.com/guard-mobile.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Layers Guard Mobile",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Android",
+  "description": "A free Android app for parents that blocks websites via VPN-based DNS filtering, enforces bedtime internet lockouts, monitors chat content with on-device AI, and alerts parents to harmful content. PIN-protected, no cloud, no account needed.",
+  "url": "https://thelayersapp.com/guard-mobile.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/PreOrder",
+    "description": "Free forever — coming soon to Google Play"
+  },
+  "featureList": [
+    "VPN-based DNS filtering to block websites at the network level",
+    "Custom blocked sites list with schedule picker",
+    "Lockout mode — cut all internet at bedtime",
+    "Chat and content monitoring with accessibility service",
+    "On-device TFLite toxicity classifier — no cloud, no data sent",
+    "Color-coded alert cards for parents",
+    "PIN-protected parent settings",
+    "Auto-restart VPN after device reboot",
+    "Multi-language: English, Japanese, Chinese, Vietnamese"
+  ],
+  "author": {
+    "@type": "Person",
+    "name": "Peter Hoang",
+    "jobTitle": "Teacher, Father of four",
+    "address": { "@type": "PostalAddress", "addressCountry": "JP" }
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Layers",
+    "url": "https://thelayersapp.com"
+  },
+  "inLanguage": ["en", "ja", "zh-CN", "vi"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens ──────────────────────────────────────────────── */
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #5b7fff;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(91,127,255,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+  /* Guard-specific */
+  --guard:   #a78bfa;
+  --guard2:  #c4b5fd;
+  --gborder: rgba(167,139,250,0.2);
+  --glow:    rgba(167,139,250,0.12);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(167,139,250,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,139,250,0.025) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div { position: relative; z-index: 1; }
+
+/* ── Nav ────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.94); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-brand-text { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text); }
+.brand-dot {
+  width: 10px; height: 10px; background: var(--guard);
+  border-radius: 50%; box-shadow: 0 0 12px var(--guard);
+  animation: gpulse 2s ease-in-out infinite;
+}
+@keyframes gpulse {
+  0%,100% { box-shadow: 0 0 8px var(--guard); }
+  50%      { box-shadow: 0 0 24px var(--guard), 0 0 48px rgba(167,139,250,0.3); }
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-back { color: var(--muted) !important; font-size: 0.8rem !important; }
+.nav-back:hover { color: var(--guard) !important; }
+.nav-cta-disabled {
+  background: var(--pill) !important; color: var(--muted) !important;
+  padding: 8px 20px; border-radius: 100px; font-weight: 700 !important;
+  cursor: default; border: 1px solid var(--border);
+  font-size: 0.875rem;
+}
+
+/* ── Animations ─────────────────────────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Layout ─────────────────────────────────────────────────────── */
+.wrap   { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+.band   { padding: 100px 40px; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.band-inner { max-width: 1200px; margin: 0 auto; }
+.center { text-align: center; }
+.label-tag {
+  display: inline-block; font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; font-weight: 500; color: var(--guard);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.85;
+}
+h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.1; }
+h2 em { font-style: italic; color: var(--guard); }
+.intro { color: var(--muted); font-size: 1.05rem; margin-top: 16px; font-weight: 300; line-height: 1.7; }
+
+/* ── Hero ───────────────────────────────────────────────────────── */
+.hero-glow {
+  position: fixed; width: 900px; height: 900px;
+  background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 68%);
+  top: 40%; left: 30%; transform: translate(-50%,-50%); pointer-events: none;
+}
+.hero-section {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  padding: 120px 40px 80px; text-align: center;
+}
+.hero-inner { max-width: 760px; animation: fadeUp 0.6s ease both; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3);
+  padding: 6px 18px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; color: var(--guard2);
+  letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
+}
+.hero h1 em { font-style: italic; color: var(--guard); }
+.hero-sub {
+  font-size: clamp(1rem, 2vw, 1.2rem); color: var(--muted);
+  font-weight: 300; line-height: 1.7; max-width: 580px; margin: 0 auto 40px;
+}
+
+/* ── Store buttons ──────────────────────────────────────────────── */
+.store-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+.store-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 24px; border-radius: 14px;
+  text-decoration: none; transition: all 0.2s; border: 1px solid transparent;
+  min-width: 210px;
+}
+.store-btn-play {
+  background: rgba(167,139,250,0.12); color: #ffffff;
+  border: 1px solid rgba(167,139,250,0.35);
+  box-shadow: 0 4px 20px rgba(167,139,250,0.15);
+}
+.store-btn-play:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(167,139,250,0.3); border-color: var(--guard); }
+.store-btn-icon { flex-shrink: 0; width: 28px; height: 28px; }
+.store-btn-text { text-align: left; }
+.store-btn-sub { display: block; font-size: 0.65rem; font-weight: 500; opacity: 0.7; letter-spacing: 0.04em; }
+.store-btn-name { display: block; font-size: 0.95rem; font-weight: 700; line-height: 1.2; }
+.hero-note { font-size: 0.82rem; color: var(--dim); }
+.hero-note span { color: var(--guard); font-weight: 600; }
+
+/* ── Features grid ──────────────────────────────────────────────── */
+.features-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 20px; margin-top: 56px;
+}
+.feat-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px 28px;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.feat-card:hover { border-color: var(--gborder); transform: translateY(-3px); }
+.feat-icon {
+  width: 48px; height: 48px; border-radius: 12px;
+  background: var(--glow); border: 1px solid var(--gborder);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+}
+.feat-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+.feat-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; font-weight: 300; }
+.feat-pill {
+  display: inline-block; margin-top: 14px;
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25);
+  color: var(--guard2); font-size: 0.7rem; font-weight: 700;
+  padding: 3px 12px; border-radius: 100px; letter-spacing: 0.06em;
+}
+
+/* ── Steps ──────────────────────────────────────────────────────── */
+.steps-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 56px; }
+.step-card { text-align: center; padding: 16px; }
+.step-num {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--glow); border: 1px solid var(--gborder);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 1rem; font-weight: 700;
+  color: var(--guard); margin: 0 auto 16px;
+}
+.step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+.step-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; font-weight: 300; }
+
+/* ── Story band ─────────────────────────────────────────────────── */
+.story-card {
+  background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(26,26,36,0.9) 60%);
+  border: 1px solid rgba(167,139,250,0.2); border-radius: 24px;
+  padding: 52px 56px; position: relative; overflow: hidden; max-width: 780px; margin: 0 auto;
+}
+.story-card::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.story-quote {
+  font-family: 'DM Serif Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+  line-height: 1.5; font-style: italic; margin-bottom: 28px; color: var(--text);
+}
+.story-quote em { color: var(--guard); font-style: normal; }
+.story-sign { font-size: 0.92rem; color: var(--muted); font-weight: 500; }
+.story-sign strong { color: var(--text); }
+
+/* ── Privacy section ───────────────────────────────────────────── */
+.privacy-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-top: 56px;
+}
+.privacy-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 20px; padding: 32px 28px; text-align: center;
+  transition: border-color 0.25s, transform 0.25s;
+}
+.privacy-card:hover { border-color: var(--gborder); transform: translateY(-3px); }
+.privacy-icon {
+  font-size: 32px; margin-bottom: 16px;
+}
+.privacy-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+.privacy-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; font-weight: 300; }
+
+/* ── FAQ ────────────────────────────────────────────────────────── */
+.faq-list { max-width: 720px; margin: 48px auto 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%; background: none; border: none; color: var(--text);
+  font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 600;
+  text-align: left; padding: 24px 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.faq-q:hover { color: var(--guard); }
+.faq-arrow {
+  flex-shrink: 0; width: 20px; height: 20px; transition: transform 0.25s;
+  color: var(--dim);
+}
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.35s ease;
+  color: var(--muted); font-size: 0.92rem; line-height: 1.7; font-weight: 300;
+}
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: 24px; }
+
+/* ── Final CTA ──────────────────────────────────────────────────── */
+.cta-section { padding: 100px 40px; text-align: center; }
+.cta-inner { max-width: 640px; margin: 0 auto; }
+.cta-section h2 { margin-bottom: 16px; }
+.cta-section p { color: var(--muted); font-size: 1rem; font-weight: 300; margin-bottom: 40px; line-height: 1.7; }
+.platform-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+.platform-pill {
+  background: var(--pill); border: 1px solid var(--border);
+  color: var(--muted); font-size: 0.75rem; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+footer { padding: 40px; border-top: 1px solid var(--border); }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta-disabled):not(.nav-back) { display: none; }
+  .wrap, .band, .cta-section { padding: 60px 24px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .privacy-grid { grid-template-columns: 1fr; }
+  .story-card { padding: 36px 28px; }
+  .store-btns { flex-direction: column; align-items: center; }
+  .store-btn { width: 100%; max-width: 280px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-glow"></div>
+
+<!-- ── Nav ─────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="guard-mobile.html" class="nav-brand">
+    <div class="brand-dot"></div>
+    <span class="nav-brand-text">Layers Guard Mobile</span>
+  </a>
+  <div class="nav-links">
+    <a href="guard.html" class="nav-back">← Layers Guard (Chrome)</a>
+    <a href="index.html" class="nav-back">← Home</a>
+    <span class="nav-cta-disabled">Coming Soon</span>
+  </div>
+</nav>
+
+<!-- ── Hero ────────────────────────────────────────────────────────── -->
+<section class="hero-section hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📱 Android App for Parents</div>
+    <h1>Guard their phone.<br>Not their <em>privacy.</em></h1>
+    <p class="hero-sub">
+      Block harmful websites at the network level. Cut all internet at bedtime.
+      Monitor chat content with on-device AI that never sends data to the cloud.
+      Free forever — no account, no subscription.
+    </p>
+
+    <div class="store-btns">
+      <a href="#" class="store-btn store-btn-play" onclick="return false;">
+        <svg class="store-btn-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 3.5L22 14L6 24.5V3.5Z" fill="#a78bfa" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M6 3.5L16.5 14L6 24.5" fill="#c4b5fd"/>
+        </svg>
+        <div class="store-btn-text">
+          <span class="store-btn-sub">Coming soon to</span>
+          <span class="store-btn-name">Google Play</span>
+        </div>
+      </a>
+    </div>
+    <p class="hero-note">Free forever · <span>On-device AI — no cloud</span> · No sign-up needed</p>
+  </div>
+</section>
+
+<!-- ── Features ────────────────────────────────────────────────────── -->
+<div class="band">
+  <div class="band-inner">
+    <div class="reveal center">
+      <span class="label-tag">// What it does</span>
+      <h2>Phone-level protection.<br><em>Parent-level control.</em></h2>
+      <p class="intro" style="max-width:580px;margin:16px auto 0;">Eight tools that protect your child's Android phone — from the network layer to the screen they're reading. All managed behind a PIN only you know.</p>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feat-card">
+        <div class="feat-icon">🛡</div>
+        <h3>VPN-based site blocking</h3>
+        <p>Blocks websites at the DNS level using a local VPN — not a browser plugin your child can uninstall. Works across every app and every browser on the phone.</p>
+        <span class="feat-pill">Network-level · All apps covered</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⏰</div>
+        <h3>Scheduled blocks</h3>
+        <p>Block certain websites only during school hours or homework time. Allow them on weekends. Set a schedule once and it enforces automatically every day.</p>
+        <span class="feat-pill">Per-site schedules</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌙</div>
+        <h3>Bedtime lockout</h3>
+        <p>Cut all internet access during set hours. No exceptions — every website and every app loses connectivity during the lockout window. Perfect for bedtime.</p>
+        <span class="feat-pill">Full internet cutoff</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔍</div>
+        <h3>Chat monitoring</h3>
+        <p>Uses Android accessibility services to read on-screen text and flag harmful content in messaging apps. Parents review color-coded alert cards — red for urgent, yellow for caution.</p>
+        <span class="feat-pill">Real-time · All messaging apps</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🧠</div>
+        <h3>On-device AI classifier</h3>
+        <p>A TensorFlow Lite toxicity model runs entirely on the phone. It classifies harmful content without sending a single byte to the cloud. Your family's data stays private.</p>
+        <span class="feat-pill">TFLite · Zero cloud dependency</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔑</div>
+        <h3>PIN-protected settings</h3>
+        <p>A 4-digit PIN is required on every app launch. Children cannot view, change, or disable any protection. Even if they know the app is installed, they cannot get in.</p>
+        <span class="feat-pill">Parent access only</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔄</div>
+        <h3>Auto-restart after reboot</h3>
+        <p>The VPN protection restarts automatically when the phone reboots. No need to re-open the app — protection is always on, even after updates or battery drain restarts.</p>
+        <span class="feat-pill">Boot receiver · Always-on</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🌐</div>
+        <h3>Multi-language</h3>
+        <p>Full interface in English, Japanese, Chinese, and Vietnamese. Built for international families — switch languages instantly from the settings screen.</p>
+        <span class="feat-pill">EN · JA · ZH · VI</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── How it works ─────────────────────────────────────────────────── -->
+<section class="wrap">
+  <div class="reveal center">
+    <span class="label-tag">// Setup in minutes</span>
+    <h2>Four steps to<br><em>full protection.</em></h2>
+  </div>
+  <div class="steps-grid reveal">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <h3>Install the app</h3>
+      <p>Download Layers Guard Mobile from Google Play. No account to create, no email to enter, no credit card.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <h3>Set your PIN</h3>
+      <p>Choose a 4-digit PIN that only you know. This locks all settings behind parent-only access from the very first launch.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <h3>Enable VPN + Accessibility</h3>
+      <p>A guided setup wizard walks you through enabling the local VPN for site blocking and the accessibility service for chat monitoring.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <h3>Add sites and set schedules</h3>
+      <p>Type in domains to block, set time windows, and enable bedtime lockout. Protection is active immediately and survives reboots.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Built for your family ────────────────────────────────────────── -->
+<div class="band">
+  <div class="band-inner">
+    <div class="reveal center">
+      <span class="label-tag">// Built for your family</span>
+      <h2>A father's<br><em>solution.</em></h2>
+    </div>
+    <div class="story-card reveal" style="margin-top:48px;">
+      <p class="story-quote">
+        "I'm a teacher and a father of four in Japan. I built Layers Guard for Chrome to protect my students, but then I realized — my own children's phones needed the same protection. <em>So I built this app for them.</em> No subscription traps, no data harvesting. Just a parent protecting their kids."
+      </p>
+      <p class="story-sign"><strong>Peter Hoang</strong> — Teacher &amp; Father of four, Japan</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Privacy ──────────────────────────────────────────────────────── -->
+<section class="wrap">
+  <div class="reveal center">
+    <span class="label-tag">// Privacy first</span>
+    <h2>Everything stays<br><em>on the phone.</em></h2>
+    <p class="intro" style="max-width:560px;margin:16px auto 0;">No cloud servers. No accounts. No analytics. Every piece of data — blocked sites, schedules, alerts, AI classifications — lives on your child's device and nowhere else.</p>
+  </div>
+  <div class="privacy-grid reveal">
+    <div class="privacy-card">
+      <div class="privacy-icon">🔒</div>
+      <h3>No cloud</h3>
+      <p>The AI toxicity classifier runs entirely on-device using TensorFlow Lite. No text is ever sent to any server.</p>
+    </div>
+    <div class="privacy-card">
+      <div class="privacy-icon">👤</div>
+      <h3>No account</h3>
+      <p>No email, no password, no sign-up. Install the app, set a PIN, and you're done. We don't know who you are.</p>
+    </div>
+    <div class="privacy-card">
+      <div class="privacy-icon">🚫</div>
+      <h3>No tracking</h3>
+      <p>No analytics, no telemetry, no ad SDKs. The app does one thing — protect your child — and nothing else.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FAQ ──────────────────────────────────────────────────────────── -->
+<div class="band">
+  <div class="band-inner">
+    <div class="reveal center">
+      <span class="label-tag">// Questions</span>
+      <h2>Frequently <em>asked.</em></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          How does the VPN blocking work?
+          <svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7.5L10 12.5L15 7.5"/></svg>
+        </button>
+        <div class="faq-a">Layers Guard Mobile creates a local VPN on the device that intercepts DNS requests. When your child tries to visit a blocked site, the request is filtered before it ever leaves the phone. No data is routed through external servers — the VPN runs entirely on-device.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What is the accessibility service used for?
+          <svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7.5L10 12.5L15 7.5"/></svg>
+        </button>
+        <div class="faq-a">The accessibility service reads text that appears on screen — such as messages in chat apps — and runs it through the on-device AI classifier. If harmful content is detected, the app creates a color-coded alert card for parents to review. The service never sends any text off the device.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Can my child disable the protection?
+          <svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7.5L10 12.5L15 7.5"/></svg>
+        </button>
+        <div class="faq-a">All settings are locked behind a 4-digit PIN that only you know. The VPN automatically restarts after a device reboot. While a technically savvy child could force-stop the app from Android settings, the boot receiver will restart protection on the next reboot.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Does it work on iPhones?
+          <svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7.5L10 12.5L15 7.5"/></svg>
+        </button>
+        <div class="faq-a">Layers Guard Mobile is currently Android only. iOS does not allow third-party VPN-based DNS filtering or accessibility services in the same way. For Apple devices, consider using the Layers Guard Chrome extension on their computer.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is it really free? What's the catch?
+          <svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7.5L10 12.5L15 7.5"/></svg>
+        </button>
+        <div class="faq-a">There is no catch. Layers Guard Mobile is free, with no ads, no in-app purchases, and no subscription. It was built by a father who needed this tool for his own children. There is no business model — just a parent sharing a solution with other parents.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What languages are supported?
+          <svg class="faq-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 7.5L10 12.5L15 7.5"/></svg>
+        </button>
+        <div class="faq-a">The app interface is available in English, Japanese, Chinese, and Vietnamese. You can switch languages at any time from the settings screen.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Final CTA ──────────────────────────────────────────────────────── -->
+<section class="cta-section">
+  <div class="cta-inner reveal">
+    <span class="label-tag">// Free for every family</span>
+    <h2>Protect their phone.<br><em>Coming soon.</em></h2>
+    <p>No subscription. No account. No data collected.<br>Layers Guard Mobile will be available on Google Play soon.</p>
+    <div class="store-btns">
+      <a href="#" class="store-btn store-btn-play" onclick="return false;">
+        <svg class="store-btn-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M6 3.5L22 14L6 24.5V3.5Z" fill="#a78bfa" stroke="#a78bfa" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M6 3.5L16.5 14L6 24.5" fill="#c4b5fd"/>
+        </svg>
+        <div class="store-btn-text">
+          <span class="store-btn-sub">Coming soon to</span>
+          <span class="store-btn-name">Google Play</span>
+        </div>
+      </a>
+    </div>
+    <div class="platform-pills">
+      <span class="platform-pill">✓ Android</span>
+      <span class="platform-pill">✓ VPN-based blocking</span>
+      <span class="platform-pill">✓ On-device AI</span>
+      <span class="platform-pill">✓ Free forever</span>
+      <span class="platform-pill">✓ No data collected</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">Help children learn, focus &amp; stay safe online</span></div>
+    <div class="footer-links">
+      <a href="index.html">Layers Home</a>
+      <a href="guard.html" style="color:var(--guard);">Layers Guard</a>
+      <a href="guard-mobile.html" style="color:var(--guard);">Guard Mobile</a>
+      <a href="contact.html">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+var revealEls = document.querySelectorAll('.reveal');
+var io = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(function(el) { io.observe(el); });
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var item = btn.parentElement;
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); el.querySelector('.faq-q').setAttribute('aria-expanded', 'false'); });
+    if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+  });
+});
+</script>
+</body>
+</html>
