@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The World Is Finally Protecting Children Online — Here's What Parents Can Do Now — Layers Blog</title>
+<meta name="description" content="From Australia's under-16 social media ban to the UK's Online Safety Act, countries everywhere are waking up to the dangers children face online. A teacher and father of four in Japan shares why he built Layers Guard — and why parents can't wait for legislation.">
+<meta name="theme-color" content="#a78bfa">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://thelayersapp.com/blog/the-world-is-protecting-children-online.html">
+<meta property="og:title" content="The World Is Finally Protecting Children Online — Here's What Parents Can Do Now">
+<meta property="og:description" content="Countries everywhere are passing laws to protect children on social media. But parents can't wait for legislation — here's what you can do today.">
+<meta property="og:image" content="https://thelayersapp.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://thelayersapp.com/blog/the-world-is-protecting-children-online.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #0d0d12;
+  --bg2:     #131318;
+  --accent:  #a78bfa;
+  --accent2: #c4b5fd;
+  --green:   #2ed573;
+  --text:    #ffffff;
+  --muted:   #a0a0b0;
+  --dim:     #555568;
+  --border:  rgba(167,139,250,0.15);
+  --card-bg: rgba(26,26,36,0.8);
+  --pill:    #252530;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Outfit', sans-serif; font-weight: 400;
+  line-height: 1.6; overflow-x: hidden;
+}
+body::after {
+  content: ''; position: fixed; inset: 0;
+  background-image: linear-gradient(rgba(167,139,250,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(167,139,250,0.03) 1px, transparent 1px);
+  background-size: 60px 60px; pointer-events: none; z-index: 0;
+}
+section, nav, footer, div, main, article { position: relative; z-index: 1; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 100;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
+.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-cta { background: #5b7fff !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+
+/* ARTICLE HEADER */
+.article-header {
+  padding: 140px 40px 48px; max-width: 760px; margin: 0 auto;
+  background: linear-gradient(180deg, rgba(167,139,250,0.06) 0%, transparent 60%);
+}
+.back-link { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 0.82rem; font-weight: 600; text-decoration: none; margin-bottom: 28px; transition: gap 0.2s; }
+.back-link:hover { gap: 10px; }
+.article-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.article-date { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.article-tag {
+  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25);
+  color: var(--accent2); font-size: 0.68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.article-read { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.article-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.12;
+}
+.article-header h1 em { font-style: italic; color: var(--accent); }
+.article-header .subtitle {
+  color: var(--muted); font-size: 1.1rem; margin-top: 16px; font-weight: 300; line-height: 1.7;
+}
+
+/* ARTICLE BODY */
+.article-body {
+  max-width: 680px; margin: 0 auto; padding: 0 40px 60px;
+}
+.article-body p {
+  color: var(--muted); font-size: 1.02rem; line-height: 1.9; font-weight: 300; margin-bottom: 24px;
+}
+.article-body p strong { color: var(--text); font-weight: 600; }
+.article-body h2 {
+  font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.2;
+  margin: 48px 0 20px; color: var(--text);
+}
+.article-body h2 em { font-style: italic; color: var(--accent); }
+.article-body blockquote {
+  border-left: 3px solid var(--accent); padding: 16px 24px; margin: 32px 0;
+  background: rgba(167,139,250,0.04); border-radius: 0 12px 12px 0;
+}
+.article-body blockquote p { color: var(--accent2); font-style: italic; font-size: 1.05rem; margin-bottom: 0; }
+.article-body .separator {
+  text-align: center; color: var(--dim); font-size: 1.4rem; letter-spacing: 0.5em;
+  margin: 40px 0; user-select: none;
+}
+.article-body ul {
+  color: var(--muted); font-size: 1.02rem; line-height: 1.9; font-weight: 300;
+  margin: 0 0 24px 20px; padding: 0;
+}
+.article-body ul li { margin-bottom: 8px; }
+.article-body ul li strong { color: var(--text); font-weight: 600; }
+
+/* STAT GRID */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin: 32px 0;
+}
+.stat-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 20px; text-align: center;
+}
+.stat-card .num { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--accent); }
+.stat-card .label { font-size: 0.78rem; color: var(--muted); font-weight: 400; margin-top: 4px; }
+
+/* CTA SECTION */
+.article-cta {
+  max-width: 680px; margin: 0 auto 80px; padding: 0 40px;
+}
+.cta-card {
+  background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(26,26,36,0.9));
+  border: 1px solid rgba(167,139,250,0.25); border-radius: 20px;
+  padding: 40px 36px; text-align: center;
+}
+.cta-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 12px; }
+.cta-card h3 em { font-style: italic; color: var(--accent); }
+.cta-card p { color: var(--muted); font-size: 0.92rem; max-width: 480px; margin: 0 auto 24px; font-weight: 300; }
+.cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--accent); color: #0d0d12; padding: 12px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 0 24px rgba(167,139,250,0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(167,139,250,0.5); }
+.btn-secondary { background: transparent; color: var(--text); padding: 12px 28px; border-radius: 100px; font-size: 0.92rem; font-weight: 500; text-decoration: none; border: 1px solid var(--dim); display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* SHARE BAR */
+.share-bar {
+  max-width: 680px; margin: 0 auto; padding: 0 40px 48px;
+  display: flex; align-items: center; gap: 12px;
+  border-top: 1px solid var(--border); padding-top: 28px;
+}
+.share-bar span { font-size: 0.8rem; color: var(--dim); font-weight: 600; }
+.share-btn {
+  background: var(--pill); border: 1px solid rgba(255,255,255,0.06);
+  color: var(--muted); padding: 6px 14px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: all 0.2s;
+  font-family: 'Outfit', sans-serif;
+}
+.share-btn:hover { background: rgba(167,139,250,0.15); color: var(--accent2); border-color: rgba(167,139,250,0.3); }
+
+/* AUTHOR */
+.author-card {
+  max-width: 680px; margin: 0 auto; padding: 0 40px 60px;
+}
+.author-inner {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px;
+}
+.author-avatar {
+  width: 52px; height: 52px; border-radius: 50%; background: var(--accent);
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+}
+.author-name { font-weight: 700; font-size: 0.95rem; }
+.author-bio { font-size: 0.82rem; color: var(--muted); font-weight: 300; margin-top: 2px; }
+
+/* FOOTER */
+footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 28px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .article-header { padding: 120px 24px 36px; }
+  .article-body, .article-cta, .share-bar, .author-card { padding-left: 24px; padding-right: 24px; }
+  .cta-card { padding: 32px 24px; }
+  .stat-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- STRUCTURED DATA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The World Is Finally Protecting Children Online — Here's What Parents Can Do Now",
+  "description": "From Australia's under-16 social media ban to the UK's Online Safety Act, countries everywhere are waking up to the dangers children face online. A teacher and father of four shares why he built Layers Guard.",
+  "datePublished": "2026-04-05",
+  "author": {
+    "@type": "Person",
+    "name": "Peter Hoang",
+    "jobTitle": "Teacher",
+    "description": "Teacher in Japan, father of four, creator of Layers"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Layers",
+    "url": "https://thelayersapp.com"
+  },
+  "mainEntityOfPage": "https://thelayersapp.com/blog/the-world-is-protecting-children-online.html"
+}
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <div class="nav-links">
+    <a href="../#features">Features</a>
+    <a href="../guard.html" style="color:#a78bfa;">Layers Guard</a>
+    <a href="./" style="color:#5b7fff;">Blog</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<header class="article-header">
+  <a href="./" class="back-link">&larr; Back to Blog</a>
+  <div class="article-meta">
+    <span class="article-date">April 5, 2026</span>
+    <span class="article-tag">Child Safety</span>
+    <span class="article-tag">Layers Guard</span>
+    <span class="article-read">&middot; 8 min read</span>
+  </div>
+  <h1>The World Is Finally Protecting Children Online &mdash; Here&rsquo;s What <em>Parents Can Do Now</em></h1>
+  <p class="subtitle">Governments on every continent are passing laws to shield children from social media. But legislation moves slowly, and your children are online today. A teacher and father of four in Japan explains why he couldn&rsquo;t wait.</p>
+</header>
+
+<article class="article-body">
+
+  <p>Something remarkable is happening around the world right now. Country after country is looking at the evidence, looking at their children, and arriving at the same conclusion: <strong>we have to do something about social media and kids.</strong></p>
+
+  <p>Australia banned children under 16 from social media entirely. The United Kingdom passed the Online Safety Act, making platforms legally responsible for protecting minors. France now requires parental consent for anyone under 15. Brazil, Indonesia, Malaysia, China, Portugal &mdash; the list grows every month.</p>
+
+  <p>In the United States, the Kids Online Safety Act (KOSA) has bipartisan support at the federal level, and at least 17 states have already passed their own laws restricting minors&rsquo; access to social media. Canada, Denmark, Spain, Norway, South Korea, and Slovenia are all actively debating similar legislation.</p>
+
+  <p><strong>This is not a trend. It is a global reckoning.</strong></p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num">30+</div>
+      <div class="label">Countries passing or debating child safety laws</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">95%</div>
+      <div class="label">of teens aged 13&ndash;17 use social media</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">3.5 hrs</div>
+      <div class="label">daily use doubles anxiety &amp; depression risk</div>
+    </div>
+  </div>
+
+  <h2>What the leaders are <em>saying</em></h2>
+
+  <p>The language coming from world leaders is unusually blunt. These are not vague concerns. They are alarm bells.</p>
+
+  <blockquote>
+    <p>&ldquo;Social media is doing serious harm to our children. I want them off their phones and onto the footy fields and the swimming pools and the tennis courts.&rdquo;</p>
+  </blockquote>
+  <p>That was Australian Prime Minister Anthony Albanese, explaining why his government passed the world&rsquo;s strictest social media ban for minors.</p>
+
+  <blockquote>
+    <p>&ldquo;I believe social media has contributed to the youth mental health crisis we face in America, and it is time for us to protect our kids.&rdquo;</p>
+  </blockquote>
+  <p>That was the US Surgeon General, Dr. Vivek Murthy, calling for warning labels on social media platforms &mdash; the same type of warnings found on tobacco products.</p>
+
+  <p>French President Emmanuel Macron has called the impact of screens and social media on children &ldquo;a major public health issue.&rdquo; UNICEF has urged every nation to prioritize digital child protection. The World Health Organization has published guidelines recommending strict limits on children&rsquo;s screen time.</p>
+
+  <p>The consensus is clear. The question is no longer <em>whether</em> children need protection online, but how fast we can provide it.</p>
+
+  <div class="separator">&middot; &middot; &middot;</div>
+
+  <h2>What I see <em>firsthand</em></h2>
+
+  <p>I&rsquo;m Peter Hoang. I&rsquo;m a teacher in Japan and a father of four.</p>
+
+  <p>I don&rsquo;t need to read the research to know that something is wrong. I see it in my classroom every day. Students who can&rsquo;t focus because their minds are still scrolling. Kids who are anxious, distracted, or withdrawn &mdash; and when you trace it back, the root is almost always something they saw, read, or experienced on social media.</p>
+
+  <p>I watch students compare themselves to strangers on the internet and quietly decide they&rsquo;re not good enough. I see the way a single cruel comment on a post can unravel a kid&rsquo;s entire week. I see the ones who stay up all night watching content they&rsquo;re far too young for, then arrive at school exhausted and empty.</p>
+
+  <p><strong>As a teacher, I can guide them during school hours. But every afternoon, they walk out my door and into an unfiltered internet &mdash; and there is nothing I can do about that.</strong></p>
+
+  <h2>A father&rsquo;s <em>dilemma</em></h2>
+
+  <p>At home, I face the same struggle every parent faces. My children are growing up in a world where the internet is essential. They need it for homework, for communication, for learning about the world. I don&rsquo;t want to take that away from them. I <em>refuse</em> to take that away from them.</p>
+
+  <p>But I also know what&rsquo;s out there. I know the algorithms don&rsquo;t care that my child is eleven. I know that one wrong search, one autoplaying video, one suggested link can lead somewhere no child should be.</p>
+
+  <p>What I want is simple: <strong>peace of mind.</strong> Not a locked-down device that turns the internet into a walled garden. Not paranoid surveillance. Just the ability to know what my children are seeing and accessing &mdash; and to set reasonable boundaries without killing their curiosity.</p>
+
+  <blockquote>
+    <p>I don&rsquo;t want to restrict my children from learning online. I want to rest easy knowing that what they find is safe.</p>
+  </blockquote>
+
+  <p>That is an incredibly simple ask. And yet, until recently, no tool made it easy.</p>
+
+  <div class="separator">&middot; &middot; &middot;</div>
+
+  <h2>Parents must take <em>responsibility</em></h2>
+
+  <p>Here is the truth that legislation alone cannot solve: <strong>teachers can protect children during school hours, but parents must take on that responsibility once children come home.</strong></p>
+
+  <p>Laws like Australia&rsquo;s ban are a powerful statement. But enforcement takes time. Platforms will fight back. Loopholes will be found. Meanwhile, children are online right now &mdash; today, tonight, while their parents sleep.</p>
+
+  <p>Governments are doing their part. But they are slow. They debate for years. They pass laws that take years more to enforce. Your children cannot wait for a committee to finish deliberating.</p>
+
+  <p>This is why I built Layers Guard.</p>
+
+  <h2>What Layers Guard <em>does</em></h2>
+
+  <p>Layers Guard is a set of free tools I built for parents who feel the way I do &mdash; parents who want their children to learn and explore online, with sensible guardrails in place.</p>
+
+  <ul>
+    <li><strong>Layers Guard for Chrome</strong> is a browser extension that lets parents block harmful websites, set browsing schedules, and get alerts when their child tries to access blocked content. It works quietly in the background so children can browse freely within safe boundaries.</li>
+    <li><strong>Layers Guard Mobile</strong> is an Android companion app that gives parents a dashboard to manage settings, view real-time alerts, and adjust protections from anywhere &mdash; even when they&rsquo;re not at home.</li>
+  </ul>
+
+  <p>Both tools are <strong>completely free.</strong> No trial period. No premium tier. No ads. I built them because every family deserves this, not just those who can afford a subscription.</p>
+
+  <p>Guard is not about spying on your children. It is not about controlling every click. It is about drawing a line around the things no child should encounter &mdash; and giving parents the confidence that the line holds.</p>
+
+  <h2>A global movement, <em>a personal mission</em></h2>
+
+  <p>When I read about Australia banning social media for children under 16, I felt something I hadn&rsquo;t expected: relief. Not because a law will fix everything &mdash; but because it meant the world was finally paying attention.</p>
+
+  <p>For years, parents have been raising these concerns and being told they were overreacting. That children are &ldquo;digital natives&rdquo; who can handle it. That restricting access would do more harm than good.</p>
+
+  <p>The data says otherwise. The US Surgeon General&rsquo;s advisory found that adolescents who spend more than three hours a day on social media face double the risk of anxiety and depression. Ninety-five percent of teenagers aged 13 to 17 use social media &mdash; and nearly half say they are online &ldquo;almost constantly.&rdquo;</p>
+
+  <p>These are not hypothetical risks. They are the lived reality of a generation.</p>
+
+  <p>I built Layers to help students in my classroom. I built Layers Guard because the problem doesn&rsquo;t end when the school bell rings. If I can give even one family the peace of mind that I wanted for my own, then every hour I spent building these tools was worth it.</p>
+
+  <div class="separator">&middot; &middot; &middot;</div>
+
+  <p>The world is waking up. Laws are being passed. Platforms are being held accountable. But your family doesn&rsquo;t have to wait. You can act today.</p>
+
+  <p>Layers Guard is free, it&rsquo;s simple, and it was built by a parent who understands exactly what you&rsquo;re going through.</p>
+
+  <p style="color:var(--dim);font-style:italic;margin-top:40px;">&mdash; Peter Hoang, father of four, from Japan</p>
+
+</article>
+
+<!-- SHARE -->
+<div class="share-bar">
+  <span>Share:</span>
+  <a class="share-btn" href="https://twitter.com/intent/tweet?text=The%20World%20Is%20Finally%20Protecting%20Children%20Online%20%E2%80%94%20Here%E2%80%99s%20What%20Parents%20Can%20Do%20Now&url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fthe-world-is-protecting-children-online.html" target="_blank" rel="noopener noreferrer">&#x1D54F; Twitter</a>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fthe-world-is-protecting-children-online.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fthe-world-is-protecting-children-online.html" target="_blank" rel="noopener noreferrer">Facebook</a>
+  <a class="share-btn" href="https://www.reddit.com/submit?url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fthe-world-is-protecting-children-online.html&title=The%20World%20Is%20Finally%20Protecting%20Children%20Online" target="_blank" rel="noopener noreferrer">Reddit</a>
+</div>
+
+<!-- AUTHOR -->
+<div class="author-card">
+  <div class="author-inner">
+    <div class="author-avatar">&#x1F468;&#x200D;&#x1F3EB;</div>
+    <div>
+      <div class="author-name">Peter Hoang</div>
+      <div class="author-bio">Teacher in Japan. Father of four. Building tools so children can learn safely online.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="article-cta">
+  <div class="cta-card">
+    <h3>Protect your family with <em>Layers Guard</em></h3>
+    <p>Free browser protection for your children. No subscriptions, no ads, no compromises.</p>
+    <div class="cta-buttons">
+      <a href="../guard.html" class="btn-primary">Get Layers Guard &mdash; Free</a>
+      <a href="../guard-mobile.html" class="btn-secondary">Guard Mobile for Android</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span>Layers</span> &middot; <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">Help children learn, focus &amp; stay safe online</span></div>
+    <div class="footer-links">
+      <a href="../">Home</a>
+      <a href="../guard.html" style="color:#a78bfa;">Layers Guard</a>
+      <a href="../guard-mobile.html" style="color:#a78bfa;">Guard Mobile</a>
+      <a href="./">Blog</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Layers &middot; Peter Hoang &middot; Japan &middot; <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
