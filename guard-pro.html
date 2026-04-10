@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers Guard Pro — Coming Soon</title>
+<meta name="description" content="Layers Guard Pro — advanced parental controls with Windows PC lockdown, remote monitoring from your phone, and app usage dashboards. Coming soon.">
+<meta name="theme-color" content="#a78bfa">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thelayersapp.com/guard-pro.html">
+<meta property="og:title" content="Layers Guard Pro — Coming Soon">
+<meta property="og:description" content="Parental controls your child cannot switch off. Windows lockdown + remote control from your phone. Coming soon.">
+<meta property="og:image" content="https://thelayersapp.com/og-image-guard.png">
+<link rel="canonical" href="https://thelayersapp.com/guard-pro.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #0d0d12;
+  --bg2:    #131318;
+  --text:   #ffffff;
+  --muted:  #a0a0b0;
+  --dim:    #555568;
+  --border: rgba(167,139,250,0.15);
+  --guard:  #a78bfa;
+  --guard2: #c4b5fd;
+  --pro:    #34d399;
+  --pro2:   #6ee7b7;
+  --glow:   rgba(52,211,153,0.10);
+  --card:   rgba(26,26,36,0.85);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── Nav ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(13,13,18,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.nav-brand { font-family: 'DM Serif Display', serif; font-size: 1.2rem; text-decoration: none; color: var(--text); }
+.nav-brand em { color: var(--guard); font-style: normal; }
+.nav-brand strong { color: var(--pro); }
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.nav-back { color: var(--guard) !important; }
+
+/* ── Hero ── */
+.hero {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 100px 40px 80px;
+  text-align: center;
+}
+.coming-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(52,211,153,0.12);
+  border: 1px solid rgba(52,211,153,0.3);
+  color: var(--pro);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+}
+.coming-badge .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--pro);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+.hero h1 em { color: var(--pro); font-style: italic; }
+.hero p {
+  font-size: 1.15rem;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0 auto 48px;
+  line-height: 1.7;
+}
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-guard {
+  display: inline-block;
+  background: var(--guard);
+  color: #0d0d12;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btn-guard:hover { opacity: 0.85; }
+.btn-ghost {
+  display: inline-block;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.95rem;
+  padding: 14px 28px;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-ghost:hover { border-color: var(--guard); color: var(--guard); }
+
+/* ── Features grid ── */
+.features-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px 100px;
+}
+.section-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--pro);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  text-align: center;
+  margin-bottom: 12px;
+}
+.section-sub {
+  text-align: center;
+  color: var(--muted);
+  font-size: 1rem;
+  margin-bottom: 56px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.feat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.feat-card:hover { border-color: rgba(52,211,153,0.3); transform: translateY(-3px); }
+.feat-icon {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.feat-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.feat-card p {
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.feat-card.highlight {
+  border-color: rgba(52,211,153,0.25);
+  background: linear-gradient(160deg, rgba(52,211,153,0.07), var(--card));
+}
+.feat-card.highlight h3 { color: var(--pro); }
+
+/* ── Compare strip ── */
+.compare-section {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 80px 40px;
+}
+.compare-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 40px;
+  font-size: 0.9rem;
+}
+.compare-table th {
+  padding: 14px 20px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.compare-table th.highlight-col { color: var(--pro); }
+.compare-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--muted);
+}
+.compare-table td:first-child { color: var(--text); font-weight: 500; }
+.compare-table td.highlight-col { color: var(--pro); font-weight: 600; }
+.ck-yes { color: #34d399; }
+.ck-no  { color: #555568; }
+.compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* ── Free tier reminder ── */
+.free-strip {
+  max-width: 820px;
+  margin: 80px auto;
+  padding: 0 40px;
+  text-align: center;
+}
+.free-card {
+  background: rgba(167,139,250,0.07);
+  border: 1px solid rgba(167,139,250,0.2);
+  border-radius: 20px;
+  padding: 40px 48px;
+}
+.free-card h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+.free-card h2 span { color: var(--guard); }
+.free-card p { color: var(--muted); margin-bottom: 28px; font-size: 1rem; }
+
+/* ── Footer ── */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 40px;
+  text-align: center;
+}
+.footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { color: var(--dim); font-size: 0.8rem; }
+
+@media (max-width: 800px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 20px; }
+  .hero, .features-section { padding-left: 24px; padding-right: 24px; }
+  .free-card { padding: 32px 24px; }
+}
+@media (max-width: 560px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .compare-section { padding: 60px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand"><em>Layers</em> <strong>Guard Pro</strong></a>
+  <div class="nav-links">
+    <a href="guard.html" class="nav-back">← Free Guard</a>
+    <a href="index.html">Home</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="coming-badge">
+    <span class="dot"></span>
+    Coming Soon
+  </div>
+  <h1>Parental controls<br>your child <em>cannot switch off.</em></h1>
+  <p>Layers Guard protects Chrome and Android for free. Guard Pro goes further — locking down the Windows PC, blocking apps at the system level, and letting you monitor everything remotely from your phone.</p>
+  <div class="hero-actions">
+    <a href="guard.html" class="btn-guard">Start with Free Guard →</a>
+    <a href="index.html" class="btn-ghost">Back to Layers</a>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="features-section">
+  <div class="section-label">// What's coming</div>
+  <h2 class="section-title">Everything in Guard, plus…</h2>
+  <p class="section-sub">Guard Pro adds a layer your child cannot remove, even if they try.</p>
+
+  <div class="features-grid">
+
+    <div class="feat-card highlight">
+      <span class="feat-icon">🖥</span>
+      <h3>Windows PC lockdown</h3>
+      <p>A lightweight agent installs on your child's PC. It auto-starts with Windows and cannot be quit without your PIN.</p>
+    </div>
+
+    <div class="feat-card highlight">
+      <span class="feat-icon">📱</span>
+      <h3>Remote control from your phone</h3>
+      <p>Pair the free Android controller app with your child's PC. Block sites, lock the screen, or review app usage — from anywhere.</p>
+    </div>
+
+    <div class="feat-card highlight">
+      <span class="feat-icon">📊</span>
+      <h3>App usage dashboard</h3>
+      <p>See exactly which apps your child used today and for how long. Colour-coded, updated in real time.</p>
+    </div>
+
+    <div class="feat-card">
+      <span class="feat-icon">🚫</span>
+      <h3>System-level app blocking</h3>
+      <p>Block apps and websites at the OS level — not just in the browser. Works across Chrome, Edge, Firefox, and any other browser.</p>
+    </div>
+
+    <div class="feat-card">
+      <span class="feat-icon">🔒</span>
+      <h3>PIN-protected everything</h3>
+      <p>Your PIN is set on your phone and synced to the PC. The child cannot quit, unpair, or uninstall without it.</p>
+    </div>
+
+    <div class="feat-card">
+      <span class="feat-icon">☁️</span>
+      <h3>Private by design</h3>
+      <p>Synced over your own Firebase project. No third-party servers ever see your child's data.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Comparison -->
+<section class="compare-section">
+  <div class="compare-inner">
+    <div class="section-label">// Guard vs Guard Pro</div>
+    <h2 class="section-title">Which one do you need?</h2>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Guard <span style="color:var(--guard);">Free</span></th>
+          <th class="highlight-col">Guard Pro</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Block websites by domain</td>
+          <td><span class="ck-yes">✓</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Internet schedules &amp; bedtime curfew</td>
+          <td><span class="ck-yes">✓</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>PIN-protected settings</td>
+          <td><span class="ck-yes">✓</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Works in incognito</td>
+          <td><span class="ck-yes">✓</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Android chat monitoring</td>
+          <td><span class="ck-yes">✓</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Windows PC lockdown</td>
+          <td><span class="ck-no">—</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Block any app (not just browser)</td>
+          <td><span class="ck-no">—</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Remote control from Android phone</td>
+          <td><span class="ck-no">—</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>App usage dashboard</td>
+          <td><span class="ck-no">—</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Child cannot quit or unpair</td>
+          <td><span class="ck-no">—</span></td>
+          <td class="highlight-col"><span class="ck-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Price</td>
+          <td style="color:var(--guard);font-weight:600;">Free forever</td>
+          <td class="highlight-col">Coming soon</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Free tier nudge -->
+<div class="free-strip">
+  <div class="free-card">
+    <h2>Not ready to wait? <span>Start free.</span></h2>
+    <p>Layers Guard Chrome is free forever and works today — block sites, set schedules, and lock settings with a PIN. No account needed.</p>
+    <a href="guard.html" class="btn-guard">Get Layers Guard Free →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="guard.html" style="color:#a78bfa;">Layers Guard</a>
+    <a href="guard-mobile.html" style="color:#a78bfa;">Guard Mobile</a>
+    <a href="guard-pro.html" style="color:#34d399;">Guard Pro</a>
+    <a href="blog/">Blog</a>
+    <a href="contact.html">Contact</a>
+    <a href="privacy.html">Privacy Policy</a>
+  </div>
+  <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:#a78bfa;text-decoration:none;">thelayersapp.com</a></p>
+</footer>
+
+</body>
+</html>
