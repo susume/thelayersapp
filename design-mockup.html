@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers — Design Direction Options</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: #f0ece4; }
+
+/* ── Comparison header ── */
+.comparison-header {
+  background: #1a1a2e; color: white;
+  padding: 28px 40px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem;
+  display: flex; align-items: center; gap: 16px;
+}
+.comparison-header span { font-family: 'Outfit', sans-serif; font-size: 0.85rem; color: #a0a0b0; font-weight: 400; margin-top: 4px; display: block; }
+.cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+.col-label {
+  text-align: center; padding: 14px; font-size: 0.75rem;
+  font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────
+   OPTION A — Current (dark/gloomy reference)
+───────────────────────────────────────────── */
+.a { --bg:#0d0d12; --bg2:#131318; --accent:#5b7fff; --guard:#a78bfa; --text:#ffffff; --muted:#a0a0b0; --dim:#555568; --border:rgba(91,127,255,0.18); --card:rgba(26,26,36,0.9); --green:#2ed573; }
+
+/* ─────────────────────────────────────────────
+   OPTION B — Warm Sage (Feng Shui: Wood + Earth)
+   Palette: warm cream bg, forest green accent,
+   amber warmth, charcoal text.
+   Energy: growth, nurturing, grounded calm.
+───────────────────────────────────────────── */
+.b { --bg:#F7F4EE; --bg2:#FFFFFF; --accent:#2D6A4F; --guard:#0F766E; --text:#1C2B20; --muted:#5A6B5E; --dim:#9AA89D; --border:rgba(45,106,79,0.15); --card:#FFFFFF; --green:#2D6A4F; --gold:#B5830A; }
+
+/* ─────────────────────────────────────────────
+   OPTION C — Sky & Stone (Feng Shui: Water + Metal)
+   Palette: soft sky-white bg, deep teal accent,
+   warm stone secondary. Clean, protective, clear.
+   Energy: clarity, trust, protection, peace.
+───────────────────────────────────────────── */
+.c { --bg:#F5F8FA; --bg2:#FFFFFF; --accent:#1B6FA8; --guard:#0E7490; --text:#1A2A3A; --muted:#566675; --dim:#9AAABB; --border:rgba(27,111,168,0.15); --card:#FFFFFF; --green:#059669; --gold:#C4870A; }
+
+/* ── Shared section styles ── */
+.preview { background: var(--bg); color: var(--text); min-height: 100vh; }
+
+.nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 28px; height: 58px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand { font-family: 'DM Serif Display', serif; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+.brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.nav-links { display: flex; gap: 20px; }
+.nav-link { font-size: 0.8rem; font-weight: 500; color: var(--muted); text-decoration: none; }
+.nav-cta { background: var(--accent); color: white; padding: 6px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; }
+.b .nav-cta { color: #fff; }
+.c .nav-cta { color: #fff; }
+
+/* Announce bar */
+.announce {
+  background: var(--accent); color: white;
+  text-align: center; padding: 9px 20px;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.a .announce { background: rgba(91,127,255,0.15); border-bottom: 1px solid var(--border); color: var(--muted); }
+.b .announce { background: linear-gradient(90deg, #2D6A4F, #3D8B67); }
+.c .announce { background: linear-gradient(90deg, #1B6FA8, #0E7490); }
+
+/* Hero */
+.hero { padding: 52px 28px 40px; text-align: center; background: var(--bg); }
+.a .hero { background: radial-gradient(ellipse at 50% 0%, rgba(91,127,255,0.08) 0%, transparent 60%), var(--bg); }
+.b .hero { background: linear-gradient(180deg, #EDF5F0 0%, var(--bg) 100%); }
+.c .hero { background: linear-gradient(180deg, #E8F1F8 0%, var(--bg) 100%); }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 100px; margin-bottom: 20px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.a .hero-badge { background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.3); color: #8aa8ff; }
+.b .hero-badge { background: rgba(45,106,79,0.12); border: 1px solid rgba(45,106,79,0.3); color: var(--accent); }
+.c .hero-badge { background: rgba(27,111,168,0.1); border: 1px solid rgba(27,111,168,0.25); color: var(--accent); }
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  line-height: 1.1; margin-bottom: 16px;
+  color: var(--text);
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.b .hero h1 em { color: #2D6A4F; }
+.c .hero h1 em { color: #1B6FA8; }
+
+.hero-sub { font-size: 0.92rem; color: var(--muted); max-width: 400px; margin: 0 auto 28px; line-height: 1.7; font-weight: 300; }
+
+.hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--accent); color: white;
+  padding: 11px 22px; border-radius: 10px;
+  font-size: 0.85rem; font-weight: 700; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.btn-secondary {
+  background: transparent; color: var(--muted);
+  padding: 11px 22px; border-radius: 10px;
+  font-size: 0.85rem; font-weight: 600; text-decoration: none;
+  border: 1px solid var(--border);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+
+/* Product cards */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 28px; background: var(--bg); }
+.card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px;
+  transition: box-shadow 0.2s;
+}
+.a .card { box-shadow: none; }
+.b .card { box-shadow: 0 2px 16px rgba(45,106,79,0.06); }
+.c .card { box-shadow: 0 2px 16px rgba(27,111,168,0.06); }
+
+.card-badge {
+  display: inline-block; font-size: 0.68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px; margin-bottom: 10px;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+.badge-blue { background: rgba(91,127,255,0.12); border: 1px solid rgba(91,127,255,0.25); color: #8aa8ff; }
+.b .badge-blue { background: rgba(45,106,79,0.1); border: 1px solid rgba(45,106,79,0.25); color: #2D6A4F; }
+.c .badge-blue { background: rgba(27,111,168,0.1); border: 1px solid rgba(27,111,168,0.25); color: #1B6FA8; }
+
+.badge-purple { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25); color: #c4b5fd; }
+.b .badge-purple { background: rgba(15,118,110,0.1); border: 1px solid rgba(15,118,110,0.25); color: #0F766E; }
+.c .badge-purple { background: rgba(14,116,144,0.1); border: 1px solid rgba(14,116,144,0.25); color: #0E7490; }
+
+.card h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; margin-bottom: 8px; color: var(--text); }
+.card p { font-size: 0.83rem; color: var(--muted); line-height: 1.65; margin-bottom: 14px; font-weight: 300; }
+.card-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; font-weight: 700; text-decoration: none;
+  padding: 9px 16px; border-radius: 9px;
+}
+.cta-blue { background: var(--accent); color: white; }
+.cta-purple { background: var(--guard); color: white; }
+.a .cta-purple { color: #0d0d12; }
+.b .cta-purple { background: #0F766E; color: white; }
+.c .cta-purple { background: #0E7490; color: white; }
+
+/* Guard section */
+.guard-section { padding: 28px; background: var(--bg2); border-top: 1px solid var(--border); }
+.section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--guard); margin-bottom: 8px; }
+.section-h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--text); margin-bottom: 8px; line-height: 1.2; }
+.section-h2 em { font-style: italic; color: var(--guard); }
+.section-p { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-weight: 300; }
+
+.peace-card {
+  padding: 20px; border-radius: 14px;
+  border: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.a .peace-card { background: rgba(167,139,250,0.06); border-color: rgba(167,139,250,0.18); }
+.b .peace-card { background: rgba(45,106,79,0.05); border-color: rgba(45,106,79,0.18); }
+.c .peace-card { background: rgba(27,111,168,0.05); border-color: rgba(27,111,168,0.18); }
+
+.peace-icon { font-size: 1.8rem; flex-shrink: 0; }
+.peace-text { font-size: 0.83rem; color: var(--muted); line-height: 1.65; }
+.peace-text strong { color: var(--text); }
+
+/* Colour swatches */
+.swatches { display: flex; gap: 8px; padding: 16px 28px; background: var(--bg); border-top: 1px solid var(--border); flex-wrap: wrap; }
+.swatch { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; color: var(--muted); }
+.sw { width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--border); flex-shrink: 0; }
+
+/* Column label bar */
+.col-labels { display: grid; grid-template-columns: 1fr 1fr 1fr; background: #0d0d12; }
+.col-lbl {
+  padding: 12px 20px; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: #a0a0b0;
+  border-right: 1px solid #1e1e2e; text-align: center;
+}
+.col-lbl.now { color: #555568; }
+.col-lbl.b-lbl { color: #5fad8a; }
+.col-lbl.c-lbl { color: #5ba8d4; }
+</style>
+</head>
+<body>
+
+<div style="background:#0d0d12;color:#a0a0b0;padding:20px 32px;font-family:'DM Serif Display',serif;font-size:1.4rem;border-bottom:1px solid #1e1e2e;">
+  Layers Homepage — Design Direction
+  <div style="font-family:'Outfit',sans-serif;font-size:0.8rem;color:#555568;font-weight:400;margin-top:4px;">Side-by-side palette & layout comparison · scroll to see full sections</div>
+</div>
+
+<div class="col-labels">
+  <div class="col-lbl now">A — Current (dark)</div>
+  <div class="col-lbl b-lbl">B — Warm Sage (recommended)</div>
+  <div class="col-lbl c-lbl">C — Sky & Stone</div>
+</div>
+
+<div class="cols">
+
+  <!-- ═══ OPTION A ═══ -->
+  <div class="preview a">
+    <div class="announce">✦ Layers Guard Mobile coming soon to Google Play</div>
+    <div class="nav">
+      <div class="nav-brand"><div class="brand-dot"></div>Layers</div>
+      <div class="nav-links">
+        <a class="nav-link" href="#">For Teachers</a>
+        <a class="nav-link" href="#">For Parents</a>
+        <a class="nav-cta">Get Started</a>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="hero-badge">🛡 Trusted by families in 40+ countries</div>
+      <h1>Help children learn,<br>focus &amp; stay <em>safe online.</em></h1>
+      <p class="hero-sub">Classroom tools for teachers. Study tools for students. Parental controls built on trust.</p>
+      <div class="hero-btns">
+        <a class="btn-primary">See All Products</a>
+        <a class="btn-secondary">🛡 Layers Guard — Free</a>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-badge badge-blue">For Teachers</div>
+        <h3>Layers</h3>
+        <p>A floating toolbar that sits on top of your slides. Timer, translation, annotation — one click away.</p>
+        <a class="card-cta cta-blue">⬇ Try Free</a>
+      </div>
+      <div class="card">
+        <div class="card-badge badge-purple">For Parents · Free</div>
+        <h3>Layers Guard</h3>
+        <p>Block websites, set bedtime lockouts, monitor chats. PIN-protected. Works in incognito.</p>
+        <a class="card-cta cta-purple">🛡 Learn More</a>
+      </div>
+    </div>
+    <div class="guard-section">
+      <div class="section-label">// For parents</div>
+      <h2 class="section-h2">Your child is <em>protected.</em></h2>
+      <p class="section-p">Layers Guard blocks harmful sites, enforces bedtime curfews, and alerts you instantly. Free on Chrome and Edge.</p>
+      <div class="peace-card">
+        <div class="peace-icon">🛡</div>
+        <div class="peace-text"><strong>No ads. No accounts. No cloud.</strong> Everything runs on your device. Nothing is shared. Your family's data stays yours.</div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="swatch"><div class="sw" style="background:#0d0d12;border-color:#333;"></div> #0d0d12</div>
+      <div class="swatch"><div class="sw" style="background:#5b7fff;"></div> Accent</div>
+      <div class="swatch"><div class="sw" style="background:#a78bfa;"></div> Guard</div>
+      <div class="swatch"><div class="sw" style="background:#2ed573;"></div> Green</div>
+    </div>
+  </div>
+
+  <!-- ═══ OPTION B — Warm Sage ═══ -->
+  <div class="preview b">
+    <div class="announce">✦ Layers Guard Pro — Windows PC parental control, coming soon</div>
+    <div class="nav">
+      <div class="nav-brand"><div class="brand-dot" style="background:#2D6A4F;box-shadow:0 0 10px rgba(45,106,79,0.5);"></div>Layers</div>
+      <div class="nav-links">
+        <a class="nav-link" href="#">For Teachers</a>
+        <a class="nav-link" href="#">For Parents</a>
+        <a class="nav-cta" style="background:#2D6A4F;">Get Started</a>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="hero-badge">🛡 Trusted by families in 40+ countries</div>
+      <h1>Help children learn,<br>focus &amp; stay <em>safe online.</em></h1>
+      <p class="hero-sub" style="color:#5A6B5E;">Classroom tools for teachers. Study tools for students. Parental controls built on trust.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" style="background:#2D6A4F;">See All Products</a>
+        <a class="btn-secondary" style="border-color:rgba(45,106,79,0.25);color:#2D6A4F;">🛡 Layers Guard — Free</a>
+      </div>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-badge badge-blue b">For Teachers</div>
+        <h3>Layers</h3>
+        <p>A floating toolbar that sits on top of your slides. Timer, translation, annotation — one click away.</p>
+        <a class="card-cta cta-blue" style="background:#2D6A4F;">⬇ Try Free</a>
+      </div>
+      <div class="card">
+        <div class="card-badge badge-purple b">For Parents · Free</div>
+        <h3>Layers Guard</h3>
+        <p>Block websites, set bedtime lockouts, monitor chats. PIN-protected. Works in incognito.</p>
+        <a class="card-cta cta-purple b" style="background:#0F766E;">🛡 Learn More</a>
+      </div>
+    </div>
+    <div class="guard-section" style="background:#EDF5F0;border-top:1px solid rgba(45,106,79,0.15);">
+      <div class="section-label" style="color:#0F766E;">// For parents</div>
+      <h2 class="section-h2" style="color:#1C2B20;">Your child is <em style="color:#0F766E;">protected.</em></h2>
+      <p class="section-p" style="color:#5A6B5E;">Layers Guard blocks harmful sites, enforces bedtime curfews, and alerts you instantly. Free on Chrome and Edge.</p>
+      <div class="peace-card" style="background:rgba(45,106,79,0.06);border-color:rgba(45,106,79,0.2);">
+        <div class="peace-icon">🌿</div>
+        <div class="peace-text" style="color:#5A6B5E;"><strong style="color:#1C2B20;">No ads. No accounts. No cloud.</strong> Everything runs on your device. Nothing is shared. Your family's data stays yours.</div>
+      </div>
+    </div>
+    <div class="swatches" style="background:#F7F4EE;border-top:1px solid rgba(45,106,79,0.1);">
+      <div class="swatch" style="color:#5A6B5E;"><div class="sw" style="background:#F7F4EE;border-color:rgba(45,106,79,0.2);"></div> #F7F4EE</div>
+      <div class="swatch" style="color:#5A6B5E;"><div class="sw" style="background:#2D6A4F;"></div> Forest</div>
+      <div class="swatch" style="color:#5A6B5E;"><div class="sw" style="background:#0F766E;"></div> Teal</div>
+      <div class="swatch" style="color:#5A6B5E;"><div class="sw" style="background:#B5830A;"></div> Amber</div>
+    </div>
+  </div>
+
+  <!-- ═══ OPTION C — Sky & Stone ═══ -->
+  <div class="preview c">
+    <div class="announce" style="background:linear-gradient(90deg,#1B6FA8,#0E7490);">✦ Layers Guard Pro — Windows PC parental control, coming soon</div>
+    <div class="nav" style="background:#FFFFFF;border-bottom:1px solid rgba(27,111,168,0.12);">
+      <div class="nav-brand"><div class="brand-dot" style="background:#1B6FA8;box-shadow:0 0 10px rgba(27,111,168,0.4);"></div>Layers</div>
+      <div class="nav-links">
+        <a class="nav-link" style="color:#566675;" href="#">For Teachers</a>
+        <a class="nav-link" style="color:#566675;" href="#">For Parents</a>
+        <a class="nav-cta" style="background:#1B6FA8;">Get Started</a>
+      </div>
+    </div>
+    <div class="hero" style="background:linear-gradient(180deg,#E8F1F8 0%,#F5F8FA 100%);">
+      <div class="hero-badge" style="background:rgba(27,111,168,0.1);border:1px solid rgba(27,111,168,0.25);color:#1B6FA8;">🛡 Trusted by families in 40+ countries</div>
+      <h1 style="color:#1A2A3A;">Help children learn,<br>focus &amp; stay <em style="color:#1B6FA8;">safe online.</em></h1>
+      <p class="hero-sub" style="color:#566675;">Classroom tools for teachers. Study tools for students. Parental controls built on trust.</p>
+      <div class="hero-btns">
+        <a class="btn-primary" style="background:#1B6FA8;">See All Products</a>
+        <a class="btn-secondary" style="border-color:rgba(27,111,168,0.25);color:#1B6FA8;">🛡 Layers Guard — Free</a>
+      </div>
+    </div>
+    <div class="cards" style="background:#F5F8FA;">
+      <div class="card" style="background:#fff;border-color:rgba(27,111,168,0.12);box-shadow:0 2px 16px rgba(27,111,168,0.06);">
+        <div class="card-badge" style="background:rgba(27,111,168,0.1);border:1px solid rgba(27,111,168,0.25);color:#1B6FA8;">For Teachers</div>
+        <h3 style="color:#1A2A3A;">Layers</h3>
+        <p style="color:#566675;">A floating toolbar that sits on top of your slides. Timer, translation, annotation — one click away.</p>
+        <a class="card-cta" style="background:#1B6FA8;color:white;">⬇ Try Free</a>
+      </div>
+      <div class="card" style="background:#fff;border-color:rgba(14,116,144,0.18);box-shadow:0 2px 16px rgba(14,116,144,0.06);">
+        <div class="card-badge" style="background:rgba(14,116,144,0.1);border:1px solid rgba(14,116,144,0.25);color:#0E7490;">For Parents · Free</div>
+        <h3 style="color:#1A2A3A;">Layers Guard</h3>
+        <p style="color:#566675;">Block websites, set bedtime lockouts, monitor chats. PIN-protected. Works in incognito.</p>
+        <a class="card-cta" style="background:#0E7490;color:white;">🛡 Learn More</a>
+      </div>
+    </div>
+    <div class="guard-section" style="background:#EBF4FB;border-top:1px solid rgba(27,111,168,0.12);">
+      <div class="section-label" style="color:#0E7490;">// For parents</div>
+      <h2 class="section-h2" style="color:#1A2A3A;">Your child is <em style="color:#0E7490;">protected.</em></h2>
+      <p class="section-p" style="color:#566675;">Layers Guard blocks harmful sites, enforces bedtime curfews, and alerts you instantly. Free on Chrome and Edge.</p>
+      <div class="peace-card" style="background:rgba(27,111,168,0.06);border-color:rgba(27,111,168,0.18);">
+        <div class="peace-icon">☁️</div>
+        <div class="peace-text" style="color:#566675;"><strong style="color:#1A2A3A;">No ads. No accounts. No cloud.</strong> Everything runs on your device. Nothing is shared. Your family's data stays yours.</div>
+      </div>
+    </div>
+    <div class="swatches" style="background:#F5F8FA;border-top:1px solid rgba(27,111,168,0.1);">
+      <div class="swatch" style="color:#566675;"><div class="sw" style="background:#F5F8FA;border-color:rgba(27,111,168,0.2);"></div> #F5F8FA</div>
+      <div class="swatch" style="color:#566675;"><div class="sw" style="background:#1B6FA8;"></div> Sky Blue</div>
+      <div class="swatch" style="color:#566675;"><div class="sw" style="background:#0E7490;"></div> Teal</div>
+      <div class="swatch" style="color:#566675;"><div class="sw" style="background:#C4870A;"></div> Gold</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Feng Shui rationale -->
+<div style="background:#1a1a2e;color:#a0a0b0;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;border-top:1px solid #2a2a4a;">
+  <div>
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#555568;margin-bottom:8px;">A — Current</div>
+    <div style="font-size:0.82rem;line-height:1.7;">Dark, techy. Looks like a SaaS dev tool. Doesn't communicate warmth or parental trust. Common palette — seen everywhere.</div>
+  </div>
+  <div>
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5fad8a;margin-bottom:8px;">B — Warm Sage ✦ Recommended</div>
+    <div style="font-size:0.82rem;line-height:1.7;"><strong style="color:#d0d0e0;">Feng Shui: Wood element.</strong> Green = growth, family, health. Cream = nurturing, earth, stability. Amber = warmth, energy, joy. Feels like a safe home — not a control panel.</div>
+  </div>
+  <div>
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#5ba8d4;margin-bottom:8px;">C — Sky &amp; Stone</div>
+    <div style="font-size:0.82rem;line-height:1.7;"><strong style="color:#d0d0e0;">Feng Shui: Water + Metal.</strong> Blue = clarity, trust, calm. Teal = protection, wisdom. Clean and professional. More corporate-feeling but highly trustworthy.</div>
+  </div>
+</div>
+
+</body>
+</html>

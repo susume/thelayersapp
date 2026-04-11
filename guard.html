@@ -13,7 +13,7 @@
 <meta property="og:image" content="https://thelayersapp.com/og-image-guard.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Layers Guard — Free Parental Web Filter">
-<meta name="twitter:description" content="Block sites, set schedules, cut internet at bedtime. Free Chrome &amp; Edge extension. Built by a teacher and father of four.">
+<meta name="twitter:description" content="Block sites, set schedules, cut internet at bedtime. Free Chrome &amp; Edge extension. No account needed.">
 <meta name="twitter:image" content="https://thelayersapp.com/og-image-guard.png">
 <link rel="canonical" href="https://thelayersapp.com/guard.html">
 <script type="application/ld+json">
@@ -43,7 +43,6 @@
   "author": {
     "@type": "Person",
     "name": "Peter Hoang",
-    "jobTitle": "Teacher, Father of four",
     "address": { "@type": "PostalAddress", "addressCountry": "JP" }
   },
   "publisher": {
@@ -59,20 +58,20 @@
 <style>
 /* ── Design tokens ──────────────────────────────────────────────── */
 :root {
-  --bg:      #0d0d12;
-  --bg2:     #131318;
-  --accent:  #5b7fff;
-  --text:    #ffffff;
-  --muted:   #a0a0b0;
-  --dim:     #555568;
-  --border:  rgba(91,127,255,0.15);
-  --card-bg: rgba(26,26,36,0.8);
-  --pill:    #252530;
-  /* Guard-specific */
-  --guard:   #a78bfa;
-  --guard2:  #c4b5fd;
-  --gborder: rgba(167,139,250,0.2);
-  --glow:    rgba(167,139,250,0.12);
+  --bg:      #F7F4EE;
+  --bg2:     #FFFFFF;
+  --accent:  #2D6A4F;
+  --text:    #1C2B20;
+  --muted:   #5A6B5E;
+  --dim:     #9AA89D;
+  --border:  rgba(45,106,79,0.15);
+  --card-bg: #FFFFFF;
+  --pill:    #EDF5F0;
+  /* Guard-specific — deep violet, readable on light backgrounds */
+  --guard:   #6D28D9;
+  --guard2:  #7C3AED;
+  --gborder: rgba(109,40,217,0.2);
+  --glow:    rgba(109,40,217,0.07);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -84,8 +83,8 @@ body {
 body::after {
   content: ''; position: fixed; inset: 0;
   background-image:
-    linear-gradient(rgba(167,139,250,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(167,139,250,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(45,106,79,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,106,79,0.04) 1px, transparent 1px);
   background-size: 60px 60px; pointer-events: none; z-index: 0;
 }
 section, nav, footer, div { position: relative; z-index: 1; }
@@ -95,7 +94,7 @@ nav {
   position: fixed; top: 0; left: 0; right: 0;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 40px; height: 64px;
-  background: rgba(13,13,18,0.94); backdrop-filter: blur(20px);
+  background: rgba(247,244,238,0.96); backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border); z-index: 100;
 }
 .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
@@ -107,7 +106,7 @@ nav {
 }
 @keyframes gpulse {
   0%,100% { box-shadow: 0 0 8px var(--guard); }
-  50%      { box-shadow: 0 0 24px var(--guard), 0 0 48px rgba(167,139,250,0.3); }
+  50%      { box-shadow: 0 0 24px var(--guard), 0 0 48px rgba(109,40,217,0.25); }
 }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
@@ -115,11 +114,11 @@ nav {
 .nav-back { color: var(--muted) !important; font-size: 0.8rem !important; }
 .nav-back:hover { color: var(--guard) !important; }
 .nav-cta {
-  background: var(--guard) !important; color: #0d0d12 !important;
+  background: var(--guard) !important; color: #ffffff !important;
   padding: 8px 20px; border-radius: 100px; font-weight: 700 !important;
-  transition: all 0.2s; box-shadow: 0 0 20px rgba(167,139,250,0.25);
+  transition: all 0.2s; box-shadow: 0 0 20px rgba(109,40,217,0.2);
 }
-.nav-cta:hover { box-shadow: 0 0 36px rgba(167,139,250,0.5) !important; transform: translateY(-1px); }
+.nav-cta:hover { box-shadow: 0 0 36px rgba(109,40,217,0.35) !important; transform: translateY(-1px); }
 
 /* ── Animations ─────────────────────────────────────────────────── */
 @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
@@ -143,7 +142,7 @@ h2 em { font-style: italic; color: var(--guard); }
 /* ── Hero ───────────────────────────────────────────────────────── */
 .hero-glow {
   position: fixed; width: 900px; height: 900px;
-  background: radial-gradient(circle, rgba(167,139,250,0.07) 0%, transparent 68%);
+  background: radial-gradient(circle, rgba(109,40,217,0.05) 0%, transparent 68%);
   top: 40%; left: 30%; transform: translate(-50%,-50%); pointer-events: none;
 }
 .hero-section {
@@ -153,9 +152,9 @@ h2 em { font-style: italic; color: var(--guard); }
 .hero-inner { max-width: 760px; animation: fadeUp 0.6s ease both; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.3);
+  background: rgba(109,40,217,0.08); border: 1px solid rgba(109,40,217,0.25);
   padding: 6px 18px; border-radius: 100px;
-  font-size: 0.78rem; font-weight: 600; color: var(--guard2);
+  font-size: 0.78rem; font-weight: 600; color: var(--guard);
   letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px;
 }
 .hero h1 {
@@ -215,8 +214,8 @@ h2 em { font-style: italic; color: var(--guard); }
 .feat-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; font-weight: 300; }
 .feat-pill {
   display: inline-block; margin-top: 14px;
-  background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.25);
-  color: var(--guard2); font-size: 0.7rem; font-weight: 700;
+  background: rgba(109,40,217,0.07); border: 1px solid rgba(109,40,217,0.2);
+  color: var(--guard); font-size: 0.7rem; font-weight: 700;
   padding: 3px 12px; border-radius: 100px; letter-spacing: 0.06em;
 }
 
@@ -236,14 +235,14 @@ h2 em { font-style: italic; color: var(--guard); }
 
 /* ── Story band ─────────────────────────────────────────────────── */
 .story-card {
-  background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(26,26,36,0.9) 60%);
-  border: 1px solid rgba(167,139,250,0.2); border-radius: 24px;
+  background: linear-gradient(135deg, rgba(109,40,217,0.05) 0%, #FFFFFF 60%);
+  border: 1px solid rgba(109,40,217,0.15); border-radius: 24px;
   padding: 52px 56px; position: relative; overflow: hidden; max-width: 780px; margin: 0 auto;
 }
 .story-card::before {
   content: ''; position: absolute; top: -60px; right: -60px;
   width: 260px; height: 260px;
-  background: radial-gradient(circle, rgba(167,139,250,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(109,40,217,0.07) 0%, transparent 70%);
   pointer-events: none;
 }
 .story-quote {
@@ -458,11 +457,10 @@ footer { padding: 40px; border-top: 1px solid var(--border); }
     <div class="footer-links">
       <a href="index.html">Layers Home</a>
       <a href="guard.html" style="color:var(--guard);">Layers Guard</a>
-      <a href="guard-mobile.html" style="color:var(--guard);">Guard Mobile</a>
       <a href="contact.html">Contact</a>
       <a href="privacy.html">Privacy Policy</a>
     </div>
-    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+    <p class="footer-copy">© 2026 Layers · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
   </div>
 </footer>
 

@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Layers — Help Children Learn, Focus &amp; Stay Safe Online</title>
-<meta name="description" content="Classroom tools for teachers, productivity tools for students, and parental controls for families. Free student extension, free parental web filter, and a floating teacher toolbar. Built by a teacher and father of four in Japan.">
+<meta name="description" content="Classroom tools for teachers, study tools for students, and free parental controls for families. Block harmful sites, translate lessons live, and help every child succeed.">
 <meta name="theme-color" content="#5b7fff">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thelayersapp.com/">
 <meta property="og:title" content="Layers — Help Children Learn, Focus &amp; Stay Safe Online">
-<meta property="og:description" content="Classroom tools for teachers, study tools for students, parental controls for families. Built by a teacher and father of four in Japan.">
+<meta property="og:description" content="Classroom tools for teachers, study tools for students, and free parental controls for families. Free to use, free to trust.">
 <meta property="og:image" content="https://thelayersapp.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Layers — Help Children Learn, Focus &amp; Stay Safe Online">
-<meta name="twitter:description" content="Classroom tools for teachers, study tools for students, parental controls for families. Built by a teacher and father of four in Japan.">
+<meta name="twitter:description" content="Classroom tools for teachers, study tools for students, and free parental controls for families. Free to use, free to trust.">
 <meta name="twitter:image" content="https://thelayersapp.com/og-image.png">
 <link rel="canonical" href="https://thelayersapp.com/">
 <link rel="alternate" hreflang="en" href="https://thelayersapp.com/">
@@ -90,7 +90,6 @@
     "founder": {
       "@type": "Person",
       "name": "Peter Hoang",
-      "jobTitle": "Teacher & Developer",
       "address": { "@type": "PostalAddress", "addressCountry": "JP" }
     },
     "contactPoint": [
@@ -121,17 +120,17 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:      #0d0d12;
-  --bg2:     #131318;
-  --accent:  #5b7fff;
-  --accent2: #7c9fff;
-  --green:   #2ed573;
-  --text:    #ffffff;
-  --muted:   #a0a0b0;
-  --dim:     #555568;
-  --border:  rgba(91,127,255,0.15);
-  --card-bg: rgba(26,26,36,0.8);
-  --pill:    #252530;
+  --bg:      #F7F4EE;
+  --bg2:     #FFFFFF;
+  --accent:  #2D6A4F;
+  --accent2: #3D8B67;
+  --green:   #2D6A4F;
+  --text:    #1C2B20;
+  --muted:   #5A6B5E;
+  --dim:     #9AA89D;
+  --border:  rgba(45,106,79,0.15);
+  --card-bg: #FFFFFF;
+  --pill:    #EDF5F0;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -142,7 +141,7 @@ body {
 }
 body::after {
   content: ''; position: fixed; inset: 0;
-  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(45,106,79,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(45,106,79,0.04) 1px, transparent 1px);
   background-size: 60px 60px; pointer-events: none; z-index: 0;
 }
 section, nav, footer, div { position: relative; z-index: 1; }
@@ -150,12 +149,12 @@ nav {
   position: fixed; top: 0; left: 0; right: 0;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 40px; height: 64px;
-  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
+  background: rgba(247,244,238,0.94); backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border); z-index: 100;
 }
 .nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
 .brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { box-shadow: 0 0 8px var(--accent); } 50% { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(91,127,255,0.3); } }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 8px var(--accent); } 50% { box-shadow: 0 0 20px var(--accent), 0 0 40px rgba(45,106,79,0.3); } }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
 .nav-links a:hover { color: var(--text); }
@@ -174,9 +173,9 @@ nav {
 .nav-dropdown.open .nav-dropdown-btn svg { transform: rotate(180deg); }
 .nav-dropdown-panel {
   position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%);
-  background: #131318; border: 1px solid rgba(91,127,255,0.2);
+  background: #FFFFFF; border: 1px solid rgba(45,106,79,0.2);
   border-radius: 16px; padding: 8px; min-width: 280px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 200;
+  box-shadow: 0 20px 60px rgba(45,106,79,0.15); z-index: 200;
   opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(-6px);
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
@@ -189,18 +188,18 @@ nav {
   padding: 11px 14px; border-radius: 10px; text-decoration: none;
   transition: background 0.15s; color: var(--text);
 }
-.ndp-item:hover { background: rgba(91,127,255,0.08); }
+.ndp-item:hover { background: rgba(45,106,79,0.08); }
 .ndp-icon {
   width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center; font-size: 17px;
 }
-.ndp-icon.blue   { background: rgba(91,127,255,0.15);  border: 1px solid rgba(91,127,255,0.25); }
-.ndp-icon.green  { background: rgba(46,213,115,0.12);  border: 1px solid rgba(46,213,115,0.25); }
-.ndp-icon.purple { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.25); }
+.ndp-icon.blue   { background: rgba(45,106,79,0.12);  border: 1px solid rgba(45,106,79,0.25); }
+.ndp-icon.green  { background: rgba(45,106,79,0.10);  border: 1px solid rgba(45,106,79,0.20); }
+.ndp-icon.purple { background: rgba(15,118,110,0.12); border: 1px solid rgba(15,118,110,0.25); }
 .ndp-name { font-size: 0.9rem; font-weight: 600; line-height: 1.2; }
 .ndp-sub  { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
-.ndp-divider { height: 1px; background: rgba(91,127,255,0.1); margin: 6px 8px; }
-.ndp-free { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: var(--green); background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.25); padding: 1px 7px; border-radius: 100px; margin-left: auto; flex-shrink: 0; }
+.ndp-divider { height: 1px; background: rgba(45,106,79,0.1); margin: 6px 8px; }
+.ndp-free { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; color: var(--green); background: rgba(45,106,79,0.12); border: 1px solid rgba(45,106,79,0.25); padding: 1px 7px; border-radius: 100px; margin-left: auto; flex-shrink: 0; }
 .lang-select-wrap { position: relative; display: flex; align-items: center; margin-right: 8px; }
 .lang-select-wrap::before { content: '🌐'; position: absolute; left: 10px; font-size: 0.75rem; pointer-events: none; z-index: 1; }
 .lang-select {
@@ -213,19 +212,19 @@ nav {
   background-repeat: no-repeat; background-position: right 10px center;
   transition: border-color 0.2s, color 0.2s;
 }
-.lang-select:hover { color: var(--text); border-color: rgba(91,127,255,0.35); }
+.lang-select:hover { color: var(--text); border-color: rgba(45,106,79,0.35); }
 .lang-select:focus { outline: none; border-color: var(--accent); color: var(--text); }
-.lang-select option { background: #1a1a24; color: var(--text); }
+.lang-select option { background: #FFFFFF; color: var(--text); }
 /* ANNOUNCEMENT BANNER */
 .announce-bar {
   position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
-  background: linear-gradient(90deg, rgba(46,213,115,0.12), rgba(91,127,255,0.12));
-  border-bottom: 1px solid rgba(46,213,115,0.2);
+  background: linear-gradient(90deg, #2D6A4F, #0F766E);
+  border-bottom: 1px solid rgba(45,106,79,0.2);
   display: flex; align-items: center; justify-content: center; gap: 12px;
   padding: 9px 20px; font-size: 0.82rem; text-align: center; flex-wrap: wrap;
 }
 .announce-bar .ab-tag {
-  background: rgba(46,213,115,0.15); border: 1px solid rgba(46,213,115,0.3);
+  background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3);
   color: var(--green); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
   text-transform: uppercase; padding: 2px 9px; border-radius: 100px;
   font-family: 'DM Mono', monospace; white-space: nowrap;
@@ -245,33 +244,33 @@ nav {
 }
 .announce-bar .ab-dismiss:hover { color: var(--muted); }
 
-.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 40px 80px; text-align: center; }
-.hero-glow { position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(91,127,255,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-60%); pointer-events: none; z-index: 0; }
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.3); padding: 6px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; color: var(--accent2); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
+.hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 120px 40px 80px; text-align: center; background: linear-gradient(180deg, #EDF5F0 0%, #F7F4EE 60%); }
+.hero-glow { position: absolute; width: 700px; height: 700px; background: radial-gradient(circle, rgba(45,106,79,0.06) 0%, transparent 68%); top: 50%; left: 50%; transform: translate(-50%,-60%); pointer-events: none; z-index: 0; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(45,106,79,0.08); border: 1px solid rgba(45,106,79,0.2); padding: 6px 16px; border-radius: 100px; font-size: 0.8rem; font-weight: 600; color: var(--accent2); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 1.05; letter-spacing: -0.02em; max-width: 900px; animation: fadeUp 0.6s ease 0.1s both; }
 .hero h1 em { font-style: italic; color: var(--accent); }
 .hero-sub { font-size: clamp(1rem, 2vw, 1.25rem); color: var(--muted); max-width: 600px; margin-top: 24px; font-weight: 300; animation: fadeUp 0.6s ease 0.2s both; }
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 44px; animation: fadeUp 0.6s ease 0.3s both; }
-.btn-primary { background: var(--accent); color: var(--text); padding: 14px 32px; border-radius: 100px; font-size: 1rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 0 30px rgba(91,127,255,0.3); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(91,127,255,0.5); }
+.btn-primary { background: var(--accent); color: var(--text); padding: 14px 32px; border-radius: 100px; font-size: 1rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 0 30px rgba(45,106,79,0.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(45,106,79,0.35); }
 .btn-secondary { background: transparent; color: var(--text); padding: 14px 32px; border-radius: 100px; font-size: 1rem; font-weight: 500; text-decoration: none; border: 1px solid var(--dim); display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 .toolbar-demo { margin-top: 80px; animation: fadeUp 0.6s ease 0.4s both; }
-.toolbar-wrap { background: #131318; border: 1px solid rgba(91,127,255,0.2); border-radius: 16px; padding: 12px 18px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 20px 80px rgba(0,0,0,0.6); flex-wrap: wrap; justify-content: center; max-width: 900px; }
-.tb-brand { display: flex; flex-direction: column; padding: 4px 12px 4px 8px; border-right: 1px solid rgba(91,127,255,0.2); margin-right: 4px; position: relative; }
+.toolbar-wrap { background: #FFFFFF; border: 1px solid rgba(45,106,79,0.2); border-radius: 16px; padding: 12px 18px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 20px 80px rgba(45,106,79,0.15); flex-wrap: wrap; justify-content: center; max-width: 900px; }
+.tb-brand { display: flex; flex-direction: column; padding: 4px 12px 4px 8px; border-right: 1px solid rgba(45,106,79,0.2); margin-right: 4px; position: relative; }
 .tb-brand::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: var(--accent); border-radius: 2px; }
 .tb-brand .b1 { font-weight: 700; color: var(--accent); font-size: 0.75rem; letter-spacing: 0.1em; }
 .tb-brand .b2 { font-size: 0.55rem; color: var(--muted); font-weight: 600; }
-.tb-pill { background: #252530; border-radius: 10px; padding: 5px 10px; display: flex; flex-direction: column; align-items: center; min-width: 48px; cursor: pointer; transition: background 0.15s; border: 1px solid transparent; }
-.tb-pill:hover { background: #2e2e3e; }
+.tb-pill { background: #EDF5F0; border-radius: 10px; padding: 5px 10px; display: flex; flex-direction: column; align-items: center; min-width: 48px; cursor: pointer; transition: background 0.15s; border: 1px solid transparent; }
+.tb-pill:hover { background: #D4EAD8; }
 .tb-pill.active { background: var(--accent); border-color: var(--accent); }
 .tb-pill .icon { font-size: 1rem; line-height: 1.2; }
 .tb-pill .lbl { font-size: 0.45rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8899cc; margin-top: 1px; }
 .tb-pill.active .lbl { color: rgba(255,255,255,0.9); }
 .tb-sep { width: 1px; background: var(--border); height: 40px; margin: 0 4px; }
-.tb-lang { background: #252530; border-radius: 10px; padding: 5px 12px; font-size: 0.7rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 4px; cursor: pointer; transition: background 0.15s; }
-.tb-lang:hover { background: #2e2e3e; }
+.tb-lang { background: #EDF5F0; border-radius: 10px; padding: 5px 12px; font-size: 0.7rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 4px; cursor: pointer; transition: background 0.15s; }
+.tb-lang:hover { background: #D4EAD8; }
 .tb-lang .arr { color: var(--muted); font-size: 0.6rem; }
 .toolbar-label { margin-top: 16px; font-size: 0.8rem; color: var(--dim); font-family: 'DM Mono', monospace; letter-spacing: 0.05em; }
 .wrap { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
@@ -298,23 +297,23 @@ h2 em { font-style: italic; color: var(--accent); }
 .products-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 56px; }
 .product-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
 .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0; transition: opacity 0.3s; }
-.product-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.35); }
+.product-card:hover { transform: translateY(-4px); border-color: rgba(45,106,79,0.35); }
 .product-card:hover::before { opacity: 1; }
-.product-card.featured { border-color: rgba(91,127,255,0.3); background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9)); }
+.product-card.featured { border-color: rgba(45,106,79,0.3); background: linear-gradient(135deg, rgba(45,106,79,0.08), #FFFFFF); }
 .product-card.mac-soon {
-  border-color: rgba(46,213,115,0.2);
-  background: linear-gradient(135deg, rgba(46,213,115,0.05), rgba(26,26,36,0.9));
+  border-color: rgba(45,106,79,0.2);
+  background: linear-gradient(135deg, rgba(45,106,79,0.05), #FFFFFF);
   position: relative; overflow: hidden;
 }
 .product-card.mac-soon::before { background: linear-gradient(90deg, transparent, var(--green), transparent); opacity: 0.6; }
 .mac-soon-overlay {
   position: absolute; inset: 0; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 10px;
-  background: rgba(13,13,18,0.55); backdrop-filter: blur(2px);
+  background: rgba(247,244,238,0.55); backdrop-filter: blur(2px);
   border-radius: 19px;
 }
 .mac-soon-badge {
-  background: rgba(46,213,115,0.15); border: 1px solid rgba(46,213,115,0.35);
+  background: rgba(45,106,79,0.15); border: 1px solid rgba(45,106,79,0.35);
   color: var(--green); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
   text-transform: uppercase; padding: 5px 16px; border-radius: 100px;
   font-family: 'DM Mono', monospace;
@@ -323,48 +322,48 @@ h2 em { font-style: italic; color: var(--accent); }
 .mac-soon-notify {
   display: inline-flex; align-items: center; gap: 6px;
   color: var(--green); font-size: 0.8rem; font-weight: 600;
-  text-decoration: none; border-bottom: 1px solid rgba(46,213,115,0.35);
+  text-decoration: none; border-bottom: 1px solid rgba(45,106,79,0.35);
   transition: opacity 0.2s;
 }
 .mac-soon-notify:hover { opacity: 0.75; }
- background: rgba(46,213,115,0.12); border: 1px solid rgba(46,213,115,0.3); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
-.product-badge.blue { background: rgba(91,127,255,0.12); border-color: rgba(91,127,255,0.3); color: var(--accent2); }
+ background: rgba(45,106,79,0.12); border: 1px solid rgba(45,106,79,0.3); color: var(--green); padding: 4px 12px; border-radius: 100px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 20px; }
+.product-badge.blue { background: rgba(45,106,79,0.12); border-color: rgba(45,106,79,0.3); color: var(--accent2); }
 .product-card h3 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 10px; }
 .product-card > p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin-bottom: 24px; }
 .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
 .feature-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--muted); }
 .feature-list li::before { content: '↗'; color: var(--accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
 .product-who { font-size: 0.8rem; color: var(--dim); font-style: italic; margin-top: 8px; }
-.product-num { position: absolute; top: 28px; right: 28px; font-family: 'DM Serif Display', serif; font-size: 4rem; color: rgba(91,127,255,0.07); line-height: 1; user-select: none; }
+.product-num { position: absolute; top: 28px; right: 28px; font-family: 'DM Serif Display', serif; font-size: 4rem; color: rgba(45,106,79,0.07); line-height: 1; user-select: none; }
 .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px; margin-top: 56px; }
 .feat-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: transform 0.2s, border-color 0.2s; }
-.feat-card:hover { transform: translateY(-3px); border-color: rgba(91,127,255,0.3); }
+.feat-card:hover { transform: translateY(-3px); border-color: rgba(45,106,79,0.3); }
 .feat-icon { font-size: 1.8rem; margin-bottom: 16px; display: block; }
 .feat-card h4 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
 .feat-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; }
 .who-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 48px; }
 .who-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s, transform 0.2s; }
-.who-card:hover { border-color: rgba(91,127,255,0.3); transform: translateY(-2px); }
+.who-card:hover { border-color: rgba(45,106,79,0.3); transform: translateY(-2px); }
 .who-icon { font-size: 1.8rem; flex-shrink: 0; }
 .who-text { font-size: 0.9rem; font-weight: 600; }
 .who-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
 .student-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 56px; }
 .st-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: transform 0.25s, border-color 0.25s; }
-.st-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.3); }
-.st-card.focus-card { border-color: rgba(46,213,115,0.25); background: linear-gradient(140deg, rgba(46,213,115,0.06), rgba(26,26,36,0.9)); }
-.st-card.talk-card { border-color: rgba(91,127,255,0.25); background: linear-gradient(140deg, rgba(91,127,255,0.06), rgba(26,26,36,0.9)); }
-.st-card.sync-card { border-color: rgba(91,127,255,0.2); }
+.st-card:hover { transform: translateY(-4px); border-color: rgba(45,106,79,0.3); }
+.st-card.focus-card { border-color: rgba(45,106,79,0.25); background: linear-gradient(140deg, rgba(45,106,79,0.06), #FFFFFF); }
+.st-card.talk-card { border-color: rgba(15,118,110,0.25); background: linear-gradient(140deg, rgba(15,118,110,0.06), #FFFFFF); }
+.st-card.sync-card { border-color: rgba(45,106,79,0.2); }
 .st-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
 .st-icon { font-size: 2rem; line-height: 1; }
 .st-name { font-size: 1rem; font-weight: 700; }
 .st-sub { font-size: 0.75rem; color: var(--accent2); font-weight: 500; margin-top: 2px; }
 .st-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
 .st-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
-.st-chip { background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25); color: var(--green); font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
-.st-free-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(46,213,115,0.1); border: 1px solid rgba(46,213,115,0.25); color: var(--green); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-top: 32px; letter-spacing: 0.06em; text-transform: uppercase; }
+.st-chip { background: rgba(45,106,79,0.1); border: 1px solid rgba(45,106,79,0.25); color: var(--green); font-size: 0.7rem; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+.st-free-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(45,106,79,0.1); border: 1px solid rgba(45,106,79,0.25); color: var(--green); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; margin-top: 32px; letter-spacing: 0.06em; text-transform: uppercase; }
 .lang-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
 .lang-tag { background: var(--pill); padding: 6px 14px; border-radius: 100px; font-size: 0.8rem; color: var(--muted); border: 1px solid rgba(255,255,255,0.05); transition: all 0.2s; }
-.lang-tag:hover { background: rgba(91,127,255,0.15); color: var(--accent2); border-color: rgba(91,127,255,0.3); }
+.lang-tag:hover { background: rgba(45,106,79,0.15); color: var(--accent2); border-color: rgba(45,106,79,0.3); }
 .sync-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
 .sync-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 32px; }
 .sync-row { display: flex; align-items: center; gap: 12px; background: var(--pill); border-radius: 12px; padding: 14px 18px; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05); }
@@ -372,12 +371,12 @@ h2 em { font-style: italic; color: var(--accent); }
 .sync-row .st { font-size: 0.85rem; font-weight: 600; }
 .sync-row .sd { font-size: 0.75rem; color: var(--muted); }
 .sync-arrow { text-align: center; color: var(--accent); font-size: 1.2rem; margin: 4px 0; opacity: 0.7; }
-.sync-note { background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.2); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: var(--accent2); text-align: center; margin-top: 12px; }
+.sync-note { background: rgba(45,106,79,0.1); border: 1px solid rgba(45,106,79,0.2); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: var(--accent2); text-align: center; margin-top: 12px; }
 /* ── Pricing ── */
 .pricing-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 48px; }
 .price-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
-.price-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.3); }
-.price-card.popular { border-color: var(--accent); background: linear-gradient(160deg, rgba(91,127,255,0.1), rgba(26,26,36,0.95)); }
+.price-card:hover { transform: translateY(-4px); border-color: rgba(45,106,79,0.3); }
+.price-card.popular { border-color: var(--accent); background: linear-gradient(160deg, rgba(45,106,79,0.1), #FFFFFF); }
 .price-card.popular::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
 .pop-tag { display: inline-flex; align-items: center; background: var(--accent); color: white; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 20px; width: fit-content; }
 .p-tier { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
@@ -398,7 +397,7 @@ h2 em { font-style: italic; color: var(--accent); }
 .price-card.popular .btn-price:hover { opacity: 0.88; transform: translateY(-1px); }
 /* School enterprise strip */
 .price-school { margin-top: 20px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; transition: border-color 0.3s; }
-.price-school:hover { border-color: rgba(91,127,255,0.3); }
+.price-school:hover { border-color: rgba(45,106,79,0.3); }
 .price-school-header { padding: 32px 40px 28px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
 .price-school-header-left .p-tier { margin-bottom: 6px; }
 .price-school-header-left .p-name { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-bottom: 10px; line-height: 1.1; }
@@ -408,13 +407,13 @@ h2 em { font-style: italic; color: var(--accent); }
 .price-school-feats { list-style: none; display: flex; flex-direction: column; gap: 14px; }
 .price-school-feats li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
 .price-school-feats li .ck { color: var(--accent); font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
-.price-school-it { background: rgba(91,127,255,0.06); border: 1px solid rgba(91,127,255,0.18); border-radius: 14px; padding: 20px 22px; font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+.price-school-it { background: rgba(15,118,110,0.06); border: 1px solid rgba(15,118,110,0.18); border-radius: 14px; padding: 20px 22px; font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
 .price-school-it strong { color: var(--accent2); display: block; margin-bottom: 6px; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .price-school-it a { color: var(--accent2); text-decoration: none; }
 .price-school-it a:hover { text-decoration: underline; }
-.btn-price-school { display: block; text-align: center; padding: 13px 32px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid rgba(91,127,255,0.4); color: var(--accent2); white-space: nowrap; }
-.btn-price-school:hover { background: rgba(91,127,255,0.1); border-color: var(--accent); color: var(--accent); }
-.no-ads { display: flex; align-items: center; gap: 20px; background: rgba(46,213,115,0.07); border: 1px solid rgba(46,213,115,0.2); border-radius: 16px; padding: 24px 36px; margin: 24px 0 0; }
+.btn-price-school { display: block; text-align: center; padding: 13px 32px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: 1px solid rgba(45,106,79,0.4); color: var(--accent2); white-space: nowrap; }
+.btn-price-school:hover { background: rgba(45,106,79,0.1); border-color: var(--accent); color: var(--accent); }
+.no-ads { display: flex; align-items: center; gap: 20px; background: rgba(45,106,79,0.06); border: 1px solid rgba(45,106,79,0.18); border-radius: 16px; padding: 24px 36px; margin: 24px 0 0; }
 .no-ads .ni { font-size: 1.8rem; flex-shrink: 0; }
 .no-ads p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
 .no-ads strong { color: var(--green); }
@@ -434,6 +433,10 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 @media (max-width: 1000px) { .pricing-top { grid-template-columns: 1fr 1fr; } .products-grid { grid-template-columns: 1fr 1fr; } .price-school-body { grid-template-columns: 1fr; } .price-school-header { flex-direction: column; align-items: flex-start; } .price-school-header-right { align-items: flex-start; } .student-grid { grid-template-columns: 1fr 1fr; } .who-grid { grid-template-columns: 1fr 1fr; } .features-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 768px) { .products-grid { grid-template-columns: 1fr; } .sync-layout { grid-template-columns: 1fr; } .problem-grid { grid-template-columns: 1fr; } nav { padding: 0 20px; } .nav-links a:not(.nav-cta):not(:last-child) { display: none; } .nav-dropdown { display: flex; } .wrap, .band { padding: 60px 24px; } }
 @media (max-width: 600px) { .features-grid { grid-template-columns: 1fr; } .student-grid { grid-template-columns: 1fr; } .pricing-top { grid-template-columns: 1fr; } .who-grid { grid-template-columns: 1fr; } .price-school-feats { grid-template-columns: 1fr; } }
+.trust-strip { display: flex; align-items: center; gap: 16px; background: rgba(15,118,110,0.06); border: 1px solid rgba(15,118,110,0.18); border-radius: 16px; padding: 24px 36px; margin: 24px 0 0; }
+.trust-strip .ti { font-size: 1.8rem; flex-shrink: 0; }
+.trust-strip p { font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+.trust-strip strong { color: #0F766E; }
 </style>
 <script type="application/ld+json">
 {
@@ -494,16 +497,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
           <div><div class="ndp-name">Layers Guard</div><div class="ndp-sub">Parental web filter · Chrome &amp; Edge</div></div>
           <span class="ndp-free">FREE</span>
         </a>
-        <a href="guard-mobile.html" class="ndp-item" role="menuitem">
-          <div class="ndp-icon purple">📱</div>
-          <div><div class="ndp-name">Layers Guard Mobile</div><div class="ndp-sub">Parental controls · Android</div></div>
-          <span class="ndp-free">FREE</span>
-        </a>
-        <a href="guard-pro.html" class="ndp-item" role="menuitem">
-          <div class="ndp-icon" style="background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.3);">🖥</div>
-          <div><div class="ndp-name">Layers Guard Pro <span style="font-size:0.7em;color:#34d399;font-weight:700;margin-left:6px;">COMING SOON</span></div><div class="ndp-sub">Remote PC controls · Windows + Android</div></div>
-          <span class="ndp-free" style="background:rgba(52,211,153,0.15);color:#34d399;border-color:rgba(52,211,153,0.3);">$10</span>
-        </a>
         <div class="ndp-divider"></div>
         <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener noreferrer" class="ndp-item" role="menuitem">
           <div class="ndp-icon blue">🎓</div>
@@ -520,14 +513,15 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
 <div class="announce-bar" id="announce-bar">
   <span class="ab-tag">New</span>
-  <span><strong>Layers Guard Pro</strong> — Remote parental controls for Windows. Control your child's PC from your phone. Coming soon.</span>
+  <span><strong>Layers Guard Pro for Windows</strong> — Remote parental control for your child's PC. Coming soon.</span>
   <a href="guard-pro.html" class="ab-link">Learn more →</a>
   <button class="ab-dismiss" onclick="document.getElementById('announce-bar').style.display='none'" aria-label="Dismiss">×</button>
 </div>
 
 <section class="hero">
   <div class="hero-glow"></div>
-<h1>Help children learn, focus<br>&amp; stay <em>safe online.</em></h1>
+  <div class="hero-badge">🛡 Trusted by families in 40+ countries</div>
+  <h1>Help children learn, focus<br>&amp; stay <em>safe online.</em></h1>
   <p class="hero-sub">Classroom tools for teachers. Study tools for students. Parental controls for families. Everything is built to help children succeed — at school and at home.</p>
   <div class="hero-actions">
     <a href="#products" class="btn-primary">See All Products</a>
@@ -554,6 +548,105 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <div class="tb-pill"><span class="icon">🌐</span><span class="lbl">BROWSER</span></div>
     </div>
     <p class="toolbar-label" data-i18n="toolbar_label">// always on top · floats over any app · drag to reposition</p>
+  </div>
+</section>
+
+<section class="wrap" id="products">
+  <div class="reveal">
+    <span class="label-tag">// The Layers family</span>
+    <h2>Four tools. One <em>mission.</em></h2>
+    <p class="intro">Classroom management for teachers. Productivity tools for students. Parental controls for families. Every product is free or one-time purchase — no subscriptions, ever.</p>
+  </div>
+  <div class="products-grid reveal">
+    <!-- Teacher card -->
+    <div class="product-card featured">
+      <span class="product-num">01</span>
+      <div class="product-badge blue">For Teachers &amp; Presenters</div>
+      <h3>Layers</h3>
+      <p>A floating toolbar that sits on top of your slides and apps. Timer, translation, annotation, student picker, and remote classroom controls — one click away.</p>
+      <ul class="feature-list">
+        <li>Floats above slides, videos, or any app — always on top</li>
+        <li>Live speech translation into 46 languages</li>
+        <li>Connect to student devices and control their focus remotely</li>
+      </ul>
+      <p class="product-who">Windows &amp; Mac · $29 one-time · 14-day free trial</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <a href="get.html" style="display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">⬇ Try Free</a>
+      </div>
+    </div>
+    <!-- Student card -->
+    <div class="product-card">
+      <span class="product-num">02</span>
+      <div class="product-badge" style="background:rgba(46,213,115,0.12);border-color:rgba(46,213,115,0.3);color:var(--green);">For Students · Free Forever</div>
+      <h3>Layers Student</h3>
+      <p>A toolbar that lives in the browser — translation, notes, timer, and focus tools on top of any page, without opening a new tab.</p>
+      <ul class="feature-list">
+        <li>Translate any word or sentence — on any website</li>
+        <li>Focus Mode blocks distracting sites</li>
+        <li>Connects to the teacher's classroom for live controls</li>
+      </ul>
+      <p class="product-who">Chrome &amp; Edge · Free — no account needed.</p>
+      <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--green);color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;">+ Add to Chrome — Free</a>
+    </div>
+    <!-- Guard card -->
+    <div class="product-card" style="border-color:rgba(167,139,250,0.25);background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(26,26,36,0.9));">
+      <span class="product-num" style="color:rgba(167,139,250,0.12);">03</span>
+      <div class="product-badge" style="background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.3);color:#c4b5fd;">For Parents · Free Forever</div>
+      <h3 style="color:#c4b5fd;">Layers Guard</h3>
+      <p>Block websites, set bedtime curfews, and monitor what your child sees. PIN-protected so children can't change anything — even in incognito.</p>
+      <ul class="feature-list">
+        <li style="--li-color:#a78bfa;">Block any website instantly — add a domain and it's gone</li>
+        <li>Lockout mode — cut all internet during bedtime hours</li>
+        <li>PIN-protected settings your children can't touch</li>
+      </ul>
+      <p class="product-who">Chrome &amp; Edge · Free forever — no account needed.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <a href="guard.html" style="display:inline-flex;align-items:center;gap:7px;background:#a78bfa;color:#0d0d12;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">🛡 Learn More</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="guard" style="padding-bottom:60px;">
+  <div class="reveal">
+    <span class="label-tag" style="color:#0F766E;">// For parents</span>
+    <h2>Your child is<br><em style="color:#0F766E;">protected.</em></h2>
+    <p class="intro">Layers Guard gives you real control. Block harmful sites, set bedtime curfews, and monitor what your child sees. Free on Chrome and Edge.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;" class="reveal">
+    <!-- Guard Chrome -->
+    <div style="background:var(--card-bg);border:1px solid rgba(167,139,250,0.2);border-radius:20px;padding:36px;transition:transform 0.3s,border-color 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(167,139,250,0.4)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(167,139,250,0.2)'">
+      <div style="font-size:2.2rem;margin-bottom:16px;">🛡</div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:8px;">Layers Guard</h3>
+      <p style="font-size:0.82rem;color:#a78bfa;font-weight:600;margin-bottom:14px;">Chrome &amp; Edge Extension · Free</p>
+      <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:20px;">Block websites by domain, schedule when sites are available, and lock out all internet during bedtime hours. PIN-protected so your children can't change settings — even in incognito mode.</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;">
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Block any website instantly</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Schedule when sites are blocked</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Bedtime lockout — cuts all internet</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Works in incognito mode</li>
+      </ul>
+      <a href="guard.html" style="display:inline-flex;align-items:center;gap:8px;background:#a78bfa;color:#0d0d12;padding:11px 22px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;">Learn More →</a>
+    </div>
+    <!-- Guard Pro teaser -->
+    <div style="background:var(--card-bg);border:1px solid rgba(52,211,153,0.25);border-radius:20px;padding:36px;transition:transform 0.3s,border-color 0.3s;position:relative;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(52,211,153,0.45)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(52,211,153,0.25)'">
+      <span style="position:absolute;top:16px;right:16px;background:#34D399;color:#0d2b1f;font-size:0.65rem;font-weight:800;padding:3px 10px;border-radius:100px;letter-spacing:0.08em;text-transform:uppercase;">Coming Soon</span>
+      <div style="font-size:2.2rem;margin-bottom:16px;">🖥</div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:1.5rem;margin-bottom:8px;color:var(--text);">Layers Guard Pro</h3>
+      <p style="font-size:0.82rem;color:#0F766E;font-weight:600;margin-bottom:14px;">Windows Agent · Coming Soon</p>
+      <p style="font-size:0.9rem;color:var(--muted);line-height:1.7;margin-bottom:20px;">Set rules from your phone — they enforce themselves on your child's Windows PC, silently, without a second screen.</p>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px;">
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#0F766E;">✓</span> Remote control from the Controller app</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#0F766E;">✓</span> Block apps and websites on the PC</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#0F766E;">✓</span> Daily time limits + bedtime lockout</li>
+        <li style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--muted);"><span style="color:#0F766E;">✓</span> Real-time alerts to your phone</li>
+      </ul>
+      <a href="guard-pro.html" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#0F766E;padding:11px 22px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;border:1px solid rgba(15,118,110,0.4);">Learn More →</a>
+    </div>
+  </div>
+  <div class="trust-strip reveal">
+    <span class="ti">🔒</span>
+    <p><strong>No ads. No accounts. No cloud.</strong> Everything runs on your device. Your family's data stays yours.</p>
   </div>
 </section>
 
@@ -625,66 +718,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   </div>
 </div>
 
-<section class="wrap" id="products">
-  <div class="reveal">
-    <span class="label-tag">// The Layers family</span>
-    <h2>Four tools. One <em>mission.</em></h2>
-    <p class="intro">Classroom management for teachers. Productivity tools for students. Parental controls for families. Every product is free or one-time purchase — no subscriptions, ever.</p>
-  </div>
-  <div class="products-grid reveal">
-    <!-- Teacher card -->
-    <div class="product-card featured">
-      <span class="product-num">01</span>
-      <div class="product-badge blue">For Teachers &amp; Presenters</div>
-      <h3>Layers</h3>
-      <p>A floating toolbar that sits on top of your slides and apps. Timer, translation, annotation, student picker, and remote classroom controls — one click away.</p>
-      <ul class="feature-list">
-        <li>Floats above slides, videos, or any app — always on top</li>
-        <li>Live speech translation into 46 languages</li>
-        <li>Connect to student devices and control their focus remotely</li>
-      </ul>
-      <p class="product-who">Windows &amp; Mac · $29 one-time · 14-day free trial</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
-        <a href="get.html" style="display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#fff;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">⬇ Try Free</a>
-      </div>
-    </div>
-    <!-- Student card -->
-    <div class="product-card">
-      <span class="product-num">02</span>
-      <div class="product-badge" style="background:rgba(46,213,115,0.12);border-color:rgba(46,213,115,0.3);color:var(--green);">For Students · Free Forever</div>
-      <h3>Layers Student</h3>
-      <p>A toolbar that lives in the browser — translation, notes, timer, and focus tools on top of any page, without opening a new tab.</p>
-      <ul class="feature-list">
-        <li>Translate any word or sentence — on any website</li>
-        <li>Focus Mode blocks distracting sites</li>
-        <li>Connects to the teacher's classroom for live controls</li>
-      </ul>
-      <p class="product-who">Chrome &amp; Edge · Free — no account needed.</p>
-      <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh?utm_source=item-share-cb" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--green);color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.88rem;font-weight:700;text-decoration:none;transition:all 0.2s;">+ Add to Chrome — Free</a>
-    </div>
-    <!-- Guard card -->
-    <div class="product-card" style="border-color:rgba(167,139,250,0.25);background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(26,26,36,0.9));">
-      <span class="product-num" style="color:rgba(167,139,250,0.12);">03</span>
-      <div class="product-badge" style="background:rgba(167,139,250,0.12);border-color:rgba(167,139,250,0.3);color:#c4b5fd;">For Parents · Free Forever</div>
-      <h3 style="color:#c4b5fd;">Layers Guard</h3>
-      <p>Block websites, set internet schedules, and cut off internet at bedtime. PIN-protected so your children can't change anything. Works in incognito.</p>
-      <ul class="feature-list">
-        <li style="--li-color:#a78bfa;">Block any website instantly — add a domain and it's gone</li>
-        <li>Lockout mode — cut all internet during bedtime hours</li>
-        <li>PIN-protected settings your children can't touch</li>
-      </ul>
-      <p class="product-who">Chrome &amp; Edge · Free forever — no account needed.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
-        <a href="guard.html" style="display:inline-flex;align-items:center;gap:7px;background:#a78bfa;color:#0d0d12;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">🛡 Chrome</a>
-        <a href="guard-mobile.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:#c4b5fd;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;border:1px solid rgba(167,139,250,0.35);">📱 Android</a>
-        <a href="guard-pro.html" style="display:inline-flex;align-items:center;gap:7px;background:transparent;color:#34d399;padding:10px 18px;border-radius:10px;font-size:0.85rem;font-weight:600;text-decoration:none;transition:all 0.2s;border:1px solid rgba(52,211,153,0.35);">🖥 Guard Pro</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
 <div class="band" id="students">
   <div class="band-inner">
     <div class="reveal">
@@ -726,60 +759,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
     </div>
   </div>
 </div>
-
-<section class="wrap" id="guard" style="padding-bottom:60px;">
-  <div class="reveal">
-    <span class="label-tag" style="color:#a78bfa;">// For parents</span>
-    <h2>Protect your children<br><em style="color:#a78bfa;">at home, too.</em></h2>
-    <p class="intro">Layers Guard gives parents the same control teachers have — block websites, set schedules, and cut internet at bedtime. Free on Chrome, Edge, and Android.</p>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-top:48px;" class="reveal">
-    <!-- Guard Chrome -->
-    <div style="background:var(--card-bg);border:1px solid rgba(167,139,250,0.2);border-radius:20px;padding:32px;transition:transform 0.3s,border-color 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(167,139,250,0.4)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(167,139,250,0.2)'">
-      <div style="font-size:2rem;margin-bottom:14px;">🛡</div>
-      <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px;">Layers Guard</h3>
-      <p style="font-size:0.78rem;color:#a78bfa;font-weight:600;margin-bottom:12px;">Chrome &amp; Edge Extension · Free</p>
-      <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:18px;">Block websites, set schedules, and cut all internet at bedtime. PIN-protected so children can't change anything — even in incognito.</p>
-      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px;">
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Block any website instantly</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Bedtime lockout &amp; schedules</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> Works in incognito mode</li>
-      </ul>
-      <a href="guard.html" style="display:inline-flex;align-items:center;gap:8px;background:#a78bfa;color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">Learn More →</a>
-    </div>
-    <!-- Guard Mobile -->
-    <div style="background:var(--card-bg);border:1px solid rgba(167,139,250,0.2);border-radius:20px;padding:32px;transition:transform 0.3s,border-color 0.3s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(167,139,250,0.4)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(167,139,250,0.2)'">
-      <div style="font-size:2rem;margin-bottom:14px;">📱</div>
-      <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px;">Guard Mobile</h3>
-      <p style="font-size:0.78rem;color:#a78bfa;font-weight:600;margin-bottom:12px;">Android App · Free</p>
-      <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:18px;">VPN-based DNS filtering that works across every app on the child's Android phone. On-device AI monitors chats and flags harmful content.</p>
-      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px;">
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> VPN-based — blocks every app</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> On-device AI chat monitoring</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#a78bfa;">✓</span> No data sent to the cloud</li>
-      </ul>
-      <a href="guard-mobile.html" style="display:inline-flex;align-items:center;gap:8px;background:#a78bfa;color:#0d0d12;padding:10px 20px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">Learn More →</a>
-    </div>
-    <!-- Guard Desktop — NEW -->
-    <div style="background:linear-gradient(145deg,rgba(52,211,153,0.07),rgba(13,13,18,0.95));border:1px solid rgba(52,211,153,0.28);border-radius:20px;padding:32px;transition:transform 0.3s,border-color 0.3s;position:relative;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='rgba(52,211,153,0.5)'" onmouseout="this.style.transform='none';this.style.borderColor='rgba(52,211,153,0.28)'">
-      <div style="position:absolute;top:16px;right:16px;background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:#34d399;font-size:0.65rem;font-weight:700;padding:3px 10px;border-radius:100px;letter-spacing:0.06em;">COMING SOON</div>
-      <div style="font-size:2rem;margin-bottom:14px;">🖥</div>
-      <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:8px;color:#34d399;">Guard Pro</h3>
-      <p style="font-size:0.78rem;color:#34d399;font-weight:600;margin-bottom:12px;">Windows + Android</p>
-      <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;margin-bottom:18px;">Control your child's Windows PC from your phone. Block apps and sites remotely, set screen time limits, and cut internet at bedtime — from anywhere.</p>
-      <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px;">
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#34d399;">✓</span> Remote control from your phone</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#34d399;">✓</span> Blocks apps &amp; sites, any browser</li>
-        <li style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--muted);"><span style="color:#34d399;">✓</span> Child cannot switch it off</li>
-      </ul>
-      <a href="guard-pro.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(52,211,153,0.15);color:#34d399;border:1px solid rgba(52,211,153,0.35);padding:10px 20px;border-radius:10px;font-size:0.85rem;font-weight:700;text-decoration:none;transition:all 0.2s;">Learn More →</a>
-    </div>
-  </div>
-  <div style="margin-top:24px;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.18);border-radius:14px;padding:20px 28px;display:flex;align-items:center;gap:16px;" class="reveal">
-    <span style="font-size:1.5rem;flex-shrink:0;">👨‍👧‍👦</span>
-    <p style="font-size:0.9rem;color:var(--muted);line-height:1.65;"><strong style="color:#c4b5fd;">Built by a parent.</strong> I have four children and I built these tools because I needed them myself. No ads, no tracking, no accounts. Just a parent helping other parents keep their kids safe online.</p>
-  </div>
-</section>
 
 <section class="wrap" id="languages">
   <div class="reveal">
@@ -896,26 +875,22 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
       <!-- Guard (free for parents) -->
       <div class="price-card" style="border-color:rgba(167,139,250,0.3);background:linear-gradient(160deg,rgba(167,139,250,0.07),rgba(26,26,36,0.95));">
-        <div class="pop-tag" style="background:#a78bfa;color:#0d0d12;">Free + $10</div>
+        <div class="pop-tag" style="background:#a78bfa;color:#0d0d12;">Free</div>
         <div class="p-tier">For Parents</div>
         <div class="p-name">Layers Guard</div>
         <div class="p-amount"><span class="p-num" style="color:#c4b5fd;">Free</span></div>
-        <div class="p-save" style="color:#c4b5fd;">Chrome extension free · Guard Mobile $10 once</div>
+        <div class="p-save" style="color:#c4b5fd;">Free forever · No account needed</div>
         <div class="p-divider"></div>
         <ul class="p-features">
-          <li><span class="ck" style="color:#a78bfa;">✓</span> Block any website by domain</li>
-          <li><span class="ck" style="color:#a78bfa;">✓</span> Schedule when sites are blocked</li>
-          <li><span class="ck" style="color:#a78bfa;">✓</span> Lockout mode — cut internet at bedtime</li>
-          <li><span class="ck" style="color:#a78bfa;">✓</span> PIN-protected parent settings</li>
-          <li><span class="ck" style="color:#a78bfa;">✓</span> Works in incognito mode</li>
-          <li><span class="ck" style="color:#a78bfa;">✓</span> Chat monitoring on Android</li>
-          <li><span class="ck" style="color:#a78bfa;">✓</span> On-device AI — nothing sent to the cloud</li>
-          <li><span class="ck" style="color:#34d399;">✓</span> <strong style="color:#34d399;">Guard Pro</strong> — Windows PC lockdown <span style="font-size:0.75em;opacity:0.7;">(coming soon)</span></li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> Block any website by domain</li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> Schedule when sites are blocked</li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> Lockout mode — cut internet at bedtime</li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> PIN-protected parent settings</li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> Works in incognito mode</li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> On-device AI — nothing sent to the cloud</li>
+          <li><span class="ck" style="color:#0F766E;">✓</span> Chrome &amp; Edge</li>
         </ul>
-        <div style="display:flex;gap:8px;flex-direction:column;">
-          <a href="guard.html" class="btn-price" style="background:#a78bfa;border-color:#a78bfa;color:#0d0d12;font-weight:700;">Guard Chrome &amp; Mobile →</a>
-          <a href="guard-pro.html" class="btn-price" style="background:rgba(52,211,153,0.12);border-color:rgba(52,211,153,0.35);color:#34d399;font-weight:700;">Guard Pro — Coming Soon →</a>
-        </div>
+        <a href="guard.html" class="btn-price" style="background:#a78bfa;border-color:#a78bfa;color:#0d0d12;font-weight:700;">Learn More →</a>
       </div>
 
     </div>
@@ -955,28 +930,6 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   </div>
 </div>
 
-<div class="band" id="story">
-  <div class="band-inner">
-    <div class="reveal">
-      <span class="label-tag" data-i18n="story_tag">// Why I built Layers</span>
-      <h2 data-i18n="story_h2">This is personal.<br><em>Here's why.</em></h2>
-    </div>
-    <div class="story-body reveal" data-i18n="story_body">
-      <p>I'm Peter Hoang, a teacher living in Japan.</p>
-      <p>I teach at a school where most of my students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where the lessons are in Japanese, sometimes English, and they understand very little of either.</p>
-      <p>I watch them struggle, and I see something I recognise.</p>
-      <p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn't speak the language, didn't understand the culture, and had no one to explain what was happening around them. My mother sat in government offices not understanding the forms she was signing. My father took whatever work he could find, nodding along to instructions he couldn't follow. They built a life anyway — through stubbornness, sacrifice, and the kindness of people who took the time to help.</p>
-      <p>I grew up watching what it costs to live in a language that isn't yours. The confusion. The isolation. The quiet shame of not understanding something everyone else seems to get.</p>
-      <p>Now I see the same thing in my classroom. A student from Vietnam staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who's bright and capable but falls behind because the lesson moves faster than their language skills allow.</p>
-      <p>These kids remind me of my parents. They remind me of the kid I would have been if my family had landed somewhere else.</p>
-      <p><strong>That's why I built Layers.</strong></p>
-      <p>It started as a floating toolbar that gives students real-time translation, a dictionary, and study tools right on top of whatever they're working on. Then I became a father of four — and I realised the same children I was trying to help at school also needed protection at home. So I built Layers Guard — parental controls that block harmful websites, enforce bedtime curfews, and monitor what children see on their screens.</p>
-      <p>The student tools are free, and they always will be. The parental tools are free, and they always will be. Because the families who need them most are the ones who can least afford to pay.</p>
-    </div>
-    <p class="story-sign reveal">— Peter Hoang</p>
-  </div>
-</div>
-
 <footer>
   <div class="footer-inner">
     <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">Help children learn, focus &amp; stay safe online</span></div>
@@ -984,14 +937,12 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <a href="#features" data-i18n="nav_features">Features</a>
       <a href="#students" data-i18n="nav_students">For Students</a>
       <a href="guard.html" style="color:#a78bfa;">Layers Guard</a>
-      <a href="guard-mobile.html" style="color:#a78bfa;">Guard Mobile</a>
-      <a href="guard-pro.html" style="color:#34d399;">Guard Pro</a>
       <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
       <a href="contact.html" data-i18n="footer_contact">Contact</a>
       <a href="blog/" data-i18n="nav_blog">Blog</a>
       <a href="privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
     </div>
-    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+    <p class="footer-copy">© 2026 Layers · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
   </div>
 </footer>
 
@@ -999,14 +950,14 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 var T = {
   en: {
     nav_features:"For Teachers", nav_students:"For Students", nav_pricing:"Pricing", nav_cta:"Get Started",
-    hero_badge:"🌏 Built by a teacher &amp; father of four in Japan",
+    hero_badge:"🛡 Trusted by families in 40+ countries",
     hero_h1:"Help children learn, focus<br>&amp; stay <em>safe online.</em>",
-    hero_sub:"Classroom tools for teachers. Study tools for students. Parental controls for families. Everything is built to help children succeed — at school and at home.",
+    hero_sub:"Classroom tools for teachers. Study tools for students. Parental controls for families. Free to use, free to trust.",
     hero_btn_teacher:"See All Products", hero_btn_student:"🛡 Layers Guard — Free",
     hero_btn_try:"See All Products", hero_see_pricing:"Pricing",
     toolbar_label:"// always on top · floats over any app · drag to reposition",
-    prob_tag:"// The problem", prob_h2:"Every interruption<br>costs you <em>the room.</em>",
-    prob_intro:"Every time you stop to translate for a student, switch apps for a timer, or hunt for a file — you lose everyone else. Layers keeps every tool on top of your presentation, one click away.",
+    prob_tag:"// The problem", prob_h2:"Every interruption<br>loses <em>the room.</em>",
+    prob_intro:"Stop to translate, hunt for a file, switch apps for a timer — you lose the room. Layers keeps everything on top of your presentation. One click, no switching.",
     prob_li1:"Stopping mid-lesson to translate for a student who doesn't follow", prob_li2:"Switching windows to look something up",
     prob_li3:"Fumbling to open a video or audio clip", prob_li4:"Switching to a separate annotation app", prob_li5:"Awkwardly deciding who to pick next",
     prob_quote:"\"Every switch breaks your flow and distracts your audience. Layers puts everything right where you need it — on top of your presentation.\"",
@@ -1047,7 +998,7 @@ var T = {
     feat9_h:"Quick File Launcher", feat9_p:"Open any document, PDF, spreadsheet, or presentation directly from the toolbar. No more hunting through folders mid-lesson — your materials open in one click from wherever Layers is.",
     feat10_h:"Internet Lockdown", feat10_p:"One button instantly blocks all internet access on every student's screen. Students see a full-screen stop overlay and cannot browse until you lift it. Works independently of Focus Mode — both can be active at the same time.",
     who_tag:"// Who uses Layers", who_h2:"For teachers who reach<br>students across <em>any language.</em>",
-    who_intro:"Built by a teacher in Japan for classrooms full of students from Vietnam, China, Nepal, and beyond — Layers is used by language teachers, presenters, and trainers worldwide.",
+    who_intro:"Designed for multilingual classrooms — used by language teachers, trainers, and presenters in over 40 countries.",
     who1_title:"Teachers", who1_sub:"Primary, secondary & higher education",
     who2_title:"Language Instructors", who2_sub:"Teaching multilingual classrooms",
     who3_title:"Corporate Trainers", who3_sub:"Workshops, onboarding, team sessions",
@@ -1055,7 +1006,7 @@ var T = {
     who5_title:"Workshop Facilitators", who5_sub:"Group activities & timed exercises",
     who6_title:"Sales Professionals", who6_sub:"Product demos & client presentations",
     stud_tag:"// Layers Student — free browser tool", stud_h2:"Not just translation.<br>A full <em>study toolkit.</em>",
-    stud_intro:"Layers Student is a complete floating toolkit that lives in the browser — seven tools, always one click away, on top of any page your students are working on. Free forever, no account needed.",
+    stud_intro:"Seven tools. One click away. Always on top of whatever page they're on. Free forever — no sign-up needed.",
     stud_free_badge:"✓ Completely free · No sign-up · Works on any website",
     stud1_name:"Push-to-Talk Translation", stud1_sub:"Speak and see it translated", stud1_p:"Students hold a button and speak in their language — their words are translated and displayed instantly. Useful for students who want to ask a question in class but aren't confident in the lesson language.",
     stud2_name:"Translation & Dictionary", stud2_sub:"29 languages", stud2_p:"Highlight any word on any page and instantly see a full definition — with pronunciation, part of speech, and an example sentence — translated into their own language. Or translate the entire page with one click.",
@@ -1067,7 +1018,7 @@ var T = {
     lang_tag:"// Translation languages", lang_h2:"Speak. Your students<br><em>understand.</em>",
     lang_intro:"The teacher app translates into 46 languages live as you speak. The student browser tool covers 29. If your students speak it, Layers almost certainly supports it.",
     sync_tag:"// Classroom connection", sync_h2:"Control every screen<br>in the <em>room.</em>",
-    sync_intro:"Create a permanent classroom once and share the code with your class. From that moment, every student's screen is connected — and they'll automatically rejoin at the start of every lesson.",
+    sync_intro:"Share the room code once. Every student's screen connects — and auto-rejoins every lesson from then on.",
     sync_f1:"Switch on Focus Mode for the whole class at once",
     sync_f2:"Block any website instantly — it disappears from every student's screen",
     sync_f3:"Trigger Internet Lockdown — cuts all browsing on every student's device",
@@ -1079,7 +1030,7 @@ var T = {
     sync_arrow2:"↓ arrives instantly", sync_box3_title:"Students — Layers in the browser", sync_box3_sub:"Receives and applies instructions immediately",
     sync_note:"Works with any Chromebook, laptop, or desktop in your classroom",
     price_tag:"// Pricing", price_h2:"Pay once.<br><em>Teach forever.</em>",
-    price_intro:"Students and parents get everything free. Teachers pay once — no subscriptions, no monthly fees, no renewals.",
+    price_intro:"Students and parents: always free. Teachers: pay once, keep forever.",
     p1_tier:"For Students", p1_name:"Student", p1_price:"Free", p1_save:"Forever free · No account needed",
     p1_f1:"Works in any browser on any device", p1_f2:"Translation & dictionary — 29 languages",
     p1_f3:"Notepad, always one click away", p1_f4:"Page drawing & annotation",
@@ -1101,16 +1052,12 @@ var T = {
     cta_btn_teacher:"See All Products", cta_btn_student:"🛡 Layers Guard — Free",
     footer_tagline:"Help children learn, focus &amp; stay safe online", footer_contact:"Contact", footer_privacy:"Privacy Policy",
     nav_blog:"Blog",
-    nav_support:"☕ Support",
-    story_tag:"// Why I built Layers",
-    story_h2:"This is personal.<br><em>Here's why.</em>",
-    story_body:'<p>I\'m Peter Hoang, a teacher living in Japan.</p><p>I teach at a school where most of my students are Japanese, but over the past few years, something has been changing. More and more students are arriving from Vietnam, China, Nepal, the Philippines, and other countries — families trying to build a new life in Japan. They sit in classrooms where the lessons are in Japanese, sometimes English, and they understand very little of either.</p><p>I watch them struggle, and I see something I recognise.</p><p>Forty years ago, my parents were refugees. They fled Vietnam with nothing and resettled in Australia — a country where they didn\'t speak the language, didn\'t understand the culture, and had no one to explain what was happening around them. My mother sat in government offices not understanding the forms she was signing. My father took whatever work he could find, nodding along to instructions he couldn\'t follow. They built a life anyway — through stubbornness, sacrifice, and the kindness of people who took the time to help.</p><p>I grew up watching what it costs to live in a language that isn\'t yours. The confusion. The isolation. The quiet shame of not understanding something everyone else seems to get.</p><p>Now I see the same thing in my classroom. A student from Vietnam staring at a Japanese textbook, lost. A Nepali kid too embarrassed to ask the teacher to repeat something for the third time. A Filipino student who\'s bright and capable but falls behind because the lesson moves faster than their language skills allow.</p><p>These kids remind me of my parents. They remind me of the kid I would have been if my family had landed somewhere else.</p><p><strong>That\'s why I built Layers.</strong></p><p>It started as a floating toolbar that gives students real-time translation, a dictionary, and study tools right on top of whatever they\'re working on. Then I became a father of four — and I realised the same children I was trying to help at school also needed protection at home. So I built Layers Guard — parental controls that block harmful websites, enforce bedtime curfews, and monitor what children see on their screens.</p><p>The student tools are free, and they always will be. The parental tools are free, and they always will be. Because the families who need them most are the ones who can least afford to pay.</p>',
-    story_coffee:"Support Layers"
+    nav_support:"☕ Support"
   },
 
   ja: {
     nav_features:"先生向け", nav_students:"生徒向け", nav_pricing:"料金", nav_cta:"はじめる",
-    hero_badge:"🌏 多言語クラスのために作られた · 14日間無料体験",
+    hero_badge:"🛡 世界40カ国以上の家族に信頼されています",
     hero_h1:"言語の壁を超えて教える。<br>スライドを<em>離れずに。</em>",
     hero_sub:"Layersは授業の上に浮かびます — 46言語のリアルタイム翻訳、タイマー、注釈、生徒ピッカー、クラス管理。スライドを離れずすべてが手元に。",
     hero_btn_teacher:"教師用アプリを入手 — $29 · Windows &amp; Mac", hero_btn_student:"生徒用拡張機能（無料）",
@@ -1158,7 +1105,7 @@ var T = {
     feat9_h:"クイックファイルランチャー", feat9_p:"ツールバーから直接ドキュメント、PDF、スプレッドシート、プレゼンを開く。授業中にフォルダを探す必要はありません。",
     feat10_h:"\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u30c0\u30a6\u30f3", feat10_p:"\u30dc\u30bf\u30f3\u30671\u3064\u3067\u5168\u751f\u5f92\u306e\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u63a5\u7d9a\u3092\u5373\u5ea7\u306b\u30d6\u30ed\u30c3\u30af\u3002\u751f\u5f92\u306e\u753b\u9762\u306b\u5168\u753b\u9762\u306eSTOP\u30aa\u30fc\u30d0\u30fc\u30ec\u30a4\u304c\u8868\u793a\u3055\u308c\u3001\u89e3\u9664\u3059\u308b\u307e\u3067\u64cd\u4f5c\u3067\u304d\u307e\u305b\u3093\u3002\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3068\u306f\u72ec\u7acb\u3057\u3066\u52d5\u4f5c\u3057\u3001\u540c\u6642\u306b\u4f7f\u7528\u3059\u308b\u3053\u3068\u3082\u3067\u304d\u307e\u3059\u3002",
     who_tag:"// Layersを使う人", who_h2:"言語が違う生徒に<br><em>届く教え方へ。</em>",
-    who_intro:"日本の教室で、ベトナム、中国、ネパールなどからの生徒たちのために作られました。言語の壁がある教室で教えるすべての先生に。",
+    who_intro:"多言語教室のために設計されました — 語学教師、トレーナー、プレゼンターが40カ国以上で使用しています。",
     who1_title:"教師", who1_sub:"小学校・中学校・高校・大学",
     who2_title:"語学教師", who2_sub:"多言語クラスの指導",
     who3_title:"企業トレーナー", who3_sub:"研修、オンボーディング、チームセッション",
@@ -1166,7 +1113,7 @@ var T = {
     who5_title:"ワークショップ進行役", who5_sub:"グループ活動・時間制演習",
     who6_title:"営業担当者", who6_sub:"製品デモ・クライアントプレゼン",
     stud_tag:"// Layers Student — 無料ブラウザツール", stud_h2:"翻訳だけじゃない。<br>完全な<em>学習ツールキット。</em>",
-    stud_intro:"Layers Studentはブラウザに常駐する7つのツールキット。作業中のページの上に常にワンクリックでアクセスできます。永久無料、アカウント不要。",
+    stud_intro:"7つのツール。ワンクリックで。どのページでも常に表示。永久無料 — 登録不要。",
     stud_free_badge:"✓ 完全無料 · 登録不要 · あらゆるウェブサイトで動作",
     stud1_name:"プッシュトゥトーク翻訳", stud1_sub:"話すと即翻訳", stud1_p:"ボタンを押しながら自分の言語で話すと、言葉がすぐに翻訳されて表示されます。授業の言語に自信がない生徒が質問するときに役立ちます。",
     stud2_name:"翻訳・辞書", stud2_sub:"29言語対応", stud2_p:"ページ上の任意の単語をハイライトして、発音・品詞・例文付きの完全な定義を自分の言語で即確認。またはワンクリックでページ全体を翻訳。",
@@ -1178,7 +1125,7 @@ var T = {
     lang_tag:"// 対応言語", lang_h2:"話すだけで<br>生徒が<em>理解します。</em>",
     lang_intro:"教師用アプリは話しながらリアルタイムで46言語に翻訳。生徒用ブラウザツールは29言語対応。",
     sync_tag:"// 教室接続", sync_h2:"教室のすべての画面を<br><em>管理します。</em>",
-    sync_intro:"\u6388\u696d\u5ba4\u3092\u4e00\u5ea6\u4f5c\u6210\u3057\u3066\u30b3\u30fc\u30c9\u3092\u30af\u30e9\u30b9\u3067\u5171\u6709\u3059\u308b\u3060\u3051\u3002\u305d\u306e\u77ac\u9593\u304b\u3089\u3059\u3079\u3066\u306e\u751f\u5f92\u306e\u753b\u9762\u306b\u63a5\u7d9a\u3067\u304d\u3001\u6b21\u56de\u306e\u6388\u696d\u304b\u3089\u3082\u81ea\u52d5\u7684\u306b\u518d\u63a5\u7d9a\u3055\u308c\u307e\u3059\u3002",
+    sync_intro:"ルームコードを一度共有するだけ。全生徒の画面が接続され、以降は毎授業自動的に再接続されます。",
     sync_f1:"\u30af\u30e9\u30b9\u5168\u4f53\u306e\u30d5\u30a9\u30fc\u30ab\u30b9\u30e2\u30fc\u30c9\u3092\u4e00\u5ea6\u306b\u8d77\u52d5",
     sync_f2:"\u30a6\u30a7\u30d6\u30b5\u30a4\u30c8\u3092\u5373\u5ea7\u306b\u30d6\u30ed\u30c3\u30af \u2014 \u3059\u3079\u3066\u306e\u751f\u5f92\u306e\u753b\u9762\u304b\u3089\u6d88\u3048\u307e\u3059",
     sync_f3:"\u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8\u30ed\u30c3\u30af\u30c0\u30a6\u30f3\u3092\u767a\u52d5 \u2014 \u5168\u751f\u5f92\u306e\u30c7\u30d0\u30a4\u30b9\u306e\u30d6\u30e9\u30a6\u30b8\u30f3\u30b0\u3092\u906e\u65ad",
@@ -1190,7 +1137,7 @@ var T = {
     sync_arrow2:"↓ 即座に受信", sync_box3_title:"生徒 — ブラウザのLayers", sync_box3_sub:"指示を受信して即座に適用",
     sync_note:"教室内のあらゆるChromebook、ラップトップ、デスクトップに対応",
     price_tag:"// 料金", price_h2:"一度の支払い。<br><em>ずっと使える。</em>",
-    price_intro:"生徒は常に全機能を無料で利用できます。教師は一度だけ支払い — サブスクなし、月額なし、更新料なし。",
+    price_intro:"生徒と保護者は常に無料。教師は一度だけ支払い — 永久に使用できます。",
     p1_tier:"生徒向け", p1_name:"生徒プラン", p1_price:"無料", p1_save:"永久無料 · アカウント不要",
     p1_f1:"あらゆるデバイスのあらゆるブラウザで動作", p1_f2:"翻訳・辞書 — 29言語",
     p1_f3:"メモ帳、ワンクリックでアクセス", p1_f4:"ページ描画・注釈",
@@ -1212,16 +1159,12 @@ var T = {
     cta_btn_teacher:"教師用アプリを入手 — $29 · Windows &amp; Mac", cta_btn_student:"生徒用拡張機能（無料）",
     footer_tagline:"多言語クラスのためのツールキット", footer_contact:"お問い合わせ", footer_privacy:"プライバシーポリシー",
     nav_blog:"ブログ",
-    nav_support:"☕ 応援する",
-    story_tag:"// Layersを作った理由",
-    story_h2:"これは個人的な話です。<br><em>聞いてください。</em>",
-    story_body:'<p>Peter Hoangです。日本で教師をしています。</p><p>私が教えている学校では、ほとんどの生徒が日本人ですが、ここ数年で変化が起きています。ベトナム、中国、ネパール、フィリピンなど、さまざまな国から生徒が増えてきました。日本で新しい生活を築こうとしている家族たちです。彼らは日本語、時には英語で行われる授業に座っていますが、どちらもほとんど理解できません。</p><p>彼らが苦労しているのを見ると、見覚えのあるものを感じます。</p><p>40年前、私の両親は難民でした。ベトナムから何も持たずに逃れ、オーストラリアに再定住しました。言葉もわからず、文化も理解できず、周りで何が起きているか説明してくれる人もいない国でした。母は政府の窓口で、署名している書類の内容がわからないまま座っていました。父はどんな仕事でも引き受け、理解できない指示にうなずいていました。それでも彼らは生活を築きました——頑固さと犠牲、そして助けてくれた人々の優しさによって。</p><p>自分の言語ではない世界で生きることの代償を、私は子供の頃からずっと見てきました。混乱。孤立。他の人が当たり前に理解していることがわからない、静かな恥ずかしさ。</p><p>今、教室で同じことを目にしています。日本語の教科書を前に途方に暮れるベトナムの生徒。3回目のお願いをするのが恥ずかしくて聞けないネパールの生徒。優秀で能力があるのに、授業のスピードが言語能力を超えているために遅れをとるフィリピンの生徒。</p><p>この子たちを見ると、両親を思い出します。もし家族が別の場所にたどり着いていたら、自分がなっていたかもしれない子供を思い出します。</p><p><strong>だからLayersを作りました。</strong></p><p>小さなものです——リアルタイム翻訳、辞書、学習ツールを、作業中の画面の上に浮かべるツールバー。すべてを解決するわけではありません。でも、まだ知らない言葉でいっぱいの教室で、ついていくチャンス、理解するチャンス、少しでも迷わずにいられるチャンスを与えてくれます。</p><p>Chrome拡張機能は無料です。そしてこれからもずっと無料です。なぜなら、最も必要としている生徒たちの家族こそ、お金を払う余裕が最もない人たちだからです。</p>',
-    story_coffee:"Layersを応援する"
+    nav_support:"☕ 応援する"
   },
 
   zh: {
     nav_features:"教师专区", nav_students:"学生专区", nav_pricing:"价格", nav_cta:"立即开始",
-    hero_badge:"🌏 专为多语言课堂打造 · 14天免费试用",
+    hero_badge:"🛡 受到全球40多个国家家庭的信任",
     hero_h1:"跨越语言障碍教学。<br>无需离开<em>您的幻灯片。</em>",
     hero_sub:"Layers 悬浮在您的课堂之上 — 46种语言的实时语音翻译、即时计时器、注释和课堂管理，无需离开幻灯片。",
     hero_btn_teacher:"获取教师应用 — $29 · Windows &amp; Mac", hero_btn_student:"免费学生插件",
@@ -1269,7 +1212,7 @@ var T = {
     feat9_h:"快速文件启动器", feat9_p:"直接从工具栏打开任何文档、PDF、电子表格或演示文稿。课堂中无需再翻找文件夹——您的材料从 Layers 所在位置一键打开。",
     feat10_h:"网络封锁", feat10_p:"一键立即屏蔽每个学生屏幕上的所有互联网访问。学生会看到全屏停止提示，在您解除之前无法浏览任何内容。与专注模式独立运行——两者可同时激活。",
     who_tag:"// 谁在使用 Layers", who_h2:"为跨语言教学的<br><em>教师而生。</em>",
-    who_intro:"由一位在日本执教的老师为多语言班级打造 — 班里有来自越南、中国、尼泊尔等地的学生。如果您的课堂跨越语言，这款工具是为您而设。",
+    who_intro:"专为多语言课堂设计 — 被40多个国家的语言教师、培训师和演讲者使用。",
     who1_title:"教师", who1_sub:"小学、中学和高等教育",
     who2_title:"语言教师", who2_sub:"多语言课堂教学",
     who3_title:"企业培训师", who3_sub:"研讨会、入职培训、团队课程",
@@ -1277,7 +1220,7 @@ var T = {
     who5_title:"工作坊引导师", who5_sub:"小组活动和计时练习",
     who6_title:"销售专业人员", who6_sub:"产品演示和客户演示",
     stud_tag:"// Layers Student — 免费浏览器工具", stud_h2:"不只是翻译。<br>完整的<em>学习工具套件。</em>",
-    stud_intro:"Layers Student 是浏览器内的完整浮动工具套件——七种工具，始终一键可达，悬浮于学生正在浏览的任何页面上方。永久免费，无需账户。",
+    stud_intro:"七个工具。一键可达。始终悬浮于学生正在浏览的任何页面。永久免费 — 无需注册。",
     stud_free_badge:"✓ 完全免费 · 无需注册 · 适用于任何网站",
     stud1_name:"按住说话翻译", stud1_sub:"说话即可看到翻译", stud1_p:"学生按住按钮用自己的语言说话——话语立即被翻译并显示出来。对于想在课堂上提问但对课程语言不自信的学生非常有用。",
     stud2_name:"翻译和词典", stud2_sub:"29种语言", stud2_p:"高亮页面上任何单词，立即查看包含发音、词性和例句的完整释义——翻译成他们自己的语言。或一键翻译整个页面。",
@@ -1289,7 +1232,7 @@ var T = {
     lang_tag:"// 翻译语言", lang_h2:"您说话，学生<br><em>理解。</em>",
     lang_intro:"教师应用在您说话时实时翻译成46种语言。学生浏览器工具支持29种语言。",
     sync_tag:"// 课堂连接", sync_h2:"控制教室中<br><em>每个屏幕。</em>",
-    sync_intro:"一次创建永久课堂并与班级共享代码。从那一刻起，每个学生的屏幕都与您连接——每节课开始时会自动重新连接。",
+    sync_intro:"只需分享一次房间码。所有学生的屏幕即刻连接 — 此后每次课自动重新连接。",
     sync_f1:"一次性为全班开启专注模式",
     sync_f2:"立即屏蔽任何网站——它从每个学生的屏幕上消失",
     sync_f3:"触发网络封锁——切断每个学生设备上的所有浏览",
@@ -1301,7 +1244,7 @@ var T = {
     sync_arrow2:"↓ 即时到达", sync_box3_title:"学生 — 浏览器中的 Layers", sync_box3_sub:"立即接收并应用指令",
     sync_note:"适用于教室中任何 Chromebook、笔记本或台式机",
     price_tag:"// 价格", price_h2:"一次付费，<br><em>永久使用。</em>",
-    price_intro:"学生始终免费使用全部功能。教师一次付费 — 无订阅、无月费、无续费。",
+    price_intro:"学生和家长：始终免费。教师：一次付费，永久使用。",
     p1_tier:"学生专用", p1_name:"学生版", p1_price:"免费", p1_save:"永久免费 · 无需账户",
     p1_f1:"在任何设备的任何浏览器上使用", p1_f2:"翻译和词典——29种语言",
     p1_f3:"记事本，一键访问", p1_f4:"页面绘图和注释",
@@ -1323,16 +1266,12 @@ var T = {
     cta_btn_teacher:"获取教师应用 — $29 · Windows &amp; Mac", cta_btn_student:"免费学生插件",
     footer_tagline:"多语言课堂工具套件", footer_contact:"联系我们", footer_privacy:"隐私政策",
     nav_blog:"博客",
-    nav_support:"☕ 支持我们",
-    story_tag:"// 我为什么创建 Layers",
-    story_h2:"这很私人。<br><em>请听我说。</em>",
-    story_body:'<p>我是 Peter Hoang，住在日本的一名教师。</p><p>我所在的学校大部分学生是日本人，但过去几年情况在变化。越来越多的学生从越南、中国、尼泊尔、菲律宾等国家来到这里——他们的家庭在尝试在日本建立新生活。他们坐在用日语、有时用英语授课的教室里，两种语言都几乎听不懂。</p><p>看着他们挣扎，我看到了一些熟悉的东西。</p><p>四十年前，我的父母是难民。他们一无所有地逃离越南，在澳大利亚重新定居——一个他们不会说语言、不理解文化、没有人解释周围发生什么的国家。我母亲坐在政府办公室里，不明白她正在签署的表格。我父亲接受任何能找到的工作，对着听不懂的指令点头。他们还是建立了生活——凭借倔强、牺牲，以及愿意花时间帮助他们的人的善意。</p><p>我从小就看着用不属于自己的语言生活需要付出什么代价。困惑。孤立。当别人都能理解的事情你却不懂时，那种安静的羞耻感。</p><p>现在我在教室里看到了同样的事情。一个越南学生盯着日语课本，茫然无措。一个尼泊尔孩子太尴尬了，不好意思让老师第三次重复。一个菲律宾学生聪明能干，却因为课程进度超过了她的语言能力而落后。</p><p>这些孩子让我想起我的父母。他们让我想起，如果我的家庭当初去了别的地方，我可能成为的那个孩子。</p><p><strong>这就是我创建 Layers 的原因。</strong></p><p>这是一个小东西——一个浮动工具栏，在学生正在使用的任何内容上方提供实时翻译、词典和学习工具。它不能解决所有问题。但它给了他们一个跟上的机会，一个理解的机会，在一个满是他们还不认识的词语的教室里，少一些迷失。</p><p>Chrome 扩展程序是免费的，而且永远都是。因为最需要它的学生，来自最负担不起费用的家庭。</p>',
-    story_coffee:"支持 Layers"
+    nav_support:"☕ 支持我们"
   },
 
   vi: {
     nav_features:"Dành cho giáo viên", nav_students:"Dành cho học sinh", nav_pricing:"Giá cả", nav_cta:"Bắt đầu",
-    hero_badge:"🌏 Được tạo cho lớp học đa ngôn ngữ · Dùng thử miễn phí 14 ngày",
+    hero_badge:"🛡 Được tin dùng bởi các gia đình tại 40+ quốc gia",
     hero_h1:"Dạy học vượt qua rào cản ngôn ngữ.<br>Không cần rời <em>slide của bạn.</em>",
     hero_sub:"Layers nổi trên bài giảng của bạn — dịch giọng nói trực tiếp sang 46 ngôn ngữ, bộ hẹn giờ, chú thích và công cụ lớp học. Được tạo bởi một giáo viên cần đến nó.",
     hero_btn_teacher:"Tải ứng dụng giáo viên — $29 · Windows &amp; Mac", hero_btn_student:"Tiện ích miễn phí cho học sinh",
@@ -1380,7 +1319,7 @@ var T = {
     feat9_h:"Khởi chạy file nhanh", feat9_p:"Mở bất kỳ tài liệu, PDF, bảng tính hoặc bài thuyết trình nào trực tiếp từ thanh công cụ. Không cần tìm kiếm trong thư mục giữa bài học.",
     feat10_h:"Chặn Internet", feat10_p:"Một nút chặn ngay lập tức toàn bộ truy cập internet trên màn hình của mọi học sinh. Học sinh thấy lớp phủ dừng toàn màn hình và không thể duyệt web cho đến khi bạn gỡ bỏ. Hoạt động độc lập với Chế độ Tập trung — cả hai có thể hoạt động cùng lúc.",
     who_tag:"// Ai sử dụng Layers", who_h2:"Dành cho giáo viên<br>dạy học <em>đa ngôn ngữ.</em>",
-    who_intro:"Được xây dựng bởi một giáo viên ở Nhật Bản cho lớp học có học sinh từ Việt Nam, Trung Quốc, Nepal và nhiều nơi khác — Layers được dùng bởi giáo viên và người thuyết trình trên toàn thế giới.",
+    who_intro:"Được thiết kế cho lớp học đa ngôn ngữ — được sử dụng bởi giáo viên ngôn ngữ, huấn luyện viên và người thuyết trình tại hơn 40 quốc gia.",
     who1_title:"Giáo viên", who1_sub:"Tiểu học, trung học và đại học",
     who2_title:"Giáo viên ngôn ngữ", who2_sub:"Dạy trong lớp đa ngôn ngữ",
     who3_title:"Huấn luyện viên doanh nghiệp", who3_sub:"Hội thảo, đào tạo nhân viên mới, buổi nhóm",
@@ -1388,7 +1327,7 @@ var T = {
     who5_title:"Người hướng dẫn workshop", who5_sub:"Hoạt động nhóm và bài tập có thời gian",
     who6_title:"Chuyên gia bán hàng", who6_sub:"Demo sản phẩm và thuyết trình khách hàng",
     stud_tag:"// Layers Student — công cụ trình duyệt miễn phí", stud_h2:"Không chỉ dịch thuật.<br>Bộ công cụ học tập <em>đầy đủ.</em>",
-    stud_intro:"Layers Student là bộ công cụ nổi đầy đủ trong trình duyệt — bảy công cụ, luôn chỉ một cú nhấp, trên mọi trang học sinh đang làm việc. Miễn phí mãi mãi, không cần tài khoản.",
+    stud_intro:"Bảy công cụ. Chỉ một cú nhấp. Luôn nổi trên mọi trang học sinh đang làm việc. Miễn phí mãi mãi — không cần đăng ký.",
     stud_free_badge:"✓ Hoàn toàn miễn phí · Không cần đăng ký · Hoạt động trên mọi trang web",
     stud1_name:"Dịch giọng nói tức thì", stud1_sub:"Nói và xem bản dịch", stud1_p:"Học sinh giữ nút và nói bằng ngôn ngữ của mình — lời nói được dịch và hiển thị ngay lập tức. Hữu ích cho học sinh muốn đặt câu hỏi trong lớp nhưng chưa tự tin với ngôn ngữ bài học.",
     stud2_name:"Dịch thuật và từ điển", stud2_sub:"29 ngôn ngữ", stud2_p:"Tô sáng bất kỳ từ nào trên trang và xem ngay định nghĩa đầy đủ — kèm phiên âm, từ loại và câu ví dụ — dịch sang ngôn ngữ của họ. Hoặc dịch toàn bộ trang chỉ một cú nhấp.",
@@ -1400,7 +1339,7 @@ var T = {
     lang_tag:"// Ngôn ngữ dịch thuật", lang_h2:"Bạn nói. Học sinh<br><em>hiểu.</em>",
     lang_intro:"Ứng dụng giáo viên dịch sang 46 ngôn ngữ theo thời gian thực khi bạn nói. Công cụ trình duyệt học sinh hỗ trợ 29 ngôn ngữ.",
     sync_tag:"// Kết nối lớp học", sync_h2:"Kiểm soát mọi màn hình<br>trong <em>phòng.</em>",
-    sync_intro:"Tạo lớp học vĩnh viễn một lần và chia sẻ mã với học sinh. Từ thời điểm đó, mọi màn hình học sinh đều được kết nối — và tự động kết nối lại vào đầu mỗi buổi học.",
+    sync_intro:"Chia sẻ mã phòng một lần. Mọi màn hình học sinh kết nối — và tự động kết nối lại mỗi buổi học từ đó trở đi.",
     sync_f1:"Bật Chế độ Tập trung cho toàn bộ lớp cùng lúc",
     sync_f2:"Chặn bất kỳ trang web nào ngay lập tức — nó biến mất khỏi màn hình của mọi học sinh",
     sync_f3:"Kích hoạt Chặn Internet — cắt toàn bộ duyệt web trên mọi thiết bị học sinh",
@@ -1412,7 +1351,7 @@ var T = {
     sync_arrow2:"↓ nhận ngay lập tức", sync_box3_title:"Học sinh — Layers trên trình duyệt", sync_box3_sub:"Nhận và áp dụng hướng dẫn ngay lập tức",
     sync_note:"Hoạt động với bất kỳ Chromebook, laptop hoặc máy tính bàn nào trong lớp học của bạn",
     price_tag:"// Giá cả", price_h2:"Trả một lần.<br><em>Dạy mãi mãi.</em>",
-    price_intro:"Học sinh luôn được sử dụng miễn phí toàn bộ. Giáo viên trả một lần — không đăng ký, không phí tháng, không gia hạn.",
+    price_intro:"Học sinh và phụ huynh: luôn miễn phí. Giáo viên: trả một lần, dùng mãi mãi.",
     p1_tier:"Dành cho học sinh", p1_name:"Gói học sinh", p1_price:"Miễn phí", p1_save:"Miễn phí mãi mãi · Không cần tài khoản",
     p1_f1:"Hoạt động trên bất kỳ trình duyệt nào, bất kỳ thiết bị nào", p1_f2:"Dịch thuật và từ điển — 29 ngôn ngữ",
     p1_f3:"Sổ tay, luôn chỉ một cú nhấp", p1_f4:"Vẽ và chú thích trang",
@@ -1434,11 +1373,7 @@ var T = {
     cta_btn_teacher:"Tải ứng dụng giáo viên — $29 · Windows &amp; Mac", cta_btn_student:"Tiện ích miễn phí cho học sinh",
     footer_tagline:"Bộ công cụ cho lớp học đa ngôn ngữ", footer_contact:"Liên hệ", footer_privacy:"Chính sách bảo mật",
     nav_blog:"Blog",
-    nav_support:"☕ Ủng hộ",
-    story_tag:"// Tại sao tôi tạo Layers",
-    story_h2:"Đây là câu chuyện cá nhân.<br><em>Xin hãy lắng nghe.</em>",
-    story_body:'<p>Tôi là Peter Hoang, một giáo viên sống tại Nhật Bản.</p><p>Tôi dạy ở một trường mà hầu hết học sinh là người Nhật, nhưng trong vài năm qua, mọi thứ đang thay đổi. Ngày càng nhiều học sinh đến từ Việt Nam, Trung Quốc, Nepal, Philippines và các quốc gia khác — những gia đình đang cố gắng xây dựng cuộc sống mới tại Nhật Bản. Họ ngồi trong lớp học nơi bài giảng bằng tiếng Nhật, đôi khi bằng tiếng Anh, và họ hiểu rất ít cả hai.</p><p>Tôi nhìn họ vật lộn, và tôi nhận ra điều gì đó quen thuộc.</p><p>Bốn mươi năm trước, bố mẹ tôi là người tị nạn. Họ rời Việt Nam với hai bàn tay trắng và tái định cư tại Úc — một đất nước nơi họ không nói được ngôn ngữ, không hiểu văn hóa, và không có ai giải thích những gì đang xảy ra xung quanh. Mẹ tôi ngồi trong các cơ quan chính phủ mà không hiểu những giấy tờ mình đang ký. Bố tôi nhận bất kỳ công việc nào tìm được, gật đầu theo những hướng dẫn mà ông không thể hiểu. Họ vẫn xây dựng được cuộc sống — bằng sự bướng bỉnh, hy sinh, và lòng tốt của những người dành thời gian giúp đỡ.</p><p>Tôi lớn lên chứng kiến cái giá phải trả khi sống bằng một ngôn ngữ không phải của mình. Sự bối rối. Sự cô lập. Nỗi xấu hổ thầm lặng khi không hiểu điều mà mọi người khác dường như đều hiểu.</p><p>Bây giờ tôi thấy điều tương tự trong lớp học của mình. Một học sinh Việt Nam nhìn chằm chằm vào sách giáo khoa tiếng Nhật, lạc lõng. Một em Nepal quá ngại để nhờ thầy nhắc lại lần thứ ba. Một học sinh Philippines thông minh và có năng lực nhưng bị tụt lại vì bài học chạy nhanh hơn khả năng ngôn ngữ của em.</p><p>Những đứa trẻ này nhắc tôi nhớ đến bố mẹ tôi. Chúng nhắc tôi nhớ đến đứa trẻ mà tôi có thể đã trở thành nếu gia đình tôi đặt chân đến một nơi khác.</p><p><strong>Đó là lý do tôi tạo ra Layers.</strong></p><p>Đó là một thứ nhỏ bé — một thanh công cụ nổi cung cấp cho học sinh bản dịch thời gian thực, từ điển và công cụ học tập ngay trên bất cứ thứ gì họ đang làm việc. Nó không giải quyết được mọi thứ. Nhưng nó cho họ cơ hội theo kịp, hiểu bài, cảm thấy bớt lạc lõng hơn trong một lớp học đầy những từ họ chưa biết.</p><p>Tiện ích Chrome miễn phí, và sẽ luôn như vậy. Bởi vì những học sinh cần nó nhất là những em có gia đình ít có khả năng chi trả nhất.</p>',
-    story_coffee:"Ủng hộ Layers"
+    nav_support:"☕ Ủng hộ"
   }
 };
 
@@ -1493,12 +1428,12 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
   position: fixed; bottom: 28px; right: 28px; z-index: 9999;
   width: 56px; height: 56px; border-radius: 50%;
   background: var(--accent); border: none; cursor: pointer;
-  box-shadow: 0 4px 24px rgba(91,127,255,0.45);
+  box-shadow: 0 4px 24px rgba(45,106,79,0.45);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.4rem; transition: transform 0.2s, box-shadow 0.2s;
   animation: pulse 2.5s ease-in-out infinite;
 }
-#chat-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 36px rgba(91,127,255,0.6); }
+#chat-bubble:hover { transform: scale(1.08); box-shadow: 0 6px 36px rgba(45,106,79,0.6); }
 #chat-bubble .cb-close { display: none; font-size: 1.2rem; }
 #chat-bubble.open .cb-icon { display: none; }
 #chat-bubble.open .cb-close { display: block; }
@@ -1506,9 +1441,9 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 #chat-window {
   position: fixed; bottom: 100px; right: 28px; z-index: 9998;
   width: 360px; max-height: 520px;
-  background: #131318; border: 1px solid rgba(91,127,255,0.25);
+  background: #FFFFFF; border: 1px solid rgba(45,106,79,0.25);
   border-radius: 20px; display: flex; flex-direction: column;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  box-shadow: 0 20px 60px rgba(45,106,79,0.15);
   transform: scale(0.92) translateY(12px); opacity: 0;
   pointer-events: none; transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
   overflow: hidden;
@@ -1516,9 +1451,9 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 #chat-window.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
 
 .chat-header {
-  padding: 16px 20px; border-bottom: 1px solid rgba(91,127,255,0.15);
+  padding: 16px 20px; border-bottom: 1px solid rgba(45,106,79,0.15);
   display: flex; align-items: center; gap: 12px;
-  background: rgba(91,127,255,0.06);
+  background: rgba(45,106,79,0.06);
 }
 .chat-avatar { width: 36px; height: 36px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
 .chat-header-text .chat-name { font-size: 0.9rem; font-weight: 700; }
@@ -1527,10 +1462,10 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 
 .chat-messages {
   flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;
-  scrollbar-width: thin; scrollbar-color: rgba(91,127,255,0.2) transparent;
+  scrollbar-width: thin; scrollbar-color: rgba(45,106,79,0.2) transparent;
 }
 .chat-messages::-webkit-scrollbar { width: 4px; }
-.chat-messages::-webkit-scrollbar-thumb { background: rgba(91,127,255,0.2); border-radius: 2px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(45,106,79,0.2); border-radius: 2px; }
 
 .msg { max-width: 82%; }
 .msg.bot { align-self: flex-start; }
@@ -1550,7 +1485,7 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
 @keyframes typingBounce { 0%,60%,100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-5px); opacity: 1; } }
 
 .chat-input-row {
-  padding: 12px 14px; border-top: 1px solid rgba(91,127,255,0.12);
+  padding: 12px 14px; border-top: 1px solid rgba(45,106,79,0.12);
   display: flex; gap: 8px; align-items: flex-end;
 }
 #chat-input {
@@ -1560,7 +1495,7 @@ document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
   resize: none; outline: none; max-height: 100px; overflow-y: auto;
   transition: border-color 0.2s;
 }
-#chat-input:focus { border-color: rgba(91,127,255,0.4); }
+#chat-input:focus { border-color: rgba(45,106,79,0.4); }
 #chat-input::placeholder { color: var(--dim); }
 #chat-send {
   background: var(--accent); border: none; border-radius: 10px;
