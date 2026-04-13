@@ -5,140 +5,218 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — Layers</title>
 <meta name="description" content="Stories, tutorials, and insights from the teacher who built Layers — the floating toolkit for multilingual classrooms.">
-<meta name="theme-color" content="#5b7fff">
+<meta name="theme-color" content="#2d6b4a">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thelayersapp.com/blog/">
 <meta property="og:title" content="Blog — Layers">
-<meta property="og:description" content="Stories, tutorials, and insights from the teacher who built Layers.">
+<meta property="og:description" content="Stories, tutorials, and honest insights from a teacher building tools for multilingual classrooms.">
 <meta property="og:image" content="https://thelayersapp.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://thelayersapp.com/blog/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+/* ── BRAND TOKENS (matched to thelayersapp.com homepage) ── */
 :root {
-  --bg:      #0d0d12;
-  --bg2:     #131318;
-  --accent:  #5b7fff;
-  --accent2: #7c9fff;
-  --green:   #2ed573;
-  --text:    #ffffff;
-  --muted:   #a0a0b0;
-  --dim:     #555568;
-  --border:  rgba(91,127,255,0.15);
-  --card-bg: rgba(26,26,36,0.8);
-  --pill:    #252530;
+  --bg:          #eae5d9;
+  --bg2:         #ddd8cb;
+  --surface:     #ffffff;
+  --accent:      #2d6b4a;
+  --accent2:     #3a9060;
+  --accent-soft: rgba(45,107,74,0.09);
+  --text:        #1a3328;
+  --muted:       #4a6659;
+  --dim:         #7c9488;
+  --border:      rgba(45,107,74,0.13);
+  --shadow:      0 2px 12px rgba(26,51,40,0.07);
+  --shadow-md:   0 4px 20px rgba(26,51,40,0.10);
 }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: 'Outfit', sans-serif; font-weight: 400;
-  line-height: 1.6; overflow-x: hidden;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400; line-height: 1.6;
+  overflow-x: hidden;
 }
-body::after {
-  content: ''; position: fixed; inset: 0;
-  background-image: linear-gradient(rgba(91,127,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(91,127,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px; pointer-events: none; z-index: 0;
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(45,107,74,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,107,74,0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none; z-index: 0;
 }
-section, nav, footer, div, main { position: relative; z-index: 1; }
+nav, section, main, footer, div { position: relative; z-index: 1; }
 
-/* NAV */
+/* ── NAV ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0;
+  position: fixed; top: 0; left: 0; right: 0; height: 64px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 40px; height: 64px;
-  background: rgba(13,13,18,0.92); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border); z-index: 100;
+  padding: 0 40px;
+  background: rgba(234,229,217,0.95);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 10px rgba(26,51,40,0.06);
+  z-index: 100;
 }
-.nav-brand { display: flex; align-items: center; gap: 10px; font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); text-decoration: none; }
-.brand-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 12px var(--accent); }
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'DM Serif Display', serif; font-size: 1.4rem;
+  color: var(--text); text-decoration: none;
+}
+.brand-dot {
+  width: 10px; height: 10px; background: var(--accent); border-radius: 50%;
+  box-shadow: 0 0 10px rgba(45,107,74,0.45);
+}
 .nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.875rem; font-weight: 500;
+  transition: color 0.2s;
+}
 .nav-links a:hover { color: var(--text); }
-.nav-cta { background: var(--accent) !important; color: var(--text) !important; padding: 8px 20px; border-radius: 100px; font-weight: 600 !important; }
+.nav-cta {
+  background: var(--accent) !important; color: #fff !important;
+  padding: 8px 20px; border-radius: 100px;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 10px rgba(45,107,74,0.3) !important;
+  transition: background 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { background: #235639 !important; transform: translateY(-1px); }
 
-/* HERO */
+/* ── HERO ── */
 .blog-hero {
   padding: 140px 40px 60px; text-align: center;
-  background: linear-gradient(180deg, rgba(91,127,255,0.06) 0%, transparent 60%);
+  background: linear-gradient(180deg, rgba(45,107,74,0.05) 0%, transparent 60%);
 }
-.blog-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; }
-.blog-hero h1 em { font-style: italic; color: var(--accent); }
-.blog-hero p { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 16px auto 0; font-weight: 300; }
-.label-tag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; opacity: 0.8; }
+.label-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace; font-size: 0.7rem;
+  font-weight: 500; color: var(--accent);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 16px; opacity: 0.75;
+}
+.blog-hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1.1; color: var(--text);
+}
+.blog-hero h1 em { font-style: italic; color: var(--accent2); }
+.blog-hero p {
+  color: var(--muted); font-size: 1.05rem;
+  max-width: 540px; margin: 16px auto 0;
+  font-weight: 300;
+}
 
-/* POST GRID */
+/* ── POST GRID ── */
 .blog-grid {
-  max-width: 900px; margin: 0 auto; padding: 0 40px 100px;
-  display: flex; flex-direction: column; gap: 28px;
+  max-width: 900px; margin: 0 auto;
+  padding: 0 40px 100px;
+  display: flex; flex-direction: column; gap: 24px;
 }
+
+/* BASE CARD */
 .post-card {
-  background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px;
-  padding: 36px 40px; transition: transform 0.3s, border-color 0.3s;
-  text-decoration: none; color: inherit; display: block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 34px 38px;
+  text-decoration: none; color: inherit;
+  display: block; position: relative; overflow: hidden;
+  transition: transform 0.28s, box-shadow 0.28s, border-color 0.28s;
+  box-shadow: var(--shadow);
 }
-.post-card:hover { transform: translateY(-4px); border-color: rgba(91,127,255,0.35); }
-.post-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
-.post-date { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
-.post-tag {
-  background: rgba(91,127,255,0.1); border: 1px solid rgba(91,127,255,0.25);
-  color: var(--accent2); font-size: 0.68rem; font-weight: 700;
-  padding: 3px 10px; border-radius: 100px; letter-spacing: 0.06em; text-transform: uppercase;
+.post-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(45,107,74,0.28);
 }
-.post-tag.green {
-  background: rgba(46,213,115,0.1); border-color: rgba(46,213,115,0.25);
-  color: var(--green);
-}
-.post-tag.orange {
-  background: rgba(255,165,50,0.1); border-color: rgba(255,165,50,0.25);
-  color: #ffb347;
-}
-.post-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; line-height: 1.25; margin-bottom: 10px; }
-.post-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; font-weight: 300; }
-.read-more { display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 0.85rem; font-weight: 600; margin-top: 16px; }
 
-/* FEATURED CARD */
-.post-card.featured {
-  border-color: rgba(91,127,255,0.3);
-  background: linear-gradient(135deg, rgba(91,127,255,0.08), rgba(26,26,36,0.9));
-}
+/* FEATURED ACCENT LINE */
+.post-card.featured { border-color: rgba(45,107,74,0.22); }
 .post-card.featured::before {
-  content: ''; display: block; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  border-radius: 20px 20px 0 0;
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent2), transparent);
 }
-.post-card.featured { position: relative; overflow: hidden; }
 
-/* NEW / ANNOUNCEMENT CARD */
+/* ANNOUNCE CARD (release notes) */
 .post-card.announce {
-  border-color: rgba(46,213,115,0.25);
-  background: linear-gradient(135deg, rgba(46,213,115,0.06), rgba(26,26,36,0.95));
+  background: linear-gradient(135deg, rgba(45,107,74,0.04), var(--surface));
+  border-color: rgba(45,107,74,0.2);
 }
 .post-card.announce::before {
-  content: ''; display: block; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--green), transparent);
-  border-radius: 20px 20px 0 0;
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
-.post-card.announce { position: relative; overflow: hidden; }
-.post-card.announce .read-more { color: var(--green); }
+.post-card.announce .read-more { color: var(--accent); }
 
-/* FOOTER */
-footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 48px 40px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
-.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; }
-.footer-brand span { color: var(--accent); }
-.footer-links { display: flex; gap: 28px; }
-.footer-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
-.footer-links a:hover { color: var(--text); }
-.footer-copy { color: var(--dim); font-size: 0.8rem; width: 100%; }
+/* META */
+.post-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.post-date { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.post-tag {
+  background: var(--accent-soft);
+  border: 1px solid rgba(45,107,74,0.2);
+  color: var(--accent);
+  font-size: 0.67rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.post-tag.green {
+  background: rgba(58,144,96,0.1);
+  border-color: rgba(58,144,96,0.25);
+  color: var(--accent2);
+}
+.post-tag.orange {
+  background: rgba(180,110,30,0.1);
+  border-color: rgba(180,110,30,0.25);
+  color: #a06820;
+}
+
+/* CARD CONTENT */
+.post-card h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.6rem; line-height: 1.22;
+  margin-bottom: 10px; color: var(--text);
+}
+.post-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.7; font-weight: 300; }
+.read-more {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--accent2); font-size: 0.85rem;
+  font-weight: 600; margin-top: 16px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--text);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 48px 40px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #fff; }
+.footer-brand span { color: var(--accent2); }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { color: rgba(255,255,255,0.48); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: #fff; }
+.footer-copy { color: rgba(255,255,255,0.28); font-size: 0.8rem; width: 100%; }
 
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
   .nav-links a:not(.nav-cta) { display: none; }
-  .blog-hero { padding: 120px 24px 40px; }
+  .blog-hero { padding: 116px 24px 40px; }
   .blog-grid { padding: 0 24px 60px; }
-  .post-card { padding: 28px 24px; }
+  .post-card { padding: 26px 22px; }
+  footer { padding: 40px 24px; }
 }
 </style>
 </head>
@@ -148,8 +226,8 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
   <a href="../" class="nav-brand"><div class="brand-dot"></div>Layers</a>
   <div class="nav-links">
     <a href="../#features">Features</a>
-    <a href="../guard.html" style="color:#a78bfa;">Layers Guard</a>
-    <a href="./" style="color:var(--accent);">Blog</a>
+    <a href="../guard.html">Layers Guard</a>
+    <a href="./" style="color:var(--accent);font-weight:600;">Blog</a>
     <a href="../contact.html">Contact</a>
     <a href="../#pricing" class="nav-cta">Get Started</a>
   </div>
@@ -163,39 +241,39 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
 
 <main class="blog-grid">
 
+  <!-- POST 5 — Screen Time (LATEST) -->
+  <a href="why-parents-should-control-childrens-screen-time.html" class="post-card featured">
+    <div class="post-meta">
+      <span class="post-date">April 13, 2026</span>
+      <span class="post-tag">Child Safety</span>
+      <span class="post-tag green">Parenting</span>
+    </div>
+    <h2>Why Parents Should Control Their Child&rsquo;s Screen Time</h2>
+    <p>Children aged 8&ndash;18 average 7.5 hours of daily screen time &mdash; more than a school day. The research links excessive screen use to poor sleep, anxiety, and developmental delays. Here&rsquo;s what the science says, and five things parents can do this week.</p>
+    <span class="read-more">Read the full post &rarr;</span>
+  </a>
+
   <!-- POST 4 — Guard / Child Safety -->
-  <a href="the-world-is-protecting-children-online.html" class="post-card featured" style="border-color:rgba(167,139,250,0.3);background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(26,26,36,0.9));">
+  <a href="the-world-is-protecting-children-online.html" class="post-card featured">
     <div class="post-meta">
       <span class="post-date">April 5, 2026</span>
-      <span class="post-tag" style="background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);color:#c4b5fd;">Child Safety</span>
-      <span class="post-tag" style="background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);color:#c4b5fd;">Layers Guard</span>
+      <span class="post-tag">Child Safety</span>
+      <span class="post-tag" style="background:rgba(100,70,180,0.09);border-color:rgba(100,70,180,0.22);color:#7c5cb8;">Layers Guard</span>
     </div>
-    <h2>The World Is Finally Protecting Children Online — Here's What Parents Can Do Now</h2>
-    <p>From Australia's under-16 ban to the US Surgeon General's warnings, countries everywhere are waking up. A teacher and father of four in Japan shares why he built Layers Guard — and why parents can't wait for legislation.</p>
-    <span class="read-more" style="color:#a78bfa;">Read the full post →</span>
+    <h2>The World Is Finally Protecting Children Online &mdash; Here&rsquo;s What Parents Can Do Now</h2>
+    <p>From Australia&rsquo;s under-16 ban to the US Surgeon General&rsquo;s warnings, countries everywhere are waking up. A teacher and father of four in Japan shares why he built Layers Guard &mdash; and why parents can&rsquo;t wait for legislation.</p>
+    <span class="read-more">Read the full post &rarr;</span>
   </a>
 
-  <!-- POST 3 — Announce -->
-  <a href="whats-new-v38-mac.html" class="post-card announce">
-    <div class="post-meta">
-      <span class="post-date">March 26, 2026</span>
-      <span class="post-tag green">Release Notes</span>
-      <span class="post-tag orange">Mac App</span>
-    </div>
-    <h2>What's New: Scheduled Focus Mode, Smarter Rooms, and the Mac App Is Coming</h2>
-    <p>Layers v3.8 adds scheduled Focus Mode and Lockdown, a cleaner Classroom Sync panel, and a lot of small things that were quietly annoying. Plus: the Mac app is real, it builds, and it's almost ready.</p>
-    <span class="read-more">Read the update →</span>
-  </a>
-
-  <!-- POST 1 — Featured -->
+  <!-- POST 1 — Origin Story -->
   <a href="why-i-built-layers.html" class="post-card featured">
     <div class="post-meta">
       <span class="post-date">April 1, 2026</span>
       <span class="post-tag">Origin Story</span>
     </div>
-    <h2>Why I Built Layers: A Teacher in Japan Who Couldn't Reach His Students</h2>
-    <p>My parents were refugees. Forty years later, I'm watching their story repeat itself in my classroom — and I decided to do something about it.</p>
-    <span class="read-more">Read the full story →</span>
+    <h2>Why I Built Layers: A Teacher in Japan Who Couldn&rsquo;t Reach His Students</h2>
+    <p>My parents were refugees. Forty years later, I&rsquo;m watching their story repeat itself in my classroom &mdash; and I decided to do something about it.</p>
+    <span class="read-more">Read the full story &rarr;</span>
   </a>
 
   <!-- POST 2 -->
@@ -205,23 +283,39 @@ footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 4
       <span class="post-tag">Problem Awareness</span>
     </div>
     <h2>5 Invisible Barriers International Students Face Every Day</h2>
-    <p>Language isn't the only thing standing between international students and success. These five barriers are in every multilingual classroom — and most teachers don't even see them.</p>
-    <span class="read-more">Read the full post →</span>
+    <p>Language isn&rsquo;t the only thing standing between international students and success. These five barriers are in every multilingual classroom &mdash; and most teachers don&rsquo;t even see them.</p>
+    <span class="read-more">Read the full post &rarr;</span>
+  </a>
+
+  <!-- POST 3 — Release Notes -->
+  <a href="whats-new-v38-mac.html" class="post-card announce">
+    <div class="post-meta">
+      <span class="post-date">March 26, 2026</span>
+      <span class="post-tag green">Release Notes</span>
+      <span class="post-tag orange">Mac App</span>
+    </div>
+    <h2>What&rsquo;s New: Scheduled Focus Mode, Smarter Rooms, and the Mac App Is Coming</h2>
+    <p>Layers v3.8 adds scheduled Focus Mode and Lockdown, a cleaner Classroom Sync panel, and a lot of small things that were quietly annoying. Plus: the Mac app is real, it builds, and it&rsquo;s almost ready.</p>
+    <span class="read-more">Read the update &rarr;</span>
   </a>
 
 </main>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-brand"><span>Layers</span> · <span style="color:var(--muted);font-size:0.9rem;font-family:'Outfit',sans-serif;">Help children learn, focus &amp; stay safe online</span></div>
+    <div class="footer-brand">
+      <span>Layers</span> &middot;
+      <span style="color:rgba(255,255,255,0.42);font-size:0.9rem;font-family:'Outfit',sans-serif;">Help children learn, focus &amp; stay safe online</span>
+    </div>
     <div class="footer-links">
       <a href="../">Home</a>
-      <a href="../guard.html" style="color:#a78bfa;">Layers Guard</a>
+      <a href="../guard.html">Layers Guard</a>
+      <a href="../guard-pro.html" style="color:var(--accent2);">Guard Pro</a>
       <a href="./">Blog</a>
       <a href="../contact.html">Contact</a>
       <a href="../privacy.html">Privacy Policy</a>
     </div>
-    <p class="footer-copy">© 2026 Layers · Peter Hoang · Japan · <a href="https://thelayersapp.com" style="color:var(--accent);text-decoration:none;">thelayersapp.com</a></p>
+    <p class="footer-copy">&copy; 2026 Layers &middot; Peter Hoang &middot; Japan &middot; <a href="https://thelayersapp.com" style="color:var(--accent2);text-decoration:none;">thelayersapp.com</a></p>
   </div>
 </footer>
 

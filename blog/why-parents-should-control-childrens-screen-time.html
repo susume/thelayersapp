@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Parents Should Control Their Child's Screen Time — Layers Blog</title>
+<meta name="description" content="Children aged 8–18 now average 7.5 hours of daily screen time — more than a full school day. Here's what the research says, and what parents can actually do about it today.">
+<meta name="theme-color" content="#2d6b4a">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://thelayersapp.com/blog/why-parents-should-control-childrens-screen-time.html">
+<meta property="og:title" content="Why Parents Should Control Their Child's Screen Time">
+<meta property="og:description" content="Children aged 8–18 now average 7.5 hours of daily screen time — more than a full school day. Here's what the research says, and what parents can actually do about it today.">
+<meta property="og:image" content="https://thelayersapp.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://thelayersapp.com/blog/why-parents-should-control-childrens-screen-time.html">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Parents Should Control Their Child's Screen Time",
+  "description": "Children aged 8–18 now average 7.5 hours of daily screen time — more than a full school day. Here's what the research says, and what parents can actually do about it today.",
+  "author": { "@type": "Person", "name": "Peter Hoang" },
+  "publisher": { "@type": "Organization", "name": "Layers", "url": "https://thelayersapp.com" },
+  "datePublished": "2026-04-13",
+  "dateModified": "2026-04-13",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://thelayersapp.com/blog/why-parents-should-control-childrens-screen-time.html" },
+  "keywords": ["screen time", "children screen time", "parental controls", "child development", "digital wellness"]
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── BRAND TOKENS (matched to thelayersapp.com homepage) ── */
+:root {
+  --bg:          #eae5d9;   /* warm cream — homepage background */
+  --bg2:         #ddd8cb;   /* slightly deeper cream — footer bg */
+  --surface:     #ffffff;
+  --accent:      #2d6b4a;   /* forest green — CTA buttons */
+  --accent2:     #3a9060;   /* medium green — italic highlights */
+  --accent-soft: rgba(45,107,74,0.09);
+  --text:        #1a3328;   /* near-black green — headings & body */
+  --muted:       #4a6659;   /* readable body-copy green */
+  --dim:         #7c9488;   /* metadata, captions */
+  --border:      rgba(45,107,74,0.13);
+  --shadow:      0 2px 12px rgba(26,51,40,0.07);
+  --shadow-md:   0 4px 20px rgba(26,51,40,0.10);
+  --shadow-lg:   0 8px 36px rgba(26,51,40,0.14);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+/* very subtle grid texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(45,107,74,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,107,74,0.035) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+nav, header, article, div, main, footer, section { position: relative; z-index: 1; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(234,229,217,0.95);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 10px rgba(26,51,40,0.06);
+  z-index: 100;
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'DM Serif Display', serif; font-size: 1.4rem;
+  color: var(--text); text-decoration: none;
+}
+.brand-dot {
+  width: 10px; height: 10px;
+  background: var(--accent); border-radius: 50%;
+  box-shadow: 0 0 10px rgba(45,107,74,0.45);
+}
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a {
+  color: var(--muted); text-decoration: none;
+  font-size: 0.875rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--accent) !important;
+  color: #fff !important;
+  padding: 8px 20px; border-radius: 100px;
+  font-weight: 600 !important;
+  transition: background 0.2s, transform 0.2s !important;
+  box-shadow: 0 2px 10px rgba(45,107,74,0.3) !important;
+}
+.nav-cta:hover { background: #235639 !important; transform: translateY(-1px); }
+
+/* ── HEADER ── */
+.article-header {
+  padding: 136px 40px 52px;
+  max-width: 760px; margin: 0 auto;
+}
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--accent); font-size: 0.82rem; font-weight: 600;
+  text-decoration: none; margin-bottom: 28px;
+  transition: gap 0.2s;
+}
+.back-link:hover { gap: 10px; }
+.article-meta {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.article-date { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+.article-tag {
+  background: var(--accent-soft);
+  border: 1px solid rgba(45,107,74,0.22);
+  color: var(--accent);
+  font-size: 0.68rem; font-weight: 700;
+  padding: 3px 11px; border-radius: 100px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.article-tag.green {
+  background: rgba(58,144,96,0.1);
+  border-color: rgba(58,144,96,0.28);
+  color: var(--accent2);
+}
+.article-read { font-size: 0.78rem; color: var(--dim); font-family: 'DM Mono', monospace; }
+
+.article-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.1; color: var(--text);
+}
+.article-header h1 em { font-style: italic; color: var(--accent2); }
+.article-header .subtitle {
+  color: var(--muted); font-size: 1.1rem;
+  margin-top: 18px; font-weight: 300;
+  line-height: 1.75; max-width: 640px;
+}
+
+/* ── ARTICLE BODY ── */
+.article-body {
+  max-width: 680px; margin: 0 auto;
+  padding: 0 40px 60px;
+}
+.article-body p {
+  color: var(--muted); font-size: 1.02rem;
+  line-height: 1.9; font-weight: 300;
+  margin-bottom: 24px;
+}
+.article-body p strong { color: var(--text); font-weight: 600; }
+
+.article-body h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.65rem; line-height: 1.2;
+  margin: 52px 0 18px; color: var(--text);
+}
+.article-body h2 em { font-style: italic; color: var(--accent2); }
+
+.article-body blockquote {
+  border-left: 3px solid var(--accent2);
+  padding: 16px 24px; margin: 32px 0;
+  background: rgba(58,144,96,0.06);
+  border-radius: 0 12px 12px 0;
+}
+.article-body blockquote p {
+  color: var(--accent);
+  font-style: italic; font-size: 1.05rem;
+  margin-bottom: 0; font-weight: 400;
+}
+.article-body .separator {
+  text-align: center; color: var(--dim);
+  font-size: 1.3rem; letter-spacing: 0.5em;
+  margin: 44px 0; user-select: none;
+}
+.article-body ul {
+  color: var(--muted); font-size: 1.02rem;
+  line-height: 1.9; font-weight: 300;
+  margin: 0 0 24px 20px;
+}
+.article-body ul li { margin-bottom: 8px; }
+.article-body ul li strong { color: var(--text); font-weight: 600; }
+
+.ref {
+  font-size: 0.7rem; color: var(--dim);
+  font-family: 'DM Mono', monospace;
+  vertical-align: super; margin-left: 1px;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--dim);
+  transition: color 0.2s, border-color 0.2s;
+}
+.ref:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ── STAT GRID ── */
+.stat-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 14px; margin: 30px 0;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px 16px;
+  text-align: center; box-shadow: var(--shadow);
+}
+.stat-card .num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.1rem; color: var(--accent);
+  line-height: 1;
+}
+.stat-card .label {
+  font-size: 0.75rem; color: var(--muted);
+  font-weight: 400; margin-top: 8px; line-height: 1.45;
+}
+
+/* ── GUIDELINE ROWS ── */
+.guideline-grid { display: grid; gap: 10px; margin: 28px 0; }
+.guideline-row {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 20px;
+  display: flex; align-items: flex-start; gap: 14px;
+  box-shadow: var(--shadow);
+}
+.age-badge {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem; font-weight: 500;
+  padding: 4px 10px; border-radius: 100px;
+  border: 1px solid rgba(45,107,74,0.2);
+  white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+}
+.guide-text { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+.guide-text strong { color: var(--text); }
+
+/* ── CHECKLIST CARD ── */
+.checklist-card {
+  background: var(--surface);
+  border: 1px solid rgba(45,107,74,0.18);
+  border-top: 3px solid var(--accent2);
+  border-radius: 16px; padding: 28px 30px;
+  margin: 28px 0; box-shadow: var(--shadow-md);
+}
+.checklist-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem; color: var(--text);
+  margin-bottom: 18px;
+}
+.checklist-card ul { list-style: none; padding: 0; margin: 0; }
+.checklist-card li {
+  color: var(--muted); font-size: 0.94rem;
+  line-height: 1.7; margin-bottom: 12px;
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.checklist-card li::before {
+  content: '✓'; color: var(--accent2);
+  font-weight: 700; flex-shrink: 0; margin-top: 2px;
+}
+.checklist-card li strong { color: var(--text); }
+
+/* ── REFERENCES ── */
+.references-section {
+  margin-top: 52px; padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+.references-section h3 {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; color: var(--dim);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: 16px;
+}
+.references-section ol {
+  color: var(--dim); font-size: 0.8rem;
+  line-height: 1.7; padding-left: 18px;
+}
+.references-section li { margin-bottom: 8px; }
+.references-section a { color: var(--accent); text-decoration: none; word-break: break-all; }
+.references-section a:hover { color: var(--accent2); }
+
+/* ── SHARE BAR ── */
+.share-bar {
+  max-width: 680px; margin: 0 auto 32px;
+  padding: 0 40px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.share-bar span {
+  font-size: 0.8rem; color: var(--dim);
+  font-family: 'DM Mono', monospace;
+}
+.share-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted); text-decoration: none;
+  font-size: 0.8rem; font-weight: 600;
+  padding: 6px 14px; border-radius: 100px;
+  transition: all 0.2s; box-shadow: var(--shadow);
+}
+.share-btn:hover {
+  border-color: var(--accent2); color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ── AUTHOR CARD ── */
+.author-card {
+  max-width: 680px; margin: 0 auto 48px; padding: 0 40px;
+}
+.author-inner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 22px 26px;
+  display: flex; align-items: center; gap: 18px;
+  box-shadow: var(--shadow);
+}
+.author-avatar { font-size: 2.4rem; }
+.author-name { font-weight: 600; font-size: 1rem; color: var(--text); margin-bottom: 4px; }
+.author-bio { color: var(--muted); font-size: 0.875rem; font-weight: 300; line-height: 1.5; }
+
+/* ── CTA CARD ── */
+.article-cta {
+  max-width: 680px; margin: 0 auto 88px; padding: 0 40px;
+}
+.cta-card {
+  background: var(--accent);
+  border-radius: 20px; padding: 38px 40px;
+  box-shadow: var(--shadow-lg);
+  position: relative; overflow: hidden;
+}
+.cta-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top right, rgba(255,255,255,0.09), transparent 55%);
+  pointer-events: none;
+}
+.cta-card h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.55rem; color: #fff; margin-bottom: 10px;
+}
+.cta-card h3 em { font-style: italic; color: rgba(255,255,255,0.72); }
+.cta-card p { color: rgba(255,255,255,0.75); font-size: 0.96rem; margin-bottom: 26px; font-weight: 300; }
+.coming-soon-note {
+  color: rgba(255,255,255,0.5); font-size: 0.8rem;
+  font-family: 'DM Mono', monospace; margin-top: 16px !important;
+  margin-bottom: 0 !important;
+}
+.cta-buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-primary {
+  background: #fff; color: var(--accent);
+  text-decoration: none; padding: 12px 24px;
+  border-radius: 100px; font-weight: 700; font-size: 0.9rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.13);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.18); }
+.btn-secondary {
+  background: rgba(255,255,255,0.12);
+  color: #fff; text-decoration: none;
+  padding: 12px 24px; border-radius: 100px;
+  font-weight: 500; font-size: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.22); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--text);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 48px 40px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
+}
+.footer-brand { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: #fff; }
+.footer-brand span { color: var(--accent2); }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a { color: rgba(255,255,255,0.48); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.footer-links a:hover { color: #fff; }
+.footer-copy { color: rgba(255,255,255,0.28); font-size: 0.8rem; width: 100%; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .article-header { padding: 116px 24px 36px; }
+  .article-body { padding: 0 24px 48px; }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .article-cta, .share-bar, .author-card { padding: 0 24px; }
+  .cta-card { padding: 28px 24px; }
+  .cta-buttons { flex-direction: column; }
+  footer { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../" class="nav-brand"><div class="brand-dot"></div>Layers</a>
+  <div class="nav-links">
+    <a href="../#features">Features</a>
+    <a href="../guard.html">Layers Guard</a>
+    <a href="./" style="color:var(--accent);font-weight:600;">Blog</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../#pricing" class="nav-cta">Get Started</a>
+  </div>
+</nav>
+
+<header class="article-header">
+  <a href="./" class="back-link">← Back to Blog</a>
+  <div class="article-meta">
+    <span class="article-date">April 13, 2026</span>
+    <span class="article-tag">Child Safety</span>
+    <span class="article-tag green">Parenting</span>
+    <span class="article-read">9 min read</span>
+  </div>
+  <h1>Why Parents Should Control Their Child&rsquo;s <em>Screen Time</em></h1>
+  <p class="subtitle">Children aged 8&ndash;18 now average 7.5 hours of daily screen time &mdash; more than a full school day. The research is clear, the risks are real, and parents are the most powerful force in changing this.</p>
+</header>
+
+<article class="article-body">
+
+  <p>Let me give you a number that stops me every time I think about it.</p>
+
+  <p>Children aged 8 to 18 in the United States <strong>average 7.5 hours in front of screens every single day</strong> &mdash; for entertainment alone, not counting school.<a href="#ref1" class="ref">[1]</a> That&rsquo;s 114 days a year. More than the school year. More than most adults spend at work.</p>
+
+  <p>For children aged 11 to 14, the number climbs to <strong>nine hours a day</strong>.<a href="#ref2" class="ref">[2]</a> About half of all teenagers log four or more hours of non-school screen time daily, according to a 2024 CDC data brief.<a href="#ref3" class="ref">[3]</a></p>
+
+  <p>We have somehow let this become normal. And the research is telling us, loudly and consistently, that it should not be.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="num">7.5h</div>
+      <div class="label">Daily screen time for children aged 8&ndash;18 (entertainment only)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">9h</div>
+      <div class="label">Daily average for children aged 11&ndash;14</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">21h</div>
+      <div class="label">Weekly screen hours kids clock, vs. 9h parents consider ideal</div>
+    </div>
+  </div>
+
+  <p>A 2025 survey from Lurie Children&rsquo;s Hospital found that parents believe nine hours per week is healthy &mdash; but their children are getting 21 hours.<a href="#ref4" class="ref">[4]</a> Parents know something is off. Most just don&rsquo;t know where to start.</p>
+
+  <div class="separator">&middot; &middot; &middot;</div>
+
+  <h2>What the research actually <em>shows</em></h2>
+
+  <p>This is not a moral panic. The science has been building steadily for years, and a 2025 review of 46 studies published in <em>MDPI Children</em> put it plainly: higher levels of screen use are linked to reduced physical activity, poorer sleep, attention difficulties, and challenges in emotional and social functioning.<a href="#ref5" class="ref">[5]</a></p>
+
+  <p>The 2024 CDC analysis of US teenagers found that those with four or more hours of daily non-school screen use were more likely to experience anxiety, depression, insufficient sleep, and poor social and emotional support compared to peers with lower screen use.<a href="#ref6" class="ref">[6]</a></p>
+
+  <p>For younger children, the evidence is even harder to ignore. A large Canadian study found that toddlers who spent two or more hours per day on screens were <strong>30 to 90 percent more likely</strong> to show behavioral issues, nearly twice as likely to struggle with vocabulary, and significantly more likely to miss key developmental milestones.<a href="#ref7" class="ref">[7]</a></p>
+
+  <p>Research from Japan &mdash; the country where I live and teach &mdash; followed 885 children aged 2 to 4 and found that two-year-olds with more than one hour of daily screen time showed significantly lower communication and daily living skill scores by age four.<a href="#ref8" class="ref">[8]</a></p>
+
+  <blockquote>
+    <p>The age at which children start regular screen engagement has dropped from four years in 1970 to just four months today. We are running an enormous, uncontrolled experiment on a generation.</p>
+  </blockquote>
+
+  <p>The direction of harm is consistent across studies. Excessive and unsupervised screen use links to language delays, attention problems, poor sleep, obesity, emotional dysregulation, and weakened parent-child relationships. These are not minor inconveniences &mdash; they are the foundations of a child&rsquo;s development.</p>
+
+  <h2>Sleep is <em>the silent victim</em></h2>
+
+  <p>If there is one area where screen time does the most quiet damage, it is sleep.</p>
+
+  <p>The National Sleep Foundation has highlighted that pre-bedtime screen use actively impairs sleep quality in children and adolescents.<a href="#ref9" class="ref">[9]</a> It is not just blue light &mdash; research now points to a more complex relationship involving emotional arousal from content and the timing of use. A child who watches exciting or distressing content before bed does not simply fall asleep an hour later. Their nervous system stays activated.</p>
+
+  <p>Poor sleep, in turn, makes everything worse. Attention in school suffers. Emotional regulation breaks down. The risk of anxiety and depression rises. And exhausted children reach for screens the next morning to cope &mdash; and the cycle continues.</p>
+
+  <p><strong>Removing screens from bedrooms is one of the single highest-impact things a parent can do.</strong> Not because technology is the enemy, but because sleep is irreplaceable.</p>
+
+  <h2>What the guidelines actually <em>say</em></h2>
+
+  <p>In early 2026, the American Academy of Pediatrics updated its guidance on digital media for the first time in a decade. The new position moves beyond rigid time limits and focuses on quality, context, and family communication.<a href="#ref10" class="ref">[10]</a> That shift matters &mdash; the goal is not to eliminate screens, but to use them well.</p>
+
+  <p>Here is what the AAP and WHO currently recommend by age:</p>
+
+  <div class="guideline-grid">
+    <div class="guideline-row">
+      <span class="age-badge">Under 18 months</span>
+      <div class="guide-text"><strong>No screen time</strong> except video chatting with family. This is the most critical developmental window for language and bonding.</div>
+    </div>
+    <div class="guideline-row">
+      <span class="age-badge">18&ndash;24 months</span>
+      <div class="guide-text">Introduce screens only with <strong>high-quality content</strong> and watch alongside your child to help them understand what they are seeing.</div>
+    </div>
+    <div class="guideline-row">
+      <span class="age-badge">Ages 2&ndash;5</span>
+      <div class="guide-text"><strong>No more than 1 hour per day</strong> of high-quality programming. Co-viewing and conversation matter as much as content selection.</div>
+    </div>
+    <div class="guideline-row">
+      <span class="age-badge">Ages 6 and up</span>
+      <div class="guide-text">Set <strong>consistent, clear limits</strong> that protect sleep, physical activity, homework time, and family connection. Screen-free mealtimes and bedrooms are strongly recommended.</div>
+    </div>
+  </div>
+
+  <p>A systematic review published in 2025, analysing 41 documents from health bodies across the globe, found strong international consensus: virtually every major organisation recommends zero or near-zero screen exposure for children under two, and strict limits for toddlers.<a href="#ref11" class="ref">[11]</a> The science is not divided here. The only debate is how to communicate it without making parents feel like failures.</p>
+
+  <div class="separator">&middot; &middot; &middot;</div>
+
+  <h2>Why parental involvement <em>changes everything</em></h2>
+
+  <p>The research does not say screens are always bad. It says <em>unsupervised, unstructured, excessive</em> screen use is harmful. That distinction matters enormously.</p>
+
+  <p>Studies consistently show that parental involvement transforms the impact of screen use on children. Research found that healthy parental media habits were among the most significant factors in reducing unhealthy media exposure in their children.<a href="#ref12" class="ref">[12]</a> Children model what they see at home &mdash; from the way parents scroll through phones at dinner to how they respond when told to put a device down.</p>
+
+  <p>A major study on preschool children in China found that excessive screen use was linked to more severe emotional symptoms &mdash; but this relationship was <em>mediated by the parent-child relationship.</em><a href="#ref13" class="ref">[13]</a> When that relationship is strong, the harm is cushioned. When it is strained, it is amplified.</p>
+
+  <p>The 2026 AAP policy statement puts it simply: <strong>what matters most is not whether children use screens, but how, when, with whom, and with what boundaries in place.</strong></p>
+
+  <blockquote>
+    <p>Parental limits and the absence of screens in bedrooms significantly reduce screen usage and associated harms. Parents are the most powerful lever in this equation.</p>
+  </blockquote>
+
+  <p>This is not about shaming parents for imperfect decisions. I have four children. I know what it is to hand a kid a tablet because you need fifteen minutes to finish something important. The goal is not perfection &mdash; it is intention. Having a plan, having rules, and having the tools to enforce them.</p>
+
+  <h2>What I see <em>in my classroom</em></h2>
+
+  <p>My students come from multilingual families across Asia &mdash; children who work incredibly hard and face real challenges every day. But I watch something happen to children who have no limits on their screen use at home, regardless of background or ability.</p>
+
+  <p>They arrive tired. Their attention moves in short bursts, jumping between topics the way a feed refreshes. When something requires sustained focus &mdash; reading a paragraph, working through a problem step by step &mdash; their tolerance runs out faster than it should. They are not lazy. Their attention has been trained by systems specifically engineered to fragment it.</p>
+
+  <p>The algorithms children interact with online are not neutral. They are built to maximise engagement &mdash; optimised to keep a child watching, not to help a child grow. No school, no parent, and certainly no child is equipped to simply &ldquo;resist&rdquo; this on their own. The design is too intentional, and children&rsquo;s developing brains are too susceptible.</p>
+
+  <p><strong>This is why the responsibility to set boundaries falls on adults. Children cannot reasonably be expected to self-regulate against systems that some of the world&rsquo;s most sophisticated engineers designed to defeat self-regulation.</strong></p>
+
+  <div class="separator">&middot; &middot; &middot;</div>
+
+  <h2>Five things parents can do <em>this week</em></h2>
+
+  <p>The research consistently points to specific, practical interventions that genuinely work. These are not vague suggestions &mdash; they are changes with measurable positive outcomes:</p>
+
+  <div class="checklist-card">
+    <h3>A practical starting point for families</h3>
+    <ul>
+      <li><strong>Make bedrooms screen-free.</strong> Remove devices from your child&rsquo;s room at night. This single change improves sleep quality, reduces anxiety, and lowers total daily screen use. Start tonight.</li>
+      <li><strong>Create screen-free mealtimes.</strong> Every major health organisation recommends this. It is also the simplest way to rebuild daily conversation with your children.</li>
+      <li><strong>Set a schedule, not just a limit.</strong> &ldquo;One hour&rdquo; without structure creates constant negotiation. &ldquo;Screens from 4pm to 5pm&rdquo; gives children clarity and removes the daily battle.</li>
+      <li><strong>Use parental controls actively.</strong> The AAP, Mayo Clinic, and WHO all recommend using available parental control tools &mdash; not as surveillance, but as a scaffold while children develop self-regulation. You would not hand a six-year-old the keys to a car.</li>
+      <li><strong>Model the behaviour you want.</strong> The most consistent predictor of a child&rsquo;s screen habits is their parents&rsquo; screen habits. Put your own phone face-down at dinner. Show them what the alternative looks like.</li>
+    </ul>
+  </div>
+
+  <p>These steps do not require expensive tools or technical expertise. What they require is consistency &mdash; and that is the hard part. Consistently enforcing screen limits when your child is upset, when you are tired, when it is just easier to let them watch &mdash; that is the real work. Having the right tools makes it a lot easier to hold the line.</p>
+
+  <div class="references-section">
+    <h3>// References</h3>
+    <ol>
+      <li id="ref1">American Academy of Child and Adolescent Psychiatry. <em>Screen Time and Children.</em> Updated June 2025. <a href="https://www.aacap.org/AACAP/Families_and_Youth/Facts_for_Families/FFF-Guide/Children-And-Watching-TV-054.aspx" target="_blank" rel="noopener noreferrer">aacap.org</a></li>
+      <li id="ref2">Common Sense Media research compilation. <em>Average Screen Time Statistics.</em> 2024. <a href="https://www.slicktext.com/blog/2023/01/30-key-screen-time-statistics-for-2022-2023/" target="_blank" rel="noopener noreferrer">slicktext.com</a></li>
+      <li id="ref3">Zablotsky B, Arockiaraj B, Haile G, Ng AE. <em>Daily Screen Time Among Teenagers: United States, July 2021&ndash;December 2023.</em> NCHS Data Brief No. 513. CDC, October 2024. <a href="https://www.cdc.gov/nchs/products/databriefs/db513.htm" target="_blank" rel="noopener noreferrer">cdc.gov</a></li>
+      <li id="ref4">Lurie Children&rsquo;s Hospital. <em>Screen Time Statistics Shaping Parenting in 2025.</em> October 2025. <a href="https://www.luriechildrens.org/en/blog/screen-time-2025/" target="_blank" rel="noopener noreferrer">luriechildrens.org</a></li>
+      <li id="ref5">Kar SS, Dube R, et al. <em>Impact of Screen Time on Development of Children.</em> MDPI Children, Vol 12 No 10, 2025. <a href="https://pubmed.ncbi.nlm.nih.gov/41153479/" target="_blank" rel="noopener noreferrer">pubmed.ncbi.nlm.nih.gov</a></li>
+      <li id="ref6">Zablotsky B, Ng AE, Black LI, et al. <em>Associations Between Screen Time Use and Health Outcomes Among US Teenagers.</em> Preventing Chronic Disease, CDC, 2025. <a href="https://www.cdc.gov/pcd/issues/2025/24_0537.htm" target="_blank" rel="noopener noreferrer">cdc.gov</a></li>
+      <li id="ref7">Common Sense Media / Monster Math. <em>How Much Screen Time Are Kids Getting in the US in 2025?</em> 2026. <a href="https://www.monstermath.app/blog/how-much-screen-time-are-kids-getting-in-the-us-in-2025" target="_blank" rel="noopener noreferrer">monstermath.app</a></li>
+      <li id="ref8">Sugiyama M, et al. <em>Outdoor Play as a Mitigating Factor in the Association Between Screen Time for Young Children and Neurodevelopmental Outcomes.</em> Children &amp; Nature Network Research Digest, 2023. <a href="https://www.childrenandnature.org/resources/research-digest-screen-time-and-green-time/" target="_blank" rel="noopener noreferrer">childrenandnature.org</a></li>
+      <li id="ref9">Hartstein LE, et al. Cited in: Lai NM et al. <em>The effectiveness of school-based interventions for reducing screen time.</em> Child and Adolescent Mental Health, 2025. <a href="https://acamh.onlinelibrary.wiley.com/doi/full/10.1111/camh.70022" target="_blank" rel="noopener noreferrer">acamh.onlinelibrary.wiley.com</a></li>
+      <li id="ref10">CHOC Children&rsquo;s Health Hub. <em>Updated AAP Recommendations for Screen Time: What Parents Need to Know.</em> February 2026. <a href="https://health.choc.org/updated-aap-recommendations-for-screen-time/" target="_blank" rel="noopener noreferrer">health.choc.org</a></li>
+      <li id="ref11">Gon&ccedil;alves CF, et al. <em>Digital Screen Exposure in Infants, Children and Adolescents: A Systematic Review of Existing Recommendations.</em> Public Health in Practice, 2025. <a href="https://www.sciencedirect.com/science/article/pii/S2666535225000722" target="_blank" rel="noopener noreferrer">sciencedirect.com</a></li>
+      <li id="ref12">Lee S, Kim D, Shin Y. Cited in: <em>Screen Time and Neurodevelopment in Preschoolers.</em> PMC, 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12146794/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></li>
+      <li id="ref13">Khanani R, et al. <em>Digital Media Use and Screen Time Exposure Among Youths.</em> PMC, 2025. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12364383/" target="_blank" rel="noopener noreferrer">pmc.ncbi.nlm.nih.gov</a></li>
+    </ol>
+  </div>
+
+</article>
+
+<!-- SHARE -->
+<div class="share-bar">
+  <span>Share:</span>
+  <a class="share-btn" href="https://twitter.com/intent/tweet?text=Why%20Parents%20Should%20Control%20Their%20Child%27s%20Screen%20Time&url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-parents-should-control-childrens-screen-time.html" target="_blank" rel="noopener noreferrer">&#x1D54F; Twitter</a>
+  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-parents-should-control-childrens-screen-time.html" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-parents-should-control-childrens-screen-time.html" target="_blank" rel="noopener noreferrer">Facebook</a>
+  <a class="share-btn" href="https://www.reddit.com/submit?url=https%3A%2F%2Fthelayersapp.com%2Fblog%2Fwhy-parents-should-control-childrens-screen-time.html&title=Why%20Parents%20Should%20Control%20Their%20Child%27s%20Screen%20Time" target="_blank" rel="noopener noreferrer">Reddit</a>
+</div>
+
+<!-- AUTHOR -->
+<div class="author-card">
+  <div class="author-inner">
+    <div class="author-avatar">&#x1F468;&#x200D;&#x1F3EB;</div>
+    <div>
+      <div class="author-name">Peter Hoang</div>
+      <div class="author-bio">Teacher in Japan. Father of four. Building tools so children can learn safely online.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="article-cta">
+  <div class="cta-card">
+    <h3>Give your family the tools to take <em>control</em></h3>
+    <p>Layers Guard lets parents set browsing schedules, block harmful content, and get real-time alerts &mdash; completely free, with no subscription and no ads.</p>
+    <div class="cta-buttons">
+      <a href="../guard.html" class="btn-primary">Get Layers Guard &mdash; Free</a>
+      <a href="../guard-pro.html" class="btn-secondary">Layers Guard Pro &rarr; Coming Soon</a>
+    </div>
+    <p class="coming-soon-note">// Guard Pro &mdash; monitor and control all your family&rsquo;s devices from one place, including Android phones and Windows PCs. No-frills, no subscription. Built by a parent.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span>Layers</span> &middot;
+      <span style="color:rgba(255,255,255,0.42);font-size:0.9rem;font-family:'Outfit',sans-serif;">Help children learn, focus &amp; stay safe online</span>
+    </div>
+    <div class="footer-links">
+      <a href="../">Home</a>
+      <a href="../guard.html">Layers Guard</a>
+      <a href="../guard-pro.html" style="color:var(--accent2);">Guard Pro</a>
+      <a href="./">Blog</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy Policy</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Layers &middot; Peter Hoang &middot; Japan &middot; <a href="https://thelayersapp.com" style="color:var(--accent2);text-decoration:none;">thelayersapp.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
