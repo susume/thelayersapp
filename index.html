@@ -286,6 +286,7 @@ footer{background:#0C1810;padding:60px 40px 40px}
   .guard-section{padding:70px 24px}
   .story-strip{padding:60px 24px}
   .guard-products{grid-template-columns:1fr}
+  .guard-products .gp-card[style*="grid-column"]{grid-column:auto;grid-template-columns:1fr}
   .pricing-grid{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr}
   .hero-ecosystem{height:260px}
@@ -300,19 +301,19 @@ footer{background:#0C1810;padding:60px 40px 40px}
 <nav id="main-nav">
   <a href="#" class="nav-brand"><div class="brand-dot"></div>Layers</a>
   <div class="nav-links">
-    <a href="#products">Products</a>
-    <a href="#for-teachers">For Teachers</a>
     <a href="#guard">For Parents</a>
+    <a href="#for-teachers">For Teachers</a>
+    <a href="#products">Products</a>
     <a href="#pricing">Pricing</a>
     <a href="blog/" style="display:none" id="nav-blog">Blog</a>
-    <a href="#pricing" class="nav-cta">Get Started</a>
+    <a href="guard-pro.html" class="nav-cta">Get Guard Pro</a>
   </div>
 </nav>
 
 <!-- ANNOUNCE BAR -->
 <div class="announce" id="announce-bar">
-  <span class="ab-tag">New</span>
-  <span><strong>Layers Guard v2.0</strong> — Content protection with on-device AI scanning. <a href="#guard">Learn more →</a></span>
+  <span class="ab-tag">Now Available</span>
+  <span><strong>Layers Guard Pro</strong> — Control your child's PC and phone from your pocket. <a href="guard-pro.html">Get it for $29 →</a></span>
   <button class="ab-x" onclick="this.parentElement.style.display='none'" aria-label="Dismiss">×</button>
 </div>
 
@@ -334,12 +335,12 @@ footer{background:#0C1810;padding:60px 40px 40px}
   </div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">🌏 Trusted in 40+ countries</div>
-    <h1>One ecosystem.<br><em>Every screen.</em></h1>
-    <p class="hero-sub">Tools for teachers, students, and parents — working together across classrooms, homes, and devices.</p>
+    <div class="hero-eyebrow">🛡 Built by a teacher &amp; father of four</div>
+    <h1>Protect every screen<br><em>from one phone.</em></h1>
+    <p class="hero-sub">See what your child does on their PC and phone. Pause the internet, block apps, set bedtime — all from your pocket. No subscription.</p>
     <div class="hero-actions">
-      <a href="#products" class="btn-hero-primary">Explore Products ↓</a>
-      <a href="#guard" class="btn-hero-ghost">🛡 Parental Controls</a>
+      <a href="guard-pro.html" class="btn-hero-primary">Get Guard Pro — $29 →</a>
+      <a href="#guard" class="btn-hero-ghost">See How It Works ↓</a>
     </div>
 
     <!-- Ecosystem orbit -->
@@ -360,26 +361,26 @@ footer{background:#0C1810;padding:60px 40px 40px}
         <span>Layers</span>
       </div>
 
-      <!-- Floating cards -->
-      <div class="eco-card eco-c1">
-        <div class="ec-icon">🏫</div>
-        <div><div class="ec-name">Layers</div><div class="ec-sub">Teacher Toolbar · Win &amp; Mac</div></div>
+      <!-- Floating cards — Guard products prominent -->
+      <div class="eco-card eco-c1" style="border-color:rgba(109,40,217,0.25)">
+        <div class="ec-icon">🛡</div>
+        <div><div class="ec-name">Guard Controller</div><div class="ec-sub">Your phone · Set the rules</div></div>
       </div>
       <div class="eco-card eco-c2" style="border-color:rgba(109,40,217,0.25)">
-        <div class="ec-icon">🛡</div>
-        <div><div class="ec-name">Guard Controller</div><div class="ec-sub">Parent App · Android</div></div>
+        <div class="ec-icon">🖥</div>
+        <div><div class="ec-name">Guard Desktop</div><div class="ec-sub">Child's PC · Enforces rules</div></div>
       </div>
-      <div class="eco-card eco-c3">
-        <div class="ec-icon">🎓</div>
-        <div><div class="ec-name">Layers Student</div><div class="ec-sub">Study Toolkit · Chrome</div></div>
-      </div>
-      <div class="eco-card eco-c4" style="border-color:rgba(109,40,217,0.2)">
+      <div class="eco-card eco-c3" style="border-color:rgba(109,40,217,0.2)">
         <div class="ec-icon">📱</div>
-        <div><div class="ec-name">Guard Mobile</div><div class="ec-sub">DNS Blocker · Android</div></div>
+        <div><div class="ec-name">Guard Child</div><div class="ec-sub">Child's phone · Stays protected</div></div>
+      </div>
+      <div class="eco-card eco-c4">
+        <div class="ec-icon">🏫</div>
+        <div><div class="ec-name">Layers Teacher</div><div class="ec-sub">Classroom toolbar · Win &amp; Mac</div></div>
       </div>
       <div class="eco-card eco-c5" style="border-color:rgba(52,211,153,0.15)">
         <div class="ec-icon">🌐</div>
-        <div><div class="ec-name">Guard</div><div class="ec-sub">Chrome &amp; Edge · Free</div></div>
+        <div><div class="ec-name">Guard Chrome</div><div class="ec-sub">Browser protection · Free</div></div>
       </div>
     </div>
   </div>
@@ -407,66 +408,66 @@ footer{background:#0C1810;padding:60px 40px 40px}
       <p class="intro">From the classroom to the living room — every product is designed to help children thrive. No subscriptions. No accounts needed for free tools.</p>
     </div>
     <div class="products-grid" style="margin-top:56px">
-      <!-- Layers Teacher — featured dark -->
-      <div class="prod-card featured reveal reveal-d1">
+      <!-- Guard Pro — flagship -->
+      <div class="prod-card featured-violet reveal reveal-d1">
         <span class="prod-num">01</span>
+        <div class="prod-badge badge-violet-dark">For Parents · Flagship</div>
+        <h3>Guard Pro</h3>
+        <p>Control your child's Windows PC and Android phone from your pocket. Block apps, pause the internet, set bedtime, see screen time — all from one app on your phone.</p>
+        <ul class="prod-feats">
+          <li>Block any app or website from your phone</li>
+          <li>Set daily screen time limits — auto-locks when done</li>
+          <li>Pause the internet instantly — one tap</li>
+          <li>Know when harmful content appears</li>
+        </ul>
+        <p class="prod-who">$29 one-time · 1 child phone + up to 3 PCs · No subscription</p>
+        <a href="guard-pro.html" class="btn-sm btn-violet">Get Guard Pro →</a>
+      </div>
+
+      <!-- Layers Teacher -->
+      <div class="prod-card featured reveal reveal-d2">
+        <span class="prod-num">02</span>
         <div class="prod-badge badge-green-dark">For Teachers &amp; Presenters</div>
-        <h3>Layers</h3>
-        <p>A floating toolbar that lives above your slides and apps. One-click translation, timers, annotation, noise monitor, and live classroom controls.</p>
+        <h3>Layers Teacher</h3>
+        <p>A floating toolbar that lives above your slides and apps. Translation, timers, annotation, noise monitor, and classroom controls — one click away.</p>
         <ul class="prod-feats">
           <li>Floats above any app — slides, video, browser</li>
           <li>Live speech translation in 46 languages</li>
-          <li>Remote control of student devices in real-time</li>
-          <li>Help queue — students signal for help from their seat</li>
+          <li>Control student devices from your toolbar</li>
+          <li>Help queue — students signal without interrupting</li>
         </ul>
         <p class="prod-who">Windows &amp; Mac · $29 one-time · 14-day free trial</p>
         <a href="get.html" class="btn-sm btn-green">⬇ Try Free for 14 Days</a>
       </div>
 
-      <!-- Guard Controller — featured violet -->
-      <div class="prod-card featured-violet reveal reveal-d2">
-        <span class="prod-num">02</span>
-        <div class="prod-badge badge-violet-dark">For Parents — Remote Control</div>
-        <h3>Guard Controller</h3>
-        <p>Set rules from your phone — they enforce themselves silently on your child's Windows PC. Block apps, set bedtimes, pause the internet instantly.</p>
-        <ul class="prod-feats">
-          <li>Remote block any app or website from your phone</li>
-          <li>Daily screen time limits with per-app control</li>
-          <li>One-tap internet pause — instant kill switch</li>
-          <li>Real-time alerts for flagged content</li>
-        </ul>
-        <p class="prod-who">Android · Controller app + Windows agent · $29</p>
-        <a href="guard-pro.html" class="btn-sm btn-violet">Learn More →</a>
-      </div>
-
-      <!-- Student — light -->
-      <div class="prod-card light-card reveal reveal-d1">
+      <!-- Guard Chrome — free, supporting -->
+      <div class="prod-card guard-light reveal reveal-d1">
         <span class="prod-num">03</span>
-        <div class="prod-badge badge-green-light">For Students · Free Forever</div>
-        <h3>Layers Student</h3>
-        <p>A Chrome toolbar for students — multilingual dictionary, translation, notes, timer, and classroom sync. Works on any website.</p>
-        <ul class="prod-feats">
-          <li>Right-click any word to look it up in 12 languages</li>
-          <li>Scratch pad and study timer built in</li>
-          <li>Focus Mode blocks distracting sites during study</li>
-        </ul>
-        <p class="prod-who">Chrome &amp; Edge · Free — no account needed</p>
-        <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" class="btn-sm btn-outline-green">+ Add to Chrome</a>
-      </div>
-
-      <!-- Guard Chrome — light -->
-      <div class="prod-card guard-light reveal reveal-d2">
-        <span class="prod-num">04</span>
         <div class="prod-badge badge-violet-light">For Parents · Free Forever</div>
         <h3>Layers Guard</h3>
-        <p>Browser-based parental controls for Chrome and Edge. Block sites, set schedules, cut internet at bedtime. PIN-protected — works in incognito.</p>
+        <p>Free browser protection for Chrome and Edge. Block harmful sites, set bedtime curfews, and keep your child safe online. No account needed.</p>
         <ul class="prod-feats">
-          <li>Block any website by domain instantly</li>
-          <li>Bedtime lockout cuts all internet access</li>
-          <li>On-device content scanning — no data leaves the device</li>
+          <li>Block any website instantly</li>
+          <li>Bedtime lockout cuts internet access</li>
+          <li>PIN-protected — works even in incognito</li>
         </ul>
         <p class="prod-who">Chrome &amp; Edge Extension · Free forever</p>
         <a href="guard.html" class="btn-sm btn-outline-violet">🛡 Get for Free</a>
+      </div>
+
+      <!-- Layers Student — free, supporting -->
+      <div class="prod-card light-card reveal reveal-d2">
+        <span class="prod-num">04</span>
+        <div class="prod-badge badge-green-light">For Students · Free Forever</div>
+        <h3>Layers Student</h3>
+        <p>A Chrome toolbar for students — dictionary, translation, notes, timer, and classroom sync. Works on any website.</p>
+        <ul class="prod-feats">
+          <li>Look up any word in 12 languages</li>
+          <li>Built-in study timer and scratch pad</li>
+          <li>Focus Mode blocks distracting sites</li>
+        </ul>
+        <p class="prod-who">Chrome &amp; Edge · Free — no account needed</p>
+        <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" class="btn-sm btn-outline-green">+ Add to Chrome</a>
       </div>
     </div>
   </div>
@@ -563,54 +564,62 @@ footer{background:#0C1810;padding:60px 40px 40px}
   <div class="guard-inner">
     <div class="reveal">
       <span class="label">// For parents</span>
-      <h2>Real control.<br><em>Every screen.</em></h2>
-      <p class="intro">Three tools that work together — from the browser, to the phone, to the Windows desktop. Free where it counts.</p>
+      <h2>Your child's screens.<br><em>Your rules.</em></h2>
+      <p class="intro">Set healthy screen-time habits from your phone. Works across Windows, Android, and Chrome — no technical setup needed.</p>
     </div>
     <div class="guard-products">
-      <!-- Guard Chrome -->
-      <div class="gp-card reveal reveal-d1">
-        <span class="gp-icon">🛡</span>
-        <h3>Layers Guard <span class="gp-badge">Free</span></h3>
-        <div class="gp-platform">Chrome &amp; Edge Extension</div>
-        <p>Block websites, set bedtime curfews, and scan content on-device. PIN-protected — even works in incognito. No account required.</p>
-        <ul class="gp-feats">
-          <li>Block any domain instantly</li>
-          <li>Scheduled internet lockout</li>
-          <li>On-device content scanning (v2.0)</li>
-          <li>Works in incognito mode</li>
-          <li>Quick Setup with 60 curated sites</li>
-        </ul>
-        <a href="guard.html" class="btn-violet-ghost">Learn More →</a>
+      <!-- Guard Pro — flagship -->
+      <div class="gp-card reveal reveal-d1" style="border-color:rgba(52,211,153,0.3);grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start">
+        <div>
+          <span class="gp-icon">🛡</span>
+          <h3>Guard Pro <span class="gp-badge">$29 one-time</span></h3>
+          <div class="gp-platform" style="color:#34D399">Everything you need — one purchase</div>
+          <p style="font-size:0.95rem;line-height:1.8;color:rgba(255,255,255,0.55)">Install it once. From that moment, you control your child's Windows PC and Android phone from your pocket. Block apps, set bedtime, pause the internet, see what they're doing — without touching their device.</p>
+          <a href="guard-pro.html" class="btn-green-ghost" style="font-size:0.95rem;padding:12px 28px">Get Guard Pro →</a>
+        </div>
+        <div>
+          <ul class="gp-feats" style="gap:12px">
+            <li style="font-size:0.9rem">Pause the internet instantly — one tap</li>
+            <li style="font-size:0.9rem">Block any app or website from your phone</li>
+            <li style="font-size:0.9rem">Set daily screen time limits that auto-enforce</li>
+            <li style="font-size:0.9rem">Bedtime lockout — the PC locks, the phone locks</li>
+            <li style="font-size:0.9rem">Know when harmful content appears</li>
+            <li style="font-size:0.9rem">See which apps they use and for how long</li>
+            <li style="font-size:0.9rem">Emergency lock — shut everything down instantly</li>
+            <li style="font-size:0.9rem">Child can't quit, uninstall, or bypass it</li>
+          </ul>
+          <p style="font-size:0.78rem;color:rgba(255,255,255,0.3);margin-top:16px">Includes: Guard Controller (your phone) + Guard Child (child's phone) + Guard Desktop (child's PC × 3). Additional child phones: $9.99 each.</p>
+        </div>
       </div>
-      <!-- Guard Mobile -->
+      <!-- Guard Chrome — supporting -->
       <div class="gp-card reveal reveal-d2">
-        <span class="gp-icon">📱</span>
-        <h3>Guard Mobile <span class="gp-badge" style="background:#a78bfa;color:#0e0a1f">$9.99</span></h3>
-        <div class="gp-platform">Android App</div>
-        <p>DNS-based blocking works across every app on Android — not just the browser. No root required. One-time purchase from Google Play.</p>
+        <span class="gp-icon">🌐</span>
+        <h3>Layers Guard <span class="gp-badge">Free</span></h3>
+        <div class="gp-platform">Chrome &amp; Edge</div>
+        <p>Free browser protection. Block harmful websites, set bedtime curfews, and keep browsing safe. No account needed — works in incognito too.</p>
         <ul class="gp-feats">
-          <li>Blocks across all Android apps</li>
-          <li>VPN-based DNS filter — no root needed</li>
-          <li>Accessibility monitoring for WhatsApp &amp; LINE</li>
-          <li>Daily usage reports</li>
-          <li>Bedtime lockout</li>
+          <li>Block any website instantly</li>
+          <li>Bedtime lockout — no browsing after hours</li>
+          <li>Content scanning built in</li>
+          <li>PIN-protected — kids can't turn it off</li>
+          <li>Quick Setup with 60 pre-selected sites</li>
         </ul>
-        <a href="#" class="btn-violet-ghost">View on Google Play →</a>
+        <a href="guard.html" class="btn-violet-ghost">Get for Free →</a>
       </div>
-      <!-- Guard Pro / Controller -->
-      <div class="gp-card reveal reveal-d3" style="border-color:rgba(52,211,153,0.2)">
-        <span class="gp-icon">🖥</span>
-        <h3>Guard Pro <span class="gp-soon">Coming Soon</span></h3>
-        <div class="gp-platform" style="color:#34D399">Windows Agent + Android Controller · $29</div>
-        <p>Set rules from your phone — they enforce silently on your child's Windows PC. Remote control without touching the child's device after pairing.</p>
+      <!-- How it works — simple -->
+      <div class="gp-card reveal reveal-d3" style="border-color:rgba(167,139,250,0.15)">
+        <span class="gp-icon">⚡</span>
+        <h3>How It Works</h3>
+        <div class="gp-platform">Set up in under 5 minutes</div>
+        <p>No expertise needed. Pair your phone with your child's device using a simple code — that's it. From then on, everything is controlled from your phone.</p>
         <ul class="gp-feats">
-          <li>Remote block apps &amp; websites from Android</li>
-          <li>Per-app daily time limits</li>
-          <li>One-tap internet pause (kill-switch)</li>
-          <li>Emergency lock from anywhere</li>
-          <li>Screen time reports by app</li>
+          <li><strong style="color:#fff">Step 1:</strong> Install Guard Pro on your phone</li>
+          <li><strong style="color:#fff">Step 2:</strong> Install the agent on your child's device</li>
+          <li><strong style="color:#fff">Step 3:</strong> Pair with a 4-digit code</li>
+          <li><strong style="color:#fff">Step 4:</strong> Set your rules — done</li>
+          <li>Works across Windows PCs and Android phones</li>
         </ul>
-        <a href="guard-pro.html" class="btn-green-ghost">Get Notified →</a>
+        <a href="guard-pro.html" class="btn-violet-ghost">See Full Demo →</a>
       </div>
     </div>
   </div>
@@ -633,52 +642,52 @@ footer{background:#0C1810;padding:60px 40px 40px}
         <p class="p-note">No credit card. No account. No catch.</p>
         <div class="p-div"></div>
         <ul class="p-feats">
-          <li><span class="ck">✓</span> Layers Guard — Chrome &amp; Edge</li>
-          <li><span class="ck">✓</span> Layers Student — Chrome extension</li>
-          <li><span class="ck">✓</span> Block websites &amp; set schedules</li>
-          <li><span class="ck">✓</span> On-device content scanning</li>
-          <li><span class="ck">✓</span> Translation &amp; dictionary tools</li>
-          <li><span class="cx">–</span> Teacher toolbar</li>
-          <li><span class="cx">–</span> Classroom sync</li>
+          <li><span class="ck">✓</span> Block harmful websites in Chrome</li>
+          <li><span class="ck">✓</span> Bedtime curfew for browsing</li>
+          <li><span class="ck">✓</span> Content scanning built in</li>
+          <li><span class="ck">✓</span> Student dictionary &amp; study tools</li>
+          <li><span class="cx">–</span> No app or PC control</li>
+          <li><span class="cx">–</span> No remote control from phone</li>
+          <li><span class="cx">–</span> Browser only</li>
         </ul>
         <a href="guard.html" class="btn-price">Get Guard Free →</a>
       </div>
-      <!-- Teacher -->
+      <!-- Guard Pro — flagship -->
       <div class="price-card pop reveal reveal-d2">
-        <div class="pop-pill">Most popular</div>
+        <div class="pop-pill">For parents</div>
+        <div class="p-tier">One-time purchase</div>
+        <div class="p-name">Guard Pro</div>
+        <div class="p-amount"><span class="p-sym">$</span><span class="p-num">29</span></div>
+        <p class="p-note">One-time · 1 child phone + up to 3 PCs included</p>
+        <div class="p-div"></div>
+        <ul class="p-feats">
+          <li><span class="ck">✓</span> Control everything from your phone</li>
+          <li><span class="ck">✓</span> Block apps &amp; websites on PC and phone</li>
+          <li><span class="ck">✓</span> Daily screen time limits — auto-enforced</li>
+          <li><span class="ck">✓</span> Bedtime lockout &amp; internet pause</li>
+          <li><span class="ck">✓</span> See what they're doing in real time</li>
+          <li><span class="ck">✓</span> Screen time charts by app</li>
+          <li><span class="ck">✓</span> +$9.99 per extra child phone</li>
+        </ul>
+        <a href="guard-pro.html" class="btn-price">Get Guard Pro →</a>
+      </div>
+      <!-- Teacher -->
+      <div class="price-card reveal reveal-d3">
         <div class="p-tier">One-time purchase</div>
         <div class="p-name">Layers Teacher</div>
         <div class="p-amount"><span class="p-sym">$</span><span class="p-num">29</span></div>
-        <p class="p-note">14-day free trial included · Windows &amp; Mac</p>
+        <p class="p-note">14-day free trial · Windows &amp; Mac</p>
         <div class="p-div"></div>
         <ul class="p-feats">
-          <li><span class="ck">✓</span> Floating teacher toolbar</li>
+          <li><span class="ck">✓</span> Floating toolbar above your slides</li>
           <li><span class="ck">✓</span> Live translation in 46 languages</li>
-          <li><span class="ck">✓</span> Classroom sync &amp; student controls</li>
-          <li><span class="ck">✓</span> Help queue (v3.10)</li>
+          <li><span class="ck">✓</span> Control student devices from toolbar</li>
+          <li><span class="ck">✓</span> Help queue — no interruptions</li>
           <li><span class="ck">✓</span> Draw, annotate, timer, picker</li>
           <li><span class="ck">✓</span> Noise monitor</li>
-          <li><span class="ck">✓</span> Layers Student free for your class</li>
+          <li><span class="ck">✓</span> Student extension free for your class</li>
         </ul>
         <a href="get.html" class="btn-price">Start Free Trial →</a>
-      </div>
-      <!-- Guard Pro -->
-      <div class="price-card reveal reveal-d3">
-        <div class="p-tier">Coming soon</div>
-        <div class="p-name">Guard Pro</div>
-        <div class="p-amount"><span class="p-sym">$</span><span class="p-num">29</span></div>
-        <p class="p-note">One-time · Controller app + Windows agent</p>
-        <div class="p-div"></div>
-        <ul class="p-feats">
-          <li><span class="ck">✓</span> Remote control from Android app</li>
-          <li><span class="ck">✓</span> Block apps &amp; websites on PC</li>
-          <li><span class="ck">✓</span> Daily time limits per app</li>
-          <li><span class="ck">✓</span> Bedtime lockout + internet pause</li>
-          <li><span class="ck">✓</span> Real-time alerts</li>
-          <li><span class="ck">✓</span> Screen time reports</li>
-          <li><span class="ck">✓</span> Guard Mobile ($9.99) sold separately</li>
-        </ul>
-        <a href="guard-pro.html" class="btn-price">Get Notified →</a>
       </div>
     </div>
 
@@ -700,9 +709,9 @@ footer{background:#0C1810;padding:60px 40px 40px}
       </div>
       <div class="footer-col">
         <h4>Products</h4>
-        <a href="index.html">Layers (Teacher)</a>
-        <a href="guard.html">Layers Guard</a>
         <a href="guard-pro.html">Guard Pro</a>
+        <a href="guard.html">Guard (Free)</a>
+        <a href="index.html">Layers Teacher</a>
         <a href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" rel="noopener">Layers Student</a>
       </div>
       <div class="footer-col">
