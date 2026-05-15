@@ -3010,14 +3010,11 @@
 
     function renderActiveApps(apps) {
       const list = document.getElementById('activeAppsList');
-      const empty = document.getElementById('appsEmpty');
+      if (!list) return;
       if (!apps || apps.length === 0) {
-        list.innerHTML = '';
-        empty.style.display = 'block';
-        list.appendChild(empty);
+        list.innerHTML = '<div class="empty-state" data-i18n="today_no_apps_open">' + T('today_no_apps_open') + '</div>';
         return;
       }
-      empty.style.display = 'none';
       const todayApps = todayTimeLog.apps || {};
       list.innerHTML = apps.slice(0, 10).map(app => {
         const name = typeof app === 'string' ? app : (app.name || app);
@@ -3032,15 +3029,12 @@
 
     function renderPendingRequests(reqs) {
       const list = document.getElementById('pendingRequestsList');
-      const empty = document.getElementById('pendingEmpty');
-      const pending = Object.entries(reqs).filter(([k, v]) => v.status === 'pending');
+      if (!list) return;
+      const pending = Object.entries(reqs || {}).filter(([k, v]) => v.status === 'pending');
       if (pending.length === 0) {
-        list.innerHTML = '';
-        empty.style.display = 'block';
-        list.appendChild(empty);
+        list.innerHTML = '<div class="empty-state" data-i18n="approval_empty">' + T('approval_empty') + '</div>';
         return;
       }
-      empty.style.display = 'none';
       list.innerHTML = pending.map(([key, req]) => {
         const typeLabel = T('cmd_' + req.type) || req.type;
         const valueLabel = req.value || '';
@@ -3091,15 +3085,12 @@
 
     function renderActivityLog(log) {
       const list = document.getElementById('activityLogList');
-      const empty = document.getElementById('logEmpty');
-      const entries = Object.entries(log).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0)).slice(0, 12);
+      if (!list) return;
+      const entries = Object.entries(log || {}).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0)).slice(0, 12);
       if (entries.length === 0) {
-        list.innerHTML = '';
-        empty.style.display = 'block';
-        list.appendChild(empty);
+        list.innerHTML = '<div class="empty-state" data-i18n="today_no_activity">' + T('today_no_activity') + '</div>';
         return;
       }
-      empty.style.display = 'none';
       list.innerHTML = entries.map(([k, e]) => {
         const cmd = T('cmd_' + e.command) || e.command;
         const source = e.source || '';
