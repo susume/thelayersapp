@@ -695,12 +695,38 @@
   <section id="screenSetup" class="screen auth-screen">
     <div class="auth-box setup-box">
       <h2 data-i18n="setup_title">Pair a device</h2>
-      <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_instructions">
-        Enter this code in the Layers Guard app on your child's device.
-      </p>
-      <div id="pairingCode" class="pairing-code">LG-0000</div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:var(--sp-sm);color:var(--text-muted);font-size:0.875rem">
-        <span class="spinner"></span> <span data-i18n="setup_waiting">Waiting for device...</span>
+
+      <!-- Tab switcher for pairing modes -->
+      <div class="auth-tabs" style="margin-bottom:var(--sp-lg)">
+        <button data-pair-tab="enter" class="active" data-i18n="setup_enter_code">Enter a code manually</button>
+        <button data-pair-tab="display" data-i18n="setup_pair_new">Show my code</button>
+      </div>
+
+      <!-- MODE 1: Enter child's code (default) -->
+      <div id="pairEnterMode">
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_enter_code_label">
+          Enter the code shown on your child's device.
+        </p>
+        <form id="pairCodeForm">
+          <div class="form-group">
+            <input id="pairCodeInput" class="input" type="text" required
+                   placeholder="e.g. LG-4829" style="text-align:center;font-size:1.25rem;letter-spacing:0.15em;text-transform:uppercase"
+                   maxlength="7" autocomplete="off">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="setup_code_submit">Connect</button>
+          <div id="pairCodeError" class="auth-error"></div>
+        </form>
+      </div>
+
+      <!-- MODE 2: Display code for child to enter -->
+      <div id="pairDisplayMode" style="display:none">
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_instructions">
+          Enter this code in the Layers Guard app on your child's device.
+        </p>
+        <div id="pairingCode" class="pairing-code">LG-0000</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:var(--sp-sm);color:var(--text-muted);font-size:0.875rem">
+          <span class="spinner"></span> <span data-i18n="setup_waiting">Waiting for device...</span>
+        </div>
       </div>
     </div>
   </section>
@@ -2612,6 +2638,107 @@
 
     function startPairing() {
       showScreen('screenSetup');
+
+      // ── Pairing tab switcher ──
+      document.querySelectorAll('[data-pair-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.dataset.pairTab;
+          document.querySelectorAll('[data-pair-tab]').forEach(b => b.classList.toggle('active', b.dataset.pairTab === tab));
+          document.getElementById('pairEnterMode').style.display = tab === 'enter' ? 'block' : 'none';
+          document.getElementById('pairDisplayMode').style.display = tab === 'display' ? 'block' : 'none';
+          if (tab === 'display') startDisplayCodePairing();
+        });
+      });
+    }
+
+    // ── MODE 1: Parent enters child's code ──
+    document.getElementById('pairCodeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawCode = document.getElementById('pairCodeInput').value.trim().toUpperCase();
+      const errEl = document.getElementById('pairCodeError');
+      const btn = e.target.querySelector('button[type="submit"]');
+      errEl.style.display = 'none';
+
+      // Normalize — accept with or without LG- prefix
+      const code = rawCode.startsWith('LG-') ? rawCode : 'LG-' + rawCode;
+
+      if (!/^LG-\d{4}$/.test(code)) {
+        errEl.textContent = T('setup_err_pair_code_invalid');
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '…';
+
+      try {
+        const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+        const val = snap.val();
+
+        if (!val) {
+          errEl.textContent = T('setup_code_invalid');
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = T('setup_code_submit');
+          return;
+        }
+
+        // Check if expired (older than 10 minutes)
+        if (val.created_at && Date.now() - val.created_at > 600000) {
+          errEl.textContent = T('setup_code_expired');
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = T('setup_code_submit');
+          return;
+        }
+
+        const deviceId = val.device_id;
+
+        // Mark as paired
+        await update(ref(db, GUARD_ROOT + '/pairing_codes/' + code), {
+          paired: true,
+          parent_auth_uid: currentUser.uid,
+        });
+
+        // Clean up pairing code
+        await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+
+        // Write device info if it doesn't exist yet
+        const infoSnap = await get(ref(db, GUARD_ROOT + '/' + deviceId + '/info'));
+        if (!infoSnap.val()) {
+          await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
+            parent_auth_uid: currentUser.uid,
+            child_name: 'My child',
+            paired_at: Date.now(),
+          });
+        } else {
+          await update(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
+            parent_auth_uid: currentUser.uid,
+          });
+        }
+
+        // Append to user's devices
+        const userSnap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
+        const userData = userSnap.val() || {};
+        const devList = userData.devices || [];
+        if (!devList.includes(deviceId)) devList.push(deviceId);
+        await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
+        devices = devList;
+        currentDeviceId = deviceId;
+        showToast(T('setup_paired_success'));
+        showScreen('screenDashboard');
+        attachListeners();
+      } catch (err) {
+        console.error('[Dashboard] Pair code error:', err);
+        errEl.textContent = err.message || T('error_generic');
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = T('setup_code_submit');
+      }
+    });
+
+    // ── MODE 2: Display code for child to enter ──
+    function startDisplayCodePairing() {
       const code = 'LG-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
       const deviceId = Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 
