@@ -1,0 +1,3713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layers Guard — Parent Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== RESET ========== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+    body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    input, select { font-family: inherit; }
+
+    /* ========== DESIGN TOKENS ========== */
+    :root {
+      --bg:           #F5F0E8;
+      --surface:      #EAE5D5;
+      --card:         #FFFFFF;
+      --card-border:  #D4C9A8;
+      --hero-bg:      #0C1810;
+
+      --accent:       #2A9D5C;
+      --accent-dim:   #C8E8D4;
+      --gold:         #8B6914;
+
+      --success:      #2A9D5C;
+      --warning:      #C4870A;
+      --danger:       #C84040;
+
+      --text:         #1E1A0F;
+      --text-muted:   #6B6150;
+      --text-dim:     #9AA89D;
+
+      --font-heading: 'DM Serif Display', serif;
+      --font-body:    'Outfit', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+
+      --sp-xs: 4px;
+      --sp-sm: 8px;
+      --sp-md: 16px;
+      --sp-lg: 24px;
+      --sp-xl: 32px;
+
+      --radius:       16px;
+      --shadow:       0 2px 8px rgba(30, 26, 15, 0.08);
+    }
+
+    /* ========== LAYOUT ========== */
+    .screen { display: none; }
+    .screen.active { display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+
+    .dashboard-wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding: var(--sp-lg); }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-lg);
+    }
+
+    .grid-full { grid-column: 1 / -1; }
+
+    /* ========== CARD BASE ========== */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: var(--sp-lg);
+    }
+    .card-header {
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; background: var(--card);
+      padding-bottom: var(--sp-sm);
+      z-index: 2;
+    }
+    .card-header h3 { font-family: var(--font-heading); font-size: 1.125rem; }
+    .card-scroll {
+      max-height: 320px; overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .card-scroll-fade {
+      position: relative;
+    }
+    .card-scroll-fade::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 32px;
+      background: linear-gradient(transparent, var(--card));
+      pointer-events: none;
+    }
+
+    /* ========== HEADER BAR ========== */
+    .header-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-md) var(--sp-lg);
+      background: var(--hero-bg); color: #fff;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .header-bar h1 { font-family: var(--font-heading); font-size: 1.25rem; }
+    .header-actions { display: flex; gap: var(--sp-md); align-items: center; }
+    .header-actions button { color: #fff; font-size: 1.25rem; position: relative; }
+    .badge {
+      position: absolute; top: -4px; right: -6px;
+      background: var(--danger); color: #fff; font-size: 0.625rem;
+      width: 16px; height: 16px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+    }
+
+    /* ========== TAB BAR ========== */
+    .tab-bar {
+      display: flex; gap: var(--sp-xs);
+      border-bottom: 2px solid var(--surface);
+      margin-bottom: var(--sp-lg);
+    }
+    .tab-bar button {
+      padding: var(--sp-sm) var(--sp-lg);
+      font-weight: 500; font-size: 0.9375rem;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-bar button.active {
+      color: var(--accent); border-bottom-color: var(--accent);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-xs);
+      padding: var(--sp-sm) var(--sp-md);
+      border-radius: 8px; font-weight: 500; font-size: 0.875rem;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-warning { background: var(--warning); color: #fff; }
+    .btn-outline { border: 1px solid var(--card-border); color: var(--text); }
+    .btn-sm { padding: var(--sp-xs) var(--sp-sm); font-size: 0.8125rem; }
+
+    /* ========== FORM INPUTS ========== */
+    .input {
+      width: 100%; padding: var(--sp-sm) var(--sp-md);
+      border: 1px solid var(--card-border); border-radius: 8px;
+      font-size: 0.9375rem; background: #fff; color: var(--text);
+    }
+    .input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+
+    /* ========== AUTH SCREEN ========== */
+    .auth-screen {
+      justify-content: center; padding: var(--sp-xl);
+    }
+    .auth-box {
+      width: 100%; max-width: 400px;
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: var(--sp-xl);
+    }
+    .auth-box h1 { font-family: var(--font-heading); text-align: center; margin-bottom: var(--sp-lg); }
+    .auth-tabs { display: flex; gap: var(--sp-xs); margin-bottom: var(--sp-lg); }
+    .auth-tabs button {
+      flex: 1; padding: var(--sp-sm);
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted); font-weight: 500;
+    }
+    .auth-tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .form-group { margin-bottom: var(--sp-md); }
+    .form-group label { display: block; font-size: 0.8125rem; color: var(--text-muted); margin-bottom: var(--sp-xs); }
+    .auth-error { color: var(--danger); font-size: 0.8125rem; margin-top: var(--sp-sm); display: none; }
+
+    /* ========== LICENSE SCREEN ========== */
+    .license-box { width: 100%; max-width: 400px; text-align: center; }
+    .license-box h2 { font-family: var(--font-heading); margin-bottom: var(--sp-md); }
+    .license-box .input { text-align: center; font-family: var(--font-mono); letter-spacing: 2px; }
+
+    /* ========== SETUP / PAIRING SCREEN ========== */
+    .setup-box { width: 100%; max-width: 480px; text-align: center; }
+    .pairing-code {
+      font-family: var(--font-mono); font-size: 2.5rem; font-weight: 700;
+      letter-spacing: 4px; color: var(--accent);
+      margin: var(--sp-lg) 0;
+    }
+    .spinner {
+      width: 24px; height: 24px; border: 3px solid var(--surface);
+      border-top-color: var(--accent); border-radius: 50%;
+      animation: spin 0.8s linear infinite; display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ========== HERO CARD ========== */
+    .hero-card {
+      background: var(--hero-bg); color: #fff;
+      border-radius: var(--radius); padding: var(--sp-xl);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .hero-card h2 { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: var(--sp-xs); }
+    .hero-card .sub { color: var(--text-dim); font-size: 0.875rem; }
+    .progress-ring { width: 160px; height: 160px; margin: var(--sp-lg) auto; }
+    .progress-ring circle { fill: none; stroke-width: 12; stroke-linecap: round; }
+    .progress-ring .bg { stroke: #1E3A2A; }
+    .progress-ring .fg { stroke: var(--accent); transition: stroke-dashoffset 0.5s ease; }
+    .progress-ring .over { stroke: var(--danger); }
+    .hero-time { font-size: 1.5rem; font-weight: 700; }
+    .hero-stats { display: flex; justify-content: center; gap: var(--sp-xl); margin-top: var(--sp-md); }
+    .hero-stats .stat { text-align: center; }
+    .hero-stats .stat-value { font-weight: 600; }
+    .hero-stats .stat-label { font-size: 0.75rem; color: var(--text-dim); }
+
+    /* ========== QUICK ACTIONS ========== */
+    .quick-actions {
+      display: flex; gap: var(--sp-md); margin-bottom: var(--sp-lg);
+    }
+    .quick-actions .action-pill {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--sp-sm);
+      padding: var(--sp-md);
+      border-radius: 12px; font-weight: 600; font-size: 0.9375rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .quick-actions .action-pill:active { transform: scale(0.97); }
+    .action-pill.emergency { background: var(--danger); color: #fff; }
+    .action-pill.emergency.active-state { background: #992020; }
+    .action-pill.wifi { background: var(--warning); color: #fff; }
+    .action-pill.wifi.active-state { background: #8A5E00; }
+
+    /* ========== PENDING REQUESTS ========== */
+    .request-card {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-md);
+      border-bottom: 1px solid var(--surface);
+      min-height: 44px;
+    }
+    .request-card:last-child { border-bottom: none; }
+    .request-info { flex: 1; }
+    .request-type { font-weight: 500; font-size: 0.875rem; }
+    .request-detail { font-size: 0.8125rem; color: var(--text-muted); }
+    .request-actions { display: flex; gap: var(--sp-sm); }
+
+    /* ========== ACTIVE APPS LIST ========== */
+    .app-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-sm) 0;
+      border-bottom: 1px solid var(--surface);
+      min-height: 44px;
+    }
+    .app-row:last-child { border-bottom: none; }
+    .app-name { font-size: 0.875rem; }
+    .app-time { font-size: 0.8125rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+    /* ========== 7-DAY BAR CHART ========== */
+    .bar-chart {
+      display: flex; align-items: flex-end; gap: var(--sp-sm);
+      height: 120px; padding: var(--sp-sm) 0;
+    }
+    .bar-chart .bar-col {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+    }
+    .bar-chart .bar {
+      width: 100%; border-radius: 4px 4px 0 0;
+      background: var(--accent); min-height: 4px;
+      transition: height 0.3s ease;
+    }
+    .bar-chart .bar.over-limit { background: var(--danger); }
+    .bar-chart .bar-label { font-size: 0.6875rem; color: var(--text-muted); margin-top: var(--sp-xs); }
+    .bar-chart .bar-value { font-size: 0.6875rem; font-family: var(--font-mono); color: var(--text-muted); }
+
+    /* ========== ACTIVITY LOG ========== */
+    .log-entry {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: var(--sp-sm) 0;
+      font-size: 0.8125rem;
+      border-bottom: 1px solid var(--surface);
+    }
+    .log-entry:last-child { border-bottom: none; }
+    .log-cmd { font-weight: 500; }
+    .log-by { color: var(--text-muted); }
+    .log-time { color: var(--text-dim); font-family: var(--font-mono); font-size: 0.75rem; }
+
+    /* ========== CALENDAR HEATMAP ========== */
+    .heatmap {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .heatmap .cell {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      min-width: 32px;
+      cursor: pointer;
+      position: relative;
+    }
+    .heatmap .cell-label {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6875rem; color: var(--text-muted);
+    }
+    .heatmap .day-header {
+      font-size: 0.6875rem; text-align: center; color: var(--text-muted);
+      padding-bottom: var(--sp-xs);
+    }
+    .heat-0 { background: #EAE5D5; }
+    .heat-1 { background: #C8E8D4; }
+    .heat-2 { background: #2A9D5C; }
+    .heat-3 { background: #1E4D38; }
+    .heat-over { background: #C84040; }
+
+    .month-nav {
+      display: flex; align-items: center; justify-content: center; gap: var(--sp-lg);
+      margin-bottom: var(--sp-md);
+    }
+    .month-nav button { font-size: 1.25rem; color: var(--text-muted); }
+    .month-nav .month-label { font-family: var(--font-heading); font-size: 1.125rem; }
+
+    .summary-stats {
+      display: flex; gap: var(--sp-lg); margin: var(--sp-md) 0;
+    }
+    .summary-stats .stat {
+      flex: 1; text-align: center;
+      background: var(--surface); border-radius: 8px; padding: var(--sp-md);
+    }
+    .summary-stats .stat-value { font-size: 1.25rem; font-weight: 600; }
+    .summary-stats .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+    .top-app-row {
+      display: flex; align-items: center; gap: var(--sp-md);
+      padding: var(--sp-sm) 0;
+    }
+    .top-app-bar-bg {
+      flex: 1; height: 8px; background: var(--surface); border-radius: 4px; overflow: hidden;
+    }
+    .top-app-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+    .top-app-pct { font-size: 0.8125rem; font-family: var(--font-mono); color: var(--text-muted); min-width: 40px; text-align: right; }
+
+    /* ========== CONTROLS TAB ========== */
+    .control-card { margin-bottom: var(--sp-lg); }
+
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-sm) 0;
+    }
+    .toggle-label { font-weight: 500; }
+    .toggle {
+      width: 44px; height: 24px;
+      background: var(--surface); border-radius: 12px;
+      position: relative; cursor: pointer; transition: background 0.2s;
+    }
+    .toggle.on { background: var(--accent); }
+    .toggle::after {
+      content: '';
+      position: absolute; top: 2px; left: 2px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .toggle.on::after { transform: translateX(20px); }
+
+    .slider-row {
+      display: flex; align-items: center; gap: var(--sp-md);
+      padding: var(--sp-sm) 0;
+    }
+    .slider-row input[type="range"] {
+      flex: 1; accent-color: var(--accent);
+    }
+    .slider-value {
+      font-family: var(--font-mono); font-size: 0.875rem;
+      min-width: 60px; text-align: center;
+    }
+
+    .blocked-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-sm) var(--sp-md);
+      border-bottom: 1px solid var(--surface);
+      min-height: 44px;
+    }
+    .blocked-item:last-child { border-bottom: none; }
+    .blocked-item-actions { display: flex; gap: var(--sp-sm); }
+
+    .add-row {
+      display: flex; gap: var(--sp-sm);
+      padding: var(--sp-sm) 0;
+    }
+    .add-row .input { flex: 1; }
+
+    .time-picker-row {
+      display: flex; align-items: center; gap: var(--sp-md);
+      padding: var(--sp-sm) 0;
+    }
+    .time-picker-row label { font-size: 0.875rem; color: var(--text-muted); min-width: 80px; }
+    .time-picker-row input[type="time"] {
+      padding: var(--sp-sm); border: 1px solid var(--card-border);
+      border-radius: 8px; font-family: var(--font-mono);
+    }
+
+    .category-pills {
+      display: flex; flex-wrap: wrap; gap: var(--sp-sm);
+      padding: var(--sp-sm) 0;
+    }
+    .category-pill {
+      padding: var(--sp-xs) var(--sp-md);
+      border-radius: 20px; font-size: 0.8125rem;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .category-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ========== ALERTS PANEL ========== */
+    .alerts-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      display: none;
+    }
+    .alerts-overlay.open { display: flex; }
+    .alerts-backdrop {
+      position: absolute; inset: 0; background: rgba(0,0,0,0.3);
+    }
+    .alerts-panel {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      width: 420px; max-width: 100%;
+      background: var(--card); box-shadow: -4px 0 16px rgba(0,0,0,0.1);
+      display: flex; flex-direction: column;
+      animation: slideIn 0.25s ease;
+    }
+    @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    .alerts-panel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-lg);
+      border-bottom: 1px solid var(--surface);
+    }
+    .alerts-panel-header h2 { font-family: var(--font-heading); }
+    .alert-filters {
+      display: flex; flex-wrap: wrap; gap: var(--sp-xs);
+      padding: var(--sp-md) var(--sp-lg);
+    }
+    .alerts-list { flex: 1; overflow-y: auto; padding: 0 var(--sp-lg); }
+    .alert-item {
+      display: flex; gap: var(--sp-md); padding: var(--sp-md) 0;
+      border-bottom: 1px solid var(--surface); cursor: pointer;
+      min-height: 44px;
+    }
+    .alert-item.unread { border-left: 3px solid var(--accent); padding-left: var(--sp-sm); }
+    .alert-icon { font-size: 1.25rem; width: 32px; text-align: center; flex-shrink: 0; }
+    .alert-body { flex: 1; }
+    .alert-category { font-weight: 500; font-size: 0.875rem; }
+    .alert-source { font-size: 0.8125rem; color: var(--text-muted); }
+    .alert-time { font-size: 0.75rem; color: var(--text-dim); }
+    .severity-dot {
+      width: 8px; height: 8px; border-radius: 50%; display: inline-block;
+    }
+    .severity-high { background: var(--danger); }
+    .severity-medium { background: var(--warning); }
+
+    /* ========== SETTINGS MODAL ========== */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.3);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      padding: var(--sp-xl); width: 100%; max-width: 420px;
+      max-height: 85vh; overflow-y: auto;
+    }
+    .modal-box h2 { font-family: var(--font-heading); margin-bottom: var(--sp-lg); }
+    .modal-section { margin-bottom: var(--sp-lg); }
+    .modal-section h4 {
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
+      color: var(--text-muted); margin-bottom: var(--sp-sm);
+    }
+
+    /* ========== CHILD SELECTOR ========== */
+    .child-selector {
+      position: relative; cursor: pointer;
+    }
+    .child-selector-current {
+      display: flex; align-items: center; gap: var(--sp-sm);
+      padding: var(--sp-xs) var(--sp-sm);
+      border-radius: 8px;
+    }
+    .child-selector-current:hover { background: rgba(255,255,255,0.1); }
+    .avatar-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .online-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+    .online-dot.online { background: var(--success); }
+    .online-dot.offline { background: #666; }
+    .child-dropdown {
+      position: absolute; top: 100%; left: 0;
+      background: var(--card); border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      min-width: 240px; padding: var(--sp-sm);
+      display: none; z-index: 50;
+    }
+    .child-dropdown.open { display: block; }
+    .child-option {
+      display: flex; align-items: center; gap: var(--sp-sm);
+      padding: var(--sp-sm) var(--sp-md);
+      border-radius: 8px; color: var(--text);
+      font-size: 0.875rem; width: 100;
+    }
+    .child-option:hover { background: var(--surface); }
+    .child-option .platform { font-size: 0.75rem; color: var(--text-dim); }
+
+    /* ========== TOAST ========== */
+    .toast-container {
+      position: fixed; bottom: var(--sp-lg); right: var(--sp-lg);
+      z-index: 500; display: flex; flex-direction: column; gap: var(--sp-sm);
+    }
+    .toast {
+      background: var(--hero-bg); color: #fff;
+      padding: var(--sp-sm) var(--sp-lg); border-radius: 8px;
+      font-size: 0.875rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInUp 0.25s ease;
+    }
+    .toast.error { background: var(--danger); }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* ========== SKELETON LOADING ========== */
+    .skeleton {
+      background: linear-gradient(90deg, var(--surface) 25%, #e0dbd0 50%, var(--surface) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+    /* ========== OFFLINE BANNER ========== */
+    .offline-banner {
+      display: none; background: var(--warning); color: #fff;
+      text-align: center; padding: var(--sp-sm); font-size: 0.8125rem;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    }
+    .offline-banner.visible { display: block; }
+
+    /* ========== CONFIRM DIALOG ========== */
+    .confirm-overlay {
+      position: fixed; inset: 0; z-index: 400;
+      display: none; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.4);
+    }
+    .confirm-overlay.open { display: flex; }
+    .confirm-box {
+      background: var(--card); border-radius: var(--radius);
+      padding: var(--sp-xl); max-width: 360px; width: 90%;
+      text-align: center;
+    }
+    .confirm-box h3 { font-family: var(--font-heading); margin-bottom: var(--sp-sm); }
+    .confirm-box p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: var(--sp-lg); }
+    .confirm-box .actions { display: flex; gap: var(--sp-md); justify-content: center; }
+
+    /* ========== STATUS BAR ========== */
+    .status-bar {
+      display: flex; align-items: center; gap: var(--sp-sm);
+      padding: var(--sp-sm); font-size: 0.8125rem; color: var(--text-muted);
+      text-align: center; justify-content: center;
+    }
+
+    /* ========== EMPTY STATES ========== */
+    .empty-state {
+      text-align: center; padding: var(--sp-xl);
+      color: var(--text-muted); font-size: 0.875rem;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .grid-2col { grid-template-columns: 1fr; }
+      .card-scroll { max-height: 240px; }
+    }
+    @media (max-width: 768px) {
+      .header-bar { padding: var(--sp-sm) var(--sp-md); }
+      .dashboard-wrap { padding: var(--sp-md); }
+      .tab-bar { display: none; }
+      .mobile-tab-bar { display: flex !important; }
+      .alerts-panel { width: 100%; }
+      .hero-card { padding: var(--sp-lg); }
+      .progress-ring { width: 120px; height: 120px; }
+      .quick-actions { flex-direction: column; }
+      .summary-stats { flex-direction: column; gap: var(--sp-sm); }
+      .bar-chart { height: 80px; }
+    }
+
+    /* ========== MOBILE BOTTOM TAB BAR ========== */
+    .mobile-tab-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--card); border-top: 1px solid var(--card-border);
+      justify-content: space-around; padding: var(--sp-sm) 0;
+      z-index: 100;
+    }
+    .mobile-tab-bar button {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      font-size: 0.625rem; color: var(--text-muted); padding: var(--sp-xs);
+    }
+    .mobile-tab-bar button.active { color: var(--accent); }
+    .mobile-tab-bar .tab-icon { font-size: 1.25rem; }
+
+    /* ========== WEEKLY DIGEST BANNER ========== */
+    .digest-banner {
+      background: var(--accent-dim); border: 1px solid var(--accent);
+      border-radius: var(--radius); padding: var(--sp-lg);
+      margin-bottom: var(--sp-lg); display: none; position: relative;
+    }
+    .digest-banner.visible { display: block; }
+    .digest-banner h3 { font-family: var(--font-heading); color: var(--accent); }
+    .digest-dismiss {
+      position: absolute; top: var(--sp-sm); right: var(--sp-sm);
+      color: var(--text-muted); font-size: 1.25rem;
+    }
+
+    /* Padding for mobile bottom bar */
+    @media (max-width: 768px) {
+      .dashboard-wrap { padding-bottom: 72px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== OFFLINE BANNER ===== -->
+  <div id="offlineBanner" class="offline-banner"></div>
+
+  <!-- ===== SCREEN: AUTH ===== -->
+  <section id="screenAuth" class="screen auth-screen active">
+    <div class="auth-box">
+      <h1 data-i18n="auth_title">Layers Guard</h1>
+      <div class="auth-tabs">
+        <button class="active" data-auth-tab="login" data-i18n="auth_login">Log in</button>
+        <button data-auth-tab="signup" data-i18n="auth_signup">Sign up</button>
+      </div>
+      <!-- Login form -->
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail" data-i18n="auth_email">Email</label>
+          <input id="loginEmail" class="input" type="email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="loginPass" data-i18n="auth_password">Password</label>
+          <input id="loginPass" class="input" type="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--sp-sm)" data-i18n="auth_login">Log in</button>
+        <p style="text-align:center;margin-top:var(--sp-sm)">
+          <a href="#" id="forgotPassLink" style="font-size:0.8125rem;color:var(--accent)" data-i18n="auth_forgot">Forgot password?</a>
+        </p>
+        <div id="loginError" class="auth-error"></div>
+      </form>
+      <!-- Signup form -->
+      <form id="signupForm" style="display:none">
+        <div class="form-group">
+          <label for="signupEmail" data-i18n="auth_email">Email</label>
+          <input id="signupEmail" class="input" type="email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="signupPass" data-i18n="auth_password">Password</label>
+          <input id="signupPass" class="input" type="password" required minlength="6" autocomplete="new-password">
+        </div>
+        <div class="form-group">
+          <label for="signupPassConfirm" data-i18n="auth_password_confirm">Confirm password</label>
+          <input id="signupPassConfirm" class="input" type="password" required minlength="6" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--sp-sm)" data-i18n="auth_signup">Sign up</button>
+        <div id="signupError" class="auth-error"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: LICENSE ===== -->
+  <section id="screenLicense" class="screen auth-screen">
+    <div class="auth-box license-box">
+      <h2 data-i18n="license_title">Activate Guard Family</h2>
+      <p style="color:var(--text-muted);margin-bottom:var(--sp-lg);font-size:0.875rem" data-i18n="license_subtitle">
+        Enter your Guard Family license key to continue.
+      </p>
+      <form id="licenseForm">
+        <div class="form-group">
+          <input id="licenseKeyInput" class="input" type="text" placeholder="XXXX-XXXX-XXXX" required data-i18n="license_placeholder" data-i18n-attr="placeholder">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="license_activate">Activate</button>
+        <div id="licenseError" class="auth-error"></div>
+      </form>
+      <p style="margin-top:var(--sp-lg);font-size:0.8125rem;color:var(--text-muted)">
+        <a href="https://thelayersapp.com/guard-pro.html" target="_blank" style="color:var(--accent)" data-i18n="license_get">Get a license key</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: SETUP (PAIRING) ===== -->
+  <section id="screenSetup" class="screen auth-screen">
+    <div class="auth-box setup-box">
+      <h2 data-i18n="setup_title">Pair a device</h2>
+      <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_instructions">
+        Enter this code in the Layers Guard app on your child's device.
+      </p>
+      <div id="pairingCode" class="pairing-code">LG-0000</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:var(--sp-sm);color:var(--text-muted);font-size:0.875rem">
+        <span class="spinner"></span> <span data-i18n="setup_waiting">Waiting for device...</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: DASHBOARD ===== -->
+  <section id="screenDashboard" class="screen">
+
+    <!-- Header -->
+    <div class="header-bar">
+      <div class="child-selector" id="childSelector">
+        <div class="child-selector-current" id="childSelectorCurrent">
+          <span class="avatar-dot" id="childAvatarDot" style="background:#2A9D5C"></span>
+          <span id="childNameLabel">Child</span>
+          <span class="online-dot" id="childOnlineDot"></span>
+          <span style="font-size:0.75rem">&#9662;</span>
+        </div>
+        <div class="child-dropdown" id="childDropdown">
+          <!-- populated dynamically -->
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="alertsBellBtn" title="Alerts">
+          &#128276;<span class="badge" id="alertsBadge" style="display:none">0</span>
+        </button>
+        <button id="settingsBtn" title="Settings">&#9881;</button>
+      </div>
+    </div>
+
+    <div class="dashboard-wrap">
+      <!-- Tab bar (desktop/tablet) -->
+      <div class="tab-bar" id="tabBar">
+        <button class="active" data-tab="today" data-i18n="tab_today">Today</button>
+        <button data-tab="trends" data-i18n="tab_trends">Trends</button>
+        <button data-tab="controls" data-i18n="tab_controls">Controls</button>
+      </div>
+
+      <!-- ===== TAB: TODAY ===== -->
+      <div id="tabToday" class="tab-panel active">
+
+        <!-- Weekly digest banner -->
+        <div id="digestBanner" class="digest-banner">
+          <button class="digest-dismiss" id="digestDismiss">&times;</button>
+          <h3 id="digestTitle">This week's recap</h3>
+          <p id="digestBody" style="font-size:0.875rem;margin-top:var(--sp-sm)"></p>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Hero card -->
+          <div class="hero-card grid-full" id="heroCard">
+            <h2 id="heroGreeting" data-i18n="hero_greeting_morning">Good morning</h2>
+            <p class="sub" id="heroSub" data-i18n="hero_subgreeting">Here's how today is going</p>
+            <div class="progress-ring">
+              <svg viewBox="0 0 160 160" width="100%" height="100%">
+                <circle class="bg" cx="80" cy="80" r="68"></circle>
+                <circle class="fg" id="progressArc" cx="80" cy="80" r="68"
+                  stroke-dasharray="427.26" stroke-dashoffset="427.26"
+                  transform="rotate(-90 80 80)"></circle>
+              </svg>
+              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+                <div class="hero-time" id="heroTime">0h 0m</div>
+                <div style="font-size:0.75rem;color:var(--text-dim)" id="heroLimit">of 2h 0m</div>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div class="stat"><div class="stat-value" id="heroUsed">0m</div><div class="stat-label" data-i18n="hero_stat_used">Used</div></div>
+              <div class="stat"><div class="stat-value" id="heroLeft">2h</div><div class="stat-label" data-i18n="hero_stat_left">Left</div></div>
+              <div class="stat"><div class="stat-value" id="heroApps">0</div><div class="stat-label" data-i18n="hero_stat_apps">Active</div></div>
+            </div>
+          </div>
+
+          <!-- Quick actions -->
+          <div class="grid-full">
+            <div class="quick-actions">
+              <button class="action-pill emergency" id="emergencyLockBtn">
+                &#128274; <span data-i18n="dashboard_emergency_lock">Lock</span>
+              </button>
+              <button class="action-pill wifi" id="internetPauseBtn">
+                &#128246; <span data-i18n="dashboard_internet_pause">Wi-Fi</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Pending requests -->
+          <div class="card" id="pendingRequestsCard">
+            <div class="card-header">
+              <h3 data-i18n="approval_inbox_title">Awaiting your approval</h3>
+            </div>
+            <div id="pendingRequestsList" class="card-scroll">
+              <div class="empty-state" id="pendingEmpty" data-i18n="approval_empty">No pending requests</div>
+            </div>
+          </div>
+
+          <!-- Active apps -->
+          <div class="card" id="activeAppsCard">
+            <div class="card-header">
+              <h3 data-i18n="today_open_now">Open right now</h3>
+            </div>
+            <div id="activeAppsList" class="card-scroll">
+              <div class="empty-state" id="appsEmpty" data-i18n="today_no_apps_open">No apps open right now</div>
+            </div>
+          </div>
+
+          <!-- 7-day chart -->
+          <div class="card grid-full" id="weekChartCard">
+            <div class="card-header">
+              <h3 data-i18n="today_recent_days">Last 7 days</h3>
+            </div>
+            <div id="weekChart" class="bar-chart">
+              <!-- 7 bar-col elements populated by JS -->
+            </div>
+          </div>
+
+          <!-- Activity log -->
+          <div class="card grid-full" id="activityLogCard">
+            <div class="card-header">
+              <h3>Activity log</h3>
+              <button class="btn btn-sm btn-outline" id="activityToggle">Show</button>
+            </div>
+            <div id="activityLogList" class="card-scroll" style="display:none">
+              <div class="empty-state" id="logEmpty">No commands yet.</div>
+            </div>
+          </div>
+
+          <!-- Status bar -->
+          <div class="status-bar grid-full" id="statusBar">
+            <span class="online-dot" id="statusDot"></span>
+            <span id="statusText">Checking...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: TRENDS ===== -->
+      <div id="tabTrends" class="tab-panel">
+        <div class="card" style="margin-bottom:var(--sp-lg)">
+          <div class="month-nav">
+            <button id="prevMonth">&#8592;</button>
+            <span class="month-label" id="monthLabel">May 2026</span>
+            <button id="nextMonth">&#8594;</button>
+          </div>
+          <div id="heatmapGrid" class="heatmap">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <div class="summary-stats" id="monthSummary">
+          <div class="stat"><div class="stat-value" id="monthTotal">--</div><div class="stat-label">Total</div></div>
+          <div class="stat"><div class="stat-value" id="monthAvg">--</div><div class="stat-label">Daily avg</div></div>
+          <div class="stat"><div class="stat-value" id="monthPeak">--</div><div class="stat-label">Peak day</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3>Most used this month</h3></div>
+          <div id="topAppsList">
+            <div class="empty-state">No app usage this month yet.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: CONTROLS ===== -->
+      <div id="tabControls" class="tab-panel">
+
+        <!-- Daily time limit -->
+        <div class="card control-card" id="timeLimitCard">
+          <div class="card-header">
+            <h3>Daily time limit</h3>
+            <div class="toggle" id="timeLimitToggle"></div>
+          </div>
+          <div id="timeLimitBody">
+            <div class="slider-row">
+              <input type="range" id="timeLimitSlider" min="30" max="480" step="15" value="120">
+              <span class="slider-value" id="timeLimitValue">2h 0m</span>
+            </div>
+            <div class="toggle-row" style="margin-top:var(--sp-sm)">
+              <span class="toggle-label">Weekend override</span>
+              <div class="toggle" id="weekendToggle"></div>
+            </div>
+            <div id="weekendSliderRow" class="slider-row" style="display:none">
+              <input type="range" id="weekendSlider" min="30" max="480" step="15" value="180">
+              <span class="slider-value" id="weekendValue">3h 0m</span>
+            </div>
+            <button class="btn btn-primary btn-sm" id="timeLimitSave" style="margin-top:var(--sp-md)">Save</button>
+          </div>
+        </div>
+
+        <!-- Blocked sites -->
+        <div class="card control-card" id="blockedSitesCard">
+          <div class="card-header"><h3>Blocked websites</h3></div>
+          <div class="add-row">
+            <input class="input" id="addSiteInput" type="text" placeholder="e.g. tiktok.com">
+            <button class="btn btn-primary btn-sm" id="addSiteBtn">Block</button>
+          </div>
+          <div id="blockedSitesList" class="card-scroll card-scroll-fade">
+            <div class="empty-state">No blocked sites yet</div>
+          </div>
+        </div>
+
+        <!-- Blocked apps -->
+        <div class="card control-card" id="blockedAppsCard">
+          <div class="card-header"><h3>Blocked apps</h3></div>
+          <div class="category-pills" id="categoryPills">
+            <button class="category-pill" data-cat="games">Games</button>
+            <button class="category-pill" data-cat="social">Social</button>
+            <button class="category-pill" data-cat="video">Video</button>
+          </div>
+          <div class="add-row">
+            <input class="input" id="addAppExe" type="text" placeholder="e.g. steam.exe" style="flex:1">
+            <input class="input" id="addAppName" type="text" placeholder="Display name" style="flex:1">
+            <button class="btn btn-primary btn-sm" id="addAppBtn">Block</button>
+          </div>
+          <div id="blockedAppsList" class="card-scroll card-scroll-fade">
+            <div class="empty-state">No blocked apps yet</div>
+          </div>
+        </div>
+
+        <!-- Bedtime schedule -->
+        <div class="card control-card" id="bedtimeCard">
+          <div class="card-header">
+            <h3>Bedtime lockout</h3>
+            <div class="toggle" id="bedtimeToggle"></div>
+          </div>
+          <div id="bedtimeBody">
+            <div class="time-picker-row">
+              <label>Starts at</label>
+              <input type="time" id="bedtimeStart" value="22:00">
+            </div>
+            <div class="time-picker-row">
+              <label>Ends at</label>
+              <input type="time" id="bedtimeEnd" value="07:00">
+            </div>
+            <div class="toggle-row" style="margin-top:var(--sp-sm)">
+              <span class="toggle-label">Weekend override</span>
+              <div class="toggle" id="bedtimeWeekendToggle"></div>
+            </div>
+            <div id="bedtimeWeekendTimes" style="display:none">
+              <div class="time-picker-row">
+                <label>Weekend start</label>
+                <input type="time" id="bedtimeWeekendStart" value="23:00">
+              </div>
+              <div class="time-picker-row">
+                <label>Weekend end</label>
+                <input type="time" id="bedtimeWeekendEnd" value="08:00">
+              </div>
+            </div>
+            <div class="toggle-row" style="margin-top:var(--sp-sm)">
+              <span class="toggle-label">Today is a holiday</span>
+              <div class="toggle" id="holidayToggle"></div>
+            </div>
+            <button class="btn btn-primary btn-sm" id="bedtimeSave" style="margin-top:var(--sp-md)">Save</button>
+          </div>
+        </div>
+
+        <!-- Per-app time limits -->
+        <div class="card control-card" id="appLimitsCard">
+          <div class="card-header"><h3>Per-app daily limits</h3></div>
+          <div class="add-row">
+            <input class="input" id="appLimitExe" type="text" placeholder="e.g. minecraft.exe" style="flex:2">
+            <input class="input" id="appLimitMins" type="number" placeholder="60" min="5" max="480" style="flex:1">
+            <button class="btn btn-primary btn-sm" id="addAppLimitBtn">Add</button>
+          </div>
+          <div id="appLimitsList" class="card-scroll card-scroll-fade">
+            <div class="empty-state">No per-app limits set.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile bottom tab bar -->
+    <div class="mobile-tab-bar" id="mobileTabBar">
+      <button class="active" data-tab="today">
+        <span class="tab-icon">&#128197;</span>Today
+      </button>
+      <button data-tab="trends">
+        <span class="tab-icon">&#128200;</span>Trends
+      </button>
+      <button data-tab="controls">
+        <span class="tab-icon">&#9881;</span>Controls
+      </button>
+    </div>
+  </section>
+
+  <!-- ===== ALERTS PANEL ===== -->
+  <div id="alertsOverlay" class="alerts-overlay">
+    <div class="alerts-backdrop" id="alertsBackdrop"></div>
+    <div class="alerts-panel">
+      <div class="alerts-panel-header">
+        <h2>Alerts</h2>
+        <div style="display:flex;gap:var(--sp-md);align-items:center">
+          <button class="btn btn-sm btn-outline" id="markAllReadBtn">Mark all read</button>
+          <button id="alertsCloseBtn" style="font-size:1.25rem;color:var(--text-muted)">&times;</button>
+        </div>
+      </div>
+      <div class="alert-filters" id="alertFilters">
+        <button class="category-pill active" data-filter="all">All</button>
+        <button class="category-pill" data-filter="violence">Violence</button>
+        <button class="category-pill" data-filter="self_harm">Self-harm</button>
+        <button class="category-pill" data-filter="sexual">Sexual</button>
+        <button class="category-pill" data-filter="sextortion">Sextortion</button>
+        <button class="category-pill" data-filter="drugs">Drugs</button>
+        <button class="category-pill" data-filter="stranger_danger">Stranger</button>
+        <button class="category-pill" data-filter="hate_speech">Hate</button>
+        <button class="category-pill" data-filter="bullying">Bullying</button>
+      </div>
+      <div class="alerts-list" id="alertsList">
+        <div class="empty-state">No alerts to show</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SETTINGS MODAL ===== -->
+  <div id="settingsOverlay" class="modal-overlay">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-lg)">
+        <h2>Settings</h2>
+        <button id="settingsCloseBtn" style="font-size:1.25rem;color:var(--text-muted)">&times;</button>
+      </div>
+
+      <div class="modal-section">
+        <h4>Child profile</h4>
+        <div class="form-group">
+          <label for="settingsChildName">Child's name</label>
+          <input id="settingsChildName" class="input" type="text">
+        </div>
+        <button class="btn btn-primary btn-sm" id="saveChildNameBtn">Save</button>
+      </div>
+
+      <div class="modal-section">
+        <h4>Screen Time PIN</h4>
+        <div class="form-group">
+          <label for="settingsPin">4-digit PIN</label>
+          <input id="settingsPin" class="input" type="text" maxlength="4" pattern="[0-9]{4}" placeholder="0000"
+            style="font-family:var(--font-mono);letter-spacing:4px;text-align:center;max-width:120px">
+        </div>
+        <button class="btn btn-primary btn-sm" id="savePinBtn">Save PIN</button>
+      </div>
+
+      <div class="modal-section">
+        <h4>Language</h4>
+        <select id="langSelect" class="input" style="max-width:200px">
+          <option value="en">English</option>
+          <option value="ja">Japanese</option>
+          <option value="zh">Chinese</option>
+          <option value="vi">Vietnamese</option>
+        </select>
+      </div>
+
+      <div class="modal-section">
+        <h4>Danger zone</h4>
+        <button class="btn btn-danger btn-sm" id="removeDeviceBtn">Remove this device</button>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--surface);margin:var(--sp-lg) 0">
+      <button class="btn btn-outline" id="logoutBtn" style="width:100%">Log out</button>
+    </div>
+  </div>
+
+  <!-- ===== CONFIRM DIALOG ===== -->
+  <div id="confirmOverlay" class="confirm-overlay">
+    <div class="confirm-box">
+      <h3 id="confirmTitle">Confirm</h3>
+      <p id="confirmBody">Are you sure?</p>
+      <div class="actions">
+        <button class="btn btn-outline" id="confirmCancel">Cancel</button>
+        <button class="btn btn-primary" id="confirmOk">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== FIREBASE SDK + APP LOGIC ===== -->
+  <script type="module">
+    // ============================================================
+    // Firebase imports
+    // ============================================================
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+    import {
+      getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,
+      sendPasswordResetEmail, signOut, onAuthStateChanged
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+    import {
+      getDatabase, ref, onValue, set, update, remove, push, get, off,
+      onDisconnect, serverTimestamp
+    } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+    // ============================================================
+    // Firebase config
+    // ============================================================
+    const firebaseConfig = {
+      apiKey: 'AIzaSyBsFJwuvs-5kp1PfupJDwFFKQ51YmYU7-w',
+      authDomain: 'layers-classroom-794f6.firebaseapp.com',
+      databaseURL: 'https://layers-classroom-794f6-default-rtdb.asia-southeast1.firebasedatabase.app',
+      projectId: 'layers-classroom-794f6',
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    // ============================================================
+    // Constants
+    // ============================================================
+    const GUARD_ROOT = 'guard';
+    const USERS_ROOT = 'guard_users';
+    const DEV_KEYS = ['LAYERS-DEV-2026'];
+    const LICENSE_URL = 'https://license.thelayersapp.com/validate';
+
+    // ============================================================
+    // i18n — STRINGS object (Task 1: full translations)
+    // ============================================================
+    const STRINGS = {
+      // ─────────────────────────────────────────────
+      // ENGLISH — complete
+      // ─────────────────────────────────────────────
+      en: {
+        // ── App-wide ──
+        app_name:                     'Layers Guard',
+        ok:                           'OK',
+        cancel:                       'Cancel',
+        save:                         'Save',
+        delete:                       'Delete',
+        confirm:                      'Confirm',
+        edit:                         'Edit',
+        add:                          'Add',
+        done:                         'Done',
+        back:                         'Back',
+        close:                        'Close',
+        loading:                      'Loading…',
+        error_generic:                'Something went wrong. Please try again.',
+        error_firebase_write:         'Command failed. Check your connection.',
+        offline_banner:               'You are offline. Commands will sync when reconnected.',
+        view_all:                     'View all',
+
+        // ── Specific error messages ──
+        setup_err_pair_code_expired:  "That pairing code isn't valid anymore. Open the desktop app to generate a fresh one.",
+        setup_err_pair_code_invalid:  'Double-check the code — it should look like LG-XXXX.',
+        setup_err_firebase_offline:   "Couldn't reach your child's PC. Check their internet, then try again.",
+        setup_err_camera_denied:      'Camera permission is off. Open Settings → Apps → Layers Guard to turn it on.',
+        pin_err_wrong_last_attempt:   '1 attempt left before PIN lockout.',
+        controls_err_block_failed:    "Couldn't block that site. We'll retry when the PC is back online.",
+        schedule_err_save_failed:     "Couldn't save your schedule. Check your internet and try again.",
+        settings_err_pin_change_failed: "Couldn't change the PIN. Try again in a moment.",
+
+        // ── i18n coverage for previously hardcoded strings ──
+        status_paused:                'PAUSED',
+        status_active:                'ACTIVE',
+        device_active_label:          'Active',
+
+        // ── PIN Gate ──
+        pin_gate_title:               'Enter your PIN',
+        pin_gate_subtitle:            'Layers Guard is locked',
+        pin_gate_forgot:              'Forgot PIN?',
+        pin_gate_forgot_message:      'To reset your PIN, reinstall the Layers Guard app.',
+        pin_gate_forgot_confirm_body: 'This will remove your PIN so you can access the app. You\'ll need to set a new PIN in Settings › Security right away.',
+        pin_gate_forgot_reset:        'Reset PIN',
+        pin_gate_forgot_done_title:   'PIN removed',
+        pin_gate_forgot_done_body:    'Go to Settings › Security to set a new PIN. Update it soon — your child\'s PC uses this PIN to stay protected.',
+        pin_gate_biometric_hint:      'Use biometrics',
+        pin_gate_wrong:               'Incorrect PIN. Try again.',
+        pin_gate_wrong_count:         'Incorrect PIN ({count} attempt remaining)',
+        pin_gate_wrong_count_plural:  'Incorrect PIN ({count} attempts remaining)',
+
+        // ── Setup / Pairing ──
+        setup_title:                  'Pair a device',
+        setup_subtitle:               'Pair this app with your child\'s PC',
+        setup_pair_new:               'Pair a new device',
+        setup_enter_code:             'Enter a code manually',
+        setup_code_instructions:      'Open the Layers Guard desktop app on your child\'s PC, then enter this code:',
+        setup_instructions:           "Enter this code in the Layers Guard app on your child's device.",
+        setup_waiting:                'Waiting for device...',
+        setup_paired_success:         'Device paired! Now create a PIN.',
+        setup_enter_code_label:       'Enter the code shown on the PC',
+        setup_enter_code_placeholder: 'e.g. LG-4829',
+        setup_code_submit:            'Connect',
+        setup_code_invalid:           'Code not found. Check the code and try again.',
+        setup_code_expired:           'This code has expired. Generate a new one on the PC.',
+        setup_pin_create_title:       'Create a PIN',
+        setup_pin_create_subtitle:    'You\'ll use this to unlock Layers Guard',
+        setup_pin_confirm_title:      'Confirm your PIN',
+        setup_pin_mismatch:           'PINs don\'t match. Please try again.',
+        setup_pin_saved:              'PIN saved. You\'re all set!',
+
+        // ── Dashboard ──
+        dashboard_title:              'Dashboard',
+        dashboard_online:             'Online',
+        dashboard_offline:            'Offline',
+        dashboard_screen_time:        'Screen Time',
+        dashboard_screen_time_of:     '{used} of {limit}',
+        dashboard_active_app:         'Active app',
+        dashboard_active_site:        'Active site',
+        dashboard_none:               'None',
+        dashboard_active_apps_title:  'Active apps',
+        dashboard_active_apps_empty:  'No apps running',
+        dashboard_tap_to_block:       'Tap to block',
+        dashboard_usage_today:        'Today\'s screen time',
+        dashboard_no_usage_yet:       'No activity recorded yet today',
+        dashboard_block_app_confirm:  'Block {name}?',
+        dashboard_block_app_body:     'This will immediately block {name} on your child\'s PC.',
+        dashboard_recent_alerts:      'Recent alerts',
+        dashboard_no_recent_alerts:   'No recent alerts',
+        dashboard_emergency_lock:     'Lock',
+        dashboard_emergency_unlock:   'Unlock',
+        dashboard_extend_time:        'Extend Time',
+        dashboard_bedtime_lock:       'Bedtime',
+        dashboard_alerts:             'Alerts',
+        dashboard_emergency_confirm_title:  'Lock Device?',
+        dashboard_emergency_confirm_body:   'A full-screen lock will appear on your child\'s PC. They can unlock it with the screen time PIN.',
+        dashboard_emergency_unlock_title:   'Unlock Device?',
+        dashboard_emergency_unlock_body:    'The lock screen will be dismissed on your child\'s PC.',
+        dashboard_extend_sheet_title: 'Extend screen time',
+        dashboard_extend_15:          '+15 min',
+        dashboard_extend_30:          '+30 min',
+        dashboard_extend_60:          '+1 hour',
+        // Internet pause card
+        dashboard_internet_pause:         'Wi-Fi',
+        dashboard_internet_paused:        'Wi-Fi Off',
+        dashboard_internet_active:        'Internet',
+        dashboard_internet_tap_resume:    'Tap to unblock',
+        dashboard_internet_tap_pause:     'Tap to block',
+        dashboard_pause_confirm_title:    'Block Internet?',
+        dashboard_pause_confirm_body:     "Your child's device will lose internet access immediately.",
+        dashboard_resume_confirm_title:   'Restore Internet?',
+        dashboard_resume_confirm_body:    "Your child's device will regain internet access.",
+        // Avatar photo
+        settings_avatar_pick_photo:   'Choose Photo',
+        settings_avatar_remove_photo: 'Remove Photo',
+        // Parent name
+        settings_parent_name_title:       'Your Name',
+        settings_parent_name_placeholder: 'Enter your name',
+        settings_parent_name_desc:        'Used in the dashboard greeting.',
+        // Screen time PIN
+        settings_screen_pin_title:        'Screen Time PIN',
+        settings_screen_pin_desc:         'The child enters this PIN to unlock the lock screen.',
+        settings_screen_pin_placeholder:  '4-digit PIN',
+        settings_screen_pin_save:         'Save PIN',
+        settings_screen_pin_saved:        'PIN saved',
+        settings_screen_pin_error:        'PIN must be exactly 4 digits.',
+
+        // ── Confirmation dialog strings ──
+        alerts_cp_off_title:          'Turn off Content Protection?',
+        alerts_cp_off_body:           "Your child's PC will stop blocking explicit sites and app installs. You can turn this back on any time.",
+        alerts_cp_off_confirm:        'Turn off',
+        alerts_cp_keep_on:            'Keep on',
+        controls_unblock_site_body:   "This site will be reachable from your child's PC right away.",
+        controls_unblock_app_body:    "This app will be accessible on your child's PC right away.",
+        schedule_delete_name_confirm: "Delete '{name}'?",
+        schedule_delete_body:         'This rule will stop applying right away.',
+        settings_pin_discard_title:   'Discard PIN change?',
+        settings_pin_discard_body:    'Your current PIN will be kept.',
+        settings_pin_discard_confirm: 'Discard',
+
+        // ── Controls ──
+        controls_title:               'Controls',
+        controls_tab_websites:        'Websites',
+        controls_tab_apps:            'Applications',
+        controls_add_site:            'Block a website',
+        controls_add_site_placeholder:'e.g. tiktok.com',
+        controls_add_app:             'Block an app',
+        controls_add_app_exe:         'Executable name (e.g. steam.exe)',
+        controls_add_app_display:     'Display name (e.g. Steam)',
+        controls_blocked_empty:       'No blocked {type} yet.',
+        controls_recently_seen:       'Recently seen',
+        controls_block:               'Block',
+        controls_unblock_confirm:     'Unblock {name}?',
+
+        // ── Schedule ──
+        schedule_title:               'Schedule',
+        schedule_daily_limit:         'Daily screen time limit',
+        schedule_daily_limit_toggle:  'Enable daily limit',
+        schedule_daily_limit_value:   '{hours}h {mins}m',
+        schedule_bedtime:             'Bedtime lockout',
+        schedule_bedtime_toggle:      'Enable bedtime',
+        schedule_bedtime_preview:     'Internet turns off at {start} and back on at {end}',
+        schedule_start_time:          'Bedtime starts',
+        schedule_end_time:            'Wakes up at',
+        schedule_app_site:            'App & site schedules',
+        schedule_add:                 'Add schedule',
+        schedule_type_app:            'App',
+        schedule_type_site:           'Website',
+        schedule_row_label:           '{name}: {start} – {end}',
+        schedule_empty:               'No schedules configured.',
+        schedule_delete_confirm:      'Delete this schedule?',
+
+        // ── Alerts ──
+        alerts_title:                 'Alerts',
+        alerts_filter_all:            'All',
+        alerts_filter_violence:       'Violence',
+        alerts_filter_bullying:       'Bullying',
+        alerts_filter_sexual:         'Sexual',
+        alerts_filter_stranger:       'Stranger Danger',
+        alerts_empty_title:           'No alerts detected.',
+        alerts_empty_body:            'Content protection is active.',
+        alerts_protection_toggle:     'Content protection',
+        alerts_severity_high:         'High',
+        alerts_severity_medium:       'Medium',
+        alerts_category_violence:     'Violence',
+        alerts_category_bullying:     'Bullying',
+        alerts_category_sexual:       'Sexual content',
+        alerts_category_stranger:     'Stranger danger',
+        alerts_detected_on:           'Detected on {source}',
+        alerts_time_just_now:         'Just now',
+        alerts_time_minutes_ago:      '{n}m ago',
+        alerts_time_hours_ago:        '{n}h ago',
+        alerts_time_days_ago:         '{n}d ago',
+
+        // ── Reports / Trends ──
+        reports_title:                'Reports',
+        reports_chart_title:          'Screen time (last 7 days)',
+        reports_today_breakdown:      'Today\'s breakdown',
+        reports_top_apps:             'Most used this week',
+        reports_no_data:              'Screen time data will appear after the first day of use.',
+        reports_minutes_unit:         '{n} min',
+        reports_hours_unit:           '{h}h {m}m',
+        reports_over_limit:           'Over limit',
+
+        // ── Settings ──
+        settings_title:               'Settings',
+        settings_section_profile:     'Child profile',
+        settings_child_name:          'Child\'s name',
+        settings_avatar_color:        'Avatar colour',
+        settings_section_devices:     'Devices',
+        settings_add_device:          'Add device',
+        settings_rename_device:       'Rename device',
+        settings_remove_device:       'Remove device',
+        settings_remove_device_confirm: 'Remove {name} from Layers Guard?',
+        settings_section_notifications: 'Notifications',
+        settings_notifications_toggle: 'Push notifications',
+        settings_section_approval:    'Approval requests',
+        settings_approval_toggle:     'Allow child to send requests',
+        settings_section_language:    'Language',
+        settings_language_en:         'English',
+        settings_language_ja:         '日本語',
+        settings_language_zh:         '中文',
+        settings_language_vi:         'Tiếng Việt',
+        settings_section_security:    'Security',
+        settings_change_pin:          'Change PIN',
+        settings_change_pin_current:  'Enter current PIN',
+        settings_change_pin_new:      'Enter new PIN',
+        settings_change_pin_confirm:  'Confirm new PIN',
+        settings_section_appearance:   'Appearance',
+        settings_dark_mode:            'Dark mode',
+        settings_section_about:       'About',
+        settings_privacy_policy:      'Privacy Policy',
+        settings_version:             'Version {v}',
+
+        // ── TodayHeroCard ──
+        hero_greeting_morning:         'Good morning',
+        hero_greeting_afternoon:       'Good afternoon',
+        hero_greeting_evening:         'Good evening',
+        hero_greeting_bedtime:         'Time to wind down',
+        hero_subgreeting:              "Here's how today is going",
+        hero_over_limit:               'Screen time limit reached',
+        hero_stat_used:                'Used',
+        hero_stat_left:                'Left',
+        hero_stat_apps:                'Active',
+        hero_stat_limit:               'Limit',
+        hero_stat_limit_off:           'Off',
+
+        // ── v1.5 Today tab ──
+        today_label:                   'Today',
+        today_open_now:                'Open right now',
+        today_no_apps_open:            'No apps open right now',
+        today_recent_days:             'Last 7 days',
+        today_granted_more_time:       'You granted more play time on some days.',
+        today_no_activity_yet:         'No activity recorded yet this week.',
+        today_lock_btn:                'Lock device',
+        today_unlock_btn:              'Unlock device',
+        today_pause_btn:               'Pause Wi-Fi',
+        today_resume_btn:              'Resume Wi-Fi',
+        today_pairing_title:           "Waiting for your child to finish pairing…",
+        today_pairing_body:            "Open the Layers Guard app on your child's PC to complete setup.",
+        weekday_sun:                   'Sun',
+        weekday_mon:                   'Mon',
+        weekday_tue:                   'Tue',
+        weekday_wed:                   'Wed',
+        weekday_thu:                   'Thu',
+        weekday_fri:                   'Fri',
+        weekday_sat:                   'Sat',
+
+        // ── v1.5 Controls overview ──
+        controls_time_limit_title:     'Daily time limit',
+        controls_time_limit_value:     '{value} per day',
+        controls_time_limit_off:       'No limit',
+        controls_restrictions_title:   'Restrictions',
+        controls_restrictions_value:   '{sites} sites · {apps} apps blocked',
+        controls_restrictions_empty:   'Nothing blocked yet',
+        controls_schedule_title:       'Bedtime & Schedule',
+        controls_schedule_value:       '{start} – {end}',
+        controls_schedule_off:         'Bedtime off',
+        controls_pin_title:            'Parental PIN',
+        controls_pin_set:              'PIN is set',
+        controls_pin_not_set:          'No PIN set — tap to add one',
+
+        // ── Save toasts ──
+        toast_saved:                   'Saved',
+        toast_pin_changed:             'PIN changed',
+        toast_dark_mode_on:            'Dark mode on',
+        toast_dark_mode_off:           'Dark mode off',
+        toast_language_changed:        'Language updated',
+
+        // ── Approval Requests ──
+        approval_title:               'Requests',
+        approval_empty:               'No pending requests.',
+        approval_approve:             'Approve',
+        approval_deny:                'Deny',
+        approval_extend_time:         '{name} is asking for {n} more minutes',
+        approval_unblock_site:        '{name} wants to access {site}',
+        approval_unblock_app:         '{name} wants to use {app}',
+        approval_inbox_title:         'Awaiting your approval',
+        approval_child:               'Your child',
+
+        // ── Nav labels ──
+        nav_dashboard:                'Home',
+        nav_controls:                 'Controls',
+        nav_schedule:                 'Schedule',
+        nav_alerts:                   'Alerts',
+        nav_reports:                  'Reports',
+        nav_settings:                 'Settings',
+
+        // ── v1.5 Bottom tabs / drawer / chrome ──
+        tab_today:                    'Today',
+        tab_trends:                   'Trends',
+        tab_controls:                 'Controls',
+        drawer_title_children:        'Children',
+        drawer_search_placeholder:    'Search children…',
+        drawer_add_child:             'Add a child',
+        drawer_online:                'Online',
+        drawer_offline:               'Offline',
+        drawer_unpair:                'Unpair',
+        drawer_rename:                'Rename',
+        drawer_empty:                 'No paired devices yet.',
+        alerts_mark_all_read:         'Mark all read',
+        alerts_empty:                 'No alerts.',
+
+        // ── Trends tab ──
+        trends_empty_title:           'No trends yet',
+        trends_empty_body:            'Pair a device to start collecting screen-time history.',
+        trends_scope_all:             'All children',
+        trends_scope_device:          'Device',
+        trends_prev_month:            'Previous month',
+        trends_next_month:            'Next month',
+        trends_legend_low:            'Less',
+        trends_legend_high:           'More',
+        trends_stat_total:            'Total',
+        trends_stat_avg:              'Daily avg',
+        trends_stat_peak:             'Peak day',
+        trends_top_apps:              'Most used this month',
+        trends_top_apps_empty:        'No app usage this month yet.',
+
+        // ── Months ──
+        month_jan:                    'January',
+        month_feb:                    'February',
+        month_mar:                    'March',
+        month_apr:                    'April',
+        month_may:                    'May',
+        month_jun:                    'June',
+        month_jul:                    'July',
+        month_aug:                    'August',
+        month_sep:                    'September',
+        month_oct:                    'October',
+        month_nov:                    'November',
+        month_dec:                    'December',
+
+        // ── Weekly digest ──
+        digest_title:                 'This week\'s recap',
+        digest_total:                 'Total screen time: {total}',
+        digest_top_apps:              'Top apps',
+
+        // ── Weekend / holiday schedule ──
+        schedule_weekend_title:       'Weekend & holidays',
+        schedule_weekend_toggle:      'Use different rules on weekends',
+        schedule_weekend_limit_label: 'Weekend daily limit',
+        schedule_weekend_bedtime_label: 'Weekend bedtime',
+        schedule_holiday_today:       'Today is a holiday',
+        schedule_holiday_help:        'Apply weekend rules today, even if it\'s a weekday. Auto-clears tomorrow.',
+        schedule_effective_default:   'Today: weekday rules ({limit})',
+        schedule_effective_weekend:   'Today: weekend rules ({limit})',
+        schedule_effective_holiday:   'Today is a holiday — using weekend rules ({limit})',
+
+        // ── Bulk block / categories ──
+        schedule_bulk_block_title:    'Block all by category',
+        schedule_bulk_block_desc:     'Block every app in a category in one tap.',
+        schedule_bulk_block_count:    '{n} apps',
+        schedule_bulk_block_confirm_title: 'Block all {category} apps?',
+        schedule_bulk_block_confirm_body:  'This will add {count} apps to the blocked list right away.',
+        category_games:               'Games',
+        category_social:              'Social',
+        category_video:               'Video',
+
+        // ── Per-app limits / app schedules ──
+        schedule_app_limit_label:           '{name}: {limit}/day',
+        schedule_app_limit_remove_confirm:  'Remove daily limit for {name}?',
+        schedule_app_limits_title:          'Per-app daily limits',
+        schedule_app_limits_empty:          'No per-app limits set.',
+        schedule_app_limits_add:            'Add app limit',
+        schedule_app_limit_modal_title:     'Add app limit',
+        schedule_app_limit_exe_placeholder: 'Executable (e.g. minecraft.exe)',
+        schedule_app_limit_name_placeholder:'Display name',
+        schedule_app_limit_duration_label:  'Daily limit',
+
+        // ── Settings: activity log ──
+        settings_section_activity:    'Activity log',
+        settings_activity_empty:      'No commands yet.',
+        cmd_emergency_lock:           'Emergency lock',
+        cmd_lockout:                  'Bedtime lockout',
+        cmd_extend_time:              'Extend time',
+        cmd_block_site:               'Block site',
+        cmd_unblock_site:             'Unblock site',
+        cmd_block_app:                'Block app',
+        cmd_unblock_app:              'Unblock app',
+        cmd_internet_pause:           'Internet pause',
+
+        // ── Web-dashboard-specific: Auth ──
+        auth_title:                   'Layers Guard',
+        auth_login:                   'Log in',
+        auth_signup:                  'Sign up',
+        auth_email:                   'Email',
+        auth_password:                'Password',
+        auth_password_confirm:        'Confirm password',
+        auth_forgot:                  'Forgot password?',
+        auth_forgot_sent:             'Password reset email sent.',
+        auth_error_invalid:           'Invalid email or password.',
+        auth_error_exists:            'An account with this email already exists.',
+        auth_error_weak_password:     'Password must be at least 6 characters.',
+        auth_error_mismatch:          'Passwords do not match.',
+
+        // ── Web-dashboard-specific: License ──
+        license_title:                'Activate Guard Family',
+        license_subtitle:             'Enter your Guard Family license key to continue.',
+        license_placeholder:          'XXXX-XXXX-XXXX',
+        license_activate:             'Activate',
+        license_error:                'Invalid license key.',
+        license_get:                  'Get a license key',
+
+        // ── Web-dashboard-specific: Setup ──
+        setup_web_title:              'Pair a device',
+        setup_web_instructions:       "Enter this code in the Layers Guard app on your child's device.",
+        setup_web_waiting:            'Waiting for device...',
+
+        // ── Controls: bedtime & weekend labels ──
+        controls_bedtime_title:       'Bedtime lockout',
+        controls_bedtime_starts:      'Starts at',
+        controls_bedtime_ends:        'Ends at',
+        controls_weekend_override:    'Weekend override',
+        controls_weekend_start:       'Weekend start',
+        controls_weekend_end:         'Weekend end',
+        controls_holiday_today:       'Today is a holiday',
+        controls_blocked_sites_title: 'Blocked websites',
+        controls_blocked_apps_title:  'Blocked apps',
+        controls_per_app_limits_title:'Per-app daily limits',
+        controls_no_blocked_sites:    'No blocked sites yet',
+        controls_no_blocked_apps:     'No blocked apps yet',
+        controls_no_app_limits:       'No per-app limits set.',
+
+        // ── Activity log card ──
+        activity_log_title:           'Activity log',
+        activity_log_show:            'Show',
+        activity_log_hide:            'Hide',
+        activity_log_empty:           'No commands yet.',
+
+        // ── Status bar ──
+        status_checking:              'Checking...',
+        status_online:                'Online',
+        status_offline:               'Offline',
+
+        // ── Settings modal ──
+        settings_child_profile:       'Child profile',
+        settings_child_name_label:    'Child\'s name',
+        settings_pin_label:           '4-digit PIN',
+        settings_save_pin:            'Save PIN',
+        settings_danger_zone:         'Danger zone',
+        settings_remove_device_btn:   'Remove this device',
+        settings_logout:              'Log out',
+      },
+
+      // ─────────────────────────────────────────────
+      // JAPANESE
+      // ─────────────────────────────────────────────
+      ja: {
+        app_name:                'Layers Guard',
+        ok:                      'OK',
+        cancel:                  'キャンセル',
+        save:                    '保存',
+        delete:                  '削除',
+        confirm:                 '確認',
+        close:                   '閉じる',
+        loading:                 '読み込み中…',
+        error_generic:           'エラーが発生しました。もう一度お試しください。',
+        error_firebase_write:    'コマンドが失敗しました。接続を確認してください。',
+        offline_banner:          'オフラインです。接続が回復するとコマンドが同期されます。',
+        // nav
+        nav_dashboard:           'ホーム',
+        nav_controls:            'コントロール',
+        nav_schedule:            'スケジュール',
+        nav_alerts:              'アラート',
+        nav_settings:            '設定',
+        // pin gate
+        pin_gate_title:          'PINを入力してください',
+        pin_gate_subtitle:       'Layers Guardはロックされています',
+        pin_gate_forgot:              'PINを忘れた',
+        pin_gate_forgot_message:      'PINをリセットするには、Layers Guardをアンインストールして再インストールしてください。',
+        pin_gate_forgot_confirm_body: 'PINを削除してアプリにアクセスできるようにします。すぐに設定›セキュリティで新しいPINを設定してください。',
+        pin_gate_forgot_reset:        'PINをリセット',
+        pin_gate_forgot_done_title:   'PINが削除されました',
+        pin_gate_forgot_done_body:    '設定›セキュリティで新しいPINを設定してください。お子様のPCの保護に使用されます。',
+        pin_gate_wrong:               'PINが正しくありません。再試行してください。',
+        pin_gate_biometric_hint:      '生体認証を使用',
+        // setup
+        setup_title:             'Layers Guardをセットアップ',
+        setup_pair_new:          '新しいデバイスをペアリング',
+        setup_waiting:           'お子さまのPCを待っています…',
+        setup_instructions:      'お子さまのデバイスのLayers Guardアプリにこのコードを入力してください。',
+        setup_pin_create_title:  'PINを作成',
+        setup_paired_success:    'デバイスがペアリングされました。PINを作成してください。',
+        // dashboard
+        dashboard_title:         'ダッシュボード',
+        dashboard_online:        'オンライン',
+        dashboard_offline:       'オフライン',
+        dashboard_screen_time:   'スクリーンタイム',
+        dashboard_emergency_lock:       'ロック',
+        dashboard_emergency_unlock:     'ロック解除',
+        dashboard_emergency_unlock_title:'デバイスのロックを解除しますか？',
+        dashboard_emergency_unlock_body: 'お子様のPCのロック画面が閉じます。',
+        dashboard_internet_pause:         'Wi-Fi',
+        dashboard_internet_paused:        'Wi-Fiオフ',
+        dashboard_internet_active:        'インターネット',
+        dashboard_internet_tap_resume:    'タップして解除',
+        dashboard_internet_tap_pause:     'タップしてブロック',
+        dashboard_pause_confirm_title:    'インターネットをブロックしますか？',
+        dashboard_pause_confirm_body:     'お子様のデバイスはすぐにインターネット接続を失います。',
+        dashboard_resume_confirm_title:   'インターネットを再開しますか？',
+        dashboard_resume_confirm_body:    'お子様のデバイスがインターネットに再接続します。',
+        settings_screen_pin_title:        'スクリーンタイムPIN',
+        settings_screen_pin_desc:         'お子様がロック画面を解除するために使用するPINです。',
+        settings_screen_pin_save:         'PINを保存',
+        settings_screen_pin_saved:        'PIN保存済み',
+        settings_screen_pin_error:        'PINは4桁の数字である必要があります。',
+        // controls
+        controls_title:          'コントロール',
+        controls_tab_websites:   'ウェブサイト',
+        controls_tab_apps:       'アプリ',
+        controls_block:          'ブロック',
+        // schedule
+        schedule_title:          'スケジュール',
+        schedule_daily_limit:    '1日のスクリーンタイム制限',
+        schedule_bedtime:        '就寝時間のロック',
+        // alerts
+        alerts_title:            'アラート',
+        alerts_empty_title:      'アラートは検出されていません。',
+        alerts_empty_body:       'コンテンツ保護が有効です。',
+        alerts_mark_all_read:    'すべて既読にする',
+        alerts_empty:            'アラートはありません。',
+        // reports
+        reports_title:           'レポート',
+        reports_no_data:         '最初の利用日後にスクリーンタイムデータが表示されます。',
+        // settings
+        settings_title:          '設定',
+        settings_change_pin:     'PINを変更',
+        // approval
+        approval_title:          'リクエスト',
+        approval_empty:          '保留中のリクエストはありません。',
+        approval_approve:        '承認',
+        approval_deny:           '拒否',
+        approval_inbox_title:    '承認待ち',
+        // v1.5 navigation
+        tab_today:                'きょう',
+        tab_trends:               '傾向',
+        tab_controls:             'コントロール',
+        drawer_title_children:    'お子さま',
+        drawer_search_placeholder:'お子さまを検索…',
+        drawer_add_child:         'お子さまを追加',
+        drawer_online:            'オンライン',
+        drawer_offline:           'オフライン',
+        drawer_unpair:            'ペアリング解除',
+        drawer_rename:            '名前を変更',
+        drawer_empty:             'ペアリングされたデバイスはまだありません。',
+        // ── Trends tab v1.5 ──
+        trends_empty_title:       '傾向はまだありません',
+        trends_empty_body:        'デバイスをペアリングすると、スクリーンタイムの記録が始まります。',
+        trends_scope_all:         'すべてのお子さま',
+        trends_scope_device:      'デバイス',
+        trends_prev_month:        '前の月',
+        trends_next_month:        '次の月',
+        trends_legend_low:        '少',
+        trends_legend_high:       '多',
+        trends_stat_total:        '合計',
+        trends_stat_avg:          '日平均',
+        trends_stat_peak:         'ピーク日',
+        trends_top_apps:          '今月の最も使われたアプリ',
+        trends_top_apps_empty:    '今月のアプリ利用はまだありません。',
+        month_jan: '1月', month_feb: '2月', month_mar: '3月', month_apr: '4月',
+        month_may: '5月', month_jun: '6月', month_jul: '7月', month_aug: '8月',
+        month_sep: '9月', month_oct: '10月', month_nov: '11月', month_dec: '12月',
+        // ── Today tab v1.5 ──
+        today_label:                   '今日',
+        today_open_now:                '使用中のアプリ',
+        today_no_apps_open:            '現在開いているアプリはありません',
+        today_recent_days:             '過去7日間',
+        today_granted_more_time:       '一部の日に追加の遊び時間を許可しました。',
+        today_no_activity_yet:         '今週はまだ記録された使用がありません。',
+        today_lock_btn:                'デバイスをロック',
+        today_unlock_btn:              'ロックを解除',
+        today_pause_btn:               'Wi-Fiを一時停止',
+        today_resume_btn:              'Wi-Fiを再開',
+        today_pairing_title:           'お子様のペアリング完了を待っています…',
+        today_pairing_body:            'お子様のPCでLayers Guardアプリを開き、設定を完了してください。',
+        weekday_sun: '日', weekday_mon: '月', weekday_tue: '火', weekday_wed: '水',
+        weekday_thu: '木', weekday_fri: '金', weekday_sat: '土',
+        // ── Controls overview v1.5 ──
+        controls_time_limit_title:     '1日の制限',
+        controls_time_limit_value:     '1日あたり{value}',
+        controls_time_limit_off:       '制限なし',
+        controls_restrictions_title:   '制限',
+        controls_restrictions_value:   'サイト{sites}件 · アプリ{apps}件をブロック',
+        controls_restrictions_empty:   'ブロックされたものはまだありません',
+        controls_schedule_title:       '就寝時間とスケジュール',
+        controls_schedule_value:       '{start}〜{end}',
+        controls_schedule_off:         '就寝時間オフ',
+        controls_pin_title:            '保護者PIN',
+        controls_pin_set:              'PIN設定済み',
+        controls_pin_not_set:          'PIN未設定 — タップして追加',
+        // ── Save toasts ──
+        toast_saved:                   '保存しました',
+        toast_pin_changed:             'PINが変更されました',
+        toast_language_changed:        '言語が更新されました',
+        // ── Weekday / hero ──
+        hero_greeting_morning:         'おはようございます',
+        hero_greeting_afternoon:       'こんにちは',
+        hero_greeting_evening:         'こんばんは',
+        hero_greeting_bedtime:         'そろそろ休む時間です',
+        hero_subgreeting:              '今日の利用状況です',
+        hero_over_limit:               'スクリーンタイムの制限に達しました',
+        hero_stat_used:                '使用済み',
+        hero_stat_left:                '残り',
+        hero_stat_apps:                'アクティブ',
+        // ── Weekly digest ──
+        digest_title:                  '今週のまとめ',
+        digest_total:                  '合計スクリーンタイム: {total}',
+        digest_top_apps:               'よく使ったアプリ',
+        // ── Weekend / holiday schedule ──
+        schedule_weekend_title:        '週末と祝日',
+        schedule_weekend_toggle:       '週末は別のルールを使用',
+        schedule_holiday_today:        '今日は祝日',
+        // ── Bulk block / categories ──
+        category_games:                'ゲーム',
+        category_social:               'ソーシャル',
+        category_video:                '動画',
+        // ── Per-app limits ──
+        schedule_app_limits_title:     'アプリごとの1日の制限',
+        schedule_app_limits_empty:     'アプリごとの制限は設定されていません。',
+        // ── Activity log commands ──
+        settings_section_activity:     'アクティビティログ',
+        settings_activity_empty:       'コマンドはまだありません。',
+        cmd_emergency_lock:            '緊急ロック',
+        cmd_lockout:                   '就寝時間ロック',
+        cmd_extend_time:               '時間を延長',
+        cmd_block_site:                'サイトをブロック',
+        cmd_unblock_site:              'サイトのブロック解除',
+        cmd_block_app:                 'アプリをブロック',
+        cmd_unblock_app:               'アプリのブロック解除',
+        cmd_internet_pause:            'インターネット一時停止',
+
+        // ── Web-dashboard-specific: Auth ──
+        auth_title:                    'Layers Guard',
+        auth_login:                    'ログイン',
+        auth_signup:                   '新規登録',
+        auth_email:                    'メールアドレス',
+        auth_password:                 'パスワード',
+        auth_password_confirm:         'パスワード確認',
+        auth_forgot:                   'パスワードをお忘れですか？',
+        auth_forgot_sent:              'パスワードリセットメールを送信しました。',
+        auth_error_invalid:            'メールアドレスまたはパスワードが正しくありません。',
+        auth_error_exists:             'このメールアドレスのアカウントは既に存在します。',
+        auth_error_weak_password:      'パスワードは6文字以上である必要があります。',
+        auth_error_mismatch:           'パスワードが一致しません。',
+        // ── Web-dashboard-specific: License ──
+        license_title:                 'Guard Familyを有効化',
+        license_subtitle:              'Guard Familyライセンスキーを入力してください。',
+        license_placeholder:           'XXXX-XXXX-XXXX',
+        license_activate:              '有効化',
+        license_error:                 'ライセンスキーが無効です。',
+        license_get:                   'ライセンスキーを取得',
+        // ── Web-dashboard-specific: Setup ──
+        setup_web_title:               'デバイスをペアリング',
+        setup_web_instructions:        'お子さまのデバイスのLayers Guardアプリにこのコードを入力してください。',
+        setup_web_waiting:             'デバイスを待っています…',
+        // ── Controls: bedtime & weekend labels ──
+        controls_bedtime_title:        '就寝時間のロック',
+        controls_bedtime_starts:       '開始時刻',
+        controls_bedtime_ends:         '終了時刻',
+        controls_weekend_override:     '週末の上書き',
+        controls_weekend_start:        '週末の開始',
+        controls_weekend_end:          '週末の終了',
+        controls_holiday_today:        '今日は祝日',
+        controls_blocked_sites_title:  'ブロックしたウェブサイト',
+        controls_blocked_apps_title:   'ブロックしたアプリ',
+        controls_per_app_limits_title: 'アプリごとの1日の制限',
+        controls_no_blocked_sites:     'ブロックしたサイトはまだありません',
+        controls_no_blocked_apps:      'ブロックしたアプリはまだありません',
+        controls_no_app_limits:        'アプリごとの制限は設定されていません。',
+        // ── Activity log card ──
+        activity_log_title:            'アクティビティログ',
+        activity_log_show:             '表示',
+        activity_log_hide:             '非表示',
+        activity_log_empty:            'コマンドはまだありません。',
+        // ── Status bar ──
+        status_checking:               '確認中...',
+        status_online:                 'オンライン',
+        status_offline:                'オフライン',
+        // ── Settings modal ──
+        settings_child_profile:        'お子さまのプロフィール',
+        settings_child_name_label:     'お子さまの名前',
+        settings_pin_label:            '4桁のPIN',
+        settings_save_pin:             'PINを保存',
+        settings_section_language:     '言語',
+        settings_danger_zone:          '危険ゾーン',
+        settings_remove_device_btn:    'このデバイスを削除',
+        settings_logout:               'ログアウト',
+      },
+
+      // ─────────────────────────────────────────────
+      // CHINESE (Simplified)
+      // ─────────────────────────────────────────────
+      zh: {
+        app_name:                'Layers Guard',
+        ok:                      '确定',
+        cancel:                  '取消',
+        save:                    '保存',
+        delete:                  '删除',
+        confirm:                 '确认',
+        close:                   '关闭',
+        loading:                 '加载中…',
+        error_generic:           '出了一些问题，请重试。',
+        error_firebase_write:    '命令失败，请检查您的网络连接。',
+        offline_banner:          '您已离线。恢复连接后命令将同步。',
+        // nav
+        nav_dashboard:           '主页',
+        nav_controls:            '控制',
+        nav_schedule:            '时间表',
+        nav_alerts:              '警报',
+        nav_settings:            '设置',
+        // pin gate
+        pin_gate_title:          '请输入 PIN 码',
+        pin_gate_subtitle:       'Layers Guard 已锁定',
+        pin_gate_forgot:              '忘记 PIN 码？',
+        pin_gate_forgot_message:      '如需重置 PIN 码，请重新安装 Layers Guard 应用。',
+        pin_gate_forgot_confirm_body: '这将删除您的 PIN 码以便访问应用。请立即在设置 › 安全中设置新 PIN 码。',
+        pin_gate_forgot_reset:        '重置 PIN 码',
+        pin_gate_forgot_done_title:   'PIN 码已删除',
+        pin_gate_forgot_done_body:    '请前往设置 › 安全设置新 PIN 码。您孩子的电脑将使用此 PIN 码进行保护。',
+        pin_gate_wrong:               'PIN 码错误，请重试。',
+        pin_gate_biometric_hint:      '使用生物识别',
+        // setup
+        setup_title:             '设置 Layers Guard',
+        setup_pair_new:          '配对新设备',
+        setup_waiting:           '正在等待孩子的电脑…',
+        setup_instructions:      '在孩子设备上的 Layers Guard 应用中输入此代码。',
+        setup_pin_create_title:  '创建 PIN 码',
+        setup_paired_success:    '设备已配对！现在请创建 PIN 码。',
+        // dashboard
+        dashboard_title:         '主页',
+        dashboard_online:        '在线',
+        dashboard_offline:       '离线',
+        dashboard_screen_time:   '屏幕时间',
+        dashboard_emergency_lock:       '锁定',
+        dashboard_emergency_unlock:     '解锁',
+        dashboard_emergency_unlock_title:'解锁设备？',
+        dashboard_emergency_unlock_body: '孩子电脑上的锁定屏幕将关闭。',
+        dashboard_internet_pause:         'Wi-Fi',
+        dashboard_internet_paused:        'Wi-Fi 已关闭',
+        dashboard_internet_active:        '网络正常',
+        dashboard_internet_tap_resume:    '点击解除',
+        dashboard_internet_tap_pause:     '点击屏蔽',
+        dashboard_pause_confirm_title:    '屏蔽网络？',
+        dashboard_pause_confirm_body:     '您孩子的设备将立即断开网络连接。',
+        dashboard_resume_confirm_title:   '恢复网络？',
+        dashboard_resume_confirm_body:    '您孩子的设备将重新连接到互联网。',
+        settings_screen_pin_title:        '屏幕时间 PIN',
+        settings_screen_pin_desc:         '孩子用此 PIN 解锁锁定屏幕。',
+        settings_screen_pin_save:         '保存 PIN',
+        settings_screen_pin_saved:        '已保存',
+        settings_screen_pin_error:        'PIN 必须是4位数字。',
+        // controls
+        controls_title:          '控制',
+        controls_tab_websites:   '网站',
+        controls_tab_apps:       '应用程序',
+        controls_block:          '屏蔽',
+        // schedule
+        schedule_title:          '时间表',
+        schedule_daily_limit:    '每日屏幕时间限制',
+        schedule_bedtime:        '就寝时间锁定',
+        // alerts
+        alerts_title:            '警报',
+        alerts_empty_title:      '未检测到任何警报。',
+        alerts_empty_body:       '内容保护已启用。',
+        alerts_mark_all_read:    '全部标为已读',
+        alerts_empty:            '暂无警报。',
+        // reports
+        reports_title:           '报告',
+        reports_no_data:         '首次使用后将显示屏幕时间数据。',
+        // settings
+        settings_title:          '设置',
+        settings_change_pin:     '更改 PIN 码',
+        // approval
+        approval_title:          '请求',
+        approval_empty:          '没有待处理的请求。',
+        approval_approve:        '批准',
+        approval_deny:           '拒绝',
+        approval_inbox_title:    '等待您的批准',
+        // v1.5 navigation
+        tab_today:                '今天',
+        tab_trends:               '趋势',
+        tab_controls:             '控制',
+        drawer_title_children:    '孩子',
+        drawer_search_placeholder:'搜索孩子…',
+        drawer_add_child:         '添加孩子',
+        drawer_online:            '在线',
+        drawer_offline:           '离线',
+        drawer_unpair:            '取消配对',
+        drawer_rename:            '重命名',
+        drawer_empty:             '尚未配对任何设备。',
+        // ── Trends tab v1.5 ──
+        trends_empty_title:       '暂无趋势',
+        trends_empty_body:        '配对设备后即可开始记录屏幕时间。',
+        trends_scope_all:         '所有孩子',
+        trends_scope_device:      '设备',
+        trends_prev_month:        '上一个月',
+        trends_next_month:        '下一个月',
+        trends_legend_low:        '少',
+        trends_legend_high:       '多',
+        trends_stat_total:        '合计',
+        trends_stat_avg:          '日均',
+        trends_stat_peak:         '高峰日',
+        trends_top_apps:          '本月最常用',
+        trends_top_apps_empty:    '本月暂无应用使用记录。',
+        month_jan: '1月', month_feb: '2月', month_mar: '3月', month_apr: '4月',
+        month_may: '5月', month_jun: '6月', month_jul: '7月', month_aug: '8月',
+        month_sep: '9月', month_oct: '10月', month_nov: '11月', month_dec: '12月',
+        // ── Today tab v1.5 ──
+        today_label:                   '今天',
+        today_open_now:                '正在使用的应用',
+        today_no_apps_open:            '当前没有打开的应用',
+        today_recent_days:             '最近 7 天',
+        today_granted_more_time:       '您在某些日子授予了额外的游戏时间。',
+        today_no_activity_yet:         '本周尚未记录任何活动。',
+        today_lock_btn:                '锁定设备',
+        today_unlock_btn:              '解锁设备',
+        today_pause_btn:               '暂停 Wi-Fi',
+        today_resume_btn:              '恢复 Wi-Fi',
+        today_pairing_title:           '正在等待您的孩子完成配对…',
+        today_pairing_body:            '请在孩子的电脑上打开 Layers Guard 应用以完成设置。',
+        weekday_sun: '日', weekday_mon: '一', weekday_tue: '二', weekday_wed: '三',
+        weekday_thu: '四', weekday_fri: '五', weekday_sat: '六',
+        // ── Controls overview v1.5 ──
+        controls_time_limit_title:     '每日时间限制',
+        controls_time_limit_value:     '每天 {value}',
+        controls_time_limit_off:       '无限制',
+        controls_restrictions_title:   '限制',
+        controls_restrictions_value:   '已屏蔽 {sites} 个网站 · {apps} 个应用',
+        controls_restrictions_empty:   '暂未屏蔽任何内容',
+        controls_schedule_title:       '就寝时间与日程',
+        controls_schedule_value:       '{start} – {end}',
+        controls_schedule_off:         '就寝时间已关闭',
+        controls_pin_title:            '家长 PIN',
+        controls_pin_set:              'PIN 已设置',
+        controls_pin_not_set:          '尚未设置 PIN — 点击添加',
+        // ── Save toasts ──
+        toast_saved:                   '已保存',
+        toast_pin_changed:             'PIN 已更改',
+        toast_language_changed:        '语言已更新',
+        // ── Hero ──
+        hero_greeting_morning:         '早上好',
+        hero_greeting_afternoon:       '下午好',
+        hero_greeting_evening:         '晚上好',
+        hero_greeting_bedtime:         '该休息了',
+        hero_subgreeting:              '今天的使用情况如下',
+        hero_over_limit:               '已达到屏幕时间限制',
+        hero_stat_used:                '已用',
+        hero_stat_left:                '剩余',
+        hero_stat_apps:                '活跃',
+        // ── Weekly digest ──
+        digest_title:                  '本周回顾',
+        digest_total:                  '总屏幕时间: {total}',
+        digest_top_apps:               '最常用应用',
+        // ── Weekend / holiday schedule ──
+        schedule_weekend_title:        '周末与节假日',
+        schedule_weekend_toggle:       '周末使用不同规则',
+        schedule_holiday_today:        '今天是节假日',
+        // ── Bulk block / categories ──
+        category_games:                '游戏',
+        category_social:               '社交',
+        category_video:                '视频',
+        // ── Per-app limits ──
+        schedule_app_limits_title:     '应用每日限制',
+        schedule_app_limits_empty:     '尚未设置应用限制。',
+        // ── Activity log ──
+        settings_section_activity:     '活动日志',
+        settings_activity_empty:       '暂无命令。',
+        cmd_emergency_lock:            '紧急锁定',
+        cmd_lockout:                   '就寝时间锁定',
+        cmd_extend_time:               '延长时间',
+        cmd_block_site:                '屏蔽网站',
+        cmd_unblock_site:              '解除网站屏蔽',
+        cmd_block_app:                 '屏蔽应用',
+        cmd_unblock_app:               '解除应用屏蔽',
+        cmd_internet_pause:            '暂停网络',
+
+        // ── Web-dashboard-specific: Auth ──
+        auth_title:                    'Layers Guard',
+        auth_login:                    '登录',
+        auth_signup:                   '注册',
+        auth_email:                    '电子邮箱',
+        auth_password:                 '密码',
+        auth_password_confirm:         '确认密码',
+        auth_forgot:                   '忘记密码？',
+        auth_forgot_sent:              '密码重置邮件已发送。',
+        auth_error_invalid:            '邮箱或密码不正确。',
+        auth_error_exists:             '此邮箱的账户已存在。',
+        auth_error_weak_password:      '密码至少需要6个字符。',
+        auth_error_mismatch:           '两次输入的密码不一致。',
+        // ── Web-dashboard-specific: License ──
+        license_title:                 '激活 Guard Family',
+        license_subtitle:              '请输入您的 Guard Family 许可证密钥以继续。',
+        license_placeholder:           'XXXX-XXXX-XXXX',
+        license_activate:              '激活',
+        license_error:                 '许可证密钥无效。',
+        license_get:                   '获取许可证密钥',
+        // ── Web-dashboard-specific: Setup ──
+        setup_web_title:               '配对设备',
+        setup_web_instructions:        '在孩子设备上的 Layers Guard 应用中输入此代码。',
+        setup_web_waiting:             '正在等待设备...',
+        // ── Controls: bedtime & weekend labels ──
+        controls_bedtime_title:        '就寝时间锁定',
+        controls_bedtime_starts:       '开始时间',
+        controls_bedtime_ends:         '结束时间',
+        controls_weekend_override:     '周末覆盖',
+        controls_weekend_start:        '周末开始',
+        controls_weekend_end:          '周末结束',
+        controls_holiday_today:        '今天是节假日',
+        controls_blocked_sites_title:  '已屏蔽的网站',
+        controls_blocked_apps_title:   '已屏蔽的应用',
+        controls_per_app_limits_title: '应用每日限制',
+        controls_no_blocked_sites:     '尚未屏蔽任何网站',
+        controls_no_blocked_apps:      '尚未屏蔽任何应用',
+        controls_no_app_limits:        '尚未设置应用限制。',
+        // ── Activity log card ──
+        activity_log_title:            '活动日志',
+        activity_log_show:             '显示',
+        activity_log_hide:             '隐藏',
+        activity_log_empty:            '暂无命令。',
+        // ── Status bar ──
+        status_checking:               '检查中...',
+        status_online:                 '在线',
+        status_offline:                '离线',
+        // ── Settings modal ──
+        settings_child_profile:        '孩子的资料',
+        settings_child_name_label:     '孩子的名字',
+        settings_pin_label:            '4位PIN码',
+        settings_save_pin:             '保存 PIN',
+        settings_section_language:     '语言',
+        settings_danger_zone:          '危险区域',
+        settings_remove_device_btn:    '移除此设备',
+        settings_logout:               '退出登录',
+      },
+
+      // ─────────────────────────────────────────────
+      // VIETNAMESE
+      // ─────────────────────────────────────────────
+      vi: {
+        app_name:                'Layers Guard',
+        ok:                      'OK',
+        cancel:                  'Huỷ',
+        save:                    'Lưu',
+        delete:                  'Xoá',
+        confirm:                 'Xác nhận',
+        close:                   'Đóng',
+        loading:                 'Đang tải…',
+        error_generic:           'Đã xảy ra lỗi. Vui lòng thử lại.',
+        error_firebase_write:    'Lệnh thất bại. Kiểm tra kết nối của bạn.',
+        offline_banner:          'Bạn đang ngoại tuyến. Lệnh sẽ đồng bộ khi kết nối lại.',
+        // nav
+        nav_dashboard:           'Trang chủ',
+        nav_controls:            'Điều khiển',
+        nav_schedule:            'Lịch trình',
+        nav_alerts:              'Cảnh báo',
+        nav_settings:            'Cài đặt',
+        // pin gate
+        pin_gate_title:          'Nhập mã PIN của bạn',
+        pin_gate_subtitle:       'Layers Guard đã bị khóa',
+        pin_gate_forgot:              'Quên PIN?',
+        pin_gate_forgot_message:      'Để đặt lại PIN, hãy gỡ cài đặt và cài lại ứng dụng Layers Guard.',
+        pin_gate_forgot_confirm_body: 'Thao tác này sẽ xoá PIN để bạn truy cập ứng dụng. Hãy đặt PIN mới ngay trong Cài đặt › Bảo mật.',
+        pin_gate_forgot_reset:        'Đặt lại PIN',
+        pin_gate_forgot_done_title:   'Đã xoá PIN',
+        pin_gate_forgot_done_body:    'Vào Cài đặt › Bảo mật để đặt PIN mới. PC của con bạn dùng PIN này để được bảo vệ.',
+        pin_gate_wrong:               'PIN không đúng. Vui lòng thử lại.',
+        pin_gate_biometric_hint:      'Dùng sinh trắc học',
+        // setup
+        setup_title:             'Thiết lập Layers Guard',
+        setup_pair_new:          'Ghép nối thiết bị mới',
+        setup_waiting:           'Đang chờ máy tính của con…',
+        setup_instructions:      'Nhập mã này trong ứng dụng Layers Guard trên thiết bị của con bạn.',
+        setup_pin_create_title:  'Tạo mã PIN',
+        setup_paired_success:    'Thiết bị đã được ghép nối! Hãy tạo mã PIN.',
+        // dashboard
+        dashboard_title:         'Trang chủ',
+        dashboard_online:        'Trực tuyến',
+        dashboard_offline:       'Ngoại tuyến',
+        dashboard_screen_time:   'Thời gian màn hình',
+        dashboard_emergency_lock:       'Khóa',
+        dashboard_emergency_unlock:     'Mở khóa',
+        dashboard_emergency_unlock_title:'Mở khóa thiết bị?',
+        dashboard_emergency_unlock_body: 'Màn hình khóa trên PC của con sẽ được tắt.',
+        dashboard_internet_pause:         'Wi-Fi',
+        dashboard_internet_paused:        'Wi-Fi tắt',
+        dashboard_internet_active:        'Internet',
+        dashboard_internet_tap_resume:    'Nhấn để mở',
+        dashboard_internet_tap_pause:     'Nhấn để chặn',
+        dashboard_pause_confirm_title:    'Chặn Internet?',
+        dashboard_pause_confirm_body:     'Thiết bị của con bạn sẽ mất kết nối internet ngay lập tức.',
+        dashboard_resume_confirm_title:   'Khôi phục Internet?',
+        dashboard_resume_confirm_body:    'Thiết bị của con bạn sẽ kết nối lại internet.',
+        settings_screen_pin_title:        'PIN thời gian màn hình',
+        settings_screen_pin_desc:         'Con nhập PIN này để mở màn hình khóa.',
+        settings_screen_pin_save:         'Lưu PIN',
+        settings_screen_pin_saved:        'Đã lưu',
+        settings_screen_pin_error:        'PIN phải là 4 chữ số.',
+        // controls
+        controls_title:          'Điều khiển',
+        controls_tab_websites:   'Trang web',
+        controls_tab_apps:       'Ứng dụng',
+        controls_block:          'Chặn',
+        // schedule
+        schedule_title:          'Lịch trình',
+        schedule_daily_limit:    'Giới hạn thời gian màn hình hàng ngày',
+        schedule_bedtime:        'Khóa giờ ngủ',
+        // alerts
+        alerts_title:            'Cảnh báo',
+        alerts_empty_title:      'Không phát hiện cảnh báo nào.',
+        alerts_empty_body:       'Bảo vệ nội dung đang hoạt động.',
+        alerts_mark_all_read:    'Đánh dấu tất cả đã đọc',
+        alerts_empty:            'Không có cảnh báo.',
+        // reports
+        reports_title:           'Báo cáo',
+        reports_no_data:         'Dữ liệu thời gian màn hình sẽ xuất hiện sau ngày sử dụng đầu tiên.',
+        // settings
+        settings_title:          'Cài đặt',
+        settings_change_pin:     'Đổi mã PIN',
+        // approval
+        approval_title:          'Yêu cầu',
+        approval_empty:          'Không có yêu cầu nào đang chờ.',
+        approval_approve:        'Chấp thuận',
+        approval_deny:           'Từ chối',
+        approval_inbox_title:    'Đang chờ phê duyệt',
+        // v1.5 navigation
+        tab_today:                'Hôm nay',
+        tab_trends:               'Xu hướng',
+        tab_controls:             'Điều khiển',
+        drawer_title_children:    'Trẻ em',
+        drawer_search_placeholder:'Tìm con…',
+        drawer_add_child:         'Thêm con',
+        drawer_online:            'Trực tuyến',
+        drawer_offline:           'Ngoại tuyến',
+        drawer_unpair:            'Huỷ ghép nối',
+        drawer_rename:            'Đổi tên',
+        drawer_empty:             'Chưa có thiết bị nào được ghép nối.',
+        // ── Trends tab v1.5 ──
+        trends_empty_title:       'Chưa có xu hướng',
+        trends_empty_body:        'Ghép nối thiết bị để bắt đầu thu thập lịch sử thời gian màn hình.',
+        trends_scope_all:         'Tất cả các con',
+        trends_scope_device:      'Thiết bị',
+        trends_prev_month:        'Tháng trước',
+        trends_next_month:        'Tháng sau',
+        trends_legend_low:        'Ít',
+        trends_legend_high:       'Nhiều',
+        trends_stat_total:        'Tổng',
+        trends_stat_avg:          'TB ngày',
+        trends_stat_peak:         'Đỉnh điểm',
+        trends_top_apps:          'Dùng nhiều nhất tháng này',
+        trends_top_apps_empty:    'Chưa có dữ liệu sử dụng ứng dụng tháng này.',
+        month_jan: 'Tháng 1',  month_feb: 'Tháng 2',  month_mar: 'Tháng 3',
+        month_apr: 'Tháng 4',  month_may: 'Tháng 5',  month_jun: 'Tháng 6',
+        month_jul: 'Tháng 7',  month_aug: 'Tháng 8',  month_sep: 'Tháng 9',
+        month_oct: 'Tháng 10', month_nov: 'Tháng 11', month_dec: 'Tháng 12',
+        // ── Today tab v1.5 ──
+        today_label:                   'Hôm nay',
+        today_open_now:                'Ứng dụng đang mở',
+        today_no_apps_open:            'Hiện không có ứng dụng nào đang mở',
+        today_recent_days:             '7 ngày qua',
+        today_granted_more_time:       'Bạn đã cấp thêm thời gian chơi vào một số ngày.',
+        today_no_activity_yet:         'Tuần này chưa ghi nhận hoạt động nào.',
+        today_lock_btn:                'Khoá thiết bị',
+        today_unlock_btn:              'Mở khoá thiết bị',
+        today_pause_btn:               'Tạm dừng Wi-Fi',
+        today_resume_btn:              'Tiếp tục Wi-Fi',
+        today_pairing_title:           'Đang chờ con bạn hoàn tất ghép nối…',
+        today_pairing_body:            'Mở ứng dụng Layers Guard trên PC của con để hoàn tất cài đặt.',
+        weekday_sun: 'CN', weekday_mon: 'T2', weekday_tue: 'T3', weekday_wed: 'T4',
+        weekday_thu: 'T5', weekday_fri: 'T6', weekday_sat: 'T7',
+        // ── Controls overview v1.5 ──
+        controls_time_limit_title:     'Giới hạn hàng ngày',
+        controls_time_limit_value:     '{value} mỗi ngày',
+        controls_time_limit_off:       'Không giới hạn',
+        controls_restrictions_title:   'Hạn chế',
+        controls_restrictions_value:   'Chặn {sites} trang · {apps} ứng dụng',
+        controls_restrictions_empty:   'Chưa chặn gì',
+        controls_schedule_title:       'Giờ ngủ & lịch',
+        controls_schedule_value:       '{start} – {end}',
+        controls_schedule_off:         'Tắt giờ ngủ',
+        controls_pin_title:            'PIN phụ huynh',
+        controls_pin_set:              'Đã đặt PIN',
+        controls_pin_not_set:          'Chưa đặt PIN — nhấn để thêm',
+        // ── Save toasts ──
+        toast_saved:                   'Đã lưu',
+        toast_pin_changed:             'Đã đổi PIN',
+        toast_language_changed:        'Đã cập nhật ngôn ngữ',
+        // ── Hero ──
+        hero_greeting_morning:         'Chào buổi sáng',
+        hero_greeting_afternoon:       'Chào buổi chiều',
+        hero_greeting_evening:         'Chào buổi tối',
+        hero_greeting_bedtime:         'Đã đến giờ nghỉ ngơi',
+        hero_subgreeting:              'Tình hình hôm nay',
+        hero_over_limit:               'Đã đạt giới hạn thời gian màn hình',
+        hero_stat_used:                'Đã dùng',
+        hero_stat_left:                'Còn lại',
+        hero_stat_apps:                'Đang dùng',
+        // ── Weekly digest ──
+        digest_title:                  'Tóm tắt tuần này',
+        digest_total:                  'Tổng thời gian màn hình: {total}',
+        digest_top_apps:               'Ứng dụng hàng đầu',
+        // ── Weekend / holiday schedule ──
+        schedule_weekend_title:        'Cuối tuần & ngày lễ',
+        schedule_weekend_toggle:       'Sử dụng quy tắc khác vào cuối tuần',
+        schedule_holiday_today:        'Hôm nay là ngày lễ',
+        // ── Bulk block / categories ──
+        category_games:                'Trò chơi',
+        category_social:               'Mạng xã hội',
+        category_video:                'Video',
+        // ── Per-app limits ──
+        schedule_app_limits_title:     'Giới hạn hàng ngày cho từng ứng dụng',
+        schedule_app_limits_empty:     'Chưa đặt giới hạn cho ứng dụng nào.',
+        // ── Activity log ──
+        settings_section_activity:     'Nhật ký hoạt động',
+        settings_activity_empty:       'Chưa có lệnh nào.',
+        cmd_emergency_lock:            'Khoá khẩn cấp',
+        cmd_lockout:                   'Khoá giờ ngủ',
+        cmd_extend_time:               'Gia hạn thời gian',
+        cmd_block_site:                'Chặn trang web',
+        cmd_unblock_site:              'Bỏ chặn trang web',
+        cmd_block_app:                 'Chặn ứng dụng',
+        cmd_unblock_app:               'Bỏ chặn ứng dụng',
+        cmd_internet_pause:            'Tạm dừng Internet',
+
+        // ── Web-dashboard-specific: Auth ──
+        auth_title:                    'Layers Guard',
+        auth_login:                    'Đăng nhập',
+        auth_signup:                   'Đăng ký',
+        auth_email:                    'Email',
+        auth_password:                 'Mật khẩu',
+        auth_password_confirm:         'Xác nhận mật khẩu',
+        auth_forgot:                   'Quên mật khẩu?',
+        auth_forgot_sent:              'Email đặt lại mật khẩu đã được gửi.',
+        auth_error_invalid:            'Email hoặc mật khẩu không hợp lệ.',
+        auth_error_exists:             'Tài khoản với email này đã tồn tại.',
+        auth_error_weak_password:      'Mật khẩu phải có ít nhất 6 ký tự.',
+        auth_error_mismatch:           'Mật khẩu không khớp.',
+        // ── Web-dashboard-specific: License ──
+        license_title:                 'Kích hoạt Guard Family',
+        license_subtitle:              'Nhập mã bản quyền Guard Family để tiếp tục.',
+        license_placeholder:           'XXXX-XXXX-XXXX',
+        license_activate:              'Kích hoạt',
+        license_error:                 'Mã bản quyền không hợp lệ.',
+        license_get:                   'Lấy mã bản quyền',
+        // ── Web-dashboard-specific: Setup ──
+        setup_web_title:               'Ghép nối thiết bị',
+        setup_web_instructions:        'Nhập mã này trong ứng dụng Layers Guard trên thiết bị của con bạn.',
+        setup_web_waiting:             'Đang chờ thiết bị...',
+        // ── Controls: bedtime & weekend labels ──
+        controls_bedtime_title:        'Khoá giờ ngủ',
+        controls_bedtime_starts:       'Bắt đầu lúc',
+        controls_bedtime_ends:         'Kết thúc lúc',
+        controls_weekend_override:     'Ghi đè cuối tuần',
+        controls_weekend_start:        'Cuối tuần bắt đầu',
+        controls_weekend_end:          'Cuối tuần kết thúc',
+        controls_holiday_today:        'Hôm nay là ngày lễ',
+        controls_blocked_sites_title:  'Trang web đã chặn',
+        controls_blocked_apps_title:   'Ứng dụng đã chặn',
+        controls_per_app_limits_title: 'Giới hạn hàng ngày cho ứng dụng',
+        controls_no_blocked_sites:     'Chưa chặn trang web nào',
+        controls_no_blocked_apps:      'Chưa chặn ứng dụng nào',
+        controls_no_app_limits:        'Chưa đặt giới hạn cho ứng dụng nào.',
+        // ── Activity log card ──
+        activity_log_title:            'Nhật ký hoạt động',
+        activity_log_show:             'Hiện',
+        activity_log_hide:             'Ẩn',
+        activity_log_empty:            'Chưa có lệnh nào.',
+        // ── Status bar ──
+        status_checking:               'Đang kiểm tra...',
+        status_online:                 'Trực tuyến',
+        status_offline:                'Ngoại tuyến',
+        // ── Settings modal ──
+        settings_child_profile:        'Hồ sơ con',
+        settings_child_name_label:     'Tên con',
+        settings_pin_label:            'PIN 4 chữ số',
+        settings_save_pin:             'Lưu PIN',
+        settings_section_language:     'Ngôn ngữ',
+        settings_danger_zone:          'Vùng nguy hiểm',
+        settings_remove_device_btn:    'Xoá thiết bị này',
+        settings_logout:               'Đăng xuất',
+      },
+    };
+
+    let currentLang = localStorage.getItem('guard_dashboard_lang') || 'en';
+    function T(key) { return (STRINGS[currentLang] && STRINGS[currentLang][key]) || STRINGS.en[key] || key; }
+
+    // ============================================================
+    // applyTranslations — scans data-i18n attributes and updates UI
+    // ============================================================
+    function applyTranslations() {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        const val = T(key);
+        if (val && val !== key) {
+          if (el.tagName === 'INPUT' && el.type !== 'submit') {
+            if (el.hasAttribute('data-i18n-attr')) {
+              el.setAttribute(el.getAttribute('data-i18n-attr'), val);
+            } else {
+              el.placeholder = val;
+            }
+          } else if (el.tagName === 'OPTION') {
+            el.textContent = val;
+          } else {
+            el.textContent = val;
+          }
+        }
+      });
+      document.documentElement.lang = currentLang;
+    }
+
+    // Wire language selector
+    const langSelectEl = document.getElementById('langSelect');
+    if (langSelectEl) {
+      langSelectEl.value = currentLang;
+      langSelectEl.addEventListener('change', (e) => {
+        currentLang = e.target.value;
+        localStorage.setItem('guard_dashboard_lang', currentLang);
+        applyTranslations();
+        showToast(T('toast_language_changed'));
+      });
+    }
+
+    // Apply translations on first load
+    applyTranslations();
+
+    // ============================================================
+    // State
+    // ============================================================
+    let currentUser = null;
+    let currentDeviceId = null;
+    let devices = [];
+    let listeners = [];
+    let currentSchedule = {};
+    let currentUsedMins = 0;
+    let todayTimeLog = {};
+    let allAlerts = {};
+    let blockedSites = [];
+    let blockedApps = [];
+    let pairingInterval = null;
+
+    // ============================================================
+    // Utility helpers (placeholder — filled in Task 2+)
+    // ============================================================
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function showToast(msg, isError = false) {
+      const el = document.createElement('div');
+      el.className = 'toast' + (isError ? ' error' : '');
+      el.textContent = msg;
+      document.getElementById('toastContainer').appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }
+
+    // ============================================================
+    // Auth tab switching
+    // ============================================================
+    document.querySelectorAll('[data-auth-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.authTab;
+        document.querySelectorAll('[data-auth-tab]').forEach(b => b.classList.toggle('active', b.dataset.authTab === tab));
+        document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+        document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+      });
+    });
+
+    // ============================================================
+    // Login form submission
+    // ============================================================
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      const errEl = document.getElementById('loginError');
+      errEl.style.display = 'none';
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        // onAuthStateChanged handles the rest
+      } catch (err) {
+        errEl.textContent = T('auth_error_invalid');
+        errEl.style.display = 'block';
+      }
+    });
+
+    // ============================================================
+    // Signup form submission
+    // ============================================================
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signupEmail').value.trim();
+      const pass = document.getElementById('signupPass').value;
+      const confirm = document.getElementById('signupPassConfirm').value;
+      const errEl = document.getElementById('signupError');
+      errEl.style.display = 'none';
+      if (pass !== confirm) { errEl.textContent = T('auth_error_mismatch'); errEl.style.display = 'block'; return; }
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await set(ref(db, USERS_ROOT + '/' + cred.user.uid), {
+          email: email,
+          created_at: Date.now(),
+          devices: [],
+        });
+      } catch (err) {
+        errEl.textContent = err.code === 'auth/email-already-in-use' ? T('auth_error_exists') : T('auth_error_weak_password');
+        errEl.style.display = 'block';
+      }
+    });
+
+    // ============================================================
+    // Forgot password
+    // ============================================================
+    document.getElementById('forgotPassLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!email) { showToast('Enter your email first', true); return; }
+      try {
+        await sendPasswordResetEmail(auth, email);
+        showToast(T('auth_forgot_sent'));
+      } catch (err) { showToast(T('error_generic'), true); }
+    });
+
+    // ============================================================
+    // License form submission (dev key bypass + Gumroad validation)
+    // ============================================================
+    document.getElementById('licenseForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const key = document.getElementById('licenseKeyInput').value.trim();
+      const errEl = document.getElementById('licenseError');
+      errEl.style.display = 'none';
+
+      // Dev key check
+      if (DEV_KEYS.includes(key)) {
+        await update(ref(db, USERS_ROOT + '/' + currentUser.uid), {
+          license_key: key,
+          license_valid: true,
+        });
+        showToast('License activated (dev key)');
+        // Re-trigger auth check
+        const snap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
+        const d = snap.val();
+        devices = d.devices || [];
+        if (devices.length === 0) { startPairing(); } else { currentDeviceId = devices[0]; showScreen('screenDashboard'); attachListeners(); }
+        return;
+      }
+
+      // Gumroad validation
+      try {
+        const resp = await fetch(LICENSE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key, product: 'guard-family' }),
+        });
+        const data = await resp.json();
+        if (resp.ok && data.valid) {
+          await update(ref(db, USERS_ROOT + '/' + currentUser.uid), {
+            license_key: key,
+            license_valid: true,
+          });
+          showToast('License activated!');
+          const snap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
+          const d = snap.val();
+          devices = d.devices || [];
+          if (devices.length === 0) { startPairing(); } else { currentDeviceId = devices[0]; showScreen('screenDashboard'); attachListeners(); }
+        } else {
+          errEl.textContent = T('license_error');
+          errEl.style.display = 'block';
+        }
+      } catch (err) {
+        errEl.textContent = T('error_generic');
+        errEl.style.display = 'block';
+      }
+    });
+
+    // ============================================================
+    // INIT — Firebase auth state listener
+    // ============================================================
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { currentUser = null; showScreen('screenAuth'); return; }
+      currentUser = user;
+      // Check license
+      const userSnap = await get(ref(db, USERS_ROOT + '/' + user.uid));
+      const userData = userSnap.val() || {};
+      if (!userData.license_key) {
+        showScreen('screenLicense');
+        return;
+      }
+      // License exists — load devices
+      devices = userData.devices || [];
+      if (devices.length === 0) {
+        startPairing();
+        return;
+      }
+      currentDeviceId = devices[0];
+      showScreen('screenDashboard');
+      attachListeners();
+    });
+
+    // ============================================================
+    // Task 3: Pairing flow + multi-child switcher
+    // ============================================================
+
+    function startPairing() {
+      showScreen('screenSetup');
+      const code = 'LG-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+      const deviceId = Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+
+      document.getElementById('pairingCode').textContent = code;
+
+      // Write pairing code to Firebase
+      set(ref(db, GUARD_ROOT + '/pairing_codes/' + code), {
+        created_at: Date.now(),
+        paired: false,
+        device_id: deviceId,
+        parent_auth_uid: currentUser.uid,
+      });
+
+      // Poll for paired
+      if (pairingInterval) clearInterval(pairingInterval);
+      pairingInterval = setInterval(async () => {
+        const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+        const val = snap.val();
+        if (val && val.paired) {
+          clearInterval(pairingInterval);
+          pairingInterval = null;
+          // Clean up pairing code
+          await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+          // Write device info
+          await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
+            parent_auth_uid: currentUser.uid,
+            child_name: 'My child',
+            paired_at: Date.now(),
+          });
+          // Append to user's devices
+          const userSnap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
+          const userData = userSnap.val() || {};
+          const devList = userData.devices || [];
+          devList.push(deviceId);
+          await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
+          devices = devList;
+          currentDeviceId = deviceId;
+          showToast(T('setup_paired_success'));
+          showScreen('screenDashboard');
+          attachListeners();
+        }
+      }, 3000);
+    }
+
+    function renderChildSelector() {
+      const dropdown = document.getElementById('childDropdown');
+      dropdown.innerHTML = '';
+      devices.forEach(async (did) => {
+        const snap = await get(ref(db, GUARD_ROOT + '/' + did + '/info'));
+        const info = snap.val() || {};
+        const statusSnap = await get(ref(db, GUARD_ROOT + '/' + did + '/status'));
+        const status = statusSnap.val() || {};
+        const isOnline = status.online && (Date.now() - (status.last_seen || 0)) < 120000;
+
+        const btn = document.createElement('button');
+        btn.className = 'child-option';
+        btn.innerHTML = `
+          <span class="avatar-dot" style="background:${info.avatar_color || '#2A9D5C'}"></span>
+          <span style="flex:1">${escapeHtml(info.child_name || 'Child')}</span>
+          <span class="online-dot ${isOnline ? 'online' : 'offline'}"></span>
+          <span class="platform">${escapeHtml(status.platform || '')}</span>
+        `;
+        btn.addEventListener('click', () => {
+          currentDeviceId = did;
+          detachListeners();
+          attachListeners();
+          dropdown.classList.remove('open');
+          updateSelectorLabel(info, isOnline);
+        });
+        dropdown.appendChild(btn);
+      });
+
+      // Add device button
+      const addBtn = document.createElement('button');
+      addBtn.className = 'child-option';
+      addBtn.innerHTML = '<span style="flex:1;color:var(--accent)">+ ' + T('settings_add_device') + '</span>';
+      addBtn.addEventListener('click', () => { dropdown.classList.remove('open'); startPairing(); });
+      dropdown.appendChild(addBtn);
+    }
+
+    function updateSelectorLabel(info, isOnline) {
+      document.getElementById('childNameLabel').textContent = info.child_name || 'Child';
+      document.getElementById('childAvatarDot').style.background = info.avatar_color || '#2A9D5C';
+      const dot = document.getElementById('childOnlineDot');
+      dot.className = 'online-dot ' + (isOnline ? 'online' : 'offline');
+    }
+
+    function detachListeners() {
+      listeners.forEach(unsub => {
+        if (typeof unsub === 'function') unsub();
+      });
+      listeners = [];
+    }
+
+    // Toggle child selector dropdown
+    document.getElementById('childSelectorCurrent').addEventListener('click', () => {
+      const dd = document.getElementById('childDropdown');
+      dd.classList.toggle('open');
+      if (dd.classList.contains('open')) renderChildSelector();
+    });
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (!document.getElementById('childSelector').contains(e.target)) {
+        document.getElementById('childDropdown').classList.remove('open');
+      }
+    });
+
+    // ============================================================
+    // Task 4: Today tab — real-time data listeners + UI rendering
+    // ============================================================
+
+    function attachListeners() {
+      if (!currentDeviceId) return;
+      showLoadingState();
+      const did = currentDeviceId;
+
+      // Device info listener — updates selector label
+      const infoRef = ref(db, GUARD_ROOT + '/' + did + '/info');
+      onValue(infoRef, (snap) => {
+        const info = snap.val() || {};
+        document.getElementById('childNameLabel').textContent = info.child_name || 'Child';
+        document.getElementById('childAvatarDot').style.background = info.avatar_color || '#2A9D5C';
+      });
+      listeners.push(() => off(infoRef));
+
+      // Status listener — renderStatus, renderHero, renderActiveApps
+      const statusRef = ref(db, GUARD_ROOT + '/' + did + '/status');
+      onValue(statusRef, (snap) => {
+        const s = snap.val() || {};
+        const isOnline = s.online && (Date.now() - (s.last_seen || 0)) < 120000;
+        renderStatus(s, isOnline);
+        renderHero(s);
+        renderActiveApps(s.active_apps || []);
+      });
+      listeners.push(() => off(statusRef));
+
+      // Schedule listener — for hero card limit display
+      const schedRef = ref(db, GUARD_ROOT + '/' + did + '/schedule');
+      onValue(schedRef, (snap) => {
+        currentSchedule = snap.val() || {};
+        renderHeroLimit();
+        populateControls();
+      });
+      listeners.push(() => off(schedRef));
+
+      // Time log listener — today + 7-day chart
+      const today = new Date().toISOString().slice(0, 10);
+      const timeRef = ref(db, GUARD_ROOT + '/' + did + '/time_log');
+      onValue(timeRef, (snap) => {
+        const log = snap.val() || {};
+        todayTimeLog = log[today] || {};
+        renderWeekChart(log);
+        renderHeroFromTimeLog(log, today);
+      });
+      listeners.push(() => off(timeRef));
+
+      // Pending requests listener
+      const reqRef = ref(db, GUARD_ROOT + '/' + did + '/pending_requests');
+      onValue(reqRef, (snap) => {
+        renderPendingRequests(snap.val() || {});
+      });
+      listeners.push(() => off(reqRef));
+
+      // Audit log listener
+      const auditRef = ref(db, GUARD_ROOT + '/' + did + '/audit_log');
+      onValue(auditRef, (snap) => {
+        renderActivityLog(snap.val() || {});
+      });
+      listeners.push(() => off(auditRef));
+
+      // Alerts listener
+      const alertsRef = ref(db, GUARD_ROOT + '/' + did + '/alerts');
+      onValue(alertsRef, (snap) => {
+        allAlerts = snap.val() || {};
+        renderAlertsBadge();
+      });
+      listeners.push(() => off(alertsRef));
+
+      // Blocked sites listener (for Controls tab)
+      const bsRef = ref(db, GUARD_ROOT + '/' + did + '/blocked_sites');
+      onValue(bsRef, (snap) => { blockedSites = snap.val() || []; renderBlockedSites(); });
+      listeners.push(() => off(bsRef));
+
+      // Blocked apps listener (for Controls tab)
+      const baRef = ref(db, GUARD_ROOT + '/' + did + '/blocked_apps');
+      onValue(baRef, (snap) => { blockedApps = snap.val() || []; renderBlockedApps(); });
+      listeners.push(() => off(baRef));
+
+      renderChildSelector();
+      checkWeeklyDigest();
+    }
+
+    // ── Hero card rendering ──
+
+    function renderHero(status) {
+      // Active apps count
+      document.getElementById('heroApps').textContent = (status.active_apps || []).length;
+
+      // Time-of-day greeting
+      const hour = new Date().getHours();
+      let greeting = T('hero_greeting_morning');
+      if (hour >= 12 && hour < 17) greeting = T('hero_greeting_afternoon');
+      else if (hour >= 17 && hour < 21) greeting = T('hero_greeting_evening');
+      else if (hour >= 21) greeting = T('hero_greeting_bedtime');
+      document.getElementById('heroGreeting').textContent = greeting;
+    }
+
+    function renderHeroFromTimeLog(log, today) {
+      const todayData = log[today] || {};
+      currentUsedMins = todayData.total_mins || 0;
+      const h = Math.floor(currentUsedMins / 60);
+      const m = currentUsedMins % 60;
+      document.getElementById('heroTime').textContent = h + 'h ' + m + 'm';
+      document.getElementById('heroUsed').textContent = formatMins(currentUsedMins);
+      updateProgressRing();
+      renderHeroLimit();
+    }
+
+    function renderHeroLimit() {
+      const sched = currentSchedule;
+      const limitMins = sched.daily_limit_mins || 120;
+      const enabled = sched.daily_limit_enabled !== false;
+      document.getElementById('heroLimit').textContent = enabled
+        ? 'of ' + formatMins(limitMins)
+        : T('hero_stat_limit_off');
+      document.getElementById('heroLeft').textContent = enabled
+        ? formatMins(Math.max(0, limitMins - currentUsedMins))
+        : '--';
+      updateProgressRing();
+    }
+
+    function updateProgressRing() {
+      const arc = document.getElementById('progressArc');
+      const circumference = 2 * Math.PI * 68; // ~427.26
+      const sched = currentSchedule;
+      const limitMins = sched.daily_limit_mins || 120;
+      const enabled = sched.daily_limit_enabled !== false;
+      const pct = enabled ? Math.min(currentUsedMins / limitMins, 1) : 0;
+      arc.style.strokeDashoffset = circumference * (1 - pct);
+      arc.classList.toggle('over', currentUsedMins >= limitMins && enabled);
+    }
+
+    function formatMins(m) {
+      if (m >= 60) return Math.floor(m / 60) + 'h ' + (m % 60) + 'm';
+      return m + 'm';
+    }
+
+    // ── Active apps rendering (with per-app minutes from time_log) ──
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function escapeAttr(str) {
+      return String(str).replace(/&/g, '&amp;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+    }
+
+    function renderActiveApps(apps) {
+      const list = document.getElementById('activeAppsList');
+      const empty = document.getElementById('appsEmpty');
+      if (!apps || apps.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        list.appendChild(empty);
+        return;
+      }
+      empty.style.display = 'none';
+      const todayApps = todayTimeLog.apps || {};
+      list.innerHTML = apps.slice(0, 10).map(app => {
+        const name = typeof app === 'string' ? app : (app.name || app);
+        const appKey = name.replace(/\./g, '_');
+        const mins = parseInt(todayApps[appKey] || 0, 10);
+        const timeStr = mins > 0 ? formatMins(mins) : '';
+        return '<div class="app-row"><span class="app-name">' + escapeHtml(name) + '</span><span class="app-time">' + timeStr + '</span></div>';
+      }).join('');
+    }
+
+    // ── Pending requests rendering ──
+
+    function renderPendingRequests(reqs) {
+      const list = document.getElementById('pendingRequestsList');
+      const empty = document.getElementById('pendingEmpty');
+      const pending = Object.entries(reqs).filter(([k, v]) => v.status === 'pending');
+      if (pending.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        list.appendChild(empty);
+        return;
+      }
+      empty.style.display = 'none';
+      list.innerHTML = pending.map(([key, req]) => {
+        const typeLabel = T('cmd_' + req.type) || req.type;
+        const valueLabel = req.value || '';
+        const msg = req.child_message || '';
+        return '<div class="request-card">'
+          + '<div class="request-info">'
+          + '<div class="request-type">' + escapeHtml(typeLabel) + '</div>'
+          + '<div class="request-detail">' + escapeHtml(valueLabel) + (msg ? ' — "' + escapeHtml(msg) + '"' : '') + '</div>'
+          + '</div>'
+          + '<div class="request-actions">'
+          + '<button class="btn btn-primary btn-sm" onclick="approveRequest(\'' + escapeAttr(key) + '\',\'' + escapeAttr(req.type) + '\',\'' + escapeAttr(req.value || '') + '\')">' + T('approval_approve') + '</button>'
+          + '<button class="btn btn-outline btn-sm" onclick="denyRequest(\'' + escapeAttr(key) + '\')">' + T('approval_deny') + '</button>'
+          + '</div>'
+          + '</div>';
+      }).join('');
+    }
+
+    // ── 7-day bar chart rendering ──
+
+    function renderWeekChart(log) {
+      const chart = document.getElementById('weekChart');
+      chart.innerHTML = '';
+      const days = [];
+      const dayNames = [T('weekday_sun'), T('weekday_mon'), T('weekday_tue'), T('weekday_wed'), T('weekday_thu'), T('weekday_fri'), T('weekday_sat')];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        const key = d.toISOString().slice(0, 10);
+        const dayData = log[key] || {};
+        days.push({ key, mins: dayData.total_mins || 0, dayName: dayNames[d.getDay()] });
+      }
+      const maxMins = Math.max(...days.map(d => d.mins), 1);
+      const limitMins = currentSchedule.daily_limit_mins || 120;
+
+      days.forEach(d => {
+        const pct = Math.max((d.mins / maxMins) * 100, 3);
+        const isOver = d.mins >= limitMins && currentSchedule.daily_limit_enabled !== false;
+        const col = document.createElement('div');
+        col.className = 'bar-col';
+        col.innerHTML = '<div class="bar-value">' + (d.mins > 0 ? formatMins(d.mins) : '') + '</div>'
+          + '<div class="bar' + (isOver ? ' over-limit' : '') + '" style="height:' + pct + '%"></div>'
+          + '<div class="bar-label">' + d.dayName + '</div>';
+        chart.appendChild(col);
+      });
+    }
+
+    // ── Activity log rendering ──
+
+    function renderActivityLog(log) {
+      const list = document.getElementById('activityLogList');
+      const empty = document.getElementById('logEmpty');
+      const entries = Object.entries(log).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0)).slice(0, 12);
+      if (entries.length === 0) {
+        list.innerHTML = '';
+        empty.style.display = 'block';
+        list.appendChild(empty);
+        return;
+      }
+      empty.style.display = 'none';
+      list.innerHTML = entries.map(([k, e]) => {
+        const cmd = T('cmd_' + e.command) || e.command;
+        const source = e.source || '';
+        const time = timeAgo(e.timestamp);
+        return '<div class="log-entry"><span class="log-cmd">' + escapeHtml(cmd) + '</span><span class="log-by">' + escapeHtml(source) + '</span><span class="log-time">' + time + '</span></div>';
+      }).join('');
+    }
+
+    // Toggle activity log expand/collapse
+    document.getElementById('activityToggle').addEventListener('click', () => {
+      const list = document.getElementById('activityLogList');
+      const btn = document.getElementById('activityToggle');
+      const visible = list.style.display !== 'none';
+      list.style.display = visible ? 'none' : 'block';
+      btn.textContent = visible ? (T('view_all') || 'Show') : (T('close') || 'Hide');
+    });
+
+    // ── Status bar rendering ──
+
+    function renderStatus(status, isOnline) {
+      const dot = document.getElementById('statusDot');
+      const text = document.getElementById('statusText');
+      dot.className = 'online-dot ' + (isOnline ? 'online' : 'offline');
+      text.textContent = isOnline
+        ? T('dashboard_online')
+        : T('dashboard_offline') + (status.last_seen ? ' — ' + timeAgo(status.last_seen) : '');
+      // Update header online dot
+      document.getElementById('childOnlineDot').className = 'online-dot ' + (isOnline ? 'online' : 'offline');
+
+      // Sync quick action states
+      emergencyLocked = Boolean(status.emergency_locked);
+      internetPaused = Boolean(status.internet_paused);
+
+      const lockBtn = document.getElementById('emergencyLockBtn');
+      lockBtn.classList.toggle('active-state', emergencyLocked);
+      lockBtn.querySelector('span').textContent = emergencyLocked ? T('dashboard_emergency_unlock') : T('dashboard_emergency_lock');
+
+      const pauseBtn = document.getElementById('internetPauseBtn');
+      pauseBtn.classList.toggle('active-state', internetPaused);
+      pauseBtn.querySelector('span').textContent = internetPaused ? T('dashboard_internet_paused') : T('dashboard_internet_pause');
+    }
+
+    function timeAgo(ts) {
+      if (!ts) return '';
+      const diff = Math.floor((Date.now() - ts) / 1000);
+      if (diff < 60) return T('alerts_time_just_now');
+      if (diff < 3600) return T('alerts_time_minutes_ago').replace('{n}', Math.floor(diff / 60));
+      if (diff < 86400) return T('alerts_time_hours_ago').replace('{n}', Math.floor(diff / 3600));
+      return T('alerts_time_days_ago').replace('{n}', Math.floor(diff / 86400));
+    }
+
+    // ── Weekly digest banner ──
+
+    function checkWeeklyDigest() {
+      const now = new Date();
+      if (now.getDay() !== 0 || now.getHours() < 18) return; // Only Sundays after 6pm
+      const weekKey = now.toISOString().slice(0, 10);
+      if (localStorage.getItem('guard_digest_dismissed_' + weekKey)) return;
+      document.getElementById('digestBanner').classList.add('visible');
+    }
+
+    document.getElementById('digestDismiss').addEventListener('click', () => {
+      const weekKey = new Date().toISOString().slice(0, 10);
+      localStorage.setItem('guard_digest_dismissed_' + weekKey, '1');
+      document.getElementById('digestBanner').classList.remove('visible');
+    });
+
+    // ── Tab switching ──
+
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)));
+      document.querySelectorAll('#tabBar button, #mobileTabBar button').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+      if (tabName === 'trends') loadTrendsMonth();
+    }
+
+    document.querySelectorAll('#tabBar button, #mobileTabBar button').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    // ── Alerts badge ──
+
+    function renderAlertsBadge() {
+      const badge = document.getElementById('alertsBadge');
+      if (!badge) return;
+      const unread = Object.values(allAlerts).filter(a => !a.read).length;
+      badge.style.display = unread > 0 ? 'flex' : 'none';
+      badge.textContent = unread > 9 ? '9+' : unread;
+    }
+
+    // ============================================================
+    // Task 5: Command dispatch — confirm dialog, quick actions,
+    //         approve/deny, block/unblock, category bulk block
+    // ============================================================
+
+    // ── State vars ──
+    let emergencyLocked = false;
+    let internetPaused = false;
+
+    // ── Confirm dialog utility ──
+    function showConfirm(title, body, onOk) {
+      document.getElementById('confirmTitle').textContent = title;
+      document.getElementById('confirmBody').textContent = body;
+      document.getElementById('confirmOverlay').classList.add('open');
+      const okBtn = document.getElementById('confirmOk');
+      const cancelBtn = document.getElementById('confirmCancel');
+      const close = () => {
+        document.getElementById('confirmOverlay').classList.remove('open');
+        okBtn.replaceWith(okBtn.cloneNode(true));
+        cancelBtn.replaceWith(cancelBtn.cloneNode(true));
+      };
+      document.getElementById('confirmOk').addEventListener('click', () => { close(); onOk(); }, { once: true });
+      document.getElementById('confirmCancel').addEventListener('click', close, { once: true });
+    }
+
+    // ── Command helpers ──
+    function getIssuedBy() {
+      if (!currentUser) return 'parent';
+      return currentUser.displayName || currentUser.email.split('@')[0];
+    }
+
+    async function writeCommand(cmdName, payload) {
+      try {
+        await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/commands/' + cmdName), {
+          ...payload,
+          timestamp: Date.now(),
+          issued_by: getIssuedBy(),
+        });
+        // Write audit log
+        const ts = Date.now();
+        const key = 'web_' + ts + '_' + cmdName;
+        await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/audit_log/' + key), {
+          command: cmdName,
+          payload,
+          source: 'web_dashboard',
+          status: 'sent',
+          timestamp: ts,
+        });
+      } catch (err) {
+        showToast(T('error_firebase_write'), true);
+      }
+    }
+
+    // ── Emergency lock toggle ──
+    document.getElementById('emergencyLockBtn').addEventListener('click', () => {
+      if (emergencyLocked) {
+        showConfirm(T('dashboard_emergency_unlock_title'), T('dashboard_emergency_unlock_body'), async () => {
+          await writeCommand('emergency_lock', { active: false });
+        });
+      } else {
+        showConfirm(T('dashboard_emergency_confirm_title'), T('dashboard_emergency_confirm_body'), async () => {
+          await writeCommand('emergency_lock', { active: true });
+        });
+      }
+    });
+
+    // ── Internet pause toggle ──
+    document.getElementById('internetPauseBtn').addEventListener('click', () => {
+      if (internetPaused) {
+        showConfirm(T('dashboard_resume_confirm_title'), T('dashboard_resume_confirm_body'), async () => {
+          await writeCommand('internet_pause', { active: false });
+        });
+      } else {
+        showConfirm(T('dashboard_pause_confirm_title'), T('dashboard_pause_confirm_body'), async () => {
+          await writeCommand('internet_pause', { active: true });
+        });
+      }
+    });
+
+    // ── Approve/deny pending requests (global scope for inline onclick) ──
+    window.approveRequest = async function(key, type, value) {
+      // Execute the matching command
+      if (type === 'extend_time') {
+        await writeCommand('extend_time', { minutes: parseInt(value) || 15 });
+      } else if (type === 'unblock_site') {
+        await writeCommand('unblock_site', { domain: value });
+      } else if (type === 'unblock_app') {
+        await writeCommand('unblock_app', { exe: value });
+      }
+      // Mark as approved
+      await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'approved' });
+      showToast(T('approval_approve'));
+    };
+
+    window.denyRequest = async function(key) {
+      await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'denied' });
+      showToast(T('approval_deny'));
+    };
+
+    // ── Block/unblock site ──
+    document.getElementById('addSiteBtn').addEventListener('click', async () => {
+      const input = document.getElementById('addSiteInput');
+      let domain = input.value.trim().toLowerCase();
+      if (!domain) return;
+      // Auto-strip protocol, www, path
+      domain = domain.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+      if (blockedSites.includes(domain)) { showToast('Already blocked'); return; }
+
+      await writeCommand('block_site', { domain });
+      const newList = [...blockedSites, domain];
+      await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_sites'), newList);
+      input.value = '';
+    });
+
+    window.unblockSite = function(domain) {
+      showConfirm(T('controls_unblock_confirm').replace('{name}', domain), T('controls_unblock_site_body'), async () => {
+        await writeCommand('unblock_site', { domain });
+        const newList = blockedSites.filter(s => s !== domain);
+        await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_sites'), newList);
+      });
+    };
+
+    // ── Block/unblock app ──
+    document.getElementById('addAppBtn').addEventListener('click', async () => {
+      const exe = document.getElementById('addAppExe').value.trim();
+      const displayName = document.getElementById('addAppName').value.trim() || exe;
+      if (!exe) return;
+      if (blockedApps.some(a => a.exe === exe)) { showToast('Already blocked'); return; }
+
+      await writeCommand('block_app', { exe, display_name: displayName });
+      const newList = [...blockedApps, { exe, display_name: displayName }];
+      await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+      document.getElementById('addAppExe').value = '';
+      document.getElementById('addAppName').value = '';
+    });
+
+    window.unblockApp = function(exe) {
+      const app = blockedApps.find(a => a.exe === exe);
+      const name = app ? app.display_name : exe;
+      showConfirm(T('controls_unblock_confirm').replace('{name}', name), T('controls_unblock_app_body'), async () => {
+        await writeCommand('unblock_app', { exe });
+        const newList = blockedApps.filter(a => a.exe !== exe);
+        await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+      });
+    };
+
+    // ── Category bulk block ──
+    const CATEGORIES = {
+      games: [
+        { exe: 'steam.exe', display_name: 'Steam' },
+        { exe: 'EpicGamesLauncher.exe', display_name: 'Epic Games' },
+        { exe: 'minecraft.exe', display_name: 'Minecraft' },
+        { exe: 'roblox.exe', display_name: 'Roblox' },
+        { exe: 'FortniteClient.exe', display_name: 'Fortnite' },
+      ],
+      social: [
+        { exe: 'discord.exe', display_name: 'Discord' },
+        { exe: 'Telegram.exe', display_name: 'Telegram' },
+        { exe: 'LINE.exe', display_name: 'LINE' },
+      ],
+      video: [
+        { exe: 'obs64.exe', display_name: 'OBS Studio' },
+        { exe: 'vlc.exe', display_name: 'VLC' },
+      ],
+    };
+
+    document.querySelectorAll('#categoryPills .category-pill').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const cat = btn.dataset.cat;
+        const apps = CATEGORIES[cat] || [];
+        showConfirm(
+          T('schedule_bulk_block_confirm_title').replace('{category}', T('category_' + cat)),
+          T('schedule_bulk_block_confirm_body').replace('{count}', apps.length),
+          async () => {
+            for (const app of apps) {
+              if (!blockedApps.some(a => a.exe === app.exe)) {
+                await writeCommand('block_app', { exe: app.exe, display_name: app.display_name });
+                blockedApps.push(app);
+              }
+            }
+            await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), blockedApps);
+            showToast(T('toast_saved'));
+          }
+        );
+      });
+    });
+
+    // ============================================================
+    // Task 6: Controls tab — schedule writes (time limits,
+    //         bedtime, per-app limits, blocked lists rendering)
+    // ============================================================
+
+    // ── Populate controls from schedule listener ──
+    function populateControls(sched) {
+      if (!sched) sched = currentSchedule;
+      // Daily limit
+      const limitEnabled = sched.daily_limit_enabled !== false;
+      document.getElementById('timeLimitToggle').classList.toggle('on', limitEnabled);
+      document.getElementById('timeLimitSlider').value = sched.daily_limit_mins || 120;
+      document.getElementById('timeLimitValue').textContent = formatMins(sched.daily_limit_mins || 120);
+
+      // Weekend
+      const weekendEnabled = Boolean(sched.weekend_enabled);
+      document.getElementById('weekendToggle').classList.toggle('on', weekendEnabled);
+      document.getElementById('weekendSliderRow').style.display = weekendEnabled ? 'flex' : 'none';
+      document.getElementById('weekendSlider').value = sched.weekend_daily_limit_mins || 180;
+      document.getElementById('weekendValue').textContent = formatMins(sched.weekend_daily_limit_mins || 180);
+
+      // Bedtime
+      const lockout = sched.lockout || {};
+      document.getElementById('bedtimeToggle').classList.toggle('on', Boolean(lockout.enabled));
+      document.getElementById('bedtimeStart').value = lockout.start || '22:00';
+      document.getElementById('bedtimeEnd').value = lockout.end || '07:00';
+
+      // Weekend bedtime
+      const wLockout = sched.weekend_lockout || {};
+      document.getElementById('bedtimeWeekendToggle').classList.toggle('on', Boolean(wLockout.enabled));
+      document.getElementById('bedtimeWeekendTimes').style.display = wLockout.enabled ? 'block' : 'none';
+      document.getElementById('bedtimeWeekendStart').value = wLockout.start || '23:00';
+      document.getElementById('bedtimeWeekendEnd').value = wLockout.end || '08:00';
+
+      // Holiday
+      document.getElementById('holidayToggle').classList.toggle('on', Boolean(sched.holiday_today));
+
+      // Per-app limits
+      renderAppLimits(sched.app_time_limits || []);
+    }
+
+    // ── Toggle helper ──
+    function bindToggle(id, callback) {
+      document.getElementById(id).addEventListener('click', function() {
+        this.classList.toggle('on');
+        callback(this.classList.contains('on'));
+      });
+    }
+
+    // Daily limit toggle
+    bindToggle('timeLimitToggle', (on) => {
+      document.getElementById('timeLimitBody').style.display = on ? 'block' : 'none';
+    });
+
+    // Slider live update
+    document.getElementById('timeLimitSlider').addEventListener('input', (e) => {
+      document.getElementById('timeLimitValue').textContent = formatMins(parseInt(e.target.value));
+    });
+    document.getElementById('weekendSlider').addEventListener('input', (e) => {
+      document.getElementById('weekendValue').textContent = formatMins(parseInt(e.target.value));
+    });
+
+    // Weekend toggle
+    bindToggle('weekendToggle', (on) => {
+      document.getElementById('weekendSliderRow').style.display = on ? 'flex' : 'none';
+    });
+
+    // Bedtime weekend toggle
+    bindToggle('bedtimeWeekendToggle', (on) => {
+      document.getElementById('bedtimeWeekendTimes').style.display = on ? 'block' : 'none';
+    });
+
+    // ── Time limit save ──
+    document.getElementById('timeLimitSave').addEventListener('click', async () => {
+      const enabled = document.getElementById('timeLimitToggle').classList.contains('on');
+      const mins = parseInt(document.getElementById('timeLimitSlider').value);
+      const weekendOn = document.getElementById('weekendToggle').classList.contains('on');
+      const weekendMins = parseInt(document.getElementById('weekendSlider').value);
+
+      try {
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), {
+          daily_limit_enabled: enabled,
+          daily_limit_mins: mins,
+          weekend_enabled: weekendOn,
+          weekend_daily_limit_mins: weekendMins,
+        });
+        showToast(T('toast_saved'));
+      } catch (err) {
+        showToast(T('error_firebase_write'), true);
+      }
+    });
+
+    // ── Bedtime save ──
+    document.getElementById('bedtimeSave').addEventListener('click', async () => {
+      const enabled = document.getElementById('bedtimeToggle').classList.contains('on');
+      const start = document.getElementById('bedtimeStart').value;
+      const end = document.getElementById('bedtimeEnd').value;
+      const wEnabled = document.getElementById('bedtimeWeekendToggle').classList.contains('on');
+      const wStart = document.getElementById('bedtimeWeekendStart').value;
+      const wEnd = document.getElementById('bedtimeWeekendEnd').value;
+      const holiday = document.getElementById('holidayToggle').classList.contains('on');
+
+      try {
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), {
+          lockout: { enabled, start, end },
+          weekend_lockout: { enabled: wEnabled, start: wStart, end: wEnd },
+          holiday_today: holiday,
+          holiday_today_date: holiday ? new Date().toISOString().slice(0, 10) : null,
+        });
+        showToast(T('toast_saved'));
+      } catch (err) {
+        showToast(T('error_firebase_write'), true);
+      }
+    });
+
+    // ── Per-app limits ──
+    let appTimeLimits = [];
+
+    function renderAppLimits(limits) {
+      appTimeLimits = limits || [];
+      const list = document.getElementById('appLimitsList');
+      if (limits.length === 0) {
+        list.innerHTML = '<div class="empty-state">' + T('schedule_app_limits_empty') + '</div>';
+        return;
+      }
+      list.innerHTML = limits.map((l, i) => `
+        <div class="blocked-item">
+          <span>${escapeHtml(l.display_name || l.exe)} — ${l.limit_mins}m/day</span>
+          <button class="btn btn-sm btn-outline" onclick="removeAppLimit(${i})">x</button>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('addAppLimitBtn').addEventListener('click', async () => {
+      const exe = document.getElementById('appLimitExe').value.trim();
+      const mins = parseInt(document.getElementById('appLimitMins').value);
+      if (!exe || !mins || mins < 5) return;
+
+      appTimeLimits.push({ exe, display_name: exe, limit_mins: mins });
+      try {
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), { app_time_limits: appTimeLimits });
+        document.getElementById('appLimitExe').value = '';
+        document.getElementById('appLimitMins').value = '';
+        showToast(T('toast_saved'));
+      } catch (err) { showToast(T('error_firebase_write'), true); }
+    });
+
+    window.removeAppLimit = async function(index) {
+      appTimeLimits.splice(index, 1);
+      try {
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), { app_time_limits: appTimeLimits });
+        showToast(T('toast_saved'));
+      } catch (err) { showToast(T('error_firebase_write'), true); }
+    };
+
+    // ── Blocked sites list rendering ──
+    function renderBlockedSites() {
+      const list = document.getElementById('blockedSitesList');
+      if (!blockedSites || blockedSites.length === 0) {
+        list.innerHTML = '<div class="empty-state">' + T('controls_blocked_empty').replace('{type}', 'sites') + '</div>';
+        return;
+      }
+      // Check for per-site schedules from the schedule object
+      const siteSchedules = (currentSchedule.site_schedules || []);
+      const schedMap = {};
+      siteSchedules.forEach(ss => { if (ss.domain) schedMap[ss.domain] = ss; });
+
+      list.innerHTML = blockedSites.map(domain => {
+        const sched = schedMap[domain];
+        const schedLabel = sched ? `${sched.start || '00:00'} – ${sched.end || '23:59'}` : '';
+        return `<div class="blocked-item">
+          <span>${escapeHtml(domain)}${schedLabel ? ' <small style="color:var(--text-dim)">' + schedLabel + '</small>' : ''}</span>
+          <div class="blocked-item-actions">
+            <button class="btn btn-sm btn-outline" onclick="editSiteSchedule('${escapeAttr(domain)}')" title="Schedule">&#128339;</button>
+            <button class="btn btn-sm btn-outline" onclick="unblockSite('${escapeAttr(domain)}')">x</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // Per-site schedule editor — inline time picker
+    window.editSiteSchedule = function(domain) {
+      const existing = (currentSchedule.site_schedules || []).find(s => s.domain === domain) || {};
+      const start = prompt(T('schedule_start_time') + ' (HH:MM)', existing.start || '00:00');
+      const end = prompt(T('schedule_end_time') + ' (HH:MM)', existing.end || '23:59');
+      if (!start || !end) return;
+      const siteSchedules = (currentSchedule.site_schedules || []).filter(s => s.domain !== domain);
+      siteSchedules.push({ domain, start, end });
+      update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), { site_schedules: siteSchedules })
+        .then(() => showToast(T('toast_saved')))
+        .catch(() => showToast(T('error_firebase_write'), true));
+    };
+
+    // ── Blocked apps list rendering ──
+    function renderBlockedApps() {
+      const list = document.getElementById('blockedAppsList');
+      if (!blockedApps || blockedApps.length === 0) {
+        list.innerHTML = '<div class="empty-state">' + T('controls_blocked_empty').replace('{type}', 'apps') + '</div>';
+        return;
+      }
+      list.innerHTML = blockedApps.map(app => `
+        <div class="blocked-item">
+          <span>${escapeHtml(app.display_name || app.exe)}</span>
+          <div class="blocked-item-actions">
+            <button class="btn btn-sm btn-outline" onclick="unblockApp('${escapeAttr(app.exe)}')">x</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ── Trends tab — calendar heatmap + monthly stats + top apps ──
+
+    let trendsMonth = new Date();
+    let trendsCache = {};
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      trendsMonth.setMonth(trendsMonth.getMonth() - 1);
+      loadTrendsMonth();
+    });
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      trendsMonth.setMonth(trendsMonth.getMonth() + 1);
+      loadTrendsMonth();
+    });
+
+    async function loadTrendsMonth() {
+      const year = trendsMonth.getFullYear();
+      const month = trendsMonth.getMonth();
+      const monthNames = [T('month_jan'), T('month_feb'), T('month_mar'), T('month_apr'), T('month_may'), T('month_jun'), T('month_jul'), T('month_aug'), T('month_sep'), T('month_oct'), T('month_nov'), T('month_dec')];
+      document.getElementById('monthLabel').textContent = monthNames[month] + ' ' + year;
+
+      // Fetch time_log for this month
+      const snap = await get(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/time_log'));
+      const log = snap.val() || {};
+
+      // Filter to current month
+      const prefix = year + '-' + String(month + 1).padStart(2, '0');
+      const monthData = {};
+      for (const [dateKey, dayData] of Object.entries(log)) {
+        if (dateKey.startsWith(prefix)) monthData[dateKey] = dayData;
+      }
+
+      renderHeatmap(year, month, monthData);
+      renderMonthlySummary(monthData);
+      renderTopApps(monthData);
+    }
+
+    function renderHeatmap(year, month, data) {
+      const grid = document.getElementById('heatmapGrid');
+      grid.innerHTML = '';
+      const limitMins = (currentSchedule.daily_limit_mins || 120);
+      const limitEnabled = currentSchedule.daily_limit_enabled !== false;
+
+      // Day headers (Mon-Sun)
+      const dayNames = [T('weekday_mon'), T('weekday_tue'), T('weekday_wed'), T('weekday_thu'), T('weekday_fri'), T('weekday_sat'), T('weekday_sun')];
+      dayNames.forEach(d => {
+        const header = document.createElement('div');
+        header.className = 'day-header';
+        header.textContent = d;
+        grid.appendChild(header);
+      });
+
+      // First day of month
+      const firstDay = new Date(year, month, 1);
+      let startDow = firstDay.getDay(); // 0=Sun
+      startDow = startDow === 0 ? 6 : startDow - 1; // Convert to Mon=0
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Empty cells before first day
+      for (let i = 0; i < startDow; i++) {
+        const blank = document.createElement('div');
+        blank.className = 'cell heat-0';
+        grid.appendChild(blank);
+      }
+
+      // Day cells
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateKey = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+        const dayData = data[dateKey] || {};
+        const mins = dayData.total_mins || 0;
+
+        let heatClass = 'heat-0';
+        if (mins > 0 && mins < 60) heatClass = 'heat-1';
+        else if (mins >= 60 && mins <= 120) heatClass = 'heat-2';
+        else if (mins > 120) heatClass = 'heat-3';
+        if (limitEnabled && mins >= limitMins) heatClass = 'heat-over';
+
+        const cell = document.createElement('div');
+        cell.className = 'cell ' + heatClass;
+        cell.innerHTML = '<span class="cell-label">' + d + '</span>';
+        cell.title = dateKey + ': ' + formatMins(mins);
+        cell.addEventListener('click', () => showDayPopover(dateKey, dayData));
+        grid.appendChild(cell);
+      }
+    }
+
+    function showDayPopover(dateKey, dayData) {
+      const apps = dayData.apps || {};
+      if (Object.keys(apps).length === 0) { showToast(dateKey + ': ' + T('dashboard_no_usage_yet')); return; }
+      const lines = Object.entries(apps)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(([name, mins]) => name.replace(/_/g, '.') + ': ' + formatMins(mins));
+      showToast(dateKey + '\n' + lines.join(', '));
+    }
+
+    function renderMonthlySummary(data) {
+      const days = Object.values(data);
+      const totalMins = days.reduce((sum, d) => sum + (d.total_mins || 0), 0);
+      const avg = days.length > 0 ? Math.round(totalMins / days.length) : 0;
+      const peak = days.reduce((max, d) => Math.max(max, d.total_mins || 0), 0);
+      const peakDate = Object.entries(data).find(([k, v]) => (v.total_mins || 0) === peak);
+
+      document.getElementById('monthTotal').textContent = formatMins(totalMins);
+      document.getElementById('monthAvg').textContent = formatMins(avg);
+      document.getElementById('monthPeak').textContent = peak > 0
+        ? formatMins(peak) + (peakDate ? ' (' + peakDate[0].slice(5) + ')' : '')
+        : '--';
+    }
+
+    function renderTopApps(data) {
+      const appTotals = {};
+      for (const dayData of Object.values(data)) {
+        const apps = dayData.apps || {};
+        for (const [name, mins] of Object.entries(apps)) {
+          const cleanName = name.replace(/_/g, '.');
+          appTotals[cleanName] = (appTotals[cleanName] || 0) + mins;
+        }
+      }
+
+      const sorted = Object.entries(appTotals).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const list = document.getElementById('topAppsList');
+      if (sorted.length === 0) {
+        list.innerHTML = '<div class="empty-state">' + T('trends_top_apps_empty') + '</div>';
+        return;
+      }
+
+      const maxMins = sorted[0][1];
+      list.innerHTML = sorted.map(([name, mins]) => {
+        const pct = Math.round((mins / maxMins) * 100);
+        return `<div class="top-app-row">
+      <span class="app-name" style="min-width:100px">${escapeHtml(name)}</span>
+      <div class="top-app-bar-bg"><div class="top-app-bar-fill" style="width:${pct}%"></div></div>
+      <span class="top-app-pct">${formatMins(mins)}</span>
+    </div>`;
+      }).join('');
+    }
+
+    // Firebase .info/connected listener
+    const connectedRef = ref(db, '.info/connected');
+    onValue(connectedRef, (snap) => {
+      const banner = document.getElementById('offlineBanner');
+      if (snap.val() === true) {
+        banner.classList.remove('visible');
+      } else {
+        banner.textContent = T('offline_banner');
+        banner.classList.add('visible');
+      }
+    });
+
+    // Escape closes modals
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.getElementById('alertsOverlay').classList.remove('open');
+        document.getElementById('settingsOverlay').classList.remove('open');
+        document.getElementById('confirmOverlay').classList.remove('open');
+      }
+    });
+
+    // Aria labels
+    document.getElementById('alertsBellBtn').setAttribute('aria-label', 'Open alerts');
+    document.getElementById('settingsBtn').setAttribute('aria-label', 'Open settings');
+    document.getElementById('emergencyLockBtn').setAttribute('aria-label', 'Emergency lock toggle');
+    document.getElementById('internetPauseBtn').setAttribute('aria-label', 'Internet pause toggle');
+
+    function showLoadingState() {
+      document.getElementById('heroTime').innerHTML = '<span class="skeleton" style="width:80px;height:24px;display:inline-block"></span>';
+      document.getElementById('pendingRequestsList').innerHTML = '<div class="skeleton" style="height:44px;margin:4px 0"></div>';
+      document.getElementById('activeAppsList').innerHTML = '<div class="skeleton" style="height:44px;margin:4px 0"></div>';
+    }
+
+    // ============================================================
+    // Task 8: Alerts panel + Settings modal + logout
+    // ============================================================
+
+    // ── Alert filter state ──
+    let alertFilter = 'all';
+
+    // ── Alerts panel open/close ──
+    document.getElementById('alertsBellBtn').addEventListener('click', () => {
+      document.getElementById('alertsOverlay').classList.add('open');
+      renderAlertsList();
+    });
+    document.getElementById('alertsBackdrop').addEventListener('click', () => {
+      document.getElementById('alertsOverlay').classList.remove('open');
+    });
+    document.getElementById('alertsCloseBtn').addEventListener('click', () => {
+      document.getElementById('alertsOverlay').classList.remove('open');
+    });
+
+    // ── Alert filter click handlers ──
+    document.querySelectorAll('#alertFilters .category-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alertFilter = btn.dataset.filter;
+        document.querySelectorAll('#alertFilters .category-pill').forEach(b => b.classList.toggle('active', b === btn));
+        renderAlertsList();
+      });
+    });
+
+    // ── Alert list rendering ──
+    const ALERT_ICONS = {
+      violence: '&#9888;&#65039;', sexual: '&#128065;&#65039;', bullying: '&#128548;',
+      self_harm: '&#128148;', sextortion: '&#128274;', drugs: '&#128138;',
+      stranger_danger: '&#128100;', hate_speech: '&#128545;',
+    };
+
+    function renderAlertsList() {
+      const list = document.getElementById('alertsList');
+      let entries = Object.entries(allAlerts).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
+      if (alertFilter !== 'all') entries = entries.filter(([k, v]) => v.category === alertFilter);
+
+      if (entries.length === 0) {
+        list.innerHTML = '<div class="empty-state">' + T('alerts_empty') + '</div>';
+        return;
+      }
+
+      list.innerHTML = entries.map(([key, alert]) => {
+        const icon = ALERT_ICONS[alert.category] || '&#9888;&#65039;';
+        const isUnread = !alert.read;
+        const severityClass = alert.severity === 'high' ? 'severity-high' : 'severity-medium';
+        return `<div class="alert-item${isUnread ? ' unread' : ''}" onclick="markAlertRead('${key}')">
+          <div class="alert-icon">${icon}</div>
+          <div class="alert-body">
+            <div class="alert-category">
+              <span class="severity-dot ${severityClass}"></span>
+              ${escapeHtml(T('alerts_category_' + alert.category) || alert.category)}
+            </div>
+            <div class="alert-source">${escapeHtml(alert.source || alert.domain || '')}</div>
+            <div class="alert-time">${timeAgo(alert.timestamp)}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // ── Mark alert as read ──
+    window.markAlertRead = async function(key) {
+      try {
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/alerts/' + key), { read: true });
+      } catch (e) { /* best-effort */ }
+    };
+
+    // ── Mark all alerts as read ──
+    document.getElementById('markAllReadBtn').addEventListener('click', async () => {
+      const updates = {};
+      for (const [key, alert] of Object.entries(allAlerts)) {
+        if (!alert.read) updates[key + '/read'] = true;
+      }
+      if (Object.keys(updates).length > 0) {
+        try {
+          await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/alerts'), updates);
+          showToast(T('alerts_mark_all_read'));
+        } catch (e) { showToast(T('error_firebase_write'), true); }
+      }
+    });
+
+    // ── Settings modal open/close ──
+    document.getElementById('settingsBtn').addEventListener('click', () => {
+      document.getElementById('settingsOverlay').classList.add('open');
+      loadSettingsData();
+    });
+    document.getElementById('settingsCloseBtn').addEventListener('click', () => {
+      document.getElementById('settingsOverlay').classList.remove('open');
+    });
+
+    async function loadSettingsData() {
+      const snap = await get(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'));
+      const info = snap.val() || {};
+      document.getElementById('settingsChildName').value = info.child_name || '';
+      document.getElementById('langSelect').value = currentLang;
+    }
+
+    // ── Save child name ──
+    document.getElementById('saveChildNameBtn').addEventListener('click', async () => {
+      const name = document.getElementById('settingsChildName').value.trim();
+      if (!name) return;
+      try {
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { child_name: name });
+        document.getElementById('childNameLabel').textContent = name;
+        showToast(T('toast_saved'));
+      } catch (e) { showToast(T('error_firebase_write'), true); }
+    });
+
+    // ── Save PIN with SHA-256 hash ──
+    document.getElementById('savePinBtn').addEventListener('click', async () => {
+      const pin = document.getElementById('settingsPin').value.trim();
+      if (!/^\d{4}$/.test(pin)) { showToast(T('settings_screen_pin_error'), true); return; }
+      try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(pin);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { pin_hash: hashHex });
+        showToast(T('settings_screen_pin_saved'));
+        document.getElementById('settingsPin').value = '';
+      } catch (e) { showToast(T('error_firebase_write'), true); }
+    });
+
+    // ── Remove device ──
+    document.getElementById('removeDeviceBtn').addEventListener('click', () => {
+      const childName = document.getElementById('childNameLabel').textContent;
+      showConfirm(
+        T('settings_remove_device_confirm').replace('{name}', childName),
+        'This will permanently remove this device from your account.',
+        async () => {
+          try {
+            await remove(ref(db, GUARD_ROOT + '/' + currentDeviceId));
+            devices = devices.filter(d => d !== currentDeviceId);
+            await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices });
+            document.getElementById('settingsOverlay').classList.remove('open');
+            if (devices.length === 0) {
+              startPairing();
+            } else {
+              currentDeviceId = devices[0];
+              detachListeners();
+              attachListeners();
+            }
+            showToast(T('toast_saved'));
+          } catch (e) { showToast(T('error_firebase_write'), true); }
+        }
+      );
+    });
+
+    // ── Logout ──
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      detachListeners();
+      await signOut(auth);
+      currentUser = null;
+      currentDeviceId = null;
+      devices = [];
+      showScreen('screenAuth');
+    });
+
+    console.log('[Dashboard] auth flow loaded');
+  </script>
+</body>
+</html>
