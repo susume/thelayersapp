@@ -1074,6 +1074,16 @@
       </div>
 
       <div class="modal-section">
+        <h4 data-i18n="setup_pair_new">Pair a new device</h4>
+        <form id="settingsPairForm" style="display:flex;gap:var(--sp-sm);align-items:flex-start">
+          <input id="settingsPairCode" class="input" type="text" placeholder="e.g. LG-3908" maxlength="7"
+                 style="flex:1;text-transform:uppercase;letter-spacing:0.1em" autocomplete="off">
+          <button type="submit" class="btn btn-primary btn-sm">Pair</button>
+        </form>
+        <div id="settingsPairError" class="auth-error"></div>
+      </div>
+
+      <div class="modal-section">
         <h4>Danger zone</h4>
         <button class="btn btn-danger btn-sm" id="removeDeviceBtn">Remove this device</button>
       </div>
@@ -2694,14 +2704,14 @@
 
         const deviceId = val.device_id;
 
-        // Mark as paired
+        // Mark as paired — do NOT delete yet; child app polls every 3s and needs to see paired=true
         await update(ref(db, GUARD_ROOT + '/pairing_codes/' + code), {
           paired: true,
           parent_auth_uid: currentUser.uid,
         });
 
-        // Clean up pairing code
-        await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+        // Let child app read paired=true, then clean up after a delay
+        setTimeout(() => remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)), 15000);
 
         // Write device info if it doesn't exist yet
         const infoSnap = await get(ref(db, GUARD_ROOT + '/' + deviceId + '/info'));
@@ -3873,6 +3883,54 @@
         showToast(T('settings_screen_pin_saved'));
         document.getElementById('settingsPin').value = '';
       } catch (e) { showToast(T('error_firebase_write'), true); }
+    });
+
+    // ── Pair new device from Settings ──
+    document.getElementById('settingsPairForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rawCode = document.getElementById('settingsPairCode').value.trim().toUpperCase();
+      const errEl = document.getElementById('settingsPairError');
+      const btn = e.target.querySelector('button[type="submit"]');
+      errEl.style.display = 'none';
+      const code = rawCode.startsWith('LG-') ? rawCode : 'LG-' + rawCode;
+      if (!/^LG-\d{4}$/.test(code)) {
+        errEl.textContent = T('setup_err_pair_code_invalid');
+        errEl.style.display = 'block';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = '…';
+      try {
+        const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+        const val = snap.val();
+        if (!val) { throw new Error(T('setup_code_invalid')); }
+        const deviceId = val.device_id;
+        // Mark paired — delay delete so child app can read it
+        await update(ref(db, GUARD_ROOT + '/pairing_codes/' + code), { paired: true, parent_auth_uid: currentUser.uid });
+        setTimeout(() => remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)), 15000);
+        // Write info if missing
+        const infoSnap = await get(ref(db, GUARD_ROOT + '/' + deviceId + '/info'));
+        if (!infoSnap.val()) {
+          await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), { parent_auth_uid: currentUser.uid, child_name: 'My child', paired_at: Date.now() });
+        } else {
+          await update(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), { parent_auth_uid: currentUser.uid });
+        }
+        // Add to devices list
+        if (!devices.includes(deviceId)) devices.push(deviceId);
+        await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices });
+        currentDeviceId = deviceId;
+        detachListeners();
+        attachListeners();
+        renderChildSelector();
+        showToast(T('setup_paired_success'));
+        document.getElementById('settingsPairCode').value = '';
+        document.getElementById('settingsOverlay').classList.remove('open');
+      } catch (err) {
+        errEl.textContent = err.message || T('error_generic');
+        errEl.style.display = 'block';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Pair';
     });
 
     // ── Remove device ──
