@@ -2549,24 +2549,61 @@
     // INIT — Firebase auth state listener
     // ============================================================
     onAuthStateChanged(auth, async (user) => {
+      // Re-enable any auth buttons that might be in loading state
+      document.querySelectorAll('.auth-box button[type="submit"]').forEach(btn => {
+        btn.disabled = false;
+      });
+
       if (!user) { currentUser = null; showScreen('screenAuth'); return; }
       currentUser = user;
-      // Check license
-      const userSnap = await get(ref(db, USERS_ROOT + '/' + user.uid));
-      const userData = userSnap.val() || {};
-      if (!userData.license_key) {
-        showScreen('screenLicense');
-        return;
+      console.log('[Dashboard] Auth state: logged in as', user.uid);
+
+      try {
+        // Check license
+        let userSnap;
+        try {
+          userSnap = await get(ref(db, USERS_ROOT + '/' + user.uid));
+        } catch (dbErr) {
+          console.error('[Dashboard] Failed to read user record:', dbErr.code, dbErr.message);
+          // User record doesn't exist yet — create it
+          await set(ref(db, USERS_ROOT + '/' + user.uid), {
+            email: user.email,
+            created_at: Date.now(),
+            devices: [],
+          });
+          userSnap = await get(ref(db, USERS_ROOT + '/' + user.uid));
+        }
+
+        const userData = userSnap.val() || {};
+
+        // If no user record at all, create one
+        if (!userSnap.val()) {
+          console.log('[Dashboard] Creating missing user record');
+          await set(ref(db, USERS_ROOT + '/' + user.uid), {
+            email: user.email,
+            created_at: Date.now(),
+            devices: [],
+          });
+        }
+
+        if (!userData.license_key) {
+          showScreen('screenLicense');
+          return;
+        }
+        // License exists — load devices
+        devices = userData.devices || [];
+        if (devices.length === 0) {
+          startPairing();
+          return;
+        }
+        currentDeviceId = devices[0];
+        showScreen('screenDashboard');
+        attachListeners();
+      } catch (err) {
+        console.error('[Dashboard] Auth state handler error:', err.code || '', err.message);
+        showToast('Error loading account: ' + (err.message || 'unknown error'), true);
+        showScreen('screenAuth');
       }
-      // License exists — load devices
-      devices = userData.devices || [];
-      if (devices.length === 0) {
-        startPairing();
-        return;
-      }
-      currentDeviceId = devices[0];
-      showScreen('screenDashboard');
-      attachListeners();
     });
 
     // ============================================================
