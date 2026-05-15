@@ -2407,13 +2407,31 @@
       const email = document.getElementById('loginEmail').value.trim();
       const pass = document.getElementById('loginPass').value;
       const errEl = document.getElementById('loginError');
+      const btn = e.target.querySelector('button[type="submit"]');
       errEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = '…';
       try {
         await signInWithEmailAndPassword(auth, email, pass);
         // onAuthStateChanged handles the rest
       } catch (err) {
-        errEl.textContent = T('auth_error_invalid');
+        console.error('Login error:', err.code, err.message);
+        let msg;
+        switch (err.code) {
+          case 'auth/invalid-credential':
+          case 'auth/user-not-found':
+          case 'auth/wrong-password':
+            msg = T('auth_error_invalid'); break;
+          case 'auth/too-many-requests':
+            msg = 'Too many attempts. Please try again later.'; break;
+          case 'auth/network-request-failed':
+            msg = 'Network error — check your internet connection.'; break;
+          default: msg = err.message || T('auth_error_invalid'); break;
+        }
+        errEl.textContent = msg;
         errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = T('auth_login');
       }
     });
 
@@ -2424,20 +2442,41 @@
       e.preventDefault();
       const email = document.getElementById('signupEmail').value.trim();
       const pass = document.getElementById('signupPass').value;
-      const confirm = document.getElementById('signupPassConfirm').value;
+      const confirmPass = document.getElementById('signupPassConfirm').value;
       const errEl = document.getElementById('signupError');
+      const btn = e.target.querySelector('button[type="submit"]');
       errEl.style.display = 'none';
-      if (pass !== confirm) { errEl.textContent = T('auth_error_mismatch'); errEl.style.display = 'block'; return; }
+      if (pass !== confirmPass) { errEl.textContent = T('auth_error_mismatch'); errEl.style.display = 'block'; return; }
+      btn.disabled = true;
+      btn.textContent = '…';
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, pass);
-        await set(ref(db, USERS_ROOT + '/' + cred.user.uid), {
-          email: email,
-          created_at: Date.now(),
-          devices: [],
-        });
+        try {
+          await set(ref(db, USERS_ROOT + '/' + cred.user.uid), {
+            email: email,
+            created_at: Date.now(),
+            devices: [],
+          });
+        } catch (dbErr) {
+          console.warn('User record write failed (auth succeeded):', dbErr.message);
+          // Auth succeeded, onAuthStateChanged will handle the rest
+        }
       } catch (err) {
-        errEl.textContent = err.code === 'auth/email-already-in-use' ? T('auth_error_exists') : T('auth_error_weak_password');
+        console.error('Signup error:', err.code, err.message);
+        let msg;
+        switch (err.code) {
+          case 'auth/email-already-in-use': msg = T('auth_error_exists'); break;
+          case 'auth/weak-password': msg = T('auth_error_weak_password'); break;
+          case 'auth/invalid-email': msg = T('auth_error_invalid'); break;
+          case 'auth/operation-not-allowed':
+          case 'auth/configuration-not-found': msg = 'Email/password sign-in is not enabled. Please enable it in Firebase Console → Authentication → Sign-in method.'; break;
+          case 'auth/network-request-failed': msg = 'Network error — check your internet connection.'; break;
+          default: msg = err.message || T('error_generic'); break;
+        }
+        errEl.textContent = msg;
         errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = T('auth_signup');
       }
     });
 
