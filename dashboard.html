@@ -2864,6 +2864,7 @@
       if (!currentDeviceId) return;
       showLoadingState();
       const did = currentDeviceId;
+      console.log('[Dashboard] Attaching listeners for device:', did);
 
       // Device info listener — updates selector label
       const infoRef = ref(db, GUARD_ROOT + '/' + did + '/info');
@@ -2878,6 +2879,7 @@
       const statusRef = ref(db, GUARD_ROOT + '/' + did + '/status');
       onValue(statusRef, (snap) => {
         const s = snap.val() || {};
+        console.log('[Dashboard] status data:', JSON.stringify(s).slice(0, 500));
         const isOnline = s.online && (Date.now() - (s.last_seen || 0)) < 120000;
         renderStatus(s, isOnline);
         renderHero(s);
@@ -2899,6 +2901,7 @@
       const timeRef = ref(db, GUARD_ROOT + '/' + did + '/time_log');
       onValue(timeRef, (snap) => {
         const log = snap.val() || {};
+        console.log('[Dashboard] time_log keys:', Object.keys(log), 'today:', today, 'todayData:', JSON.stringify(log[today] || {}).slice(0, 300));
         todayTimeLog = log[today] || {};
         renderWeekChart(log);
         renderHeroFromTimeLog(log, today);
