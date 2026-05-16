@@ -41,7 +41,7 @@
     "Web Dashboard — manage all child devices from any browser, no install needed",
     "Block apps and websites on child's Windows PC",
     "Block sites on child's Android phone via DNS filtering",
-    "Mac child protection (in development — included when it ships)",
+    "Mac child protection — blocks apps, tracks screen time, enforces bedtime",
     "Daily screen time limits with automatic lockout",
     "Bedtime internet lockout",
     "Colour-coded screen time charts by app",
@@ -131,12 +131,9 @@ h2 em{font-style:italic;color:var(--grd)}
 .trust-item strong{color:var(--text)}
 
 /* ── What's included ──────────────────────────────────────── */
-.bundle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px}
-.bundle-card.featured-new{background:linear-gradient(145deg,rgba(52,211,153,0.1),var(--card));border-color:rgba(52,211,153,0.35);grid-column:span 3}
-.bundle-card.featured-new .bundle-inner{display:flex;gap:32px;align-items:center}
-.bundle-card.featured-new .bundle-inner p{flex:1}
-.bundle-card.featured-new .bundle-highlight{flex-shrink:0;display:flex;flex-direction:column;gap:6px}
-.bundle-card.featured-new .bh-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.22);color:var(--grd2);font-size:0.68rem;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:0.04em;white-space:nowrap}
+.bundle-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;margin-top:52px}
+.bundle-card{grid-column:span 2}
+.bundle-card.span-half{grid-column:span 3}
 .bundle-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 26px;transition:border-color 0.25s,transform 0.25s}
 .bundle-card:hover{border-color:var(--gborder);transform:translateY(-3px)}
 .bundle-icon{font-size:2.4rem;margin-bottom:16px;display:block}
@@ -321,8 +318,7 @@ footer{padding:40px;border-top:1px solid var(--border)}
   .phone-frame{order:-1}
   .pricing-grid{grid-template-columns:1fr;max-width:440px}
   .bundle-grid{grid-template-columns:1fr}
-  .bundle-card.featured-new{grid-column:span 1}
-  .bundle-card.featured-new .bundle-inner{flex-direction:column}
+  .bundle-card,.bundle-card.span-half{grid-column:span 1}
 }
 @media(max-width:768px){
   nav{padding:0 20px}
@@ -361,7 +357,7 @@ footer{padding:40px;border-top:1px solid var(--border)}
     <div class="hero-badge">🛡 Android · Windows · Mac · Web · Founder Edition</div>
     <h1 class="hero">Every screen.<br><em>One price.</em></h1>
     <p class="hero-sub">
-      One payment. Every Guard app for your whole family — <strong>Android phones, Windows PCs, Mac</strong> (in development), and a <strong>Web Dashboard</strong> you can open from any browser.
+      One payment. Every Guard app for your whole family — <strong>Android phones, Windows PCs, Mac</strong>, and a <strong>Web Dashboard</strong> you can open from any browser.
       Control everything from your phone or your laptop. No recurring fees. No per-device charges.
     </p>
     <div class="cta-row">
@@ -410,24 +406,17 @@ footer{padding:40px;border-top:1px solid var(--border)}
       <div class="bc-platform">Child's Windows PC</div>
       <p>Runs silently on your child's PC. Blocks apps and websites, tracks screen time, and locks the PC when time is up. Your child cannot quit or remove it without your PIN.</p>
     </div>
-    <div class="bundle-card featured-new">
+    <div class="bundle-card span-half" style="border-color:rgba(52,211,153,0.25)">
       <span class="bundle-icon">🌐</span>
       <h3>Guard Web Dashboard</h3>
       <div class="bc-platform">Any device with a browser · Parent dashboard</div>
-      <div class="bundle-inner">
-        <p>Full parental control from any browser — your laptop, a friend's tablet, or a library computer. Monitor screen time, manage blocked apps and sites, and lock devices instantly. No install required — just sign in at thelayersapp.com/dashboard.</p>
-        <div class="bundle-highlight">
-          <span class="bh-pill">🖥 No install needed</span>
-          <span class="bh-pill">📊 Full feature parity</span>
-          <span class="bh-pill">🔒 Works on any device</span>
-        </div>
-      </div>
+      <p>Full parental control from any browser — your laptop, a friend's tablet, or a library computer. Monitor screen time, manage blocked apps and sites, and lock devices instantly. No install required.</p>
     </div>
-    <div class="bundle-card" style="border-color:rgba(52,211,153,0.25)">
+    <div class="bundle-card span-half" style="border-color:rgba(52,211,153,0.25)">
       <span class="bundle-icon">💻</span>
       <h3>Guard Mac</h3>
-      <div class="bc-platform">Child's Mac · In development — v1.0</div>
-      <p>Mac child protection is actively being built. As a Founder Edition buyer, you get it the moment it ships — no extra charge, no update required.</p>
+      <div class="bc-platform">Child's Mac · macOS</div>
+      <p>Protects your child's Mac the same way Guard Desktop protects Windows. Blocks apps and websites, tracks screen time, enforces bedtime lockout, and locks the Mac when time is up. Included with your Founder Edition purchase.</p>
     </div>
   </div>
 </section>
@@ -893,7 +882,7 @@ footer{padding:40px;border-top:1px solid var(--border)}
         <li>Guard Web Dashboard — manage from any browser</li>
         <li>Guard Child — Android child protection</li>
         <li>Guard Desktop — Windows PC protection</li>
-        <li>Guard Mac — Mac protection (in development, ships free)</li>
+        <li>Guard Mac — Mac child protection</li>
         <li>All future Guard apps included when they ship</li>
         <li>Up to 7 child devices · no per-device fee</li>
         <li>All future updates included</li>
@@ -924,7 +913,7 @@ footer{padding:40px;border-top:1px solid var(--border)}
     <div class="platform-pills">
       <span class="platform-pill">✓ Android 8+</span>
       <span class="platform-pill">✓ Windows 10 &amp; 11</span>
-      <span class="platform-pill">✓ Mac (in development)</span>
+      <span class="platform-pill">✓ macOS</span>
       <span class="platform-pill">✓ Any browser (Web Dashboard)</span>
       <span class="platform-pill">✓ No subscription</span>
       <span class="platform-pill">✓ No router needed</span>
