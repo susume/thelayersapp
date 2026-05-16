@@ -17,23 +17,33 @@
 
     /* ========== DESIGN TOKENS ========== */
     :root {
-      --bg:           #F5F0E8;
-      --surface:      #EAE5D5;
+      --bg:           #F2F0EB;
+      --surface:      #E8E5DD;
       --card:         #FFFFFF;
-      --card-border:  #D4C9A8;
+      --card-border:  #E8E5DD;
       --hero-bg:      #0C1810;
+      --sidebar-bg:   #111916;
 
       --accent:       #2A9D5C;
       --accent-dim:   #C8E8D4;
+      --accent-light: #EDFAF2;
       --gold:         #8B6914;
+      --purple:       #7C5CFC;
+      --purple-light: #F0ECFF;
+      --orange:       #E68A2E;
+      --orange-light: #FFF6EC;
+      --blue:         #3B82F6;
+      --blue-light:   #EFF6FF;
+      --pink:         #E84D8A;
+      --pink-light:   #FFF0F5;
 
       --success:      #2A9D5C;
-      --warning:      #C4870A;
-      --danger:       #C84040;
+      --warning:      #D97706;
+      --danger:       #DC2626;
 
-      --text:         #1E1A0F;
-      --text-muted:   #6B6150;
-      --text-dim:     #9AA89D;
+      --text:         #1A1A1A;
+      --text-muted:   #6B7280;
+      --text-dim:     #9CA3AF;
 
       --font-heading: 'DM Serif Display', serif;
       --font-body:    'Outfit', sans-serif;
@@ -44,24 +54,355 @@
       --sp-md: 16px;
       --sp-lg: 24px;
       --sp-xl: 32px;
+      --sp-2xl: 48px;
 
       --radius:       16px;
-      --shadow:       0 2px 8px rgba(30, 26, 15, 0.08);
+      --radius-sm:    12px;
+      --radius-xs:    8px;
+      --shadow:       0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+      --shadow-md:    0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg:    0 8px 24px rgba(0,0,0,0.08);
+
+      --sidebar-w: 260px;
     }
 
-    /* ========== LAYOUT ========== */
+    /* ========== SCREENS ========== */
     .screen { display: none; }
-    .screen.active { display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    .screen.active { display: flex; min-height: 100vh; }
 
-    .dashboard-wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding: var(--sp-lg); }
-
-    .grid-2col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-lg);
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--sidebar-bg);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: var(--sp-lg) var(--sp-md);
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      padding: var(--sp-sm) var(--sp-sm);
+      margin-bottom: var(--sp-xl);
+    }
+    .sidebar-logo .logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+    .sidebar-logo .logo-text {
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      letter-spacing: -0.01em;
     }
 
-    .grid-full { grid-column: 1 / -1; }
+    .sidebar-section {
+      margin-bottom: var(--sp-lg);
+    }
+    .sidebar-label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.35);
+      padding: 0 var(--sp-sm);
+      margin-bottom: var(--sp-sm);
+    }
+
+    .sidebar-nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      width: 100%;
+      padding: 10px var(--sp-sm);
+      border-radius: var(--radius-xs);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.875rem;
+      font-weight: 400;
+      transition: background 0.15s, color 0.15s;
+      position: relative;
+    }
+    .sidebar-nav-item:hover {
+      background: rgba(255,255,255,0.07);
+      color: #fff;
+    }
+    .sidebar-nav-item .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+    .sidebar-nav-item .badge {
+      position: static;
+      margin-left: auto;
+    }
+    .sidebar-spacer { flex: 1; }
+
+    .sidebar-footer {
+      padding-top: var(--sp-md);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ========== CHILD SELECTOR (sidebar) ========== */
+    .child-selector {
+      position: relative;
+    }
+    .child-selector-current {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      padding: 10px var(--sp-sm);
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .child-selector-current:hover {
+      background: rgba(255,255,255,0.07);
+    }
+    .child-selector-current .child-name {
+      flex: 1;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+    .avatar-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .online-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .online-dot.online { background: #34D399; }
+    .online-dot.offline { background: #6B7280; }
+    .child-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #1E2520;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-xs);
+      display: none;
+      z-index: 50;
+      box-shadow: var(--shadow-lg);
+    }
+    .child-dropdown.open { display: block; }
+    .child-option {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      padding: var(--sp-sm) var(--sp-md);
+      border-radius: var(--radius-xs);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.875rem;
+      width: 100%;
+      transition: background 0.15s;
+    }
+    .child-option:hover { background: rgba(255,255,255,0.07); }
+    .child-option .platform { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
+
+    .sidebar-add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 10px;
+      margin-top: var(--sp-xs);
+      border: 1px dashed rgba(255,255,255,0.15);
+      border-radius: var(--radius-xs);
+      color: var(--accent);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .sidebar-add-btn:hover {
+      border-color: var(--accent);
+      background: rgba(42,157,92,0.08);
+    }
+
+    /* ========== MAIN CONTENT AREA ========== */
+    .main-content {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      min-height: 100vh;
+      padding: var(--sp-xl) var(--sp-2xl) var(--sp-2xl);
+    }
+
+    /* ========== HEADER BAR ========== */
+    .header-bar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--sp-lg);
+      padding: 0;
+    }
+    .header-bar h1 {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .header-sub {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: var(--sp-xs);
+    }
+    .header-actions {
+      display: flex;
+      gap: var(--sp-md);
+      align-items: center;
+    }
+
+    /* ========== TAB BAR ========== */
+    .tab-bar {
+      display: flex;
+      gap: var(--sp-xs);
+      margin-bottom: var(--sp-xl);
+      border-bottom: 1px solid var(--surface);
+    }
+    .tab-bar button {
+      padding: var(--sp-sm) var(--sp-lg);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-bar button.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .tab-bar button:hover:not(.active) {
+      color: var(--text);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ========== BADGE ========== */
+    .badge {
+      background: var(--danger);
+      color: #fff;
+      font-size: 0.625rem;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-xs);
+      padding: var(--sp-sm) var(--sp-md);
+      border-radius: var(--radius-xs);
+      font-weight: 500;
+      font-size: 0.875rem;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-warning { background: var(--warning); color: #fff; }
+    .btn-outline {
+      border: 1px solid var(--card-border);
+      color: var(--text);
+      background: var(--card);
+    }
+    .btn-outline:hover { border-color: var(--text-dim); }
+    .btn-sm { padding: var(--sp-xs) var(--sp-sm); font-size: 0.8125rem; }
+
+    /* ========== FORM INPUTS ========== */
+    .input {
+      width: 100%;
+      padding: 10px var(--sp-md);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xs);
+      font-size: 0.9375rem;
+      background: #fff;
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(42,157,92,0.12);
+    }
+
+    /* ========== SUMMARY CARDS ROW ========== */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-md);
+      margin-bottom: var(--sp-lg);
+    }
+    .summary-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: var(--sp-lg);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.15s;
+      border: 1px solid var(--card-border);
+    }
+    .summary-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+    .sc-icon-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+    .sc-purple .sc-icon-wrap { background: var(--purple-light); }
+    .sc-green .sc-icon-wrap { background: var(--accent-light); }
+    .sc-orange .sc-icon-wrap { background: var(--orange-light); }
+    .sc-blue .sc-icon-wrap { background: var(--blue-light); }
+    .sc-pink .sc-icon-wrap { background: var(--pink-light); }
+    .sc-title {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .sc-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .sc-sub {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
 
     /* ========== CARD BASE ========== */
     .card {
@@ -72,167 +413,107 @@
       padding: var(--sp-lg);
     }
     .card-header {
-      display: flex; justify-content: space-between; align-items: center;
-      position: sticky; top: 0; background: var(--card);
-      padding-bottom: var(--sp-sm);
-      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--sp-md);
     }
-    .card-header h3 { font-family: var(--font-heading); font-size: 1.125rem; }
+    .card-header h3 {
+      font-family: var(--font-heading);
+      font-size: 1.0625rem;
+      color: var(--text);
+    }
     .card-scroll {
-      max-height: 320px; overflow-y: auto;
+      max-height: 300px;
+      overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
-    .card-scroll-fade {
-      position: relative;
-    }
+    .card-scroll-fade { position: relative; }
     .card-scroll-fade::after {
       content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 32px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 28px;
       background: linear-gradient(transparent, var(--card));
       pointer-events: none;
     }
 
-    /* ========== HEADER BAR ========== */
-    .header-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--sp-md) var(--sp-lg);
-      background: var(--hero-bg); color: #fff;
-      position: sticky; top: 0; z-index: 100;
+    /* ========== GRID LAYOUTS ========== */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-md);
+      margin-bottom: var(--sp-md);
     }
-    .header-bar h1 { font-family: var(--font-heading); font-size: 1.25rem; }
-    .header-actions { display: flex; gap: var(--sp-md); align-items: center; }
-    .header-actions button { color: #fff; font-size: 1.25rem; position: relative; }
-    .badge {
-      position: absolute; top: -4px; right: -6px;
-      background: var(--danger); color: #fff; font-size: 0.625rem;
-      width: 16px; height: 16px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700;
-    }
+    .grid-full { grid-column: 1 / -1; }
 
-    /* ========== TAB BAR ========== */
-    .tab-bar {
-      display: flex; gap: var(--sp-xs);
-      border-bottom: 2px solid var(--surface);
-      margin-bottom: var(--sp-lg);
-    }
-    .tab-bar button {
-      padding: var(--sp-sm) var(--sp-lg);
-      font-weight: 500; font-size: 0.9375rem;
-      color: var(--text-muted);
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .tab-bar button.active {
-      color: var(--accent); border-bottom-color: var(--accent);
-    }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    /* ========== BUTTONS ========== */
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-xs);
-      padding: var(--sp-sm) var(--sp-md);
-      border-radius: 8px; font-weight: 500; font-size: 0.875rem;
-      transition: opacity 0.2s;
-    }
-    .btn:hover { opacity: 0.85; }
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-danger { background: var(--danger); color: #fff; }
-    .btn-warning { background: var(--warning); color: #fff; }
-    .btn-outline { border: 1px solid var(--card-border); color: var(--text); }
-    .btn-sm { padding: var(--sp-xs) var(--sp-sm); font-size: 0.8125rem; }
-
-    /* ========== FORM INPUTS ========== */
-    .input {
-      width: 100%; padding: var(--sp-sm) var(--sp-md);
-      border: 1px solid var(--card-border); border-radius: 8px;
-      font-size: 0.9375rem; background: #fff; color: var(--text);
-    }
-    .input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
-
-    /* ========== AUTH SCREEN ========== */
-    .auth-screen {
-      justify-content: center; padding: var(--sp-xl);
-    }
-    .auth-box {
-      width: 100%; max-width: 400px;
-      background: var(--card); border-radius: var(--radius);
-      box-shadow: var(--shadow); padding: var(--sp-xl);
-    }
-    .auth-box h1 { font-family: var(--font-heading); text-align: center; margin-bottom: var(--sp-lg); }
-    .auth-tabs { display: flex; gap: var(--sp-xs); margin-bottom: var(--sp-lg); }
-    .auth-tabs button {
-      flex: 1; padding: var(--sp-sm);
-      border-bottom: 2px solid transparent;
-      color: var(--text-muted); font-weight: 500;
-    }
-    .auth-tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
-    .form-group { margin-bottom: var(--sp-md); }
-    .form-group label { display: block; font-size: 0.8125rem; color: var(--text-muted); margin-bottom: var(--sp-xs); }
-    .auth-error { color: var(--danger); font-size: 0.8125rem; margin-top: var(--sp-sm); display: none; }
-
-    /* ========== LICENSE SCREEN ========== */
-    .license-box { width: 100%; max-width: 400px; text-align: center; }
-    .license-box h2 { font-family: var(--font-heading); margin-bottom: var(--sp-md); }
-    .license-box .input { text-align: center; font-family: var(--font-mono); letter-spacing: 2px; }
-
-    /* ========== SETUP / PAIRING SCREEN ========== */
-    .setup-box { width: 100%; max-width: 480px; text-align: center; }
-    .pairing-code {
-      font-family: var(--font-mono); font-size: 2.5rem; font-weight: 700;
-      letter-spacing: 4px; color: var(--accent);
-      margin: var(--sp-lg) 0;
-    }
-    .spinner {
-      width: 24px; height: 24px; border: 3px solid var(--surface);
-      border-top-color: var(--accent); border-radius: 50%;
-      animation: spin 0.8s linear infinite; display: inline-block;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ========== HERO CARD ========== */
+    /* ========== HERO CARD (Screen Time Ring) ========== */
     .hero-card {
-      background: var(--hero-bg); color: #fff;
-      border-radius: var(--radius); padding: var(--sp-xl);
-      text-align: center; position: relative; overflow: hidden;
+      background: var(--hero-bg);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: var(--sp-xl);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .hero-card h2 { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: var(--sp-xs); }
+    .hero-card h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      margin-bottom: var(--sp-xs);
+    }
     .hero-card .sub { color: var(--text-dim); font-size: 0.875rem; }
-    .progress-ring { width: 160px; height: 160px; margin: var(--sp-lg) auto; }
+    .progress-ring { width: 160px; height: 160px; margin: var(--sp-lg) auto; position: relative; }
+    .progress-ring svg { width: 100%; height: 100%; }
     .progress-ring circle { fill: none; stroke-width: 12; stroke-linecap: round; }
     .progress-ring .bg { stroke: #1E3A2A; }
     .progress-ring .fg { stroke: var(--accent); transition: stroke-dashoffset 0.5s ease; }
     .progress-ring .over { stroke: var(--danger); }
     .hero-time { font-size: 1.5rem; font-weight: 700; }
-    .hero-stats { display: flex; justify-content: center; gap: var(--sp-xl); margin-top: var(--sp-md); }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: var(--sp-xl);
+      margin-top: var(--sp-md);
+    }
     .hero-stats .stat { text-align: center; }
     .hero-stats .stat-value { font-weight: 600; }
     .hero-stats .stat-label { font-size: 0.75rem; color: var(--text-dim); }
 
     /* ========== QUICK ACTIONS ========== */
     .quick-actions {
-      display: flex; gap: var(--sp-md); margin-bottom: var(--sp-lg);
+      display: flex;
+      gap: var(--sp-md);
+      margin-bottom: var(--sp-md);
     }
     .quick-actions .action-pill {
-      flex: 1; display: flex; align-items: center; justify-content: center; gap: var(--sp-sm);
-      padding: var(--sp-md);
-      border-radius: 12px; font-weight: 600; font-size: 0.9375rem;
-      transition: transform 0.15s, box-shadow 0.15s;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-sm);
+      padding: 14px var(--sp-lg);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      transition: transform 0.12s, box-shadow 0.15s;
+      box-shadow: var(--shadow);
     }
-    .quick-actions .action-pill:active { transform: scale(0.97); }
+    .quick-actions .action-pill:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .quick-actions .action-pill:active { transform: scale(0.98); }
     .action-pill.emergency { background: var(--danger); color: #fff; }
-    .action-pill.emergency.active-state { background: #992020; }
+    .action-pill.emergency.active-state { background: #991B1B; }
     .action-pill.wifi { background: var(--warning); color: #fff; }
-    .action-pill.wifi.active-state { background: #8A5E00; }
+    .action-pill.wifi.active-state { background: #92400E; }
 
     /* ========== PENDING REQUESTS ========== */
     .request-card {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--sp-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-md) 0;
       border-bottom: 1px solid var(--surface);
       min-height: 44px;
     }
@@ -242,28 +523,38 @@
     .request-detail { font-size: 0.8125rem; color: var(--text-muted); }
     .request-actions { display: flex; gap: var(--sp-sm); }
 
-    /* ========== ACTIVE APPS LIST ========== */
+    /* ========== ACTIVE APPS ========== */
     .app-row {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: var(--sp-sm) 0;
       border-bottom: 1px solid var(--surface);
-      min-height: 44px;
+      min-height: 40px;
     }
     .app-row:last-child { border-bottom: none; }
-    .app-name { font-size: 0.875rem; }
+    .app-name { font-size: 0.875rem; font-weight: 500; }
     .app-time { font-size: 0.8125rem; color: var(--text-muted); font-family: var(--font-mono); }
 
     /* ========== 7-DAY BAR CHART ========== */
     .bar-chart {
-      display: flex; align-items: flex-end; gap: var(--sp-sm);
-      height: 120px; padding: var(--sp-sm) 0;
+      display: flex;
+      align-items: flex-end;
+      gap: var(--sp-sm);
+      height: 130px;
+      padding: var(--sp-sm) 0;
     }
     .bar-chart .bar-col {
-      flex: 1; display: flex; flex-direction: column; align-items: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .bar-chart .bar {
-      width: 100%; border-radius: 4px 4px 0 0;
-      background: var(--accent); min-height: 4px;
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      background: var(--accent);
+      min-height: 4px;
       transition: height 0.3s ease;
     }
     .bar-chart .bar.over-limit { background: var(--danger); }
@@ -272,7 +563,9 @@
 
     /* ========== ACTIVITY LOG ========== */
     .log-entry {
-      display: flex; justify-content: space-between; align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: var(--sp-sm) 0;
       font-size: 0.8125rem;
       border-bottom: 1px solid var(--surface);
@@ -282,343 +575,592 @@
     .log-by { color: var(--text-muted); }
     .log-time { color: var(--text-dim); font-family: var(--font-mono); font-size: 0.75rem; }
 
-    /* ========== CALENDAR HEATMAP ========== */
+    /* ========== CALENDAR HEATMAP (Trends) ========== */
+    /* ========== TRENDS TAB ========== */
+    .trends-overview-card .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--sp-md);
+    }
+    .trends-overview-body {
+      display: flex;
+      gap: var(--sp-xl);
+      align-items: flex-start;
+    }
+    .trends-heatmap-wrap { flex: 1; min-width: 0; }
+    .trends-sidebar-stats {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
+      min-width: 150px;
+    }
+    .ts-card {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-md) var(--sp-md);
+      text-align: center;
+      border: 1px solid var(--card-border);
+    }
+    .ts-card:nth-child(1) { border-left: 3px solid var(--accent); }
+    .ts-card:nth-child(2) { border-left: 3px solid var(--blue); }
+    .ts-card:nth-child(3) { border-left: 3px solid var(--orange); }
+    .ts-icon { font-size: 1.25rem; margin-bottom: var(--sp-xs); }
+    .ts-value { font-size: 1.25rem; font-weight: 700; font-family: var(--font-mono); }
+    .ts-label { font-size: 0.6875rem; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+
     .heatmap {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
+      gap: 3px;
     }
     .heatmap .cell {
       aspect-ratio: 1;
-      border-radius: 4px;
-      min-width: 32px;
+      border-radius: 5px;
       cursor: pointer;
       position: relative;
+      transition: transform 0.15s, box-shadow 0.15s;
     }
+    .heatmap .cell:hover { transform: scale(1.12); z-index: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
     .heatmap .cell-label {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.6875rem; color: var(--text-muted);
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.5625rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      pointer-events: none;
     }
     .heatmap .day-header {
-      font-size: 0.6875rem; text-align: center; color: var(--text-muted);
-      padding-bottom: var(--sp-xs);
+      font-size: 0.5625rem;
+      text-align: center;
+      color: var(--text-dim);
+      padding-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    .heat-0 { background: #EAE5D5; }
+    .heat-0 { background: var(--surface); }
     .heat-1 { background: #C8E8D4; }
     .heat-2 { background: #2A9D5C; }
+    .heat-2 .cell-label { color: #fff; }
     .heat-3 { background: #1E4D38; }
-    .heat-over { background: #C84040; }
+    .heat-3 .cell-label { color: #fff; }
+    .heat-over { background: #DC2626; }
+    .heat-over .cell-label { color: #fff; }
+
+    .heatmap-legend {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: var(--sp-sm);
+      padding-top: var(--sp-sm);
+      border-top: 1px solid var(--card-border);
+    }
+    .legend-label { font-size: 0.625rem; color: var(--text-dim); }
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      display: inline-block;
+    }
 
     .month-nav {
-      display: flex; align-items: center; justify-content: center; gap: var(--sp-lg);
-      margin-bottom: var(--sp-md);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
     }
-    .month-nav button { font-size: 1.25rem; color: var(--text-muted); }
-    .month-nav .month-label { font-family: var(--font-heading); font-size: 1.125rem; }
-
-    .summary-stats {
-      display: flex; gap: var(--sp-lg); margin: var(--sp-md) 0;
+    .month-nav button {
+      font-size: 1rem;
+      color: var(--text-muted);
+      padding: var(--sp-xs) var(--sp-sm);
+      border-radius: var(--radius-xs);
+      transition: background 0.15s;
     }
-    .summary-stats .stat {
-      flex: 1; text-align: center;
-      background: var(--surface); border-radius: 8px; padding: var(--sp-md);
-    }
-    .summary-stats .stat-value { font-size: 1.25rem; font-weight: 600; }
-    .summary-stats .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+    .month-nav button:hover { background: var(--surface); }
+    .month-nav .month-label { font-family: var(--font-heading); font-size: 1rem; }
 
     .top-app-row {
-      display: flex; align-items: center; gap: var(--sp-md);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
       padding: var(--sp-sm) 0;
     }
     .top-app-bar-bg {
-      flex: 1; height: 8px; background: var(--surface); border-radius: 4px; overflow: hidden;
+      flex: 1;
+      height: 8px;
+      background: var(--surface);
+      border-radius: 4px;
+      overflow: hidden;
     }
-    .top-app-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; }
+    .top-app-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; transition: width 0.4s ease; }
     .top-app-pct { font-size: 0.8125rem; font-family: var(--font-mono); color: var(--text-muted); min-width: 40px; text-align: right; }
 
     /* ========== CONTROLS TAB ========== */
-    .control-card { margin-bottom: var(--sp-lg); }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-md);
+    }
+    .control-card { margin-bottom: 0; }
 
     .toggle-row {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: var(--sp-sm) 0;
     }
-    .toggle-label { font-weight: 500; }
+    .toggle-label { font-weight: 500; font-size: 0.875rem; }
     .toggle {
-      width: 44px; height: 24px;
-      background: var(--surface); border-radius: 12px;
-      position: relative; cursor: pointer; transition: background 0.2s;
+      width: 44px;
+      height: 24px;
+      background: var(--surface);
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
     }
     .toggle.on { background: var(--accent); }
     .toggle::after {
       content: '';
-      position: absolute; top: 2px; left: 2px;
-      width: 20px; height: 20px; border-radius: 50%;
-      background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
       transition: transform 0.2s;
     }
     .toggle.on::after { transform: translateX(20px); }
 
     .slider-row {
-      display: flex; align-items: center; gap: var(--sp-md);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
       padding: var(--sp-sm) 0;
     }
     .slider-row input[type="range"] {
-      flex: 1; accent-color: var(--accent);
+      flex: 1;
+      accent-color: var(--accent);
+      height: 6px;
     }
     .slider-value {
-      font-family: var(--font-mono); font-size: 0.875rem;
-      min-width: 60px; text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      min-width: 60px;
+      text-align: center;
+      background: var(--surface);
+      padding: var(--sp-xs) var(--sp-sm);
+      border-radius: var(--radius-xs);
     }
 
     .blocked-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--sp-sm) var(--sp-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-sm) 0;
       border-bottom: 1px solid var(--surface);
-      min-height: 44px;
+      min-height: 40px;
+      font-size: 0.875rem;
     }
     .blocked-item:last-child { border-bottom: none; }
     .blocked-item-actions { display: flex; gap: var(--sp-sm); }
 
     .add-row {
-      display: flex; gap: var(--sp-sm);
+      display: flex;
+      gap: var(--sp-sm);
       padding: var(--sp-sm) 0;
     }
     .add-row .input { flex: 1; }
 
     .time-picker-row {
-      display: flex; align-items: center; gap: var(--sp-md);
+      display: flex;
+      align-items: center;
+      gap: var(--sp-md);
       padding: var(--sp-sm) 0;
     }
     .time-picker-row label { font-size: 0.875rem; color: var(--text-muted); min-width: 80px; }
     .time-picker-row input[type="time"] {
-      padding: var(--sp-sm); border: 1px solid var(--card-border);
-      border-radius: 8px; font-family: var(--font-mono);
+      padding: var(--sp-sm);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xs);
+      font-family: var(--font-mono);
     }
 
     .category-pills {
-      display: flex; flex-wrap: wrap; gap: var(--sp-sm);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-sm);
       padding: var(--sp-sm) 0;
     }
     .category-pill {
-      padding: var(--sp-xs) var(--sp-md);
-      border-radius: 20px; font-size: 0.8125rem;
+      padding: 6px var(--sp-md);
+      border-radius: 20px;
+      font-size: 0.8125rem;
+      font-weight: 500;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      transition: background 0.2s, color 0.2s;
+      transition: all 0.15s;
     }
+    .category-pill:hover { border-color: var(--accent); color: var(--accent); }
     .category-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ========== AUTH SCREEN ========== */
+    .auth-screen {
+      justify-content: center;
+      align-items: center;
+      padding: var(--sp-xl);
+      background: var(--bg);
+    }
+    .auth-box {
+      width: 100%;
+      max-width: 420px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: var(--sp-2xl) var(--sp-xl);
+    }
+    .auth-box h1 {
+      font-family: var(--font-heading);
+      text-align: center;
+      margin-bottom: var(--sp-xs);
+      font-size: 1.75rem;
+    }
+    .auth-tabs {
+      display: flex;
+      gap: var(--sp-xs);
+      margin-bottom: var(--sp-lg);
+      border-bottom: 1px solid var(--surface);
+    }
+    .auth-tabs button {
+      flex: 1;
+      padding: var(--sp-sm);
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .auth-tabs button.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .form-group { margin-bottom: var(--sp-md); }
+    .form-group label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: var(--sp-xs);
+    }
+    .auth-error {
+      color: var(--danger);
+      font-size: 0.8125rem;
+      margin-top: var(--sp-sm);
+      display: none;
+    }
+    .auth-logo-wrap {
+      text-align: center;
+      margin-bottom: var(--sp-lg);
+    }
+    .auth-logo-icon {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      display: inline-block;
+      margin-bottom: var(--sp-sm);
+    }
+
+    /* ========== LICENSE SCREEN ========== */
+    .license-box { width: 100%; max-width: 420px; text-align: center; }
+    .license-box h2 { font-family: var(--font-heading); margin-bottom: var(--sp-md); }
+    .license-box .input { text-align: center; font-family: var(--font-mono); letter-spacing: 2px; }
+
+    /* ========== SETUP / PAIRING SCREEN ========== */
+    .setup-box { width: 100%; max-width: 480px; text-align: center; }
+    .pairing-code {
+      font-family: var(--font-mono);
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: 6px;
+      color: var(--accent);
+      margin: var(--sp-lg) 0;
+    }
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--surface);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* ========== ALERTS PANEL ========== */
     .alerts-overlay {
-      position: fixed; inset: 0; z-index: 200;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
       display: none;
     }
     .alerts-overlay.open { display: flex; }
     .alerts-backdrop {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.3);
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(2px);
     }
     .alerts-panel {
-      position: absolute; right: 0; top: 0; bottom: 0;
-      width: 420px; max-width: 100%;
-      background: var(--card); box-shadow: -4px 0 16px rgba(0,0,0,0.1);
-      display: flex; flex-direction: column;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 440px;
+      max-width: 100%;
+      background: var(--card);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
       animation: slideIn 0.25s ease;
     }
     @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
     .alerts-panel-header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: var(--sp-lg);
       border-bottom: 1px solid var(--surface);
     }
     .alerts-panel-header h2 { font-family: var(--font-heading); }
     .alert-filters {
-      display: flex; flex-wrap: wrap; gap: var(--sp-xs);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-xs);
       padding: var(--sp-md) var(--sp-lg);
     }
     .alerts-list { flex: 1; overflow-y: auto; padding: 0 var(--sp-lg); }
     .alert-item {
-      display: flex; gap: var(--sp-md); padding: var(--sp-md) 0;
-      border-bottom: 1px solid var(--surface); cursor: pointer;
+      display: flex;
+      gap: var(--sp-md);
+      padding: var(--sp-md) 0;
+      border-bottom: 1px solid var(--surface);
+      cursor: pointer;
       min-height: 44px;
+      transition: background 0.15s;
     }
+    .alert-item:hover { background: rgba(0,0,0,0.02); }
     .alert-item.unread { border-left: 3px solid var(--accent); padding-left: var(--sp-sm); }
     .alert-icon { font-size: 1.25rem; width: 32px; text-align: center; flex-shrink: 0; }
     .alert-body { flex: 1; }
-    .alert-category { font-weight: 500; font-size: 0.875rem; }
+    .alert-category { font-weight: 500; font-size: 0.875rem; display: flex; align-items: center; gap: var(--sp-sm); }
     .alert-source { font-size: 0.8125rem; color: var(--text-muted); }
     .alert-time { font-size: 0.75rem; color: var(--text-dim); }
-    .severity-dot {
-      width: 8px; height: 8px; border-radius: 50%; display: inline-block;
-    }
+    .severity-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
     .severity-high { background: var(--danger); }
     .severity-medium { background: var(--warning); }
 
     /* ========== SETTINGS MODAL ========== */
     .modal-overlay {
-      position: fixed; inset: 0; z-index: 300;
-      display: none; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.3);
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(2px);
     }
     .modal-overlay.open { display: flex; }
     .modal-box {
-      background: var(--card); border-radius: var(--radius);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      padding: var(--sp-xl); width: 100%; max-width: 420px;
-      max-height: 85vh; overflow-y: auto;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      padding: var(--sp-xl);
+      width: 100%;
+      max-width: 440px;
+      max-height: 85vh;
+      overflow-y: auto;
     }
     .modal-box h2 { font-family: var(--font-heading); margin-bottom: var(--sp-lg); }
     .modal-section { margin-bottom: var(--sp-lg); }
     .modal-section h4 {
-      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px;
-      color: var(--text-muted); margin-bottom: var(--sp-sm);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: var(--sp-sm);
     }
 
-    /* ========== CHILD SELECTOR ========== */
-    .child-selector {
-      position: relative; cursor: pointer;
+    /* ========== CONFIRM DIALOG ========== */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(2px);
     }
-    .child-selector-current {
-      display: flex; align-items: center; gap: var(--sp-sm);
-      padding: var(--sp-xs) var(--sp-sm);
-      border-radius: 8px;
+    .confirm-overlay.open { display: flex; }
+    .confirm-box {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: var(--sp-xl);
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
     }
-    .child-selector-current:hover { background: rgba(255,255,255,0.1); }
-    .avatar-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-    }
-    .online-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-    }
-    .online-dot.online { background: var(--success); }
-    .online-dot.offline { background: #666; }
-    .child-dropdown {
-      position: absolute; top: 100%; left: 0;
-      background: var(--card); border-radius: 12px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      min-width: 240px; padding: var(--sp-sm);
-      display: none; z-index: 50;
-    }
-    .child-dropdown.open { display: block; }
-    .child-option {
-      display: flex; align-items: center; gap: var(--sp-sm);
-      padding: var(--sp-sm) var(--sp-md);
-      border-radius: 8px; color: var(--text);
-      font-size: 0.875rem; width: 100;
-    }
-    .child-option:hover { background: var(--surface); }
-    .child-option .platform { font-size: 0.75rem; color: var(--text-dim); }
+    .confirm-box h3 { font-family: var(--font-heading); margin-bottom: var(--sp-sm); }
+    .confirm-box p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: var(--sp-lg); }
+    .confirm-box .actions { display: flex; gap: var(--sp-md); justify-content: center; }
 
     /* ========== TOAST ========== */
     .toast-container {
-      position: fixed; bottom: var(--sp-lg); right: var(--sp-lg);
-      z-index: 500; display: flex; flex-direction: column; gap: var(--sp-sm);
+      position: fixed;
+      bottom: var(--sp-lg);
+      right: var(--sp-lg);
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-sm);
     }
     .toast {
-      background: var(--hero-bg); color: #fff;
-      padding: var(--sp-sm) var(--sp-lg); border-radius: 8px;
-      font-size: 0.875rem; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: var(--hero-bg);
+      color: #fff;
+      padding: var(--sp-sm) var(--sp-lg);
+      border-radius: var(--radius-xs);
+      font-size: 0.875rem;
+      box-shadow: var(--shadow-lg);
       animation: fadeInUp 0.25s ease;
     }
     .toast.error { background: var(--danger); }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    /* ========== STATUS BAR ========== */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-sm);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      background: var(--card);
+      padding: 6px var(--sp-md);
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+    }
+
+    /* ========== EMPTY STATES ========== */
+    .empty-state {
+      text-align: center;
+      padding: var(--sp-xl);
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
 
     /* ========== SKELETON LOADING ========== */
     .skeleton {
       background: linear-gradient(90deg, var(--surface) 25%, #e0dbd0 50%, var(--surface) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
-      border-radius: 4px;
+      border-radius: 6px;
     }
     @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
     /* ========== OFFLINE BANNER ========== */
     .offline-banner {
-      display: none; background: var(--warning); color: #fff;
-      text-align: center; padding: var(--sp-sm); font-size: 0.8125rem;
-      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: none;
+      background: var(--warning);
+      color: #fff;
+      text-align: center;
+      padding: var(--sp-sm);
+      font-size: 0.8125rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
     }
     .offline-banner.visible { display: block; }
 
-    /* ========== CONFIRM DIALOG ========== */
-    .confirm-overlay {
-      position: fixed; inset: 0; z-index: 400;
-      display: none; align-items: center; justify-content: center;
-      background: rgba(0,0,0,0.4);
+    /* ========== WEEKLY DIGEST BANNER ========== */
+    .digest-banner {
+      background: var(--accent-light);
+      border: 1px solid var(--accent-dim);
+      border-radius: var(--radius);
+      padding: var(--sp-lg);
+      margin-bottom: var(--sp-md);
+      display: none;
+      position: relative;
     }
-    .confirm-overlay.open { display: flex; }
-    .confirm-box {
-      background: var(--card); border-radius: var(--radius);
-      padding: var(--sp-xl); max-width: 360px; width: 90%;
-      text-align: center;
-    }
-    .confirm-box h3 { font-family: var(--font-heading); margin-bottom: var(--sp-sm); }
-    .confirm-box p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: var(--sp-lg); }
-    .confirm-box .actions { display: flex; gap: var(--sp-md); justify-content: center; }
-
-    /* ========== STATUS BAR ========== */
-    .status-bar {
-      display: flex; align-items: center; gap: var(--sp-sm);
-      padding: var(--sp-sm); font-size: 0.8125rem; color: var(--text-muted);
-      text-align: center; justify-content: center;
-    }
-
-    /* ========== EMPTY STATES ========== */
-    .empty-state {
-      text-align: center; padding: var(--sp-xl);
-      color: var(--text-muted); font-size: 0.875rem;
-    }
-
-    /* ========== RESPONSIVE ========== */
-    @media (max-width: 1024px) {
-      .grid-2col { grid-template-columns: 1fr; }
-      .card-scroll { max-height: 240px; }
-    }
-    @media (max-width: 768px) {
-      .header-bar { padding: var(--sp-sm) var(--sp-md); }
-      .dashboard-wrap { padding: var(--sp-md); }
-      .tab-bar { display: none; }
-      .mobile-tab-bar { display: flex !important; }
-      .alerts-panel { width: 100%; }
-      .hero-card { padding: var(--sp-lg); }
-      .progress-ring { width: 120px; height: 120px; }
-      .quick-actions { flex-direction: column; }
-      .summary-stats { flex-direction: column; gap: var(--sp-sm); }
-      .bar-chart { height: 80px; }
+    .digest-banner.visible { display: block; }
+    .digest-banner h3 { font-family: var(--font-heading); color: var(--accent); }
+    .digest-dismiss {
+      position: absolute;
+      top: var(--sp-sm);
+      right: var(--sp-sm);
+      color: var(--text-muted);
+      font-size: 1.25rem;
+      padding: var(--sp-xs);
     }
 
     /* ========== MOBILE BOTTOM TAB BAR ========== */
     .mobile-tab-bar {
       display: none;
-      position: fixed; bottom: 0; left: 0; right: 0;
-      background: var(--card); border-top: 1px solid var(--card-border);
-      justify-content: space-around; padding: var(--sp-sm) 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border-top: 1px solid var(--card-border);
+      justify-content: space-around;
+      padding: var(--sp-sm) 0;
       z-index: 100;
     }
     .mobile-tab-bar button {
-      display: flex; flex-direction: column; align-items: center; gap: 2px;
-      font-size: 0.625rem; color: var(--text-muted); padding: var(--sp-xs);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 0.625rem;
+      color: var(--text-muted);
+      padding: var(--sp-xs);
     }
     .mobile-tab-bar button.active { color: var(--accent); }
     .mobile-tab-bar .tab-icon { font-size: 1.25rem; }
 
-    /* ========== WEEKLY DIGEST BANNER ========== */
-    .digest-banner {
-      background: var(--accent-dim); border: 1px solid var(--accent);
-      border-radius: var(--radius); padding: var(--sp-lg);
-      margin-bottom: var(--sp-lg); display: none; position: relative;
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 1024px) {
+      .summary-cards { grid-template-columns: repeat(2, 1fr); }
+      .controls-grid { grid-template-columns: 1fr; }
+      .main-content { padding: var(--sp-lg); }
     }
-    .digest-banner.visible { display: block; }
-    .digest-banner h3 { font-family: var(--font-heading); color: var(--accent); }
-    .digest-dismiss {
-      position: absolute; top: var(--sp-sm); right: var(--sp-sm);
-      color: var(--text-muted); font-size: 1.25rem;
-    }
-
-    /* Padding for mobile bottom bar */
     @media (max-width: 768px) {
-      .dashboard-wrap { padding-bottom: 72px; }
+      .sidebar { display: none; }
+      .main-content {
+        margin-left: 0;
+        padding: var(--sp-md);
+        padding-bottom: 72px;
+      }
+      .summary-cards { grid-template-columns: 1fr 1fr; }
+      .grid-2col { grid-template-columns: 1fr; }
+      .tab-bar { display: none; }
+      .mobile-tab-bar { display: flex !important; }
+      .header-bar { flex-direction: column; gap: var(--sp-sm); }
+      .header-bar h1 { font-size: 1.375rem; }
+      .quick-actions { flex-direction: column; }
+      .trends-overview-body { flex-direction: column; }
+      .trends-sidebar-stats { flex-direction: row; min-width: auto; }
+      .ts-card { flex: 1; }
+      .bar-chart { height: 90px; }
+      .alerts-panel { width: 100%; }
+      .hero-card { padding: var(--sp-lg); }
+      .progress-ring { width: 120px; height: 120px; }
+    }
+    @media (max-width: 480px) {
+      .summary-cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -630,12 +1172,14 @@
   <!-- ===== SCREEN: AUTH ===== -->
   <section id="screenAuth" class="screen auth-screen active">
     <div class="auth-box">
+      <div class="auth-logo-wrap">
+        <img class="auth-logo-icon" src="guard-child-logo.png" alt="Guard Child">
+      </div>
       <h1 data-i18n="auth_title">Layers Guard</h1>
       <div class="auth-tabs">
         <button class="active" data-auth-tab="login" data-i18n="auth_login">Log in</button>
         <button data-auth-tab="signup" data-i18n="auth_signup">Sign up</button>
       </div>
-      <!-- Login form -->
       <form id="loginForm">
         <div class="form-group">
           <label for="loginEmail" data-i18n="auth_email">Email</label>
@@ -645,13 +1189,12 @@
           <label for="loginPass" data-i18n="auth_password">Password</label>
           <input id="loginPass" class="input" type="password" required autocomplete="current-password">
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--sp-sm)" data-i18n="auth_login">Log in</button>
-        <p style="text-align:center;margin-top:var(--sp-sm)">
-          <a href="#" id="forgotPassLink" style="font-size:0.8125rem;color:var(--accent)" data-i18n="auth_forgot">Forgot password?</a>
+        <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;margin-top:var(--sp-sm)" data-i18n="auth_login">Log in</button>
+        <p style="text-align:center;margin-top:var(--sp-md)">
+          <a href="#" id="forgotPassLink" style="font-size:0.8125rem;color:var(--accent);text-decoration:none" data-i18n="auth_forgot">Forgot password?</a>
         </p>
         <div id="loginError" class="auth-error"></div>
       </form>
-      <!-- Signup form -->
       <form id="signupForm" style="display:none">
         <div class="form-group">
           <label for="signupEmail" data-i18n="auth_email">Email</label>
@@ -665,7 +1208,7 @@
           <label for="signupPassConfirm" data-i18n="auth_password_confirm">Confirm password</label>
           <input id="signupPassConfirm" class="input" type="password" required minlength="6" autocomplete="new-password">
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:var(--sp-sm)" data-i18n="auth_signup">Sign up</button>
+        <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;margin-top:var(--sp-sm)" data-i18n="auth_signup">Sign up</button>
         <div id="signupError" class="auth-error"></div>
       </form>
     </div>
@@ -674,6 +1217,9 @@
   <!-- ===== SCREEN: LICENSE ===== -->
   <section id="screenLicense" class="screen auth-screen">
     <div class="auth-box license-box">
+      <div class="auth-logo-wrap">
+        <img class="auth-logo-icon" src="guard-child-logo.png" alt="Guard Child">
+      </div>
       <h2 data-i18n="license_title">Activate Guard Family</h2>
       <p style="color:var(--text-muted);margin-bottom:var(--sp-lg);font-size:0.875rem" data-i18n="license_subtitle">
         Enter your Guard Family license key to continue.
@@ -682,11 +1228,11 @@
         <div class="form-group">
           <input id="licenseKeyInput" class="input" type="text" placeholder="XXXX-XXXX-XXXX" required data-i18n="license_placeholder" data-i18n-attr="placeholder">
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="license_activate">Activate</button>
+        <button type="submit" class="btn btn-primary" style="width:100%;padding:12px" data-i18n="license_activate">Activate</button>
         <div id="licenseError" class="auth-error"></div>
       </form>
       <p style="margin-top:var(--sp-lg);font-size:0.8125rem;color:var(--text-muted)">
-        <a href="https://thelayersapp.com/guard-pro.html" target="_blank" style="color:var(--accent)" data-i18n="license_get">Get a license key</a>
+        <a href="https://thelayersapp.com/guard-pro.html" target="_blank" style="color:var(--accent);text-decoration:none" data-i18n="license_get">Get a license key</a>
       </p>
     </div>
   </section>
@@ -694,15 +1240,14 @@
   <!-- ===== SCREEN: SETUP (PAIRING) ===== -->
   <section id="screenSetup" class="screen auth-screen">
     <div class="auth-box setup-box">
+      <div class="auth-logo-wrap">
+        <img class="auth-logo-icon" src="guard-child-logo.png" alt="Guard Child">
+      </div>
       <h2 data-i18n="setup_title">Pair a device</h2>
-
-      <!-- Tab switcher for pairing modes -->
       <div class="auth-tabs" style="margin-bottom:var(--sp-lg)">
         <button data-pair-tab="enter" class="active" data-i18n="setup_enter_code">Enter a code manually</button>
         <button data-pair-tab="display" data-i18n="setup_pair_new">Show my code</button>
       </div>
-
-      <!-- MODE 1: Enter child's code (default) -->
       <div id="pairEnterMode">
         <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_enter_code_label">
           Enter the code shown on your child's device.
@@ -713,12 +1258,10 @@
                    placeholder="e.g. LG-4829" style="text-align:center;font-size:1.25rem;letter-spacing:0.15em;text-transform:uppercase"
                    maxlength="7" autocomplete="off">
           </div>
-          <button type="submit" class="btn btn-primary" style="width:100%" data-i18n="setup_code_submit">Connect</button>
+          <button type="submit" class="btn btn-primary" style="width:100%;padding:12px" data-i18n="setup_code_submit">Connect</button>
           <div id="pairCodeError" class="auth-error"></div>
         </form>
       </div>
-
-      <!-- MODE 2: Display code for child to enter -->
       <div id="pairDisplayMode" style="display:none">
         <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_instructions">
           Enter this code in the Layers Guard app on your child's device.
@@ -734,29 +1277,67 @@
   <!-- ===== SCREEN: DASHBOARD ===== -->
   <section id="screenDashboard" class="screen">
 
-    <!-- Header -->
-    <div class="header-bar">
-      <div class="child-selector" id="childSelector">
-        <div class="child-selector-current" id="childSelectorCurrent">
-          <span class="avatar-dot" id="childAvatarDot" style="background:#2A9D5C"></span>
-          <span id="childNameLabel">Child</span>
-          <span class="online-dot" id="childOnlineDot"></span>
-          <span style="font-size:0.75rem">&#9662;</span>
-        </div>
-        <div class="child-dropdown" id="childDropdown">
-          <!-- populated dynamically -->
-        </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <img class="logo-icon" src="guard-child-logo.png" alt="Guard Child">
+        <span class="logo-text">Guard</span>
       </div>
-      <div class="header-actions">
-        <button id="alertsBellBtn" title="Alerts">
-          &#128276;<span class="badge" id="alertsBadge" style="display:none">0</span>
-        </button>
-        <button id="settingsBtn" title="Settings">&#9881;</button>
-      </div>
-    </div>
 
-    <div class="dashboard-wrap">
-      <!-- Tab bar (desktop/tablet) -->
+      <div class="sidebar-section">
+        <div class="sidebar-label">Account</div>
+        <div class="child-selector" id="childSelector">
+          <div class="child-selector-current" id="childSelectorCurrent">
+            <span class="avatar-dot" id="childAvatarDot" style="background:#2A9D5C"></span>
+            <span id="childNameLabel" style="flex:1;font-size:0.875rem">Child</span>
+            <span class="online-dot" id="childOnlineDot"></span>
+            <span style="font-size:0.65rem;opacity:0.5">&#9662;</span>
+          </div>
+          <div class="child-dropdown" id="childDropdown"></div>
+        </div>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-label">General</div>
+        <button id="alertsBellBtn" class="sidebar-nav-item" title="Alerts">
+          <span class="nav-icon">&#128276;</span>
+          <span>Alerts</span>
+          <span class="badge" id="alertsBadge" style="display:none">0</span>
+        </button>
+        <button id="settingsBtn" class="sidebar-nav-item" title="Settings">
+          <span class="nav-icon">&#9881;</span>
+          <span>Settings</span>
+        </button>
+      </div>
+
+      <div class="sidebar-spacer"></div>
+
+      <div class="sidebar-footer">
+        <button id="logoutBtn" class="sidebar-nav-item" style="color:rgba(255,255,255,0.5)">
+          <span class="nav-icon">&#10140;</span>
+          <span>Log out</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content area -->
+    <main class="main-content">
+
+      <!-- Header -->
+      <div class="header-bar">
+        <div>
+          <h1 id="heroGreeting" data-i18n="hero_greeting_morning">Good morning</h1>
+          <p class="header-sub" id="heroSub" data-i18n="hero_subgreeting">Here's how today is going</p>
+        </div>
+        <div class="header-actions">
+          <div class="status-bar" id="statusBar">
+            <span class="online-dot" id="statusDot"></span>
+            <span id="statusText">Checking...</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab bar -->
       <div class="tab-bar" id="tabBar">
         <button class="active" data-tab="today" data-i18n="tab_today">Today</button>
         <button data-tab="trends" data-i18n="tab_trends">Trends</button>
@@ -773,43 +1354,61 @@
           <p id="digestBody" style="font-size:0.875rem;margin-top:var(--sp-sm)"></p>
         </div>
 
+        <!-- Summary cards -->
+        <div class="summary-cards">
+          <div class="summary-card sc-green" id="heroCard">
+            <div class="sc-icon-wrap">&#9203;</div>
+            <div class="sc-title" data-i18n="dashboard_screen_time">Screen Time</div>
+            <div class="sc-value" id="heroTime">0h 0m</div>
+            <div class="sc-sub" id="heroLimit">of 2h 0m</div>
+          </div>
+
+          <div class="summary-card sc-purple">
+            <div class="sc-icon-wrap">&#128737;</div>
+            <div class="sc-title">Protection</div>
+            <div class="sc-value" id="heroUsed">0m</div>
+            <div class="sc-sub" data-i18n="hero_stat_used">Used</div>
+          </div>
+
+          <div class="summary-card sc-orange">
+            <div class="sc-icon-wrap">&#9200;</div>
+            <div class="sc-title" data-i18n="hero_stat_left">Remaining</div>
+            <div class="sc-value" id="heroLeft">2h</div>
+            <div class="sc-sub" data-i18n="hero_stat_left">Left</div>
+          </div>
+
+          <div class="summary-card sc-blue">
+            <div class="sc-icon-wrap">&#128241;</div>
+            <div class="sc-title" data-i18n="hero_stat_apps">Active Apps</div>
+            <div class="sc-value" id="heroApps">0</div>
+            <div class="sc-sub">Running now</div>
+          </div>
+        </div>
+
+        <!-- Hidden progress ring (for JS compatibility) -->
+        <div style="display:none">
+          <div class="progress-ring">
+            <svg viewBox="0 0 160 160">
+              <circle class="bg" cx="80" cy="80" r="68"></circle>
+              <circle class="fg" id="progressArc" cx="80" cy="80" r="68"
+                stroke-dasharray="427.26" stroke-dashoffset="427.26"
+                transform="rotate(-90 80 80)"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="quick-actions">
+          <button class="action-pill emergency" id="emergencyLockBtn">
+            &#128274; <span data-i18n="dashboard_emergency_lock">Lock</span>
+          </button>
+          <button class="action-pill wifi" id="internetPauseBtn">
+            &#128246; <span data-i18n="dashboard_internet_pause">Wi-Fi</span>
+          </button>
+        </div>
+
+        <!-- Pending requests + Active apps -->
         <div class="grid-2col">
-          <!-- Hero card -->
-          <div class="hero-card grid-full" id="heroCard">
-            <h2 id="heroGreeting" data-i18n="hero_greeting_morning">Good morning</h2>
-            <p class="sub" id="heroSub" data-i18n="hero_subgreeting">Here's how today is going</p>
-            <div class="progress-ring">
-              <svg viewBox="0 0 160 160" width="100%" height="100%">
-                <circle class="bg" cx="80" cy="80" r="68"></circle>
-                <circle class="fg" id="progressArc" cx="80" cy="80" r="68"
-                  stroke-dasharray="427.26" stroke-dashoffset="427.26"
-                  transform="rotate(-90 80 80)"></circle>
-              </svg>
-              <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
-                <div class="hero-time" id="heroTime">0h 0m</div>
-                <div style="font-size:0.75rem;color:var(--text-dim)" id="heroLimit">of 2h 0m</div>
-              </div>
-            </div>
-            <div class="hero-stats">
-              <div class="stat"><div class="stat-value" id="heroUsed">0m</div><div class="stat-label" data-i18n="hero_stat_used">Used</div></div>
-              <div class="stat"><div class="stat-value" id="heroLeft">2h</div><div class="stat-label" data-i18n="hero_stat_left">Left</div></div>
-              <div class="stat"><div class="stat-value" id="heroApps">0</div><div class="stat-label" data-i18n="hero_stat_apps">Active</div></div>
-            </div>
-          </div>
-
-          <!-- Quick actions -->
-          <div class="grid-full">
-            <div class="quick-actions">
-              <button class="action-pill emergency" id="emergencyLockBtn">
-                &#128274; <span data-i18n="dashboard_emergency_lock">Lock</span>
-              </button>
-              <button class="action-pill wifi" id="internetPauseBtn">
-                &#128246; <span data-i18n="dashboard_internet_pause">Wi-Fi</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Pending requests -->
           <div class="card" id="pendingRequestsCard">
             <div class="card-header">
               <h3 data-i18n="approval_inbox_title">Awaiting your approval</h3>
@@ -819,7 +1418,6 @@
             </div>
           </div>
 
-          <!-- Active apps -->
           <div class="card" id="activeAppsCard">
             <div class="card-header">
               <h3 data-i18n="today_open_now">Open right now</h3>
@@ -828,171 +1426,192 @@
               <div class="empty-state" id="appsEmpty" data-i18n="today_no_apps_open">No apps open right now</div>
             </div>
           </div>
+        </div>
 
-          <!-- 7-day chart -->
-          <div class="card grid-full" id="weekChartCard">
-            <div class="card-header">
-              <h3 data-i18n="today_recent_days">Last 7 days</h3>
-            </div>
-            <div id="weekChart" class="bar-chart">
-              <!-- 7 bar-col elements populated by JS -->
-            </div>
+        <!-- 7-day chart -->
+        <div class="card" id="weekChartCard" style="margin-bottom:var(--sp-md)">
+          <div class="card-header">
+            <h3 data-i18n="today_recent_days">Last 7 days</h3>
           </div>
+          <div id="weekChart" class="bar-chart"></div>
+        </div>
 
-          <!-- Activity log -->
-          <div class="card grid-full" id="activityLogCard">
-            <div class="card-header">
-              <h3>Activity log</h3>
-              <button class="btn btn-sm btn-outline" id="activityToggle">Show</button>
-            </div>
-            <div id="activityLogList" class="card-scroll" style="display:none">
-              <div class="empty-state" id="logEmpty">No commands yet.</div>
-            </div>
+        <!-- Activity log -->
+        <div class="card" id="activityLogCard">
+          <div class="card-header">
+            <h3>Activity log</h3>
+            <button class="btn btn-sm btn-outline" id="activityToggle">Show</button>
           </div>
-
-          <!-- Status bar -->
-          <div class="status-bar grid-full" id="statusBar">
-            <span class="online-dot" id="statusDot"></span>
-            <span id="statusText">Checking...</span>
+          <div id="activityLogList" class="card-scroll" style="display:none">
+            <div class="empty-state" id="logEmpty">No commands yet.</div>
           </div>
         </div>
       </div>
 
       <!-- ===== TAB: TRENDS ===== -->
       <div id="tabTrends" class="tab-panel">
-        <div class="card" style="margin-bottom:var(--sp-lg)">
-          <div class="month-nav">
-            <button id="prevMonth">&#8592;</button>
-            <span class="month-label" id="monthLabel">May 2026</span>
-            <button id="nextMonth">&#8594;</button>
+        <!-- Combined heatmap + stats card -->
+        <div class="card trends-overview-card" style="margin-bottom:var(--sp-md)">
+          <div class="card-header">
+            <h3 data-i18n="trends_activity">Activity</h3>
+            <div class="month-nav">
+              <button id="prevMonth">&#8592;</button>
+              <span class="month-label" id="monthLabel">May 2026</span>
+              <button id="nextMonth">&#8594;</button>
+            </div>
           </div>
-          <div id="heatmapGrid" class="heatmap">
-            <!-- populated by JS -->
+          <div class="trends-overview-body">
+            <div class="trends-heatmap-wrap">
+              <div id="heatmapGrid" class="heatmap"></div>
+              <div class="heatmap-legend">
+                <span class="legend-label">Less</span>
+                <span class="legend-swatch heat-0"></span>
+                <span class="legend-swatch heat-1"></span>
+                <span class="legend-swatch heat-2"></span>
+                <span class="legend-swatch heat-3"></span>
+                <span class="legend-swatch heat-over"></span>
+                <span class="legend-label">More</span>
+              </div>
+            </div>
+            <div class="trends-sidebar-stats" id="monthSummary">
+              <div class="ts-card">
+                <div class="ts-icon">&#9201;</div>
+                <div class="ts-value" id="monthTotal">--</div>
+                <div class="ts-label">Total</div>
+              </div>
+              <div class="ts-card">
+                <div class="ts-icon">&#128202;</div>
+                <div class="ts-value" id="monthAvg">--</div>
+                <div class="ts-label">Daily avg</div>
+              </div>
+              <div class="ts-card">
+                <div class="ts-icon">&#128293;</div>
+                <div class="ts-value" id="monthPeak">--</div>
+                <div class="ts-label">Peak day</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="summary-stats" id="monthSummary">
-          <div class="stat"><div class="stat-value" id="monthTotal">--</div><div class="stat-label">Total</div></div>
-          <div class="stat"><div class="stat-value" id="monthAvg">--</div><div class="stat-label">Daily avg</div></div>
-          <div class="stat"><div class="stat-value" id="monthPeak">--</div><div class="stat-label">Peak day</div></div>
-        </div>
-
+        <!-- Top apps card -->
         <div class="card">
-          <div class="card-header"><h3>Most used this month</h3></div>
+          <div class="card-header"><h3 data-i18n="trends_top_apps">Most used this month</h3></div>
           <div id="topAppsList">
-            <div class="empty-state">No app usage this month yet.</div>
+            <div class="empty-state" data-i18n="trends_top_apps_empty">No app usage this month yet.</div>
           </div>
         </div>
       </div>
 
       <!-- ===== TAB: CONTROLS ===== -->
       <div id="tabControls" class="tab-panel">
+        <div class="controls-grid">
 
-        <!-- Daily time limit -->
-        <div class="card control-card" id="timeLimitCard">
-          <div class="card-header">
-            <h3>Daily time limit</h3>
-            <div class="toggle" id="timeLimitToggle"></div>
+          <!-- Daily time limit -->
+          <div class="card control-card" id="timeLimitCard">
+            <div class="card-header">
+              <h3>Daily time limit</h3>
+              <div class="toggle" id="timeLimitToggle"></div>
+            </div>
+            <div id="timeLimitBody">
+              <div class="slider-row">
+                <input type="range" id="timeLimitSlider" min="30" max="480" step="15" value="120">
+                <span class="slider-value" id="timeLimitValue">2h 0m</span>
+              </div>
+              <div class="toggle-row" style="margin-top:var(--sp-sm)">
+                <span class="toggle-label">Weekend override</span>
+                <div class="toggle" id="weekendToggle"></div>
+              </div>
+              <div id="weekendSliderRow" class="slider-row" style="display:none">
+                <input type="range" id="weekendSlider" min="30" max="480" step="15" value="180">
+                <span class="slider-value" id="weekendValue">3h 0m</span>
+              </div>
+              <button class="btn btn-primary btn-sm" id="timeLimitSave" style="margin-top:var(--sp-md)">Save</button>
+            </div>
           </div>
-          <div id="timeLimitBody">
-            <div class="slider-row">
-              <input type="range" id="timeLimitSlider" min="30" max="480" step="15" value="120">
-              <span class="slider-value" id="timeLimitValue">2h 0m</span>
-            </div>
-            <div class="toggle-row" style="margin-top:var(--sp-sm)">
-              <span class="toggle-label">Weekend override</span>
-              <div class="toggle" id="weekendToggle"></div>
-            </div>
-            <div id="weekendSliderRow" class="slider-row" style="display:none">
-              <input type="range" id="weekendSlider" min="30" max="480" step="15" value="180">
-              <span class="slider-value" id="weekendValue">3h 0m</span>
-            </div>
-            <button class="btn btn-primary btn-sm" id="timeLimitSave" style="margin-top:var(--sp-md)">Save</button>
-          </div>
-        </div>
 
-        <!-- Blocked sites -->
-        <div class="card control-card" id="blockedSitesCard">
-          <div class="card-header"><h3>Blocked websites</h3></div>
-          <div class="add-row">
-            <input class="input" id="addSiteInput" type="text" placeholder="e.g. tiktok.com">
-            <button class="btn btn-primary btn-sm" id="addSiteBtn">Block</button>
-          </div>
-          <div id="blockedSitesList" class="card-scroll card-scroll-fade">
-            <div class="empty-state">No blocked sites yet</div>
-          </div>
-        </div>
-
-        <!-- Blocked apps -->
-        <div class="card control-card" id="blockedAppsCard">
-          <div class="card-header"><h3>Blocked apps</h3></div>
-          <div class="category-pills" id="categoryPills">
-            <button class="category-pill" data-cat="games">Games</button>
-            <button class="category-pill" data-cat="social">Social</button>
-            <button class="category-pill" data-cat="video">Video</button>
-          </div>
-          <div class="add-row">
-            <input class="input" id="addAppExe" type="text" placeholder="e.g. steam.exe" style="flex:1">
-            <input class="input" id="addAppName" type="text" placeholder="Display name" style="flex:1">
-            <button class="btn btn-primary btn-sm" id="addAppBtn">Block</button>
-          </div>
-          <div id="blockedAppsList" class="card-scroll card-scroll-fade">
-            <div class="empty-state">No blocked apps yet</div>
-          </div>
-        </div>
-
-        <!-- Bedtime schedule -->
-        <div class="card control-card" id="bedtimeCard">
-          <div class="card-header">
-            <h3>Bedtime lockout</h3>
-            <div class="toggle" id="bedtimeToggle"></div>
-          </div>
-          <div id="bedtimeBody">
-            <div class="time-picker-row">
-              <label>Starts at</label>
-              <input type="time" id="bedtimeStart" value="22:00">
+          <!-- Bedtime schedule -->
+          <div class="card control-card" id="bedtimeCard">
+            <div class="card-header">
+              <h3>Bedtime lockout</h3>
+              <div class="toggle" id="bedtimeToggle"></div>
             </div>
-            <div class="time-picker-row">
-              <label>Ends at</label>
-              <input type="time" id="bedtimeEnd" value="07:00">
-            </div>
-            <div class="toggle-row" style="margin-top:var(--sp-sm)">
-              <span class="toggle-label">Weekend override</span>
-              <div class="toggle" id="bedtimeWeekendToggle"></div>
-            </div>
-            <div id="bedtimeWeekendTimes" style="display:none">
+            <div id="bedtimeBody">
               <div class="time-picker-row">
-                <label>Weekend start</label>
-                <input type="time" id="bedtimeWeekendStart" value="23:00">
+                <label>Starts at</label>
+                <input type="time" id="bedtimeStart" value="22:00">
               </div>
               <div class="time-picker-row">
-                <label>Weekend end</label>
-                <input type="time" id="bedtimeWeekendEnd" value="08:00">
+                <label>Ends at</label>
+                <input type="time" id="bedtimeEnd" value="07:00">
               </div>
+              <div class="toggle-row" style="margin-top:var(--sp-sm)">
+                <span class="toggle-label">Weekend override</span>
+                <div class="toggle" id="bedtimeWeekendToggle"></div>
+              </div>
+              <div id="bedtimeWeekendTimes" style="display:none">
+                <div class="time-picker-row">
+                  <label>Weekend start</label>
+                  <input type="time" id="bedtimeWeekendStart" value="23:00">
+                </div>
+                <div class="time-picker-row">
+                  <label>Weekend end</label>
+                  <input type="time" id="bedtimeWeekendEnd" value="08:00">
+                </div>
+              </div>
+              <div class="toggle-row" style="margin-top:var(--sp-sm)">
+                <span class="toggle-label">Today is a holiday</span>
+                <div class="toggle" id="holidayToggle"></div>
+              </div>
+              <button class="btn btn-primary btn-sm" id="bedtimeSave" style="margin-top:var(--sp-md)">Save</button>
             </div>
-            <div class="toggle-row" style="margin-top:var(--sp-sm)">
-              <span class="toggle-label">Today is a holiday</span>
-              <div class="toggle" id="holidayToggle"></div>
+          </div>
+
+          <!-- Blocked sites -->
+          <div class="card control-card" id="blockedSitesCard">
+            <div class="card-header"><h3>Blocked websites</h3></div>
+            <div class="add-row">
+              <input class="input" id="addSiteInput" type="text" placeholder="e.g. tiktok.com">
+              <button class="btn btn-primary btn-sm" id="addSiteBtn">Block</button>
             </div>
-            <button class="btn btn-primary btn-sm" id="bedtimeSave" style="margin-top:var(--sp-md)">Save</button>
+            <div id="blockedSitesList" class="card-scroll card-scroll-fade">
+              <div class="empty-state">No blocked sites yet</div>
+            </div>
           </div>
-        </div>
 
-        <!-- Per-app time limits -->
-        <div class="card control-card" id="appLimitsCard">
-          <div class="card-header"><h3>Per-app daily limits</h3></div>
-          <div class="add-row">
-            <input class="input" id="appLimitExe" type="text" placeholder="e.g. minecraft.exe" style="flex:2">
-            <input class="input" id="appLimitMins" type="number" placeholder="60" min="5" max="480" style="flex:1">
-            <button class="btn btn-primary btn-sm" id="addAppLimitBtn">Add</button>
+          <!-- Blocked apps -->
+          <div class="card control-card" id="blockedAppsCard">
+            <div class="card-header"><h3>Blocked apps</h3></div>
+            <div class="category-pills" id="categoryPills">
+              <button class="category-pill" data-cat="games">Games</button>
+              <button class="category-pill" data-cat="social">Social</button>
+              <button class="category-pill" data-cat="video">Video</button>
+            </div>
+            <div class="add-row">
+              <input class="input" id="addAppExe" type="text" placeholder="e.g. steam.exe" style="flex:1">
+              <input class="input" id="addAppName" type="text" placeholder="Display name" style="flex:1">
+              <button class="btn btn-primary btn-sm" id="addAppBtn">Block</button>
+            </div>
+            <div id="blockedAppsList" class="card-scroll card-scroll-fade">
+              <div class="empty-state">No blocked apps yet</div>
+            </div>
           </div>
-          <div id="appLimitsList" class="card-scroll card-scroll-fade">
-            <div class="empty-state">No per-app limits set.</div>
-          </div>
-        </div>
 
+          <!-- Per-app time limits -->
+          <div class="card control-card" id="appLimitsCard" style="grid-column: 1 / -1">
+            <div class="card-header"><h3>Per-app daily limits</h3></div>
+            <div class="add-row">
+              <input class="input" id="appLimitExe" type="text" placeholder="e.g. minecraft.exe" style="flex:2">
+              <input class="input" id="appLimitMins" type="number" placeholder="60" min="5" max="480" style="flex:1">
+              <button class="btn btn-primary btn-sm" id="addAppLimitBtn">Add</button>
+            </div>
+            <div id="appLimitsList" class="card-scroll card-scroll-fade">
+              <div class="empty-state">No per-app limits set.</div>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </main>
 
     <!-- Mobile bottom tab bar -->
     <div class="mobile-tab-bar" id="mobileTabBar">
@@ -1089,7 +1708,7 @@
       </div>
 
       <hr style="border:none;border-top:1px solid var(--surface);margin:var(--sp-lg) 0">
-      <button class="btn btn-outline" id="logoutBtn" style="width:100%">Log out</button>
+      <button class="btn btn-outline" id="logoutBtn2" style="width:100%;display:none">Log out</button>
     </div>
   </div>
 
