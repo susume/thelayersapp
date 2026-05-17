@@ -3429,10 +3429,12 @@
         if (val && val.paired) {
           clearInterval(pairingInterval);
           pairingInterval = null;
+          // Use the child's device_id (child overwrites it when claiming)
+          const childDeviceId = val.device_id || deviceId;
           // Clean up pairing code
           await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
           // Write device info
-          await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
+          await set(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'), {
             parent_auth_uid: currentUser.uid,
             child_name: 'My child',
             paired_at: Date.now(),
@@ -3441,10 +3443,10 @@
           const userSnap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
           const userData = userSnap.val() || {};
           const devList = userData.devices || [];
-          devList.push(deviceId);
+          devList.push(childDeviceId);
           await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
           devices = devList;
-          currentDeviceId = deviceId;
+          currentDeviceId = childDeviceId;
           showToast(T('setup_paired_success'));
           showScreen('screenPinCreate');
         }
