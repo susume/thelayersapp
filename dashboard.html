@@ -1286,6 +1286,33 @@
     </div>
   </section>
 
+  <!-- ===== SCREEN: PIN CREATION (after pairing) ===== -->
+  <section id="screenPinCreate" class="screen auth-screen">
+    <div class="auth-box setup-box">
+      <div class="auth-logo-wrap">
+        <div class="auth-logo-icon"></div>
+      </div>
+      <h2 data-i18n="setup_pin_create_title">Create a PIN</h2>
+      <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_pin_create_subtitle">You'll use this to unlock Layers Guard</p>
+      <div id="pinCreateStep1">
+        <div class="form-group">
+          <input id="pinCreateInput" class="input" type="password" inputmode="numeric" pattern="\d{4}" maxlength="4" required
+                 placeholder="4-digit PIN" style="text-align:center;font-size:1.5rem;letter-spacing:0.3em" autocomplete="off">
+        </div>
+        <button id="pinCreateNextBtn" class="btn btn-primary" style="width:100%;padding:12px" data-i18n="setup_pin_confirm_title">Confirm PIN</button>
+      </div>
+      <div id="pinCreateStep2" style="display:none">
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_pin_confirm_title">Confirm your PIN</p>
+        <div class="form-group">
+          <input id="pinConfirmInput" class="input" type="password" inputmode="numeric" pattern="\d{4}" maxlength="4" required
+                 placeholder="Re-enter PIN" style="text-align:center;font-size:1.5rem;letter-spacing:0.3em" autocomplete="off">
+        </div>
+        <button id="pinCreateSaveBtn" class="btn btn-primary" style="width:100%;padding:12px">Save PIN</button>
+      </div>
+      <div id="pinCreateError" class="auth-error"></div>
+    </div>
+  </section>
+
   <!-- ===== SCREEN: DASHBOARD ===== -->
   <section id="screenDashboard" class="screen">
 
@@ -2274,6 +2301,10 @@
         setup_waiting:           'お子さまのPCを待っています…',
         setup_instructions:      'お子さまのデバイスのLayers Guardアプリにこのコードを入力してください。',
         setup_pin_create_title:  'PINを作成',
+        setup_pin_create_subtitle: 'Layers Guardのロック解除に使用します',
+        setup_pin_confirm_title: 'PINを確認',
+        setup_pin_mismatch:      'PINが一致しません。もう一度お試しください。',
+        setup_pin_saved:         'PINが保存されました。準備完了です！',
         setup_paired_success:    'デバイスがペアリングされました。PINを作成してください。',
         // dashboard
         dashboard_title:         'ダッシュボード',
@@ -2519,6 +2550,10 @@
         setup_waiting:           '正在等待孩子的电脑…',
         setup_instructions:      '在孩子设备上的 Layers Guard 应用中输入此代码。',
         setup_pin_create_title:  '创建 PIN 码',
+        setup_pin_create_subtitle: '用于解锁 Layers Guard',
+        setup_pin_confirm_title: '确认 PIN 码',
+        setup_pin_mismatch:      'PIN 码不匹配，请重试。',
+        setup_pin_saved:         'PIN 码已保存，设置完成！',
         setup_paired_success:    '设备已配对！现在请创建 PIN 码。',
         // dashboard
         dashboard_title:         '主页',
@@ -2764,6 +2799,10 @@
         setup_waiting:           'Đang chờ máy tính của con…',
         setup_instructions:      'Nhập mã này trong ứng dụng Layers Guard trên thiết bị của con bạn.',
         setup_pin_create_title:  'Tạo mã PIN',
+        setup_pin_create_subtitle: 'Dùng để mở khoá Layers Guard',
+        setup_pin_confirm_title: 'Xác nhận mã PIN',
+        setup_pin_mismatch:      'Mã PIN không khớp. Vui lòng thử lại.',
+        setup_pin_saved:         'Mã PIN đã lưu. Hoàn tất!',
         setup_paired_success:    'Thiết bị đã được ghép nối! Hãy tạo mã PIN.',
         // dashboard
         dashboard_title:         'Trang chủ',
@@ -3357,8 +3396,7 @@
         devices = devList;
         currentDeviceId = deviceId;
         showToast(T('setup_paired_success'));
-        showScreen('screenDashboard');
-        attachListeners();
+        showScreen('screenPinCreate');
       } catch (err) {
         console.error('[Dashboard] Pair code error:', err);
         errEl.textContent = err.message || T('error_generic');
@@ -3408,11 +3446,59 @@
           devices = devList;
           currentDeviceId = deviceId;
           showToast(T('setup_paired_success'));
-          showScreen('screenDashboard');
-          attachListeners();
+          showScreen('screenPinCreate');
         }
       }, 3000);
     }
+
+    // ── PIN Creation flow (after pairing) ──
+    let _pinCreateValue = '';
+    document.getElementById('pinCreateNextBtn').addEventListener('click', () => {
+      const pin = document.getElementById('pinCreateInput').value.trim();
+      const errEl = document.getElementById('pinCreateError');
+      errEl.style.display = 'none';
+      if (!/^\d{4}$/.test(pin)) {
+        errEl.textContent = T('settings_screen_pin_error');
+        errEl.style.display = 'block';
+        return;
+      }
+      _pinCreateValue = pin;
+      document.getElementById('pinCreateStep1').style.display = 'none';
+      document.getElementById('pinCreateStep2').style.display = '';
+      document.getElementById('pinConfirmInput').value = '';
+      document.getElementById('pinConfirmInput').focus();
+    });
+
+    document.getElementById('pinCreateSaveBtn').addEventListener('click', async () => {
+      const confirm = document.getElementById('pinConfirmInput').value.trim();
+      const errEl = document.getElementById('pinCreateError');
+      errEl.style.display = 'none';
+      if (confirm !== _pinCreateValue) {
+        errEl.textContent = T('setup_pin_mismatch');
+        errEl.style.display = 'block';
+        document.getElementById('pinConfirmInput').value = '';
+        return;
+      }
+      try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(_pinCreateValue);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { pin_hash: hashHex });
+        _pinCreateValue = '';
+        document.getElementById('pinCreateInput').value = '';
+        document.getElementById('pinConfirmInput').value = '';
+        document.getElementById('pinCreateStep1').style.display = '';
+        document.getElementById('pinCreateStep2').style.display = 'none';
+        showToast(T('setup_pin_saved'));
+        showScreen('screenDashboard');
+        attachListeners();
+      } catch (e) {
+        errEl.textContent = T('error_firebase_write');
+        errEl.style.display = 'block';
+      }
+    });
 
     function renderChildSelector() {
       const list = document.getElementById('deviceList');
@@ -3628,9 +3714,13 @@
       }
       const todayApps = todayTimeLog.apps || {};
       list.innerHTML = apps.slice(0, 10).map(app => {
-        const name = typeof app === 'string' ? app : (app.name || app);
-        const appKey = name.replace(/\./g, '_');
-        const mins = parseInt(todayApps[appKey] || 0, 10);
+        // Normalise: string = Windows/Mac exe, object = Android {name, package_name}
+        const name = typeof app === 'string' ? app : (app.name || app.package_name || 'Unknown');
+        const pkg  = typeof app === 'string' ? app : (app.package_name || app.name || '');
+        // Time lookup: try sanitised package name first (Android), then exe-style key (Windows)
+        const pkgKey = pkg.replace(/\./g, '_');
+        const nameKey = name.replace(/\./g, '_');
+        const mins = parseInt(todayApps[pkgKey] || todayApps[nameKey] || 0, 10);
         const timeStr = mins > 0 ? formatMins(mins) : '';
         return '<div class="app-row"><span class="app-name">' + escapeHtml(name) + '</span><span class="app-time">' + timeStr + '</span></div>';
       }).join('');
