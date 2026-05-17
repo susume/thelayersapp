@@ -218,6 +218,12 @@
     .child-option:hover { background: rgba(255,255,255,0.07); }
     .child-option .platform { font-size: 0.75rem; color: rgba(255,255,255,0.4); }
 
+    /* Device list (sidebar persistent list) */
+    .device-item.active {
+      background: rgba(42, 157, 92, 0.18);
+    }
+    .device-item.active .device-name { color: #34D399; font-weight: 600; }
+
     .sidebar-add-btn {
       display: flex;
       align-items: center;
@@ -1291,16 +1297,8 @@
       </div>
 
       <div class="sidebar-section">
-        <div class="sidebar-label">Account</div>
-        <div class="child-selector" id="childSelector">
-          <div class="child-selector-current" id="childSelectorCurrent">
-            <span class="avatar-dot" id="childAvatarDot" style="background:#2A9D5C"></span>
-            <span id="childNameLabel" style="flex:1;font-size:0.875rem">Child</span>
-            <span class="online-dot" id="childOnlineDot"></span>
-            <span style="font-size:0.65rem;opacity:0.5">&#9662;</span>
-          </div>
-          <div class="child-dropdown" id="childDropdown"></div>
-        </div>
+        <div class="sidebar-label">Devices</div>
+        <div id="deviceList"></div>
       </div>
 
       <div class="sidebar-section">
@@ -3417,46 +3415,41 @@
     }
 
     function renderChildSelector() {
-      const dropdown = document.getElementById('childDropdown');
-      dropdown.innerHTML = '';
+      const list = document.getElementById('deviceList');
+      list.innerHTML = '';
       devices.forEach(async (did) => {
         const snap = await get(ref(db, GUARD_ROOT + '/' + did + '/info'));
         const info = snap.val() || {};
         const statusSnap = await get(ref(db, GUARD_ROOT + '/' + did + '/status'));
         const status = statusSnap.val() || {};
         const isOnline = status.online && (Date.now() - (status.last_seen || 0)) < 120000;
+        const isActive = did === currentDeviceId;
 
         const btn = document.createElement('button');
-        btn.className = 'child-option';
+        btn.className = 'sidebar-nav-item device-item' + (isActive ? ' active' : '');
+        btn.dataset.deviceId = did;
         btn.innerHTML = `
           <span class="avatar-dot" style="background:${info.avatar_color || '#2A9D5C'}"></span>
-          <span style="flex:1">${escapeHtml(info.child_name || 'Child')}</span>
+          <span class="device-name" style="flex:1">${escapeHtml(info.child_name || 'Child')}</span>
           <span class="online-dot ${isOnline ? 'online' : 'offline'}"></span>
-          <span class="platform">${escapeHtml(status.platform || '')}</span>
         `;
         btn.addEventListener('click', () => {
+          if (did === currentDeviceId) return;
           currentDeviceId = did;
           detachListeners();
           attachListeners();
-          dropdown.classList.remove('open');
-          updateSelectorLabel(info, isOnline);
         });
-        dropdown.appendChild(btn);
+        list.appendChild(btn);
       });
 
       // Add device button
       const addBtn = document.createElement('button');
-      addBtn.className = 'child-option';
-      addBtn.innerHTML = '<span style="flex:1;color:var(--accent)">+ ' + T('settings_add_device') + '</span>';
-      addBtn.addEventListener('click', () => { dropdown.classList.remove('open'); startPairing(); });
-      dropdown.appendChild(addBtn);
-    }
-
-    function updateSelectorLabel(info, isOnline) {
-      document.getElementById('childNameLabel').textContent = info.child_name || 'Child';
-      document.getElementById('childAvatarDot').style.background = info.avatar_color || '#2A9D5C';
-      const dot = document.getElementById('childOnlineDot');
-      dot.className = 'online-dot ' + (isOnline ? 'online' : 'offline');
+      addBtn.className = 'sidebar-nav-item';
+      addBtn.style.color = 'var(--accent)';
+      addBtn.style.opacity = '0.8';
+      addBtn.innerHTML = '<span class="nav-icon" style="font-size:1rem">+</span><span>' + T('settings_add_device') + '</span>';
+      addBtn.addEventListener('click', () => startPairing());
+      list.appendChild(addBtn);
     }
 
     function detachListeners() {
@@ -3466,19 +3459,6 @@
       listeners = [];
     }
 
-    // Toggle child selector dropdown
-    document.getElementById('childSelectorCurrent').addEventListener('click', () => {
-      const dd = document.getElementById('childDropdown');
-      dd.classList.toggle('open');
-      if (dd.classList.contains('open')) renderChildSelector();
-    });
-    // Close dropdown on outside click
-    document.addEventListener('click', (e) => {
-      if (!document.getElementById('childSelector').contains(e.target)) {
-        document.getElementById('childDropdown').classList.remove('open');
-      }
-    });
-
     // ============================================================
     // Task 4: Today tab — real-time data listeners + UI rendering
     // ============================================================
@@ -3486,14 +3466,21 @@
     function attachListeners() {
       if (!currentDeviceId) return;
       showLoadingState();
+      currentUsedMins = 0;
+      currentSchedule = {};
       const did = currentDeviceId;
 
-      // Device info listener — updates selector label
+      // Device info listener — updates active device button in sidebar list
       const infoRef = ref(db, GUARD_ROOT + '/' + did + '/info');
       onValue(infoRef, (snap) => {
         const info = snap.val() || {};
-        document.getElementById('childNameLabel').textContent = info.child_name || 'Child';
-        document.getElementById('childAvatarDot').style.background = info.avatar_color || '#2A9D5C';
+        const activeBtn = document.querySelector(`#deviceList .device-item[data-device-id="${did}"]`);
+        if (activeBtn) {
+          const nameEl = activeBtn.querySelector('.device-name');
+          if (nameEl) nameEl.textContent = info.child_name || 'Child';
+          const avatarEl = activeBtn.querySelector('.avatar-dot');
+          if (avatarEl) avatarEl.style.background = info.avatar_color || '#2A9D5C';
+        }
       });
       listeners.push(() => off(infoRef));
 
@@ -3518,7 +3505,8 @@
       listeners.push(() => off(schedRef));
 
       // Time log listener — today + 7-day chart
-      const today = new Date().toISOString().slice(0, 10);
+      const _now = new Date();
+      const today = _now.getFullYear() + '-' + String(_now.getMonth() + 1).padStart(2, '0') + '-' + String(_now.getDate()).padStart(2, '0');
       const timeRef = ref(db, GUARD_ROOT + '/' + did + '/time_log');
       onValue(timeRef, (snap) => {
         const log = snap.val() || {};
@@ -3685,7 +3673,7 @@
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
-        const key = d.toISOString().slice(0, 10);
+        const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         const dayData = log[key] || {};
         days.push({ key, mins: dayData.total_mins || 0, dayName: dayNames[d.getDay()] });
       }
@@ -3740,8 +3728,12 @@
       text.textContent = isOnline
         ? T('dashboard_online')
         : T('dashboard_offline') + (status.last_seen ? ' — ' + timeAgo(status.last_seen) : '');
-      // Update header online dot
-      document.getElementById('childOnlineDot').className = 'online-dot ' + (isOnline ? 'online' : 'offline');
+      // Update online dot on the active device list button
+      const activeDevBtn = document.querySelector(`#deviceList .device-item[data-device-id="${currentDeviceId}"]`);
+      if (activeDevBtn) {
+        const onlineDot = activeDevBtn.querySelector('.online-dot');
+        if (onlineDot) onlineDot.className = 'online-dot ' + (isOnline ? 'online' : 'offline');
+      }
 
       // Sync quick action states
       emergencyLocked = Boolean(status.emergency_locked);
@@ -4477,7 +4469,8 @@
       if (!name) return;
       try {
         await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { child_name: name });
-        document.getElementById('childNameLabel').textContent = name;
+        const nameEl = document.querySelector(`#deviceList .device-item[data-device-id="${currentDeviceId}"] .device-name`);
+        if (nameEl) nameEl.textContent = name;
         showToast(T('toast_saved'));
       } catch (e) { showToast(T('error_firebase_write'), true); }
     });
@@ -4549,7 +4542,8 @@
 
     // ── Remove device ──
     document.getElementById('removeDeviceBtn').addEventListener('click', () => {
-      const childName = document.getElementById('childNameLabel').textContent;
+      const childNameEl = document.querySelector(`#deviceList .device-item[data-device-id="${currentDeviceId}"] .device-name`);
+      const childName = childNameEl ? childNameEl.textContent : 'Child';
       showConfirm(
         T('settings_remove_device_confirm').replace('{name}', childName),
         'This will permanently remove this device from your account.',
