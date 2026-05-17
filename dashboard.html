@@ -3925,6 +3925,12 @@
           timestamp: Date.now(),
           issued_by: getIssuedBy(),
         });
+        // Write status flags immediately so dashboard state persists across reload
+        if (cmdName === 'emergency_lock') {
+          await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/status'), { emergency_locked: !!payload.active });
+        } else if (cmdName === 'internet_pause') {
+          await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/status'), { internet_paused: !!payload.active });
+        }
         // Write audit log
         const ts = Date.now();
         const key = 'web_' + ts + '_' + cmdName;
@@ -3945,10 +3951,20 @@
       if (emergencyLocked) {
         showConfirm(T('dashboard_emergency_unlock_title'), T('dashboard_emergency_unlock_body'), async () => {
           await writeCommand('emergency_lock', { active: false });
+          emergencyLocked = false;
+          const btn = document.getElementById('emergencyLockBtn');
+          btn.classList.remove('active-state');
+          btn.querySelector('span').textContent = T('dashboard_emergency_lock');
+          showToast(T('dashboard_emergency_unlock_sent') || 'Device unlocked');
         });
       } else {
         showConfirm(T('dashboard_emergency_confirm_title'), T('dashboard_emergency_confirm_body'), async () => {
           await writeCommand('emergency_lock', { active: true });
+          emergencyLocked = true;
+          const btn = document.getElementById('emergencyLockBtn');
+          btn.classList.add('active-state');
+          btn.querySelector('span').textContent = T('dashboard_emergency_unlock');
+          showToast(T('dashboard_emergency_lock_sent') || 'Device locked');
         });
       }
     });
@@ -3958,10 +3974,20 @@
       if (internetPaused) {
         showConfirm(T('dashboard_resume_confirm_title'), T('dashboard_resume_confirm_body'), async () => {
           await writeCommand('internet_pause', { active: false });
+          internetPaused = false;
+          const btn = document.getElementById('internetPauseBtn');
+          btn.classList.remove('active-state');
+          btn.querySelector('span').textContent = T('dashboard_internet_pause');
+          showToast(T('dashboard_resume_sent') || 'Internet restored');
         });
       } else {
         showConfirm(T('dashboard_pause_confirm_title'), T('dashboard_pause_confirm_body'), async () => {
           await writeCommand('internet_pause', { active: true });
+          internetPaused = true;
+          const btn = document.getElementById('internetPauseBtn');
+          btn.classList.add('active-state');
+          btn.querySelector('span').textContent = T('dashboard_internet_paused');
+          showToast(T('dashboard_pause_sent') || 'Internet paused');
         });
       }
     });
