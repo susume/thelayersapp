@@ -9,23 +9,39 @@
   @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap');
 
   :root {
-    --bg: #0e0f14;
-    --surface: #16181f;
-    --border: #2a2d38;
+    --bg: #0a0b10;
+    --surface: #13151e;
+    --surface-2: #1a1d2a;
+    --surface-3: #22253a;
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.12);
     --blue: #4f8ef7;
-    --blue-dim: #1e2d50;
+    --blue-glow: rgba(79,142,247,0.15);
+    --blue-dim: rgba(79,142,247,0.1);
     --green: #3ecf8e;
-    --green-dim: #12362a;
+    --green-glow: rgba(62,207,142,0.12);
+    --green-dim: rgba(62,207,142,0.08);
     --amber: #f5a623;
-    --amber-dim: #3a2900;
+    --amber-glow: rgba(245,166,35,0.12);
+    --amber-dim: rgba(245,166,35,0.08);
     --red: #f76f6f;
-    --red-dim: #2e1010;
+    --red-glow: rgba(247,111,111,0.12);
+    --red-dim: rgba(247,111,111,0.08);
     --purple: #a78bfa;
-    --purple-dim: #1e1a3a;
-    --text: #e8eaf0;
-    --muted: #6b7080;
+    --purple-glow: rgba(167,139,250,0.12);
+    --purple-dim: rgba(167,139,250,0.08);
+    --text: #e8ecf4;
+    --text-secondary: #9aa0b8;
+    --muted: #5c6278;
     --mono: 'DM Mono', monospace;
     --sans: 'Sora', 'Noto Sans JP', sans-serif;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 24px;
+    --shadow-card: 0 2px 12px rgba(0,0,0,0.3), 0 0 0 1px var(--border);
+    --shadow-glow-blue: 0 0 20px rgba(79,142,247,0.15);
+    --shadow-glow-green: 0 0 20px rgba(62,207,142,0.15);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,12 +53,19 @@
     font-size: 15px;
     line-height: 1.7;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* ── Header ── */
+  /* ── Sticky Header ── */
   header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,11,16,0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 24px 32px;
+    padding: 16px 32px;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -51,14 +74,14 @@
 
   .logo {
     width: 36px; height: 36px;
-    background: var(--blue);
-    border-radius: 8px;
+    background: linear-gradient(135deg, var(--blue), #7c5cfc);
+    border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 18px; flex-shrink: 0;
   }
 
-  .header-text h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
-  .header-text p { font-size: 13px; color: var(--muted); margin-top: 1px; }
+  .header-text h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+  .header-text p { font-size: 12px; color: var(--muted); margin-top: 1px; }
 
   .header-right {
     margin-left: auto;
@@ -68,10 +91,10 @@
   .badge {
     background: var(--green-dim);
     color: var(--green);
-    border: 1px solid var(--green);
+    border: 1px solid rgba(62,207,142,0.3);
     border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 12px;
+    padding: 3px 12px;
+    font-size: 11px;
     font-weight: 600;
     font-family: var(--mono);
     letter-spacing: 0.5px;
@@ -81,18 +104,19 @@
     display: inline-flex;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: 3px;
     gap: 2px;
     flex-wrap: wrap;
   }
   .lang-btn {
     background: none; border: none;
-    padding: 5px 14px; border-radius: 6px;
-    font-family: var(--sans); font-size: 12px; font-weight: 600;
+    padding: 4px 12px; border-radius: 6px;
+    font-family: var(--sans); font-size: 11px; font-weight: 600;
     color: var(--muted); cursor: pointer;
-    transition: all 0.15s;
+    transition: all 0.2s ease;
   }
+  .lang-btn:hover { color: var(--text-secondary); }
   .lang-btn.active {
     background: var(--blue-dim);
     color: var(--blue);
@@ -100,30 +124,190 @@
 
   /* ── Main Layout ── */
   main {
-    max-width: 820px;
+    max-width: 880px;
     margin: 0 auto;
-    padding: 36px 32px 80px;
+    padding: 0 32px 100px;
   }
 
-  /* ── Audience Tabs ── */
+  /* ── Hero Section ── */
+  .hero {
+    text-align: center;
+    padding: 64px 0 48px;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-dim);
+    border: 1px solid rgba(79,142,247,0.2);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 20px;
+  }
+  .hero h2 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+  .hero p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ── Role Selector ── */
+  .role-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .role-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .role-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .role-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .role-card.active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .role-card-teacher::before { background: linear-gradient(90deg, var(--blue), #7c5cfc); }
+  .role-card-teacher.active { border-color: var(--blue); }
+  .role-card-teacher.active::before { opacity: 1; }
+  .role-card-it::before { background: linear-gradient(90deg, var(--green), var(--blue)); }
+  .role-card-it.active { border-color: var(--green); }
+  .role-card-it.active::before { opacity: 1; }
+
+  .role-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .role-card h3 {
+    font-size: 17px; font-weight: 700; color: #fff;
+    margin-bottom: 6px;
+  }
+  .role-card p {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.6; margin-bottom: 14px;
+  }
+  .role-cta {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 13px; font-weight: 600;
+    color: var(--blue);
+    transition: gap 0.2s ease;
+  }
+  .role-card-it .role-cta { color: var(--green); }
+  .role-card:hover .role-cta { gap: 8px; }
+  .role-time {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; color: var(--muted);
+    font-family: var(--mono);
+    margin-bottom: 14px;
+  }
+
+  /* ── Progress Bar ── */
+  .progress-bar {
+    display: none;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+    padding: 0 12px;
+  }
+  .progress-bar.visible { display: flex; }
+
+  .progress-dot {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--muted);
+    background: var(--surface);
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+  }
+  .progress-dot.active {
+    border-color: var(--blue);
+    color: var(--blue);
+    background: var(--blue-dim);
+    box-shadow: var(--shadow-glow-blue);
+  }
+  .progress-dot.done {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+  .progress-line {
+    flex: 1; height: 2px;
+    background: var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  .progress-line.done { background: var(--green); }
+  .progress-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .progress-dot.active .progress-label { color: var(--blue); }
+  .progress-dot.done .progress-label { color: var(--green); }
+
+  /* ── IT Admin Tabs ── */
   .tabs {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
     margin-bottom: 36px;
   }
 
   .tab {
     background: var(--surface);
     border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
     cursor: pointer;
-    transition: border-color 0.15s, background 0.15s;
+    transition: all 0.2s ease;
     text-align: left;
   }
-  .tab:hover { border-color: #3a3d4a; }
-  .tab.active { border-color: var(--blue); }
+  .tab:hover { border-color: var(--border-hover); }
+  .tab.active { border-color: var(--blue); box-shadow: var(--shadow-glow-blue); }
 
   .tab-tag {
     display: inline-block;
@@ -134,24 +318,138 @@
   }
   .tag-chromebook { background: var(--green-dim); color: var(--green); }
   .tag-windows { background: var(--purple-dim); color: var(--purple); }
-  .tag-student { background: var(--blue-dim); color: var(--blue); }
   .tag-mac { background: rgba(167,139,250,0.15); color: #c4b5fd; }
 
   .tab h3 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
   .tab p { font-size: 11px; color: var(--muted); line-height: 1.5; }
-  .tab .tab-icon { font-size: 16px; float: right; margin-top: -2px; }
 
   /* ── Section Panels ── */
   .panel { display: none; }
   .panel.visible { display: block; }
 
-  /* ── Shared Components ── */
+  /* ── Phase Section ── */
+  .phase {
+    margin-bottom: 16px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    transition: box-shadow 0.3s ease;
+  }
+  .phase.expanded { box-shadow: var(--shadow-card); }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    user-select: none;
+  }
+  .phase-header:hover { background: rgba(255,255,255,0.02); }
+
+  .phase-number {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 14px; font-weight: 600;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+  .phase-number.blue { background: var(--blue-dim); color: var(--blue); border: 1.5px solid rgba(79,142,247,0.3); }
+  .phase-number.green-done { background: var(--green-dim); color: var(--green); border: 1.5px solid rgba(62,207,142,0.3); }
+
+  .phase-info { flex: 1; }
+  .phase-info h3 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .phase-meta {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 11px; color: var(--muted);
+  }
+  .phase-time {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: var(--mono);
+  }
+  .phase-status {
+    display: inline-flex; align-items: center; gap: 4px;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .phase-chevron {
+    font-size: 14px;
+    color: var(--muted);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  .phase.expanded .phase-chevron { transform: rotate(180deg); }
+
+  .phase-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .phase.expanded .phase-content {
+    max-height: 3000px;
+  }
+  .phase-inner {
+    padding: 0 24px 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Steps (inside phases) ── */
+  .steps { display: flex; flex-direction: column; padding-top: 24px; }
+
+  .step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 0 16px;
+    position: relative;
+  }
+
+  .step:not(:last-child) .step-line {
+    position: absolute;
+    left: 19px; top: 40px; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .step-check {
+    width: 40px; height: 40px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 13px; font-weight: 600;
+    color: var(--muted);
+    background: var(--bg);
+    flex-shrink: 0;
+    position: relative; z-index: 2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .step-check:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+  .step-check.checked {
+    border-color: var(--green);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  .step-body { padding: 6px 0 28px; }
+  .step-body h2 { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.2px; }
+  .step-body p { color: var(--text-secondary); font-size: 13px; margin-bottom: 10px; }
+
+  /* ── Shared UI Components ── */
   .intro-box {
     background: var(--blue-dim);
-    border: 1px solid var(--blue);
-    border-radius: 10px;
+    border: 1px solid rgba(79,142,247,0.2);
+    border-radius: var(--radius-md);
     padding: 16px 20px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     font-size: 13px;
     color: #a8c4ff;
     display: flex;
@@ -160,57 +458,11 @@
   }
   .intro-box .icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
-  .steps { display: flex; flex-direction: column; }
-
-  .step {
-    display: grid;
-    grid-template-columns: 44px 1fr;
-    gap: 0 16px;
-    position: relative;
-  }
-
-  .step:not(:last-child) .line {
-    position: absolute;
-    left: 21px; top: 42px; bottom: 0;
-    width: 2px;
-    background: var(--border);
-  }
-
-  .step-num {
-    width: 44px; height: 44px;
-    border: 2px solid var(--blue);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono);
-    font-size: 14px; font-weight: 500;
-    color: var(--blue);
-    background: var(--bg);
-    flex-shrink: 0;
-    position: relative; z-index: 1;
-  }
-
-  .step-body { padding: 8px 0 32px; }
-  .step-body h2 { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 6px; letter-spacing: -0.2px; }
-  .step-body p { color: #9aa0b8; font-size: 13px; margin-bottom: 10px; }
-
-  .path {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 7px 12px;
-    font-size: 12px;
-    color: var(--amber);
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-  }
-  .path .sep { color: var(--muted); }
-
   .copy-box {
-    background: var(--surface);
+    background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
     display: flex; align-items: center;
     justify-content: space-between;
     gap: 10px;
@@ -223,20 +475,20 @@
   }
 
   .copy-btn {
-    background: var(--border); border: none;
-    border-radius: 5px; color: var(--muted);
+    background: var(--surface-2); border: none;
+    border-radius: 6px; color: var(--muted);
     font-family: var(--mono); font-size: 11px;
     padding: 5px 10px; cursor: pointer;
     flex-shrink: 0;
-    transition: background 0.15s, color 0.15s;
+    transition: all 0.2s ease;
   }
   .copy-btn:hover { background: var(--blue); color: #fff; }
   .copy-btn.copied { background: var(--green-dim); color: var(--green); }
 
   .note {
     background: var(--amber-dim);
-    border: 1px solid var(--amber);
-    border-radius: 7px;
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: var(--radius-sm);
     padding: 10px 14px;
     font-size: 12px; color: #f0c97a;
     display: flex; gap: 8px;
@@ -246,18 +498,31 @@
 
   .warn {
     background: var(--red-dim);
-    border: 1px solid var(--red);
-    border-radius: 7px;
+    border: 1px solid rgba(247,111,111,0.25);
+    border-radius: var(--radius-sm);
     padding: 10px 14px;
     font-size: 12px; color: #ffaaaa;
     display: flex; gap: 8px;
     margin-top: 8px;
   }
 
-  .setting-row {
-    background: var(--surface);
+  .path {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--bg);
     border: 1px solid var(--border);
-    border-radius: 7px;
+    border-radius: 6px;
+    padding: 7px 12px;
+    font-size: 12px;
+    color: var(--amber);
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .path .sep { color: var(--muted); }
+
+  .setting-row {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     padding: 10px 14px;
     margin-bottom: 6px;
     display: flex;
@@ -270,8 +535,8 @@
 
   .done-box {
     background: var(--green-dim);
-    border: 1px solid var(--green);
-    border-radius: 10px;
+    border: 1px solid rgba(62,207,142,0.25);
+    border-radius: var(--radius-md);
     padding: 18px 20px;
     display: flex; gap: 12px;
     align-items: flex-start;
@@ -282,9 +547,9 @@
   .done-box p { font-size: 12px; color: #5db88e; }
 
   .code-block {
-    background: #0a0b10;
+    background: #060710;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: 14px;
     margin-bottom: 10px;
     position: relative;
@@ -303,53 +568,248 @@
 
   .download-btn {
     display: inline-flex; align-items: center; gap: 6px;
-    background: var(--blue); border: none;
-    border-radius: 8px; color: #fff;
+    background: linear-gradient(135deg, var(--blue), #7c5cfc);
+    border: none;
+    border-radius: var(--radius-sm); color: #fff;
     font-family: var(--sans); font-size: 13px; font-weight: 600;
     padding: 10px 18px; cursor: pointer;
-    transition: opacity 0.15s;
+    transition: all 0.2s ease;
     margin-bottom: 8px;
+    text-decoration: none;
   }
-  .download-btn:hover { opacity: 0.85; }
+  .download-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: var(--shadow-glow-blue); }
 
   /* ── Windows sub-methods ── */
   .sub-methods {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; margin-bottom: 28px;
+    gap: 12px; margin-bottom: 28px;
   }
   .sub-method {
     background: var(--surface);
     border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px; cursor: pointer;
-    transition: border-color 0.15s;
+    border-radius: var(--radius-md);
+    padding: 16px 18px; cursor: pointer;
+    transition: all 0.2s ease;
     font-size: 12px;
   }
-  .sub-method.active { border-color: var(--purple); }
+  .sub-method:hover { border-color: var(--border-hover); }
+  .sub-method.active { border-color: var(--purple); box-shadow: 0 0 16px rgba(167,139,250,0.1); }
   .sub-method h4 { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px; }
   .sub-method p { color: var(--muted); font-size: 11px; }
 
   .sub-panel { display: none; }
   .sub-panel.visible { display: block; }
 
-  /* ── Student Section ── */
+  .ref-label {
+    color: var(--muted); font-size: 12px;
+    margin-bottom: 10px; margin-top: 24px;
+  }
+
+  /* ── Command Cards Grid ── */
+  .cmd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .cmd-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    transition: all 0.25s ease;
+  }
+  .cmd-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .cmd-card .cmd-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .cmd-card h4 {
+    font-size: 14px; font-weight: 700; color: #fff;
+    margin-bottom: 6px;
+  }
+  .cmd-card p {
+    font-size: 12px; color: var(--text-secondary);
+    line-height: 1.6; margin-bottom: 10px;
+  }
+  .cmd-tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 700;
+    font-family: var(--mono);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .tag-blue { background: var(--blue-dim); color: var(--blue); }
+  .tag-red { background: var(--red-dim); color: var(--red); }
+  .tag-green { background: var(--green-dim); color: var(--green); }
+  .tag-amber { background: var(--amber-dim); color: var(--amber); }
+
+  /* ── Classroom Simulator ── */
+  .classroom-sim {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .sim-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(79,142,247,0.08), rgba(124,92,252,0.06));
+    border-bottom: 1px solid var(--border);
+  }
+  .sim-toolbar-label {
+    font-size: 13px; font-weight: 700; color: #fff;
+  }
+  .sim-room-badge {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--text-secondary);
+    font-family: var(--mono);
+  }
+  .sim-room-badge .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green);
+    animation: pulse-dot 2s ease infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .sim-body {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    min-height: 220px;
+  }
+  .sim-students {
+    padding: 16px 18px;
+    border-right: 1px solid var(--border);
+  }
+  .sim-students-label {
+    font-size: 11px; color: var(--muted);
+    font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 12px;
+  }
+  .sim-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .sim-student {
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+  }
+  .sim-student:hover { border-color: var(--border-hover); background: var(--surface-3); }
+  .sim-student .s-avatar { font-size: 20px; display: block; margin-bottom: 4px; }
+  .sim-student .s-name {
+    font-size: 11px; font-family: var(--mono);
+    color: var(--muted); font-weight: 600;
+  }
+  .sim-student .s-status {
+    position: absolute; top: -4px; right: -4px;
+    font-size: 12px;
+  }
+
+  .sim-student.focused {
+    border-color: var(--blue);
+    background: var(--blue-dim);
+  }
+  .sim-student.focused .s-name { color: var(--blue); }
+  .sim-student.locked {
+    border-color: var(--red);
+    background: var(--red-dim);
+  }
+  .sim-student.locked .s-name { color: var(--red); }
+  .sim-student.help {
+    border-color: var(--amber);
+    background: var(--amber-dim);
+    animation: pulse-help 1s ease infinite;
+  }
+  @keyframes pulse-help {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0); }
+    50% { box-shadow: 0 0 12px rgba(245,166,35,0.3); }
+  }
+
+  .sim-controls {
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sim-controls-label {
+    font-size: 11px; color: var(--muted);
+    font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 6px;
+  }
+  .sim-btn {
+    border: none;
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 12px; font-weight: 600;
+    font-family: var(--sans);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+  }
+  .sim-btn:hover { transform: translateX(2px); }
+  .sim-btn.blue { background: var(--blue-dim); color: var(--blue); }
+  .sim-btn.red { background: var(--red-dim); color: var(--red); }
+  .sim-btn.green { background: var(--green-dim); color: var(--green); }
+  .sim-btn.amber { background: var(--amber-dim); color: var(--amber); }
+  .sim-btn.muted { background: var(--surface-2); color: var(--muted); }
+  .sim-btn.active-state { box-shadow: inset 0 0 0 1.5px currentColor; }
+
+  .sim-status-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--text-secondary);
+    font-family: var(--mono);
+  }
+  .sim-status-bar > span:first-child { color: var(--blue); }
+
+  @keyframes log-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .sim-log-item { animation: log-in 0.3s ease; }
+
+  /* ── Student Share Card ── */
   .student-card {
     background: #fff;
-    border-radius: 20px;
+    border-radius: var(--radius-xl);
     max-width: 460px;
     margin: 0 auto;
     padding: 36px 32px 32px;
     text-align: center;
     color: #1a1f36;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   }
-
   .student-card .s-logo {
     display: flex; align-items: center; justify-content: center;
     gap: 8px; margin-bottom: 4px;
   }
   .student-card .s-logo-icon {
     width: 40px; height: 40px;
-    background: #4f8ef7; border-radius: 10px;
+    background: linear-gradient(135deg, #4f8ef7, #7c5cfc); border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px;
   }
@@ -372,7 +832,7 @@
   }
   .s-step-num {
     width: 28px; height: 28px;
-    background: #4f8ef7; color: #fff;
+    background: linear-gradient(135deg, #4f8ef7, #7c5cfc); color: #fff;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 700;
@@ -404,89 +864,76 @@
 
   .store-link {
     display: block;
-    background: #4f8ef7; color: #fff;
+    background: linear-gradient(135deg, #4f8ef7, #7c5cfc); color: #fff;
     text-decoration: none; border-radius: 10px;
     padding: 12px; font-size: 13px; font-weight: 700;
-    transition: background 0.15s;
+    transition: all 0.2s ease;
   }
-  .store-link:hover { background: #3a7be0; }
+  .store-link:hover { opacity: 0.9; }
 
   .store-hint {
     font-size: 11px; color: #aab4cc; margin-top: 8px;
   }
 
-  /* ── Ref section ── */
-  .ref-label {
-    color: var(--muted); font-size: 12px;
-    margin-bottom: 10px; margin-top: 24px;
+  /* ── Section Titles ── */
+  .teacher-section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.2px;
   }
 
-  /* ── Routing Guide ── */
-  .routing-guide {
-    background: linear-gradient(135deg, var(--surface) 0%, rgba(79,142,247,0.06) 100%);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px 24px 20px;
-    margin-bottom: 28px;
+  /* ── Completion Banner ── */
+  .completion-banner {
+    background: linear-gradient(135deg, rgba(62,207,142,0.1), rgba(79,142,247,0.08));
+    border: 1px solid rgba(62,207,142,0.25);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    text-align: center;
+    margin-top: 40px;
+    display: none;
   }
-  .routing-guide h2 {
-    font-size: 16px; font-weight: 700; color: #fff;
-    margin-bottom: 14px;
+  .completion-banner.visible { display: block; }
+  .completion-banner h3 {
+    font-size: 20px; font-weight: 700;
+    color: var(--green); margin-bottom: 6px;
   }
-  .routing-paths {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .route-card {
-    border-radius: 10px;
-    padding: 16px 18px;
-    cursor: pointer;
-    transition: transform 0.15s, border-color 0.15s;
-  }
-  .route-card:hover { transform: translateY(-2px); }
-  .route-teacher {
-    background: var(--blue-dim);
-    border: 1.5px solid var(--blue);
-  }
-  .route-teacher:hover { border-color: #7aabff; }
-  .route-it {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-  }
-  .route-it:hover { border-color: var(--muted); }
-  .route-card .route-emoji { font-size: 22px; margin-bottom: 8px; }
-  .route-card h3 {
-    font-size: 14px; font-weight: 700; color: #fff;
-    margin-bottom: 4px;
-  }
-  .route-card p {
-    font-size: 12px; color: var(--muted); line-height: 1.55;
-  }
-  .route-card .route-action {
-    display: inline-block; margin-top: 10px;
-    font-size: 12px; font-weight: 600;
-    color: var(--blue); cursor: pointer;
-  }
-  .route-teacher .route-action { color: var(--blue); }
-  .route-it .route-action { color: var(--muted); }
-
-  @media (max-width: 640px) {
-    .routing-paths { grid-template-columns: 1fr; }
+  .completion-banner p {
+    font-size: 14px; color: var(--text-secondary);
   }
 
   /* ── Responsive ── */
   @media (max-width: 640px) {
-    header { padding: 18px 20px; }
-    main { padding: 24px 18px 60px; }
+    header { padding: 12px 18px; }
+    main { padding: 0 18px 60px; }
+    .hero { padding: 40px 0 32px; }
+    .hero h2 { font-size: 24px; }
+    .role-selector { grid-template-columns: 1fr; }
     .tabs { grid-template-columns: 1fr; }
     .sub-methods { grid-template-columns: 1fr; }
+    .cmd-grid { grid-template-columns: 1fr; }
+    .sim-body { grid-template-columns: 1fr; }
+    .sim-students { border-right: none; border-bottom: 1px solid var(--border); }
+    .sim-controls { flex-direction: row; flex-wrap: wrap; }
+    .sim-btn { flex: 1; min-width: 100px; text-align: center; }
     .student-card { padding: 28px 22px 24px; }
+    .phase-header { padding: 16px 18px; }
+    .phase-inner { padding: 0 18px 24px; }
+    .progress-bar { display: none !important; }
   }
 
+  /* ── Print ── */
   @media print {
     body { background: #fff; color: #000; }
-    .lang-toggle, .tabs, .routing-guide { display: none; }
+    header, .hero, .role-selector, .progress-bar, .lang-toggle, .tabs, .completion-banner { display: none !important; }
     .panel { display: block !important; }
+    .phase { border: 1px solid #ddd; box-shadow: none; }
+    .phase-content { max-height: none !important; }
     .panel + .panel { page-break-before: always; }
   }
 </style>
@@ -506,417 +953,713 @@
       <button class="lang-btn" onclick="setLang('zh')">中文</button>
       <button class="lang-btn" onclick="setLang('vi')">Tiếng Việt</button>
     </div>
-    <span class="badge">v1.3.3</span>
+    <span class="badge">v1.4.1</span>
   </div>
 </header>
 
 <main>
 
-  <!-- ── Routing Guide ── -->
-  <div class="routing-guide">
-    <h2 data-i18n="route_h">👋 Which guide do you need?</h2>
-    <div class="routing-paths">
-      <div class="route-card route-teacher" onclick="showPanel('student'); scrollToTabs();">
-        <div class="route-emoji">🧑‍🏫</div>
-        <h3 data-i18n="route_teacher_h">I'm a teacher</h3>
-        <p data-i18n="route_teacher_p">Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves. Mac users: see the <strong>Mac Teacher App</strong> tab.</p>
-        <span class="route-action" data-i18n="route_teacher_action">→ Go to Self-Install guide</span>
-      </div>
-      <div class="route-card route-it" onclick="showPanel('chromebook'); scrollToTabs();">
-        <div class="route-emoji">🔧</div>
-        <h3 data-i18n="route_it_h">I'm IT / school admin</h3>
-        <p data-i18n="route_it_p">Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.</p>
-        <span class="route-action" data-i18n="route_it_action">→ Go to deployment guides</span>
-      </div>
+  <!-- ── Hero ── -->
+  <div class="hero" id="hero-section">
+    <div class="hero-badge">⚡ <span data-i18n="hero_badge">Ready in under 5 minutes</span></div>
+    <h2 data-i18n="hero_h">Get started with Layers</h2>
+    <p data-i18n="hero_p">Choose your setup path below. Teachers start with a personal install, IT admins deploy to all devices at once.</p>
+  </div>
+
+  <!-- ── Role Selector ── -->
+  <div class="role-selector" id="role-selector">
+    <div class="role-card role-card-teacher" onclick="selectRole('teacher')">
+      <span class="role-icon">🧑‍🏫</span>
+      <h3 data-i18n="route_teacher_h">I'm a teacher</h3>
+      <p data-i18n="role_teacher_p">Install Layers on your browser, create a classroom room, and learn to control student screens in real time.</p>
+      <div class="role-time">⏱ ~5 min</div>
+      <span class="role-cta" data-i18n="route_teacher_action">→ Start teacher setup</span>
+    </div>
+    <div class="role-card role-card-it" onclick="selectRole('it')">
+      <span class="role-icon">🔧</span>
+      <h3 data-i18n="route_it_h">I'm IT / school admin</h3>
+      <p data-i18n="role_it_p">Deploy Layers to all student devices at once — no student action needed. Requires admin access.</p>
+      <div class="role-time">⏱ ~3 min</div>
+      <span class="role-cta" data-i18n="route_it_action">→ Choose deployment method</span>
     </div>
   </div>
 
-  <!-- ── Audience Tabs ── -->
-  <div class="tabs" id="guide-tabs">
-    <div class="tab" onclick="showPanel('chromebook')">
-      <span class="tab-tag tag-chromebook">ChromeOS</span>
-      <h3 data-i18n="tab_cb_h">Chromebook Admin</h3>
-      <p data-i18n="tab_cb_p">Force-install via Google Workspace Admin Console</p>
-    </div>
-    <div class="tab" onclick="showPanel('windows')">
-      <span class="tab-tag tag-windows">Windows</span>
-      <h3 data-i18n="tab_win_h">Windows Admin</h3>
-      <p data-i18n="tab_win_p">Force-install via registry on Windows 10/11 PCs</p>
-    </div>
-    <div class="tab" onclick="showPanel('mac')">
-      <span class="tab-tag tag-mac">macOS</span>
-      <h3 data-i18n="tab_mac_h">Mac Teacher App</h3>
-      <p data-i18n="tab_mac_p">Download &amp; first-launch setup for macOS</p>
-    </div>
-    <div class="tab active" onclick="showPanel('student')">
-      <span class="tab-tag tag-student" data-i18n="tag_student">Self-Install</span>
-      <h3 data-i18n="tab_st_h">Teacher / Self-Install</h3>
-      <p data-i18n="tab_st_p">Install on your own browser or share with students</p>
-    </div>
+  <!-- ── Teacher Progress Bar ── -->
+  <div class="progress-bar" id="teacher-progress">
+    <div class="progress-dot active" onclick="scrollToPhase(1)"><span class="progress-label" data-i18n="prog_install">Install</span>1</div>
+    <div class="progress-line"></div>
+    <div class="progress-dot" onclick="scrollToPhase(2)"><span class="progress-label" data-i18n="prog_room">Room</span>2</div>
+    <div class="progress-line"></div>
+    <div class="progress-dot" onclick="scrollToPhase(3)"><span class="progress-label" data-i18n="prog_students">Students</span>3</div>
+    <div class="progress-line"></div>
+    <div class="progress-dot" onclick="scrollToPhase(4)"><span class="progress-label" data-i18n="prog_controls">Controls</span>4</div>
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
-  <!--  CHROMEBOOK PANEL                            -->
+  <!--  TEACHER PANEL (phased wizard)              -->
   <!-- ═══════════════════════════════════════════ -->
-  <div id="panel-chromebook" class="panel">
-    <div class="note" style="margin-bottom:16px;">
-      <span>🔒</span>
-      <span data-i18n="admin_note_cb">This guide requires <strong>Google Workspace admin access</strong>. If you're a teacher without admin rights, ask your school's IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.</span>
-    </div>
-    <div class="intro-box">
-      <span class="icon">ℹ️</span>
-      <span data-i18n="cb_intro">This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.</span>
-    </div>
+  <div id="panel-teacher" class="panel">
 
-    <div class="steps">
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_s1_h">Open Google Admin Console</h2>
-          <p data-i18n="cb_s1_p">Sign in with your Google Workspace admin account.</p>
-          <div class="copy-box">
-            <code>https://admin.google.com</code>
-            <button class="copy-btn" onclick="copyText(this, 'https://admin.google.com')">Copy</button>
+    <!-- Phase 1: Install Windows App -->
+    <div class="phase expanded" id="phase-1" data-phase="1">
+      <div class="phase-header" onclick="togglePhase(1)">
+        <div class="phase-number blue">1</div>
+        <div class="phase-info">
+          <h3 data-i18n="teacher_sec1_short">Install the Layers teacher app</h3>
+          <div class="phase-meta">
+            <span class="phase-time">⏱ ~2 min</span>
+            <span class="phase-status" id="phase-1-status" style="display:none">✓ <span data-i18n="phase_done">Done</span></span>
           </div>
         </div>
+        <span class="phase-chevron">▾</span>
       </div>
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_s2_h">Navigate to Chrome App Management</h2>
-          <p data-i18n="cb_s2_p">Follow this path in the left sidebar:</p>
-          <div class="path">
-            <span data-i18n="cb_s2_nav1">Devices</span><span class="sep">›</span>
-            <span>Chrome</span><span class="sep">›</span>
-            <span data-i18n="cb_s2_nav3">Apps &amp; Extensions</span><span class="sep">›</span>
-            <span data-i18n="cb_s2_nav4">Users &amp; Browsers</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_s3_h">Select the Student Organisational Unit</h2>
-          <p data-i18n="cb_s3_p">In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.</p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_s4_h">Add the Layers Extension</h2>
-          <p data-i18n="cb_s4_p">Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:</p>
-          <div class="copy-box">
-            <code>iclfdiolilnmjeimkdoeloeiioaongnh</code>
-            <button class="copy-btn" onclick="copyText(this, 'iclfdiolilnmjeimkdoeloeiioaongnh')">Copy</button>
-          </div>
-          <p data-i18n="cb_s4_p2">Select the Layers extension and click <strong>Select</strong>.</p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_s5_h">Set Installation Policy to Force Install</h2>
-          <p data-i18n="cb_s5_p">After adding the extension, a settings panel appears. Set:</p>
-          <div class="setting-row">
-            <span class="label" data-i18n="cb_s5_policy">Installation policy</span>
-            <span class="val" data-i18n="cb_s5_force">Force install</span>
-          </div>
-          <div class="setting-row">
-            <span class="label" data-i18n="cb_s5_pin">Pin to toolbar</span>
-            <span class="val" data-i18n="cb_s5_enabled">Enabled (recommended)</span>
-          </div>
-          <div class="note">
-            <span>⚠️</span>
-            <span data-i18n="cb_s5_note"><strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num">6</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_s6_h">Save</h2>
-          <p data-i18n="cb_s6_p">Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.</p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num">✓</div>
-        <div class="step-body">
-          <h2 data-i18n="cb_done_h">Done — What Happens Next</h2>
-          <div class="done-box">
-            <span class="icon">🎉</span>
-            <div>
-              <h3 data-i18n="cb_done_title">Extension auto-installs on all student devices</h3>
-              <p data-i18n="cb_done_p">Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.</p>
+      <div class="phase-content">
+        <div class="phase-inner">
+          <div class="steps">
+            <div class="step">
+              <div class="step-line"></div>
+              <div class="step-check" data-step="1-1" onclick="toggleStep(this)">1</div>
+              <div class="step-body">
+                <h2 data-i18n="teacher_s1_h">Download Layers for Windows</h2>
+                <p data-i18n="teacher_s1_p">Click the button below to download the Layers .zip file. Extract it and you'll find the <strong>Layers.exe</strong> file inside — no installer needed.</p>
+                <a class="download-btn" href="https://github.com/susume/thelayersapp/releases/latest/download/Layers.zip" rel="noopener noreferrer" style="text-decoration:none;">⬇ Download Layers.zip</a>
+                <div class="note" style="margin-top:10px;">
+                  <span>💡</span>
+                  <span data-i18n="teacher_s1_note"><strong>On a school computer?</strong> If the app won't open from your Downloads folder, copy <strong>Layers.exe</strong> to your Desktop first, then run it from there.</span>
+                </div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-line"></div>
+              <div class="step-check" data-step="1-2" onclick="toggleStep(this)">2</div>
+              <div class="step-body">
+                <h2 data-i18n="teacher_s2_h">Handle the Windows SmartScreen warning</h2>
+                <p data-i18n="teacher_s2_p">When you double-click <strong>Layers.exe</strong>, Windows will show a blue SmartScreen warning saying <em>"Windows protected your PC"</em>. This is normal for independent software that isn't signed with an expensive Microsoft certificate.</p>
+                <div class="setting-row">
+                  <span class="label" data-i18n="teacher_s2_step1">Step A</span>
+                  <span class="val" data-i18n="teacher_s2_step1v">Click "More info"</span>
+                </div>
+                <div class="setting-row">
+                  <span class="label" data-i18n="teacher_s2_step2">Step B</span>
+                  <span class="val" data-i18n="teacher_s2_step2v">Click "Run anyway"</span>
+                </div>
+                <div class="note">
+                  <span>⚠️</span>
+                  <span data-i18n="teacher_s2_note">You only need to do this <strong>once</strong>. After the first launch, Windows will remember your choice and open Layers normally.</span>
+                </div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-line"></div>
+              <div class="step-check" data-step="1-3" onclick="toggleStep(this)">3</div>
+              <div class="step-body">
+                <h2 data-i18n="teacher_s3_h">Layers is running</h2>
+                <p data-i18n="teacher_s3_p">The Layers toolbar will appear floating on your screen. It starts in <strong>trial mode</strong> — all features work for 14 days, no license key needed.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-check" data-step="1-4" onclick="toggleStep(this)">✓</div>
+              <div class="step-body">
+                <h2 data-i18n="teacher_s4_h">App installed</h2>
+                <div class="done-box">
+                  <span class="icon">✅</span>
+                  <div>
+                    <h3 data-i18n="teacher_s4_title">Layers is ready on your computer</h3>
+                    <p data-i18n="teacher_s4_p">The toolbar floats above all your apps — PowerPoint, Chrome, YouTube, everything. Now continue below to create a classroom room.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
+
+    <!-- Phase 2: Create Room -->
+    <div class="phase" id="phase-2" data-phase="2">
+      <div class="phase-header" onclick="togglePhase(2)">
+        <div class="phase-number blue">2</div>
+        <div class="phase-info">
+          <h3 data-i18n="teacher_sec2_short">Create a classroom room</h3>
+          <div class="phase-meta">
+            <span class="phase-time">⏱ ~2 min</span>
+            <span class="phase-status" id="phase-2-status" style="display:none">✓ <span data-i18n="phase_done">Done</span></span>
+          </div>
+        </div>
+        <span class="phase-chevron">▾</span>
+      </div>
+      <div class="phase-content">
+        <div class="phase-inner">
+          <div class="steps">
+            <div class="step">
+              <div class="step-line"></div>
+              <div class="step-check" data-step="2-1" onclick="toggleStep(this)">1</div>
+              <div class="step-body">
+                <h2 data-i18n="room_s1_h">Open the Settings panel in Layers</h2>
+                <p data-i18n="room_s1_p">Click the 🗂️ icon to open the Layers toolbar, then click the <strong>⚙ Settings</strong> button at the bottom of the toolbar.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-line"></div>
+              <div class="step-check" data-step="2-2" onclick="toggleStep(this)">2</div>
+              <div class="step-body">
+                <h2 data-i18n="room_s2_h">Click "Create Room" and enter a name &amp; password</h2>
+                <p data-i18n="room_s2_p">Give your room a memorable name (e.g. <em>English 3A</em>) and set a password. Students will need the <strong>Room Name</strong> and <strong>Password</strong> to join.</p>
+                <div class="note">
+                  <span>💡</span>
+                  <span data-i18n="room_s2_note">The Room Name is your <strong>Room ID</strong> — keep it simple and easy to type. You can save multiple rooms and switch between them in Settings.</span>
+                </div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-line"></div>
+              <div class="step-check" data-step="2-3" onclick="toggleStep(this)">3</div>
+              <div class="step-body">
+                <h2 data-i18n="room_s3_h">Write the Room Name &amp; Password on the board</h2>
+                <p data-i18n="room_s3_p">Students will need your <strong>Room Name</strong> and <strong>Password</strong> to connect in the next step. Display them where the class can see.</p>
+                <div class="note" style="background:var(--green-dim);border-color:rgba(62,207,142,0.25);">
+                  <span>💡</span>
+                  <span data-i18n="room_s3_tip">You can change the password at any time in <strong>Settings</strong>.</span>
+                </div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-check" data-step="2-4" onclick="toggleStep(this)">✓</div>
+              <div class="step-body">
+                <h2 data-i18n="room_done_h">Your classroom is live</h2>
+                <div class="done-box">
+                  <span class="icon">🎉</span>
+                  <div>
+                    <h3 data-i18n="room_done_title">Students are connected — you're in control</h3>
+                    <p data-i18n="room_done_p">Use the teacher controls below to focus, lock, or send links to all student browsers at once. Changes take effect within seconds.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3: Students install extension & join room -->
+    <div class="phase" id="phase-3" data-phase="3">
+      <div class="phase-header" onclick="togglePhase(3)">
+        <div class="phase-number blue">3</div>
+        <div class="phase-info">
+          <h3 data-i18n="teacher_sec3_short">Students install &amp; join</h3>
+          <div class="phase-meta">
+            <span class="phase-time">⏱ ~2 min</span>
+            <span class="phase-status" id="phase-3-status" style="display:none">✓ <span data-i18n="phase_done">Done</span></span>
+          </div>
+        </div>
+        <span class="phase-chevron">▾</span>
+      </div>
+      <div class="phase-content">
+        <div class="phase-inner">
+          <p style="font-size:13px;color:var(--text-secondary);margin:20px 0 20px;" data-i18n="student_intro">Students need to install the free Layers Chrome extension, then join the room you created. Show them the QR code or share the link — it takes under a minute.</p>
+
+          <div class="student-card">
+            <div class="s-logo">
+              <div class="s-logo-icon">🗂️</div>
+              <span class="s-logo-text">Layers</span>
+            </div>
+            <p class="s-tagline" data-i18n="st_tagline">Translation, dictionary, notes &amp; timer — floats over any page</p>
+            <div class="student-steps" id="student-steps"></div>
+            <div class="qr-section">
+              <div class="qr-label" data-i18n="st_qr_label">Scan the QR code</div>
+              <div id="qrcode"></div>
+              <div class="qr-url">chromewebstore.google.com/detail/alielgklefmocpmnmfahepacngmeomof</div>
+            </div>
+            <a class="store-link" href="https://chromewebstore.google.com/detail/alielgklefmocpmnmfahepacngmeomof" target="_blank" data-i18n="st_link">🔗 Open Chrome Web Store</a>
+            <p class="store-hint" data-i18n="st_hint">Can't scan? Click the link above</p>
+          </div>
+
+          <div style="margin-top:28px;">
+            <div class="teacher-section-title" data-i18n="join_title">After installing — students join your room</div>
+            <div class="steps">
+              <div class="step">
+                <div class="step-line"></div>
+                <div class="step-check" data-step="3-1" onclick="toggleStep(this)">1</div>
+                <div class="step-body">
+                  <h2 data-i18n="join_s1_h">Students open the Layers toolbar</h2>
+                  <p data-i18n="join_s1_p">Students click the <strong>🗂️ icon</strong> in the top-right of their Chrome toolbar to open Layers, then click <strong>⚙ Settings</strong>.</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-line"></div>
+                <div class="step-check" data-step="3-2" onclick="toggleStep(this)">2</div>
+                <div class="step-body">
+                  <h2 data-i18n="join_s2_h">Students enter the Room Name &amp; Password</h2>
+                  <p data-i18n="join_s2_p">Students type the <strong>Room Name</strong> and <strong>Password</strong> you created in Step 2, then click <strong>Join Room</strong>.</p>
+                  <div class="note">
+                    <span>💡</span>
+                    <span data-i18n="join_s2_note">Write the Room Name and Password on the board so students can see it. You can change the password later in Settings.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-check" data-step="3-3" onclick="toggleStep(this)">✓</div>
+                <div class="step-body">
+                  <h2 data-i18n="join_done_h">Students are connected</h2>
+                  <div class="done-box">
+                    <span class="icon">🎉</span>
+                    <div>
+                      <h3 data-i18n="join_done_title">Your classroom is live</h3>
+                      <p data-i18n="join_done_p">You'll see a green indicator in your Layers toolbar showing how many students are connected. Each student's number appears in your teacher panel.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4: Master the Controls -->
+    <div class="phase" id="phase-4" data-phase="4">
+      <div class="phase-header" onclick="togglePhase(4)">
+        <div class="phase-number blue">4</div>
+        <div class="phase-info">
+          <h3 data-i18n="teacher_sec4_short">Master the controls</h3>
+          <div class="phase-meta">
+            <span class="phase-time">⏱ ~2 min</span>
+          </div>
+        </div>
+        <span class="phase-chevron">▾</span>
+      </div>
+      <div class="phase-content">
+        <div class="phase-inner">
+          <p style="font-size:13px;color:var(--text-secondary);margin:20px 0 20px;" data-i18n="controls_intro">Once students are connected to your room, you control their Layers toolbar from yours. Here is what each command does — try the interactive demo below.</p>
+
+          <div class="cmd-grid">
+            <div class="cmd-card">
+              <div class="cmd-icon">🎯</div>
+              <h4 data-i18n="cmd_focus_h">Focus Mode</h4>
+              <p data-i18n="cmd_focus_p">Collapses the student toolbar to a minimal strip. Students can still use the timer and notes but cannot open other panels. Keeps students on task.</p>
+              <span class="cmd-tag tag-blue" data-i18n="cmd_focus_tag">Soft restriction</span>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-icon">🔒</div>
+              <h4 data-i18n="cmd_lock_h">Lockdown Mode</h4>
+              <p data-i18n="cmd_lock_p">Fully locks the student toolbar with a PIN. Students cannot close or interact with it until you release. Use during tests or assessments.</p>
+              <span class="cmd-tag tag-red" data-i18n="cmd_lock_tag">Hard restriction</span>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-icon">🔗</div>
+              <h4 data-i18n="cmd_url_h">Push a Link</h4>
+              <p data-i18n="cmd_url_p">Opens a specific URL on all connected student browsers simultaneously. Useful for sharing a reading, a Google Form, or a video.</p>
+              <span class="cmd-tag tag-green" data-i18n="cmd_url_tag">Opens new tab</span>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-icon">🚫</div>
+              <h4 data-i18n="cmd_block_h">Block Sites</h4>
+              <p data-i18n="cmd_block_p">Sends a list of blocked domains to student extensions. Any student who tries to open a blocked domain is redirected. Works in addition to IT-level blocking.</p>
+              <span class="cmd-tag tag-amber" data-i18n="cmd_block_tag">Per-room override</span>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-icon">🗓️</div>
+              <h4 data-i18n="cmd_sched_h">Schedule</h4>
+              <p data-i18n="cmd_sched_p">Set a daily time window during which Focus or Lockdown turns on automatically. Set it once and it runs every day without any teacher action.</p>
+              <span class="cmd-tag tag-blue" data-i18n="cmd_sched_tag">Runs automatically</span>
+            </div>
+            <div class="cmd-card">
+              <div class="cmd-icon">🆘</div>
+              <h4 data-i18n="cmd_help_h">Student Help Signal</h4>
+              <p data-i18n="cmd_help_p">Students press a <strong>Help</strong> button inside their Layers toolbar. Their student number flashes in your teacher panel — no hands raised, no noise.</p>
+              <span class="cmd-tag tag-amber" data-i18n="cmd_help_tag">Silent alert</span>
+            </div>
+          </div>
+
+          <!-- Interactive Simulator -->
+          <div class="teacher-section-title" data-i18n="sim_title">Interactive Demo — Try the teacher controls</div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;" data-i18n="sim_subtitle">Click the buttons on the right to see how student screens respond. Click any student tile to simulate a help request.</p>
+
+          <div class="classroom-sim">
+            <div class="sim-toolbar">
+              <span class="sim-toolbar-label">🧑‍🏫 Layers Teacher Panel</span>
+              <div class="sim-room-badge">
+                <span class="dot"></span>
+                English 3A &nbsp;·&nbsp; 8 students
+              </div>
+            </div>
+            <div class="sim-body">
+              <div class="sim-students">
+                <div class="sim-students-label" data-i18n="sim_students_label">Connected Students</div>
+                <div class="sim-grid" id="sim-grid"></div>
+              </div>
+              <div class="sim-controls">
+                <div class="sim-controls-label" data-i18n="sim_controls_label">Commands</div>
+                <button class="sim-btn blue" id="btn-focus" onclick="simCmd('focus')">🎯 Focus Mode</button>
+                <button class="sim-btn red" id="btn-lock" onclick="simCmd('lock')">🔒 Lockdown</button>
+                <button class="sim-btn green" id="btn-push" onclick="simCmd('push')">🔗 Push Link</button>
+                <button class="sim-btn amber" id="btn-block" onclick="simCmd('block')">🚫 Block Sites</button>
+                <button class="sim-btn muted" id="btn-reset" onclick="simCmd('reset')">↩ Release All</button>
+              </div>
+            </div>
+            <div class="sim-status-bar">
+              <span>›</span>
+              <span class="status-text sim-log-item" id="sim-log">Room active — 8 students connected. Click a command or a student tile.</span>
+            </div>
+          </div>
+
+          <div class="note" style="margin-bottom:8px;">
+            <span>💡</span>
+            <span data-i18n="help_tip">Click any <strong>student tile</strong> above to simulate a help request — the tile flashes amber. Click again to dismiss. In your real classroom, this happens automatically when a student presses the Help button in their toolbar.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completion Banner -->
+    <div class="completion-banner" id="completion-banner">
+      <h3 data-i18n="complete_h">🎉 Setup complete!</h3>
+      <p data-i18n="complete_p">You're all set. Open Layers on your computer to start your first classroom session.</p>
+    </div>
+
   </div>
 
   <!-- ═══════════════════════════════════════════ -->
-  <!--  WINDOWS PANEL                               -->
+  <!--  IT ADMIN PANEL                             -->
   <!-- ═══════════════════════════════════════════ -->
-  <div id="panel-windows" class="panel">
+  <div id="panel-it" class="panel">
 
-    <div class="note" style="margin-bottom:16px;">
-      <span>🔒</span>
-      <span data-i18n="admin_note_win">This guide requires <strong>Windows administrator rights</strong>. If you're a teacher without admin access, ask your school's IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.</span>
-    </div>
-
-    <div class="intro-box">
-      <span class="icon">ℹ️</span>
-      <span data-i18n="win_intro">This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.</span>
-    </div>
-
-    <div class="sub-methods">
-      <div class="sub-method active" onclick="showSubMethod('reg')">
-        <span class="tab-tag" style="background:var(--green-dim);color:var(--green);font-size:10px;padding:2px 7px;border-radius:4px;margin-bottom:6px;display:inline-block" data-i18n="win_recommended">Recommended</span>
-        <h4 data-i18n="win_m1_h">⚙️ Registry (.reg file)</h4>
-        <p data-i18n="win_m1_p">Double-click to install. 30 sec per machine.</p>
+    <div class="tabs" id="it-tabs">
+      <div class="tab active" onclick="showITPanel('chromebook')">
+        <span class="tab-tag tag-chromebook">ChromeOS</span>
+        <h3 data-i18n="tab_cb_h">Chromebook Admin</h3>
+        <p data-i18n="tab_cb_p">Force-install via Google Workspace Admin Console</p>
       </div>
-      <div class="sub-method" onclick="showSubMethod('bat')">
-        <span class="tab-tag" style="background:var(--blue-dim);color:var(--blue);font-size:10px;padding:2px 7px;border-radius:4px;margin-bottom:6px;display:inline-block" data-i18n="win_fastest">Fastest</span>
-        <h4 data-i18n="win_m2_h">💻 Silent .bat Script</h4>
-        <p data-i18n="win_m2_p">Run from USB or network share. No clicks.</p>
+      <div class="tab" onclick="showITPanel('windows')">
+        <span class="tab-tag tag-windows">Windows</span>
+        <h3 data-i18n="tab_win_h">Windows Admin</h3>
+        <p data-i18n="tab_win_p">Force-install via registry on Windows 10/11 PCs</p>
+      </div>
+      <div class="tab" onclick="showITPanel('mac')">
+        <span class="tab-tag tag-mac">macOS</span>
+        <h3 data-i18n="tab_mac_h">Mac Teacher App</h3>
+        <p data-i18n="tab_mac_p">Download &amp; first-launch setup for macOS</p>
       </div>
     </div>
 
-    <!-- REG sub-panel -->
-    <div id="sub-reg" class="sub-panel visible">
+    <!-- Chromebook Panel -->
+    <div id="it-chromebook" class="sub-panel visible">
+      <div class="note" style="margin-bottom:16px;">
+        <span>🔒</span>
+        <span data-i18n="admin_note_cb">This guide requires <strong>Google Workspace admin access</strong>. If you're a teacher without admin rights, ask your school's IT department to follow these steps, or use the <strong>Teacher Setup</strong> tab instead.</span>
+      </div>
+      <div class="intro-box">
+        <span class="icon">ℹ️</span>
+        <span data-i18n="cb_intro">This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.</span>
+      </div>
+
       <div class="steps">
         <div class="step">
-          <div class="line"></div>
-          <div class="step-num">1</div>
+          <div class="step-line"></div>
+          <div class="step-check" data-step="cb-1" onclick="toggleStep(this)">1</div>
           <div class="step-body">
-            <h2 data-i18n="win_reg_s1_h">Download the .reg file</h2>
-            <p data-i18n="win_reg_s1_p">Save it anywhere on the target PC.</p>
-            <button class="download-btn" onclick="downloadReg()">⬇ Download layers-install.reg</button>
+            <h2 data-i18n="cb_s1_h">Open Google Admin Console</h2>
+            <p data-i18n="cb_s1_p">Sign in with your Google Workspace admin account.</p>
+            <div class="copy-box">
+              <code>https://admin.google.com</code>
+              <button class="copy-btn" onclick="copyText(this, 'https://admin.google.com')">Copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="cb-2" onclick="toggleStep(this)">2</div>
+          <div class="step-body">
+            <h2 data-i18n="cb_s2_h">Navigate to Chrome App Management</h2>
+            <p data-i18n="cb_s2_p">Follow this path in the left sidebar:</p>
+            <div class="path">
+              <span data-i18n="cb_s2_nav1">Devices</span><span class="sep">›</span>
+              <span>Chrome</span><span class="sep">›</span>
+              <span data-i18n="cb_s2_nav3">Apps &amp; Extensions</span><span class="sep">›</span>
+              <span data-i18n="cb_s2_nav4">Users &amp; Browsers</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="cb-3" onclick="toggleStep(this)">3</div>
+          <div class="step-body">
+            <h2 data-i18n="cb_s3_h">Select the Student Organisational Unit</h2>
+            <p data-i18n="cb_s3_p">In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="cb-4" onclick="toggleStep(this)">4</div>
+          <div class="step-body">
+            <h2 data-i18n="cb_s4_h">Add the Layers Extension</h2>
+            <p data-i18n="cb_s4_p">Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:</p>
+            <div class="copy-box">
+              <code>iclfdiolilnmjeimkdoeloeiioaongnh</code>
+              <button class="copy-btn" onclick="copyText(this, 'iclfdiolilnmjeimkdoeloeiioaongnh')">Copy</button>
+            </div>
+            <p data-i18n="cb_s4_p2">Select the Layers extension and click <strong>Select</strong>.</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="cb-5" onclick="toggleStep(this)">5</div>
+          <div class="step-body">
+            <h2 data-i18n="cb_s5_h">Set Installation Policy to Force Install</h2>
+            <p data-i18n="cb_s5_p">After adding the extension, a settings panel appears. Set:</p>
+            <div class="setting-row">
+              <span class="label" data-i18n="cb_s5_policy">Installation policy</span>
+              <span class="val" data-i18n="cb_s5_force">Force install</span>
+            </div>
+            <div class="setting-row">
+              <span class="label" data-i18n="cb_s5_pin">Pin to toolbar</span>
+              <span class="val" data-i18n="cb_s5_enabled">Enabled (recommended)</span>
+            </div>
             <div class="note">
               <span>⚠️</span>
-              <span data-i18n="win_reg_s1_note">Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue. This is normal for .reg files.</span>
+              <span data-i18n="cb_s5_note"><strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.</span>
             </div>
           </div>
         </div>
 
         <div class="step">
-          <div class="line"></div>
-          <div class="step-num">2</div>
+          <div class="step-line"></div>
+          <div class="step-check" data-step="cb-6" onclick="toggleStep(this)">6</div>
           <div class="step-body">
-            <h2 data-i18n="win_reg_s2_h">Run as Administrator</h2>
-            <p data-i18n="win_reg_s2_p">Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.</p>
+            <h2 data-i18n="cb_s6_h">Save</h2>
+            <p data-i18n="cb_s6_p">Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.</p>
           </div>
         </div>
 
         <div class="step">
-          <div class="line"></div>
-          <div class="step-num">3</div>
+          <div class="step-check checked" data-step="cb-done">✓</div>
           <div class="step-body">
-            <h2 data-i18n="win_s3_h">Restart Chrome</h2>
-            <p data-i18n="win_s3_p">Close and reopen Chrome. The extension installs automatically within seconds.</p>
-          </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">✓</div>
-          <div class="step-body">
-            <h2 data-i18n="win_done_h">Done</h2>
+            <h2 data-i18n="cb_done_h">Done — What Happens Next</h2>
             <div class="done-box">
               <span class="icon">🎉</span>
               <div>
-                <h3 data-i18n="win_done_title">Layers is now force-installed</h3>
-                <p data-i18n="win_done_p">The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.</p>
+                <h3 data-i18n="cb_done_title">Extension auto-installs on all student devices</h3>
+                <p data-i18n="cb_done_p">Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <p class="ref-label" data-i18n="win_ref">What's inside the .reg file (for reference):</p>
-      <div class="code-block">
-        <pre>Windows Registry Editor Version 5.00
-
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist]
-"1"="iclfdiolilnmjeimkdoeloeiioaongnh;https://clients2.google.com/service/update2/crx"</pre>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
-      </div>
-      <div class="note">
-        <span>💡</span>
-        <span data-i18n="win_reg_note2">If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.</span>
       </div>
     </div>
 
-    <!-- BAT sub-panel -->
-    <div id="sub-bat" class="sub-panel">
-      <div class="steps">
-        <div class="step">
-          <div class="line"></div>
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h2 data-i18n="win_bat_s1_h">Download the .bat script</h2>
-            <button class="download-btn" onclick="downloadBat()">⬇ Download layers-install.bat</button>
-          </div>
-        </div>
+    <!-- Windows Panel -->
+    <div id="it-windows" class="sub-panel">
+      <div class="note" style="margin-bottom:16px;">
+        <span>🔒</span>
+        <span data-i18n="admin_note_win">This guide requires <strong>Windows administrator rights</strong>. If you're a teacher without admin access, ask your school's IT department to follow these steps, or use the <strong>Teacher Setup</strong> tab instead.</span>
+      </div>
+      <div class="intro-box">
+        <span class="icon">ℹ️</span>
+        <span data-i18n="win_intro">This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.</span>
+      </div>
 
-        <div class="step">
-          <div class="line"></div>
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h2 data-i18n="win_bat_s2_h">Run as Administrator</h2>
-            <p data-i18n="win_bat_s2_p">Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. A black window flashes briefly.</p>
-            <div class="warn">
-              <span>⚠️</span>
-              <span data-i18n="win_bat_s2_warn">Must be run as Administrator or the registry write will fail silently.</span>
+      <div class="sub-methods">
+        <div class="sub-method active" onclick="showSubMethod('reg')">
+          <span class="tab-tag" style="background:var(--green-dim);color:var(--green);font-size:10px;padding:2px 7px;border-radius:4px;margin-bottom:6px;display:inline-block" data-i18n="win_recommended">Recommended</span>
+          <h4 data-i18n="win_m1_h">⚙️ Registry (.reg file)</h4>
+          <p data-i18n="win_m1_p">Double-click to install. 30 sec per machine.</p>
+        </div>
+        <div class="sub-method" onclick="showSubMethod('bat')">
+          <span class="tab-tag" style="background:var(--blue-dim);color:var(--blue);font-size:10px;padding:2px 7px;border-radius:4px;margin-bottom:6px;display:inline-block" data-i18n="win_fastest">Fastest</span>
+          <h4 data-i18n="win_m2_h">💻 Silent .bat Script</h4>
+          <p data-i18n="win_m2_p">Run from USB or network share. No clicks.</p>
+        </div>
+      </div>
+
+      <!-- REG sub-panel -->
+      <div id="sub-reg" class="sub-panel visible">
+        <div class="steps">
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-check" data-step="wr-1" onclick="toggleStep(this)">1</div>
+            <div class="step-body">
+              <h2 data-i18n="win_reg_s1_h">Download the .reg file</h2>
+              <p data-i18n="win_reg_s1_p">Save it anywhere on the target PC.</p>
+              <button class="download-btn" onclick="downloadReg()">⬇ Download layers-install.reg</button>
+              <div class="note">
+                <span>⚠️</span>
+                <span data-i18n="win_reg_s1_note">Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue. This is normal for .reg files.</span>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div class="step">
-          <div class="line"></div>
-          <div class="step-num">3</div>
-          <div class="step-body">
-            <h2 data-i18n="win_s3_h">Restart Chrome</h2>
-            <p data-i18n="win_s3_p">Close and reopen Chrome. The extension installs automatically within seconds.</p>
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-check" data-step="wr-2" onclick="toggleStep(this)">2</div>
+            <div class="step-body">
+              <h2 data-i18n="win_reg_s2_h">Run as Administrator</h2>
+              <p data-i18n="win_reg_s2_p">Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.</p>
+            </div>
           </div>
-        </div>
-
-        <div class="step">
-          <div class="step-num">✓</div>
-          <div class="step-body">
-            <h2 data-i18n="win_done_h">Done</h2>
-            <div class="done-box">
-              <span class="icon">🎉</span>
-              <div>
-                <h3 data-i18n="win_bat_done_title">Layers is force-installed</h3>
-                <p data-i18n="win_bat_done_p">Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.</p>
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-check" data-step="wr-3" onclick="toggleStep(this)">3</div>
+            <div class="step-body">
+              <h2 data-i18n="win_s3_h">Restart Chrome</h2>
+              <p data-i18n="win_s3_p">Close and reopen Chrome. The extension installs automatically within seconds.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-check checked">✓</div>
+            <div class="step-body">
+              <h2 data-i18n="win_done_h">Done</h2>
+              <div class="done-box">
+                <span class="icon">🎉</span>
+                <div>
+                  <h3 data-i18n="win_done_title">Layers is now force-installed</h3>
+                  <p data-i18n="win_done_p">The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <p class="ref-label" data-i18n="win_ref">What's inside the .reg file (for reference):</p>
+        <div class="code-block">
+          <pre>Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist]
+"1"="alielgklefmocpmnmfahepacngmeomof;https://clients2.google.com/service/update2/crx"</pre>
+          <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+        </div>
+        <div class="note">
+          <span>💡</span>
+          <span data-i18n="win_reg_note2">If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.</span>
+        </div>
       </div>
 
-      <p class="ref-label" data-i18n="win_bat_ref">What's inside the .bat file:</p>
-      <div class="code-block">
-        <pre>@echo off
+      <!-- BAT sub-panel -->
+      <div id="sub-bat" class="sub-panel">
+        <div class="steps">
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-check" data-step="wb-1" onclick="toggleStep(this)">1</div>
+            <div class="step-body">
+              <h2 data-i18n="win_bat_s1_h">Download the .bat script</h2>
+              <button class="download-btn" onclick="downloadBat()">⬇ Download layers-install.bat</button>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-check" data-step="wb-2" onclick="toggleStep(this)">2</div>
+            <div class="step-body">
+              <h2 data-i18n="win_bat_s2_h">Run as Administrator</h2>
+              <p data-i18n="win_bat_s2_p">Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. A black window flashes briefly.</p>
+              <div class="warn">
+                <span>⚠️</span>
+                <span data-i18n="win_bat_s2_warn">Must be run as Administrator or the registry write will fail silently.</span>
+              </div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-line"></div>
+            <div class="step-check" data-step="wb-3" onclick="toggleStep(this)">3</div>
+            <div class="step-body">
+              <h2 data-i18n="win_s3_h">Restart Chrome</h2>
+              <p data-i18n="win_s3_p">Close and reopen Chrome. The extension installs automatically within seconds.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-check checked">✓</div>
+            <div class="step-body">
+              <h2 data-i18n="win_done_h">Done</h2>
+              <div class="done-box">
+                <span class="icon">🎉</span>
+                <div>
+                  <h3 data-i18n="win_bat_done_title">Layers is force-installed</h3>
+                  <p data-i18n="win_bat_done_p">Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="ref-label" data-i18n="win_bat_ref">What's inside the .bat file:</p>
+        <div class="code-block">
+          <pre>@echo off
 reg add "HKLM\SOFTWARE\Policies\Google\Chrome\ExtensionInstallForcelist" ^
   /v 1 ^
   /t REG_SZ ^
-  /d "iclfdiolilnmjeimkdoeloeiioaongnh;https://clients2.google.com/service/update2/crx" ^
+  /d "alielgklefmocpmnmfahepacngmeomof;https://clients2.google.com/service/update2/crx" ^
   /f
 echo Layers extension force-install policy applied.
 pause</pre>
-        <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+          <button class="copy-btn" onclick="copyBlock(this)">Copy</button>
+        </div>
       </div>
     </div>
 
-  </div>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!--  MAC PANEL                                   -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div id="panel-mac" class="panel">
-    <div class="intro-box" style="background:rgba(167,139,250,0.1);border-color:#a78bfa;">
-      <span class="icon">🍎</span>
-      <span data-i18n="mac_intro">Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.</span>
-    </div>
-
-    <div class="steps">
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">1</div>
-        <div class="step-body">
-          <h2 data-i18n="mac_s1_h">Download the .dmg from Google Drive</h2>
-          <p data-i18n="mac_s1_p">Open the folder and download the <strong>Layers Teacher.dmg</strong> file.</p>
-          <a href="https://drive.google.com/drive/folders/1zKE7chL3ivQT3JtGHBS0TjfqSmFZgXjX?usp=drive_link" target="_blank" rel="noopener noreferrer" class="download-btn" style="background:#a78bfa;text-decoration:none;">⬇ Open Google Drive folder</a>
-        </div>
+    <!-- Mac Panel -->
+    <div id="it-mac" class="sub-panel">
+      <div class="intro-box" style="background:var(--purple-dim);border-color:rgba(167,139,250,0.25);">
+        <span class="icon">🍎</span>
+        <span data-i18n="mac_intro">Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.</span>
       </div>
 
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">2</div>
-        <div class="step-body">
-          <h2 data-i18n="mac_s2_h">Open the .dmg and drag the app to Applications</h2>
-          <p data-i18n="mac_s2_p">Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.</p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="line"></div>
-        <div class="step-num" style="border-color:#a78bfa;color:#a78bfa;">3</div>
-        <div class="step-body">
-          <h2 data-i18n="mac_s3_h">First launch — right-click to open</h2>
-          <p data-i18n="mac_s3_p">Because the app is not yet code-signed, macOS will block it on the first launch with the message: <em>"Layers Teacher.app cannot be opened because it is from an unidentified developer."</em></p>
-          <div class="note" style="margin-top:10px;margin-bottom:10px;">
-            <span>🖱️</span>
-            <span data-i18n="mac_s3_note"><strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong> — after that, the app opens normally.</span>
-          </div>
-          <div class="note" style="background:var(--green-dim);border-color:var(--green);">
-            <span>💡</span>
-            <span data-i18n="mac_s3_alt">Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong> next to the Layers warning.</span>
+      <div class="steps">
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="mac-1" onclick="toggleStep(this)" style="border-color:rgba(167,139,250,0.3);color:var(--purple);">1</div>
+          <div class="step-body">
+            <h2 data-i18n="mac_s1_h">Download the .dmg from Google Drive</h2>
+            <p data-i18n="mac_s1_p">Open the folder and download the <strong>Layers Teacher.dmg</strong> file.</p>
+            <a href="https://drive.google.com/drive/folders/1zKE7chL3ivQT3JtGHBS0TjfqSmFZgXjX?usp=drive_link" target="_blank" rel="noopener noreferrer" class="download-btn" style="background:linear-gradient(135deg,#a78bfa,#7c5cfc);text-decoration:none;">⬇ Open Google Drive folder</a>
           </div>
         </div>
-      </div>
-
-      <div class="step">
-        <div class="step-num" style="border-color:var(--green);color:var(--green);">✓</div>
-        <div class="step-body">
-          <h2 data-i18n="mac_done_h">Done — Layers is running</h2>
-          <div class="done-box">
-            <span class="icon">🎉</span>
-            <div>
-              <h3 data-i18n="mac_done_title">The toolbar is floating on your screen</h3>
-              <p data-i18n="mac_done_p">From now on, double-click the app to open it normally. Layers floats above Keynote, Safari, YouTube, and any full-screen app. A 14-day free trial starts automatically — no license key needed to begin.</p>
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="mac-2" onclick="toggleStep(this)" style="border-color:rgba(167,139,250,0.3);color:var(--purple);">2</div>
+          <div class="step-body">
+            <h2 data-i18n="mac_s2_h">Open the .dmg and drag the app to Applications</h2>
+            <p data-i18n="mac_s2_p">Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-line"></div>
+          <div class="step-check" data-step="mac-3" onclick="toggleStep(this)" style="border-color:rgba(167,139,250,0.3);color:var(--purple);">3</div>
+          <div class="step-body">
+            <h2 data-i18n="mac_s3_h">First launch — right-click to open</h2>
+            <p data-i18n="mac_s3_p">Because the app is not yet code-signed, macOS will block it on the first launch with the message: <em>"Layers Teacher.app cannot be opened because it is from an unidentified developer."</em></p>
+            <div class="note" style="margin-top:10px;margin-bottom:10px;">
+              <span>🖱️</span>
+              <span data-i18n="mac_s3_note"><strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong> — after that, the app opens normally.</span>
+            </div>
+            <div class="note" style="background:var(--green-dim);border-color:rgba(62,207,142,0.25);">
+              <span>💡</span>
+              <span data-i18n="mac_s3_alt">Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong> next to the Layers warning.</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-check checked" style="border-color:var(--green);color:var(--green);">✓</div>
+          <div class="step-body">
+            <h2 data-i18n="mac_done_h">Done — Layers is running</h2>
+            <div class="done-box">
+              <span class="icon">🎉</span>
+              <div>
+                <h3 data-i18n="mac_done_title">The toolbar is floating on your screen</h3>
+                <p data-i18n="mac_done_p">From now on, double-click the app to open it normally. Layers floats above Keynote, Safari, YouTube, and any full-screen app. A 14-day free trial starts automatically — no license key needed to begin.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-  </div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!--  STUDENT PANEL                               -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div id="panel-student" class="panel visible">
-    <div class="student-card">
-      <div class="s-logo">
-        <div class="s-logo-icon">🗂️</div>
-        <span class="s-logo-text">Layers</span>
-      </div>
-      <p class="s-tagline" data-i18n="st_tagline">Translation, dictionary, notes & timer — floats over any page</p>
-
-      <div class="student-steps" id="student-steps"></div>
-
-      <div class="qr-section">
-        <div class="qr-label" data-i18n="st_qr_label">Scan the QR code</div>
-        <div id="qrcode"></div>
-        <div class="qr-url">chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh</div>
-      </div>
-
-      <a class="store-link" id="store-link" href="https://chromewebstore.google.com/detail/iclfdiolilnmjeimkdoeloeiioaongnh" target="_blank" data-i18n="st_link">🔗 Open Chrome Web Store</a>
-      <p class="store-hint" data-i18n="st_hint">Can't scan? Click the link above</p>
-    </div>
   </div>
 
 </main>
 
 <script>
-const EXT_ID = 'iclfdiolilnmjeimkdoeloeiioaongnh';
+const EXT_ID = 'alielgklefmocpmnmfahepacngmeomof';
 const UPDATE_URL = 'https://clients2.google.com/service/update2/crx';
 const STORE_URL = 'https://chromewebstore.google.com/detail/' + EXT_ID;
 
@@ -927,24 +1670,116 @@ new QRCode(document.getElementById('qrcode'), {
   correctLevel: QRCode.CorrectLevel.M
 });
 
-// ── Tab switching ──
-function scrollToTabs() {
-  document.getElementById('guide-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+// ── Role Selection ──
+function selectRole(role) {
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
+
+  if (role === 'teacher') {
+    document.querySelector('.role-card-teacher').classList.add('active');
+    document.getElementById('panel-teacher').classList.add('visible');
+    document.getElementById('teacher-progress').classList.add('visible');
+  } else {
+    document.querySelector('.role-card-it').classList.add('active');
+    document.getElementById('panel-it').classList.add('visible');
+    document.getElementById('teacher-progress').classList.remove('visible');
+  }
+
+  document.getElementById('role-selector').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function showPanel(id) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('visible'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('panel-' + id).classList.add('visible');
-  // Highlight the matching tab
-  const tabs = document.querySelectorAll('.tab');
-  const tabMap = { chromebook: 0, windows: 1, student: 2 };
+// ── IT Tab Switching ──
+function showITPanel(id) {
+  document.querySelectorAll('#panel-it > .sub-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('#it-tabs .tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('it-' + id).classList.add('visible');
+  const tabs = document.querySelectorAll('#it-tabs .tab');
+  const tabMap = { chromebook: 0, windows: 1, mac: 2 };
   if (tabMap[id] !== undefined) tabs[tabMap[id]].classList.add('active');
 }
 
+// ── Phase Toggle ──
+function togglePhase(num) {
+  const phase = document.getElementById('phase-' + num);
+  phase.classList.toggle('expanded');
+}
+
+function scrollToPhase(num) {
+  const phase = document.getElementById('phase-' + num);
+  if (!phase.classList.contains('expanded')) phase.classList.add('expanded');
+  phase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Step Completion ──
+const completedSteps = JSON.parse(localStorage.getItem('layers_install_steps') || '{}');
+
+function toggleStep(el) {
+  const step = el.getAttribute('data-step');
+  if (!step) return;
+
+  if (completedSteps[step]) {
+    delete completedSteps[step];
+    el.classList.remove('checked');
+    el.textContent = el.textContent === '✓' ? '✓' : step.split('-')[1];
+  } else {
+    completedSteps[step] = true;
+    el.classList.add('checked');
+    el.textContent = '✓';
+  }
+
+  localStorage.setItem('layers_install_steps', JSON.stringify(completedSteps));
+  updateProgress();
+}
+
+function updateProgress() {
+  const phases = [
+    { num: 1, steps: ['1-1','1-2','1-3','1-4'] },
+    { num: 2, steps: ['2-1','2-2','2-3','2-4'] },
+    { num: 3, steps: ['3-1','3-2','3-3'] },
+  ];
+
+  const dots = document.querySelectorAll('.progress-dot');
+  const lines = document.querySelectorAll('.progress-line');
+
+  phases.forEach((phase, i) => {
+    const done = phase.steps.every(s => completedSteps[s]);
+    const numEl = document.querySelector('#phase-' + phase.num + ' .phase-number');
+    const statusEl = document.getElementById('phase-' + phase.num + '-status');
+
+    if (done) {
+      dots[i]?.classList.add('done');
+      dots[i]?.classList.remove('active');
+      if (lines[i]) lines[i].classList.add('done');
+      if (numEl) { numEl.classList.remove('blue'); numEl.classList.add('green-done'); numEl.textContent = '✓'; }
+      if (statusEl) statusEl.style.display = 'inline-flex';
+    } else {
+      dots[i]?.classList.remove('done');
+      if (lines[i]) lines[i].classList.remove('done');
+      if (numEl) { numEl.classList.add('blue'); numEl.classList.remove('green-done'); numEl.textContent = phase.num; }
+      if (statusEl) statusEl.style.display = 'none';
+    }
+  });
+
+  const allDone = phases.every(p => p.steps.every(s => completedSteps[s]));
+  const banner = document.getElementById('completion-banner');
+  if (banner) banner.classList.toggle('visible', allDone);
+}
+
+function restoreSteps() {
+  document.querySelectorAll('.step-check[data-step]').forEach(el => {
+    const step = el.getAttribute('data-step');
+    if (completedSteps[step]) {
+      el.classList.add('checked');
+      el.textContent = '✓';
+    }
+  });
+  updateProgress();
+}
+
+// ── Sub-method (Windows) ──
 function showSubMethod(id) {
-  document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('visible'));
-  document.querySelectorAll('.sub-method').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('#it-windows > .sub-panel').forEach(p => p.classList.remove('visible'));
+  document.querySelectorAll('#it-windows .sub-method').forEach(m => m.classList.remove('active'));
   document.getElementById('sub-' + id).classList.add('visible');
   event.currentTarget.classList.add('active');
 }
@@ -985,104 +1820,297 @@ function dl(name, content) {
   a.download = name; a.click();
 }
 
+// ── Classroom Simulator ──
+const SIM_STUDENTS = [
+  { name: 'Aiko',  avatar: '🧒', num: 1 },
+  { name: 'Ben',   avatar: '👦', num: 2 },
+  { name: 'Clara', avatar: '👧', num: 3 },
+  { name: 'Diego', avatar: '🧑', num: 4 },
+  { name: 'Eva',   avatar: '👩', num: 5 },
+  { name: 'Finn',  avatar: '🧔', num: 6 },
+  { name: 'Grace', avatar: '👱', num: 7 },
+  { name: 'Hiro',  avatar: '🧒', num: 8 },
+];
+
+let simState = 'normal';
+
+function buildSimGrid() {
+  const grid = document.getElementById('sim-grid');
+  if (!grid) return;
+  grid.innerHTML = SIM_STUDENTS.map(s => `
+    <div class="sim-student" id="sim-s${s.num}" title="${s.name} — click to simulate help request" onclick="simHelp(${s.num})">
+      <span class="s-avatar">${s.avatar}</span>
+      <span class="s-name">${s.num}</span>
+    </div>
+  `).join('');
+}
+
+function simSetLog(msg) {
+  const el = document.getElementById('sim-log');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.remove('sim-log-item');
+  void el.offsetWidth;
+  el.classList.add('sim-log-item');
+}
+
+function simClearStates() {
+  SIM_STUDENTS.forEach(s => {
+    const el = document.getElementById('sim-s' + s.num);
+    if (!el) return;
+    el.classList.remove('focused', 'locked', 'help');
+    const badge = el.querySelector('.s-status');
+    if (badge) badge.remove();
+  });
+}
+
+function simCmd(cmd) {
+  simClearStates();
+  ['focus','lock','push','block','reset'].forEach(b => {
+    document.getElementById('btn-' + b)?.classList.remove('active-state');
+  });
+
+  if (cmd === 'reset') {
+    simState = 'normal';
+    simSetLog('↩ All restrictions released — students back to normal');
+    return;
+  }
+  if (cmd === simState) {
+    simState = 'normal';
+    simSetLog('↩ Command cancelled — students back to normal');
+    return;
+  }
+
+  simState = cmd;
+  document.getElementById('btn-' + cmd)?.classList.add('active-state');
+
+  if (cmd === 'focus') {
+    SIM_STUDENTS.forEach(s => document.getElementById('sim-s' + s.num)?.classList.add('focused'));
+    simSetLog('🎯 Focus Mode ON — student toolbars collapsed to minimal view');
+  } else if (cmd === 'lock') {
+    SIM_STUDENTS.forEach(s => {
+      const el = document.getElementById('sim-s' + s.num);
+      el?.classList.add('locked');
+      const badge = document.createElement('span');
+      badge.className = 's-status'; badge.textContent = '🔒';
+      el?.appendChild(badge);
+    });
+    simSetLog('🔒 Lockdown active — student toolbars PIN-locked until you release');
+  } else if (cmd === 'push') {
+    SIM_STUDENTS.forEach(s => {
+      const el = document.getElementById('sim-s' + s.num);
+      el?.classList.add('focused');
+      const badge = document.createElement('span');
+      badge.className = 's-status'; badge.textContent = '🔗';
+      el?.appendChild(badge);
+    });
+    simSetLog('🔗 Link pushed — all 8 students opened the URL in a new tab');
+    setTimeout(() => {
+      simClearStates(); simState = 'normal';
+      document.getElementById('btn-push')?.classList.remove('active-state');
+      simSetLog('✅ Push complete — students are on the linked page');
+    }, 2500);
+  } else if (cmd === 'block') {
+    SIM_STUDENTS.forEach(s => {
+      const el = document.getElementById('sim-s' + s.num);
+      el?.classList.add('focused');
+      const badge = document.createElement('span');
+      badge.className = 's-status'; badge.textContent = '🚫';
+      el?.appendChild(badge);
+    });
+    simSetLog('🚫 Site block active — blocked domains redirect on all student browsers');
+  }
+}
+
+function simHelp(num) {
+  const el = document.getElementById('sim-s' + num);
+  if (!el) return;
+  const already = el.classList.contains('help');
+  if (already) {
+    el.classList.remove('help');
+    const badge = el.querySelector('.s-status');
+    if (badge && badge.textContent === '🆘') badge.remove();
+    simSetLog('✅ Help cleared for student ' + num);
+  } else {
+    el.classList.add('help');
+    let badge = el.querySelector('.s-status');
+    if (!badge) { badge = document.createElement('span'); badge.className = 's-status'; el.appendChild(badge); }
+    badge.textContent = '🆘';
+    simSetLog('🆘 Student ' + num + ' needs help! Click their tile again to dismiss.');
+  }
+}
+
 // ── i18n ──
 let currentLang = 'en';
 
 const i18n = {
-  // Header
-  header_title:   { en: 'Layers — Installation Guide', ja: 'Layers — インストールガイド', zh: 'Layers — 安装指南', vi: 'Layers — Hướng dẫn cài đặt' },
-  header_sub:     { en: 'Deploy or install the Layers Chrome extension', ja: 'Layers Chrome 拡張機能の導入・インストール', zh: '部署或安装 Layers Chrome 扩展程序', vi: 'Triển khai hoặc cài đặt tiện ích mở rộng Layers Chrome' },
+  header_title: { en: 'Layers — Installation Guide', ja: 'Layers — インストールガイド', zh: 'Layers — 安装指南', vi: 'Layers — Hướng dẫn cài đặt' },
+  header_sub:   { en: 'Deploy or install the Layers Chrome extension', ja: 'Layers Chrome 拡張機能の導入・インストール', zh: '部署或安装 Layers Chrome 扩展程序', vi: 'Triển khai hoặc cài đặt tiện ích mở rộng Layers Chrome' },
 
-  // Routing guide
-  route_h:              { en: '👋 Which guide do you need?', ja: '👋 どのガイドが必要ですか？', zh: '👋 您需要哪个指南？', vi: '👋 Bạn cần hướng dẫn nào?' },
+  hero_badge: { en: 'Ready in under 5 minutes', ja: '5分以内にセットアップ完了', zh: '5分钟内即可完成', vi: 'Sẵn sàng trong dưới 5 phút' },
+  hero_h:     { en: 'Get started with Layers', ja: 'Layers を始めましょう', zh: '开始使用 Layers', vi: 'Bắt đầu với Layers' },
+  hero_p:     { en: 'Choose your setup path below. Teachers start with a personal install, IT admins deploy to all devices at once.', ja: '下のセットアップ方法を選んでください。教師は個人インストール、IT管理者は一括導入です。', zh: '请在下方选择您的设置路径。教师从个人安装开始，IT 管理员一次部署到所有设备。', vi: 'Chọn đường dẫn cài đặt bên dưới. Giáo viên bắt đầu với cài đặt cá nhân, quản trị viên IT triển khai đến tất cả thiết bị cùng lúc.' },
+
   route_teacher_h:      { en: "I'm a teacher", ja: '教員の方', zh: '我是教师', vi: 'Tôi là giáo viên' },
-  route_teacher_p:      { en: 'Use the <strong>Self-Install</strong> option to add Layers to your own browser, or share the QR code with students so they can install it themselves.', ja: '<strong>セルフインストール</strong>で自分のブラウザに追加するか、QRコードを生徒に共有してインストールしてもらいましょう。', zh: '使用<strong>自助安装</strong>将 Layers 添加到您的浏览器，或将二维码分享给学生让他们自行安装。', vi: 'Sử dụng tùy chọn <strong>Tự cài đặt</strong> để thêm Layers vào trình duyệt của bạn, hoặc chia sẻ mã QR cho học sinh để các em tự cài đặt.' },
-  route_teacher_action: { en: '→ Go to Self-Install guide', ja: '→ セルフインストールガイドへ', zh: '→ 前往自助安装指南', vi: '→ Đến hướng dẫn Tự cài đặt' },
+  role_teacher_p:       { en: 'Install Layers on your browser, create a classroom room, and learn to control student screens in real time.', ja: '自分のブラウザにLayersをインストールし、クラスルームを作成して、生徒の画面をリアルタイムで管理する方法を学びましょう。', zh: '在您的浏览器上安装 Layers，创建教室房间，并学习实时控制学生屏幕。', vi: 'Cài đặt Layers trên trình duyệt của bạn, tạo phòng học và học cách kiểm soát màn hình học sinh theo thời gian thực.' },
+  route_teacher_action: { en: '→ Start teacher setup', ja: '→ 教師セットアップを開始', zh: '→ 开始教师设置', vi: '→ Bắt đầu thiết lập giáo viên' },
   route_it_h:           { en: "I'm IT / school admin", ja: 'IT管理者・学校管理者の方', zh: 'IT / 学校管理员', vi: 'Tôi là quản trị viên IT / trường học' },
-  route_it_p:           { en: 'Deploy Layers to all student devices at once — no student action needed. Requires admin access to Google Workspace or Windows PCs.', ja: 'すべての生徒端末に一括導入します。生徒側の操作は不要です。Google Workspace または Windows PC の管理者権限が必要です。', zh: '一次性将 Layers 部署到所有学生设备——无需学生操作。需要 Google Workspace 或 Windows PC 的管理员权限。', vi: 'Triển khai Layers đến tất cả thiết bị học sinh cùng lúc — không cần học sinh thao tác. Yêu cầu quyền quản trị Google Workspace hoặc máy tính Windows.' },
-  route_it_action:      { en: '→ Go to deployment guides', ja: '→ 一括導入ガイドへ', zh: '→ 前往部署指南', vi: '→ Đến hướng dẫn triển khai' },
+  role_it_p:            { en: 'Deploy Layers to all student devices at once — no student action needed. Requires admin access.', ja: 'すべての生徒端末に一括導入します。生徒側の操作は不要です。管理者権限が必要です。', zh: '一次性将 Layers 部署到所有学生设备——无需学生操作。需要管理员权限。', vi: 'Triển khai Layers đến tất cả thiết bị học sinh cùng lúc — không cần học sinh thao tác. Yêu cầu quyền quản trị.' },
+  route_it_action:      { en: '→ Choose deployment method', ja: '→ 導入方法を選択', zh: '→ 选择部署方式', vi: '→ Chọn phương pháp triển khai' },
 
-  // Tabs
-  tab_cb_h:  { en: 'Chromebook Admin', ja: 'Chromebook 管理者', zh: 'Chromebook 管理员', vi: 'Quản trị Chromebook' },
-  tab_cb_p:  { en: 'Force-install via Google Workspace Admin Console', ja: 'Google Workspace 管理コンソールで一括インストール', zh: '通过 Google Workspace 管理控制台强制安装', vi: 'Cài đặt bắt buộc qua Google Workspace Admin Console' },
-  tab_win_h: { en: 'Windows Admin', ja: 'Windows 管理者', zh: 'Windows 管理员', vi: 'Quản trị Windows' },
-  tab_win_p: { en: 'Force-install via registry on Windows 10/11 PCs', ja: 'レジストリを使って Windows 10/11 に強制インストール', zh: '通过注册表在 Windows 10/11 上强制安装', vi: 'Cài đặt bắt buộc qua registry trên Windows 10/11' },
-  tag_student: { en: 'Self-Install', ja: 'セルフ', zh: '自助安装', vi: 'Tự cài đặt' },
-  tab_st_h:  { en: 'Teacher / Self-Install', ja: '教員 / セルフインストール', zh: '教师 / 自助安装', vi: 'Giáo viên / Tự cài đặt' },
-  tab_st_p:  { en: 'Install on your own browser or share with students', ja: '自分のブラウザにインストール、または生徒に共有', zh: '安装到您的浏览器或分享给学生', vi: 'Cài đặt trên trình duyệt của bạn hoặc chia sẻ cho học sinh' },
+  prog_install:  { en: 'Install', ja: 'インストール', zh: '安装', vi: 'Cài đặt' },
+  prog_room:     { en: 'Room', ja: 'ルーム', zh: '房间', vi: 'Phòng' },
+  prog_students: { en: 'Students', ja: '生徒', zh: '学生', vi: 'Học sinh' },
+  prog_controls: { en: 'Controls', ja: '操作', zh: '控制', vi: 'Điều khiển' },
 
-  // Chromebook
-  admin_note_cb: { en: 'This guide requires <strong>Google Workspace admin access</strong>. If you\'re a teacher without admin rights, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Google Workspace 管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。', zh: '本指南需要 <strong>Google Workspace 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>自助安装</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị Google Workspace</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.' },
-  admin_note_win: { en: 'This guide requires <strong>Windows administrator rights</strong>. If you\'re a teacher without admin access, ask your school\'s IT department to follow these steps, or use the <strong>Self-Install</strong> tab instead.', ja: 'このガイドには<strong>Windows の管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>セルフインストール</strong>タブをご利用ください。', zh: '本指南需要 <strong>Windows 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>自助安装</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị viên Windows</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Tự cài đặt</strong>.' },
-  cb_intro:    { en: 'This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.', ja: 'このガイドに従うと、<strong>すべての生徒の Chromebook に Layers 拡張機能を自動インストール</strong>できます。生徒側の操作は一切不要です。インストール後、生徒は拡張機能を削除できません。', zh: '此操作会在<strong>所有学生 Chromebook 上自动安装</strong> Layers Chrome 扩展程序——无需学生操作。扩展程序会立即显示，学生无法删除。', vi: 'Thao tác này sẽ tự động cài đặt tiện ích Layers Chrome trên <strong>tất cả Chromebook của học sinh</strong> — không cần học sinh thao tác. Tiện ích sẽ xuất hiện ngay lập tức và học sinh không thể gỡ bỏ.' },
-  cb_s1_h:     { en: 'Open Google Admin Console', ja: 'Google 管理コンソールを開く', zh: '打开 Google 管理控制台', vi: 'Mở Google Admin Console' },
-  cb_s1_p:     { en: 'Sign in with your Google Workspace admin account.', ja: 'Google Workspace の管理者アカウントでサインインします。', zh: '使用 Google Workspace 管理员帐号登录。', vi: 'Đăng nhập bằng tài khoản quản trị Google Workspace.' },
-  cb_s2_h:     { en: 'Navigate to Chrome App Management', ja: 'Chrome アプリ管理ページに移動する', zh: '导航到 Chrome 应用管理', vi: 'Điều hướng đến Quản lý ứng dụng Chrome' },
-  cb_s2_p:     { en: 'Follow this path in the left sidebar:', ja: '左サイドバーで次の順にクリックします：', zh: '在左侧栏按以下路径点击：', vi: 'Theo đường dẫn này trên thanh bên trái:' },
-  cb_s2_nav1:  { en: 'Devices', ja: 'デバイス', zh: '设备', vi: 'Thiết bị' },
-  cb_s2_nav3:  { en: 'Apps & Extensions', ja: 'アプリと拡張機能', zh: '应用和扩展程序', vi: 'Ứng dụng & Tiện ích' },
-  cb_s2_nav4:  { en: 'Users & Browsers', ja: 'ユーザーとブラウザ', zh: '用户和浏览器', vi: 'Người dùng & Trình duyệt' },
-  cb_s3_h:     { en: 'Select the Student Organisational Unit', ja: '生徒の組織部門（OU）を選択する', zh: '选择学生组织单位', vi: 'Chọn Đơn vị tổ chức học sinh' },
-  cb_s3_p:     { en: 'In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.', ja: '左パネルで生徒が所属する組織部門（例：<em>生徒</em>、<em>1年生</em>）をクリックします。これにより、教職員ではなく生徒だけにインストールされます。', zh: '在左侧面板中，点击包含学生的组织单位（如 <em>学生</em> 或 <em>一年级</em>）。这样可以确保扩展程序只安装在学生设备上，不会影响教职工。', vi: 'Trong bảng bên trái, nhấp vào OU chứa học sinh của bạn (ví dụ: <em>Học sinh</em> hoặc <em>Lớp 1</em>). Điều này đảm bảo tiện ích chỉ được cài đặt cho học sinh, không phải nhân viên.' },
-  cb_s4_h:     { en: 'Add the Layers Extension', ja: 'Layers 拡張機能を追加する', zh: '添加 Layers 扩展程序', vi: 'Thêm tiện ích Layers' },
-  cb_s4_p:     { en: 'Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:', ja: '右下の <strong>＋ ボタン</strong> をクリック → <strong>Chrome ウェブストアから追加</strong> を選択します。「Layers」で検索するか、拡張機能 ID を直接貼り付けます：', zh: '点击右下角的 <strong>＋ 按钮</strong> → <strong>从 Chrome 网上应用店添加</strong>。搜索"Layers"，或直接粘贴扩展程序 ID：', vi: 'Nhấp nút <strong>＋</strong> (góc dưới bên phải) → <strong>Thêm từ Chrome Web Store</strong>. Tìm "Layers", hoặc dán ID tiện ích:' },
-  cb_s4_p2:    { en: 'Select the Layers extension and click <strong>Select</strong>.', ja: 'Layers 拡張機能を選択して <strong>選択</strong> をクリックします。', zh: '选择 Layers 扩展程序，然后点击<strong>选择</strong>。', vi: 'Chọn tiện ích Layers và nhấp <strong>Chọn</strong>.' },
-  cb_s5_h:     { en: 'Set Installation Policy to Force Install', ja: 'インストールポリシーを「強制インストール」に設定する', zh: '将安装策略设为强制安装', vi: 'Đặt chính sách cài đặt thành Cài đặt bắt buộc' },
-  cb_s5_p:     { en: 'After adding the extension, a settings panel appears. Set:', ja: '拡張機能を追加すると、右側に設定パネルが表示されます。次のように設定します：', zh: '添加扩展程序后，会出现设置面板。设置如下：', vi: 'Sau khi thêm tiện ích, bảng cài đặt sẽ xuất hiện. Thiết lập:' },
-  cb_s5_policy:{ en: 'Installation policy', ja: 'インストールポリシー', zh: '安装策略', vi: 'Chính sách cài đặt' },
-  cb_s5_force: { en: 'Force install', ja: '強制インストール', zh: '强制安装', vi: 'Cài đặt bắt buộc' },
-  cb_s5_pin:   { en: 'Pin to toolbar', ja: 'ツールバーにピン留め', zh: '固定到工具栏', vi: 'Ghim vào thanh công cụ' },
-  cb_s5_enabled:{ en: 'Enabled (recommended)', ja: '有効（推奨）', zh: '已启用（推荐）', vi: 'Bật (khuyến nghị)' },
-  cb_s5_note:  { en: '<strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.', ja: '「インストールを許可」は選ばないでください。生徒が削除できてしまいます。必ず<strong>強制インストール</strong>を選択してください。', zh: '<strong>不要</strong>选择"允许安装"——学生不能自行删除。请选择<strong>强制安装</strong>。', vi: '<strong>Không</strong> chọn "Cho phép cài đặt" — học sinh không được phép gỡ bỏ. Hãy chọn <strong>Cài đặt bắt buộc</strong>.' },
-  cb_s6_h:     { en: 'Save', ja: '保存する', zh: '保存', vi: 'Lưu' },
-  cb_s6_p:     { en: 'Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.', ja: '右上の <strong>保存</strong> をクリックします。ポリシーはすぐに反映されます。', zh: '点击右上角的<strong>保存</strong>。策略会立即生效。', vi: 'Nhấp <strong>Lưu</strong> ở góc trên bên phải. Chính sách sẽ được triển khai ngay lập tức.' },
-  cb_done_h:   { en: 'Done — What Happens Next', ja: '完了 — この後の動作', zh: '完成 — 接下来会发生什么', vi: 'Hoàn tất — Điều gì xảy ra tiếp theo' },
-  cb_done_title:{ en: 'Extension auto-installs on all student devices', ja: 'すべての生徒端末に自動インストールされます', zh: '扩展程序会自动安装到所有学生设备', vi: 'Tiện ích sẽ tự động cài đặt trên tất cả thiết bị học sinh' },
-  cb_done_p:   { en: 'Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required. The extension cannot be removed while the policy is active.', ja: '次回 Chrome にサインインするか再起動すると、生徒のツールバーに Layers アイコンが表示されます。生徒側の操作は不要です。ポリシーが有効な間、生徒は拡張機能を削除できません。', zh: '学生下次登录或重启 Chrome 时，工具栏会出现 Layers 图标。无需学生操作。策略生效期间，学生无法删除该扩展程序。', vi: 'Học sinh sẽ thấy biểu tượng Layers trên thanh công cụ Chrome khi đăng nhập hoặc khởi động lại Chrome lần sau. Không cần học sinh thao tác. Tiện ích không thể bị gỡ bỏ khi chính sách còn hiệu lực.' },
+  teacher_sec1_short: { en: 'Install the Layers teacher app', ja: 'Layers教師アプリをインストール', zh: '安装 Layers 教师应用', vi: 'Cài đặt ứng dụng Layers cho giáo viên' },
+  teacher_sec2_short: { en: 'Create a classroom room', ja: 'クラスルームを作成', zh: '创建教室房间', vi: 'Tạo phòng học' },
+  teacher_sec3_short: { en: 'Students install & join', ja: '生徒がインストール＆参加', zh: '学生安装并加入', vi: 'Học sinh cài đặt & tham gia' },
+  teacher_sec4_short: { en: 'Master the controls', ja: 'コントロールを習得', zh: '掌握控制功能', vi: 'Làm chủ các điều khiển' },
+  phase_done:         { en: 'Done', ja: '完了', zh: '完成', vi: 'Hoàn tất' },
 
+  teacher_s1_h:       { en: 'Download Layers for Windows', ja: 'Layers for Windows をダウンロード', zh: '下载 Windows 版 Layers', vi: 'Tải Layers cho Windows' },
+  teacher_s1_p:       { en: 'Click the button below to download the Layers .zip file. Extract it and you\'ll find the <strong>Layers.exe</strong> file inside — no installer needed.', ja: '下のボタンをクリックして Layers の .zip ファイルをダウンロードします。展開すると中に <strong>Layers.exe</strong> があります — インストーラー不要です。', zh: '点击下方按钮下载 Layers .zip 文件。解压后即可找到 <strong>Layers.exe</strong> — 无需安装程序。', vi: 'Nhấp nút bên dưới để tải tệp .zip của Layers. Giải nén và bạn sẽ thấy <strong>Layers.exe</strong> bên trong — không cần trình cài đặt.' },
+  teacher_s1_note:    { en: '<strong>On a school computer?</strong> If the app won\'t open from your Downloads folder, copy <strong>Layers.exe</strong> to your Desktop first, then run it from there.', ja: '<strong>学校のパソコンですか？</strong> ダウンロードフォルダから開けない場合は、<strong>Layers.exe</strong> をデスクトップにコピーしてから実行してください。', zh: '<strong>在学校电脑上？</strong>如果无法从下载文件夹打开，请先将 <strong>Layers.exe</strong> 复制到桌面，然后从那里运行。', vi: '<strong>Đang dùng máy tính trường học?</strong> Nếu ứng dụng không mở được từ thư mục Tải xuống, hãy sao chép <strong>Layers.exe</strong> ra Desktop rồi chạy từ đó.' },
+  teacher_s2_h:       { en: 'Handle the Windows SmartScreen warning', ja: 'Windows SmartScreen の警告に対処する', zh: '处理 Windows SmartScreen 警告', vi: 'Xử lý cảnh báo Windows SmartScreen' },
+  teacher_s2_p:       { en: 'When you double-click <strong>Layers.exe</strong>, Windows will show a blue SmartScreen warning saying <em>"Windows protected your PC"</em>. This is normal for independent software that isn\'t signed with an expensive Microsoft certificate.', ja: '<strong>Layers.exe</strong> をダブルクリックすると、Windows が青い SmartScreen 警告で<em>「Windows によって PC が保護されました」</em>と表示します。これは高額な Microsoft 証明書で署名されていない独立ソフトウェアでは正常な動作です。', zh: '双击 <strong>Layers.exe</strong> 时，Windows 会显示蓝色 SmartScreen 警告，提示<em>"Windows 已保护你的电脑"</em>。这对于未使用昂贵的 Microsoft 证书签名的独立软件来说是正常的。', vi: 'Khi nhấp đúp <strong>Layers.exe</strong>, Windows sẽ hiển thị cảnh báo SmartScreen màu xanh với nội dung <em>"Windows đã bảo vệ PC của bạn"</em>. Đây là bình thường đối với phần mềm độc lập chưa được ký bằng chứng chỉ Microsoft.' },
+  teacher_s2_step1:   { en: 'Step A', ja: 'ステップ A', zh: '步骤 A', vi: 'Bước A' },
+  teacher_s2_step1v:  { en: 'Click "More info"', ja: '「詳細情報」をクリック', zh: '点击"详细信息"', vi: 'Nhấp "More info"' },
+  teacher_s2_step2:   { en: 'Step B', ja: 'ステップ B', zh: '步骤 B', vi: 'Bước B' },
+  teacher_s2_step2v:  { en: 'Click "Run anyway"', ja: '「実行」をクリック', zh: '点击"仍要运行"', vi: 'Nhấp "Run anyway"' },
+  teacher_s2_note:    { en: 'You only need to do this <strong>once</strong>. After the first launch, Windows will remember your choice and open Layers normally.', ja: 'これは<strong>1回だけ</strong>必要です。初回起動後、Windows は選択を記憶し、Layers を通常通り開きます。', zh: '您只需执行<strong>一次</strong>。首次启动后，Windows 会记住您的选择，之后正常打开 Layers。', vi: 'Bạn chỉ cần làm điều này <strong>một lần</strong>. Sau lần khởi động đầu tiên, Windows sẽ nhớ lựa chọn của bạn và mở Layers bình thường.' },
+  teacher_s3_h:       { en: 'Layers is running', ja: 'Layers が起動しました', zh: 'Layers 正在运行', vi: 'Layers đang chạy' },
+  teacher_s3_p:       { en: 'The Layers toolbar will appear floating on your screen. It starts in <strong>trial mode</strong> — all features work for 14 days, no license key needed.', ja: 'Layers ツールバーが画面上にフローティング表示されます。<strong>体験モード</strong>で開始されます — 14日間すべての機能が使えます。ライセンスキー不要です。', zh: 'Layers 工具栏将悬浮在屏幕上。它以<strong>试用模式</strong>启动——所有功能可用 14 天，无需许可证密钥。', vi: 'Thanh công cụ Layers sẽ xuất hiện nổi trên màn hình. Nó bắt đầu ở <strong>chế độ dùng thử</strong> — tất cả tính năng hoạt động trong 14 ngày, không cần khóa giấy phép.' },
+  teacher_s4_h:       { en: 'App installed', ja: 'アプリのインストール完了', zh: '应用已安装', vi: 'Ứng dụng đã cài đặt' },
+  teacher_s4_title:   { en: 'Layers is ready on your computer', ja: 'Layers がパソコンで使えます', zh: 'Layers 已在您的电脑上就绪', vi: 'Layers đã sẵn sàng trên máy tính của bạn' },
+  teacher_s4_p:       { en: 'The toolbar floats above all your apps — PowerPoint, Chrome, YouTube, everything. Now continue below to create a classroom room.', ja: 'ツールバーはすべてのアプリ（PowerPoint、Chrome、YouTubeなど）の上にフロートします。次のステップでクラスルームを作成しましょう。', zh: '工具栏悬浮在所有应用上方——PowerPoint、Chrome、YouTube，一切应用。请继续创建教室房间。', vi: 'Thanh công cụ nổi phía trên tất cả ứng dụng — PowerPoint, Chrome, YouTube, mọi thứ. Tiếp tục bên dưới để tạo phòng học.' },
+
+  student_intro:      { en: 'Students need to install the free Layers Chrome extension, then join the room you created. Show them the QR code or share the link — it takes under a minute.', ja: '生徒は無料の Layers Chrome 拡張機能をインストールし、あなたが作成したルームに参加する必要があります。QRコードを見せるかリンクを共有してください — 1分以内で完了します。', zh: '学生需要安装免费的 Layers Chrome 扩展程序，然后加入您创建的房间。向他们展示二维码或分享链接——不到一分钟即可完成。', vi: 'Học sinh cần cài đặt tiện ích Layers Chrome miễn phí, sau đó tham gia phòng bạn đã tạo. Cho họ xem mã QR hoặc chia sẻ liên kết — chưa đầy một phút.' },
+  join_title:         { en: 'After installing — students join your room', ja: 'インストール後 — 生徒がルームに参加', zh: '安装后——学生加入您的房间', vi: 'Sau khi cài đặt — học sinh tham gia phòng của bạn' },
+  join_s1_h:          { en: 'Students open the Layers toolbar', ja: '生徒がLayersツールバーを開く', zh: '学生打开 Layers 工具栏', vi: 'Học sinh mở thanh công cụ Layers' },
+  join_s1_p:          { en: 'Students click the <strong>🗂️ icon</strong> in the top-right of their Chrome toolbar to open Layers, then click <strong>⚙ Settings</strong>.', ja: '生徒は Chrome ツールバー右上の<strong>🗂️アイコン</strong>をクリックして Layers を開き、<strong>⚙ 設定</strong>をクリックします。', zh: '学生点击 Chrome 工具栏右上角的<strong>🗂️图标</strong>打开 Layers，然后点击<strong>⚙ 设置</strong>。', vi: 'Học sinh nhấp <strong>biểu tượng 🗂️</strong> ở góc trên bên phải thanh công cụ Chrome để mở Layers, sau đó nhấp <strong>⚙ Cài đặt</strong>.' },
+  join_s2_h:          { en: 'Students enter the Room Name & Password', ja: '生徒がルーム名とパスワードを入力', zh: '学生输入房间名称和密码', vi: 'Học sinh nhập Tên phòng & Mật khẩu' },
+  join_s2_p:          { en: 'Students type the <strong>Room Name</strong> and <strong>Password</strong> you created in Step 2, then click <strong>Join Room</strong>.', ja: 'ステップ2で作成した<strong>ルーム名</strong>と<strong>パスワード</strong>を入力し、<strong>ルームに参加</strong>をクリックします。', zh: '学生输入您在第2步创建的<strong>房间名称</strong>和<strong>密码</strong>，然后点击<strong>加入房间</strong>。', vi: 'Học sinh nhập <strong>Tên phòng</strong> và <strong>Mật khẩu</strong> bạn đã tạo ở Bước 2, sau đó nhấp <strong>Tham gia phòng</strong>.' },
+  join_s2_note:       { en: 'Write the Room Name and Password on the board so students can see it. You can change the password later in Settings.', ja: 'ルーム名とパスワードを黒板に書いて生徒に見せましょう。パスワードは後から設定で変更できます。', zh: '将房间名称和密码写在黑板上让学生看到。您可以稍后在设置中更改密码。', vi: 'Viết Tên phòng và Mật khẩu lên bảng để học sinh có thể nhìn thấy. Bạn có thể đổi mật khẩu sau trong Cài đặt.' },
+  join_done_h:        { en: 'Students are connected', ja: '生徒が接続されました', zh: '学生已连接', vi: 'Học sinh đã kết nối' },
+  join_done_title:    { en: 'Your classroom is live', ja: 'クラスルームが起動しました', zh: '您的教室已上线', vi: 'Lớp học của bạn đang hoạt động' },
+  join_done_p:        { en: "You'll see a green indicator in your Layers toolbar showing how many students are connected. Each student's number appears in your teacher panel.", ja: 'Layers ツールバーに緑色のインジケーターが表示され、接続中の生徒数を確認できます。各生徒の番号が教師パネルに表示されます。', zh: '您的 Layers 工具栏中会出现绿色指示器，显示已连接的学生人数。每位学生的编号会出现在您的教师面板中。', vi: 'Bạn sẽ thấy chỉ báo màu xanh lá trên thanh công cụ Layers hiển thị số học sinh đang kết nối. Số của mỗi học sinh xuất hiện trong bảng giáo viên.' },
+
+  room_s1_h:          { en: 'Open the Settings panel in Layers', ja: 'LayersのSettings（設定）パネルを開く', zh: '打开 Layers 的设置面板', vi: 'Mở bảng Cài đặt trong Layers' },
+  room_s1_p:          { en: 'Click the 🗂️ icon to open the Layers toolbar, then click the <strong>⚙ Settings</strong> button at the bottom of the toolbar.', ja: '🗂️アイコンをクリックしてLayersツールバーを開き、ツールバー下部にある<strong>⚙ 設定</strong>ボタンをクリックします。', zh: '点击 🗂️ 图标打开 Layers 工具栏，然后点击工具栏底部的 <strong>⚙ 设置</strong>按钮。', vi: 'Nhấp biểu tượng 🗂️ để mở thanh công cụ Layers, sau đó nhấp nút <strong>⚙ Cài đặt</strong> ở cuối thanh công cụ.' },
+  room_s2_h:          { en: 'Click "Create Room" and enter a name &amp; password', ja: '「ルームを作成」をクリックして名前とパスワードを入力', zh: '点击"创建房间"并输入名称和密码', vi: 'Nhấp "Tạo phòng" và nhập tên &amp; mật khẩu' },
+  room_s2_p:          { en: 'Give your room a memorable name (e.g. <em>English 3A</em>) and set a password. Students will need the <strong>Room Name</strong> and <strong>Password</strong> to join.', ja: '覚えやすいルーム名（例：<em>English 3A</em>）を設定し、パスワードを決めます。生徒が参加するには<strong>ルーム名</strong>と<strong>パスワード</strong>が必要です。', zh: '为您的房间起一个易记的名称（如 <em>English 3A</em>）并设置密码。学生需要<strong>房间名称</strong>和<strong>密码</strong>才能加入。', vi: 'Đặt tên phòng dễ nhớ (ví dụ: <em>English 3A</em>) và tạo mật khẩu. Học sinh sẽ cần <strong>Tên phòng</strong> và <strong>Mật khẩu</strong> để tham gia.' },
+  room_s2_note:       { en: 'The Room Name is your <strong>Room ID</strong> — keep it simple and easy to type. You can save multiple rooms and switch between them in Settings.', ja: 'ルーム名は<strong>ルームID</strong>になります — シンプルで入力しやすい名前にしましょう。設定から複数のルームを保存して切り替えられます。', zh: '房间名称就是您的<strong>房间 ID</strong>——请保持简洁易输入。您可以在设置中保存多个房间并随时切换。', vi: 'Tên phòng chính là <strong>ID phòng</strong> của bạn — giữ đơn giản và dễ gõ. Bạn có thể lưu nhiều phòng và chuyển đổi trong Cài đặt.' },
+  room_s3_h:          { en: 'Write the Room Name &amp; Password on the board', ja: 'ルーム名とパスワードを黒板に書く', zh: '将房间名称和密码写在黑板上', vi: 'Viết Tên phòng &amp; Mật khẩu lên bảng' },
+  room_s3_p:          { en: 'Students will need your <strong>Room Name</strong> and <strong>Password</strong> to connect in the next step. Display them where the class can see.', ja: '次のステップで生徒が接続するために<strong>ルーム名</strong>と<strong>パスワード</strong>が必要です。クラス全員に見える場所に表示してください。', zh: '学生在下一步连接时需要您的<strong>房间名称</strong>和<strong>密码</strong>。请展示在全班都能看到的地方。', vi: 'Học sinh sẽ cần <strong>Tên phòng</strong> và <strong>Mật khẩu</strong> của bạn để kết nối trong bước tiếp theo. Hiển thị chúng ở nơi cả lớp có thể nhìn thấy.' },
+  room_s3_tip:        { en: 'You can change the password at any time in <strong>Settings</strong>.', ja: 'パスワードは<strong>設定</strong>からいつでも変更できます。', zh: '您可以随时在<strong>设置</strong>中更改密码。', vi: 'Bạn có thể thay đổi mật khẩu bất cứ lúc nào trong <strong>Cài đặt</strong>.' },
+  room_done_h:        { en: 'Your classroom is live', ja: 'クラスルームが起動しました', zh: '您的教室已上线', vi: 'Lớp học của bạn đang hoạt động' },
+  room_done_title:    { en: "Students are connected — you're in control", ja: '生徒が接続されました — 管理を開始できます', zh: '学生已连接——您已掌控全局', vi: 'Học sinh đã kết nối — bạn đang kiểm soát' },
+  room_done_p:        { en: 'Use the teacher controls below to focus, lock, or send links to all student browsers at once. Changes take effect within seconds.', ja: '下の操作パネルを使って、生徒全員のブラウザに一括でフォーカス、ロック、リンク送信ができます。変更は数秒以内に反映されます。', zh: '使用下方的教师控制面板，可以一次性对所有学生浏览器进行专注、锁定或发送链接。更改在几秒内生效。', vi: 'Sử dụng các điều khiển giáo viên bên dưới để tập trung, khóa hoặc gửi liên kết tới tất cả trình duyệt học sinh cùng lúc. Thay đổi có hiệu lực trong vài giây.' },
+
+  controls_intro:     { en: 'Once students are connected to your room, you control their Layers toolbar from yours. Here is what each command does — try the interactive demo below.', ja: '生徒がルームに接続すると、あなたのツールバーから生徒のLayersツールバーを操作できます。各コマンドの内容を確認し、下のインタラクティブデモをお試しください。', zh: '学生连接到您的房间后，您可以通过自己的工具栏控制他们的 Layers 工具栏。以下是每个命令的说明——请试用下方的交互演示。', vi: 'Sau khi học sinh kết nối vào phòng của bạn, bạn có thể điều khiển thanh công cụ Layers của họ từ thanh của mình. Đây là những gì mỗi lệnh thực hiện — hãy thử demo tương tác bên dưới.' },
+  cmd_focus_h:        { en: 'Focus Mode', ja: 'フォーカスモード', zh: '专注模式', vi: 'Chế độ Tập trung' },
+  cmd_focus_p:        { en: 'Collapses the student toolbar to a minimal strip. Students can still use the timer and notes but cannot open other panels. Keeps students on task.', ja: '生徒のツールバーを最小限のストリップに折りたたみます。タイマーとメモは使えますが、他のパネルは開けません。学習に集中させるためのモードです。', zh: '将学生工具栏折叠为最小条。学生仍可使用计时器和笔记，但无法打开其他面板。帮助学生专注于任务。', vi: 'Thu nhỏ thanh công cụ học sinh về mức tối thiểu. Học sinh vẫn có thể dùng hẹn giờ và ghi chú nhưng không thể mở các bảng khác. Giúp học sinh tập trung vào nhiệm vụ.' },
+  cmd_focus_tag:      { en: 'Soft restriction', ja: 'ソフト制限', zh: '软限制', vi: 'Hạn chế nhẹ' },
+  cmd_lock_h:         { en: 'Lockdown Mode', ja: 'ロックダウンモード', zh: '锁定模式', vi: 'Chế độ Khóa' },
+  cmd_lock_p:         { en: 'Fully locks the student toolbar with a PIN. Students cannot close or interact with it until you release. Use during tests or assessments.', ja: 'PINで生徒のツールバーを完全にロックします。あなたが解除するまで、生徒はツールバーを閉じたり操作したりできません。テストや評価時に使用します。', zh: '用 PIN 完全锁定学生工具栏。学生无法关闭或操作，直到您解除。适用于考试或评估期间。', vi: 'Khóa hoàn toàn thanh công cụ học sinh bằng mã PIN. Học sinh không thể đóng hoặc tương tác cho đến khi bạn giải phóng. Dùng trong bài kiểm tra hoặc đánh giá.' },
+  cmd_lock_tag:       { en: 'Hard restriction', ja: 'ハード制限', zh: '硬限制', vi: 'Hạn chế cứng' },
+  cmd_url_h:          { en: 'Push a Link', ja: 'リンクを送信', zh: '推送链接', vi: 'Gửi liên kết' },
+  cmd_url_p:          { en: 'Opens a specific URL on all connected student browsers simultaneously. Useful for sharing a reading, a Google Form, or a video.', ja: '接続中の全生徒ブラウザで特定のURLを同時に開きます。リーディング資料、Googleフォーム、動画などを共有するのに便利です。', zh: '同时在所有已连接的学生浏览器中打开指定 URL。适合分享阅读材料、Google 表单或视频。', vi: 'Mở một URL cụ thể trên tất cả trình duyệt học sinh kết nối cùng lúc. Hữu ích để chia sẻ bài đọc, biểu mẫu Google hoặc video.' },
+  cmd_url_tag:        { en: 'Opens new tab', ja: '新しいタブで開く', zh: '打开新标签页', vi: 'Mở tab mới' },
+  cmd_block_h:        { en: 'Block Sites', ja: 'サイトをブロック', zh: '屏蔽网站', vi: 'Chặn trang web' },
+  cmd_block_p:        { en: 'Sends a list of blocked domains to student extensions. Any student who tries to open a blocked domain is redirected. Works in addition to IT-level blocking.', ja: 'ブロックするドメインのリストを生徒の拡張機能に送信します。ブロックされたドメインを開こうとした生徒はリダイレクトされます。IT管理者のブロックに追加する形で動作します。', zh: '向学生扩展程序发送被屏蔽域名列表。尝试访问被屏蔽域名的学生会被重定向。在 IT 级别屏蔽的基础上额外生效。', vi: 'Gửi danh sách tên miền bị chặn đến các tiện ích học sinh. Học sinh cố gắng mở tên miền bị chặn sẽ bị chuyển hướng. Hoạt động thêm vào bất kỳ tính năng chặn cấp IT nào đã có.' },
+  cmd_block_tag:      { en: 'Per-room override', ja: 'ルームごとの設定', zh: '按房间覆盖', vi: 'Ghi đè theo phòng' },
+  cmd_sched_h:        { en: 'Schedule', ja: 'スケジュール', zh: '计划', vi: 'Lịch trình' },
+  cmd_sched_p:        { en: 'Set a daily time window during which Focus or Lockdown turns on automatically. Set it once and it runs every day without any teacher action.', ja: 'フォーカスまたはロックダウンが自動的にオンになる時間帯を設定します。定期的な授業に最適で、一度設定すれば毎日自動的に動作します。', zh: '设置每天自动开启专注或锁定的时间段。非常适合定期课程——设置一次，每天自动运行，无需教师操作。', vi: 'Đặt khung thời gian hàng ngày để Tập trung hoặc Khóa tự động bật. Rất phù hợp cho các lớp học định kỳ — thiết lập một lần và chạy mỗi ngày mà không cần thao tác của giáo viên.' },
+  cmd_sched_tag:      { en: 'Runs automatically', ja: '自動実行', zh: '自动运行', vi: 'Tự động chạy' },
+  cmd_help_h:         { en: 'Student Help Signal', ja: '生徒のヘルプ信号', zh: '学生求助信号', vi: 'Tín hiệu Cầu trợ của học sinh' },
+  cmd_help_p:         { en: 'Students press a <strong>Help</strong> button inside their Layers toolbar. Their student number flashes in your teacher panel — no hands raised, no noise.', ja: '生徒がLayersツールバー内の<strong>ヘルプ</strong>ボタンを押します。教師パネルに生徒の番号が点滅し、誰が助けを必要としているかがすぐにわかります。挙手や声出し不要。', zh: '学生按下 Layers 工具栏内的<strong>帮助</strong>按钮。他们的学生编号会在您的教师面板中闪烁——无需举手，无需出声。', vi: 'Học sinh nhấn nút <strong>Trợ giúp</strong> trong thanh công cụ Layers của họ. Số học sinh của họ nhấp nháy trong bảng giáo viên — không cần giơ tay, không cần tiếng ồn.' },
+  cmd_help_tag:       { en: 'Silent alert', ja: 'サイレントアラート', zh: '静默提醒', vi: 'Cảnh báo im lặng' },
+  sim_title:          { en: 'Interactive Demo — Try the teacher controls', ja: 'インタラクティブデモ — 教師コントロールを試す', zh: '交互演示——试用教师控制', vi: 'Demo Tương tác — Thử các điều khiển giáo viên' },
+  sim_subtitle:       { en: 'Click the buttons on the right to see how student screens respond. Click any student tile to simulate a help request.', ja: '右側のボタンをクリックして、生徒の画面がどのように変化するか確認してください。生徒タイルをクリックしてヘルプリクエストをシミュレートできます。', zh: '点击右侧按钮查看学生屏幕如何响应。点击任意学生方块模拟求助请求。', vi: 'Nhấp các nút bên phải để xem màn hình học sinh phản hồi. Nhấp vào ô học sinh bất kỳ để mô phỏng yêu cầu trợ giúp.' },
+  sim_students_label: { en: 'Connected Students', ja: '接続中の生徒', zh: '已连接学生', vi: 'Học sinh Kết nối' },
+  sim_controls_label: { en: 'Commands', ja: 'コマンド', zh: '指令', vi: 'Lệnh' },
+  help_tip:           { en: 'Click any <strong>student tile</strong> above to simulate a help request — the tile flashes amber. Click again to dismiss. In your real classroom, this happens automatically when a student presses the Help button in their toolbar.', ja: '上の<strong>生徒タイル</strong>をクリックしてヘルプリクエストをシミュレートしましょう。タイルがアンバー色に点滅します。もう一度クリックで解除。実際の授業では、生徒がツールバーのヘルプボタンを押すと自動的にこうなります。', zh: '点击上方任意<strong>学生方块</strong>模拟求助请求——方块会闪烁琥珀色。再次点击取消。在真实课堂中，当学生按下工具栏中的帮助按钮时会自动触发。', vi: 'Nhấp vào bất kỳ <strong>ô học sinh</strong> nào ở trên để mô phỏng yêu cầu trợ giúp — ô sẽ nhấp nháy màu hổ phách. Nhấp lại để xóa. Trong lớp học thực, điều này xảy ra tự động khi học sinh nhấn nút Trợ giúp trong thanh công cụ.' },
+  complete_h: { en: '🎉 Setup complete!', ja: '🎉 セットアップ完了！', zh: '🎉 设置完成！', vi: '🎉 Thiết lập hoàn tất!' },
+  complete_p: { en: "You're all set. Open Layers on your computer to start your first classroom session.", ja: '準備完了です。パソコンでLayersを開いて、最初のクラスセッションを始めましょう。', zh: '一切就绪。在您的电脑上打开 Layers 开始您的第一堂课。', vi: 'Mọi thứ đã sẵn sàng. Mở Layers trên máy tính để bắt đầu buổi học đầu tiên.' },
+
+  tab_cb_h:    { en: 'Chromebook Admin', ja: 'Chromebook 管理者', zh: 'Chromebook 管理员', vi: 'Quản trị Chromebook' },
+  tab_cb_p:    { en: 'Force-install via Google Workspace Admin Console', ja: 'Google Workspace 管理コンソールで一括インストール', zh: '通过 Google Workspace 管理控制台强制安装', vi: 'Cài đặt bắt buộc qua Google Workspace Admin Console' },
+  tab_win_h:   { en: 'Windows Admin', ja: 'Windows 管理者', zh: 'Windows 管理员', vi: 'Quản trị Windows' },
+  tab_win_p:   { en: 'Force-install via registry on Windows 10/11 PCs', ja: 'レジストリを使って Windows 10/11 に強制インストール', zh: '通过注册表在 Windows 10/11 上强制安装', vi: 'Cài đặt bắt buộc qua registry trên Windows 10/11' },
   tab_mac_h:   { en: 'Mac Teacher App', ja: 'Mac 教師アプリ', zh: 'Mac 教师应用', vi: 'Ứng dụng giáo viên Mac' },
-  tab_mac_p:   { en: 'Download & first-launch setup for macOS', ja: 'macOS向けダウンロードと初回起動の設定', zh: '下载及 macOS 首次启动设置', vi: 'Tải xuống và thiết lập lần đầu cho macOS' },
-  mac_intro:   { en: 'Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.', ja: 'Mac用Layers教師アプリ（.dmg）をダウンロードします。アプリはまだコード署名されていないため、初回起動時に一手順追加が必要です。', zh: '下载 Mac 版 Layers 教师应用（.dmg）。该应用尚未经过代码签名，因此首次启动需要一个额外步骤。', vi: 'Tải ứng dụng Layers dành cho giáo viên trên Mac (.dmg). Ứng dụng chưa được ký mã, vì vậy lần khởi động đầu tiên cần thêm một bước.' },
-  mac_s1_h:    { en: 'Download the .dmg from Google Drive', ja: 'Google Driveから.dmgをダウンロード', zh: '从 Google Drive 下载 .dmg', vi: 'Tải .dmg từ Google Drive' },
-  mac_s1_p:    { en: 'Open the folder and download the <strong>Layers Teacher.dmg</strong> file.', ja: 'フォルダを開いて<strong>Layers Teacher.dmg</strong>をダウンロードしてください。', zh: '打开文件夹并下载 <strong>Layers Teacher.dmg</strong> 文件。', vi: 'Mở thư mục và tải file <strong>Layers Teacher.dmg</strong>.' },
-  mac_s2_h:    { en: 'Open the .dmg and drag the app to Applications', ja: '.dmgを開いてアプリをApplicationsにドラッグ', zh: '打开 .dmg 并将应用拖到 Applications 文件夹', vi: 'Mở .dmg và kéo ứng dụng vào thư mục Applications' },
-  mac_s2_p:    { en: 'Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.', ja: 'ダウンロードした.dmgをダブルクリック。<strong>Layers Teacher.app</strong>をApplicationsフォルダにドラッグしてください。', zh: '双击下载的 .dmg 文件。将 <strong>Layers Teacher.app</strong> 拖到 Applications 文件夹。', vi: 'Nhấp đúp vào file .dmg đã tải. Kéo <strong>Layers Teacher.app</strong> vào thư mục Applications.' },
-  mac_s3_h:    { en: 'First launch — right-click to open', ja: '初回起動 — 右クリックして開く', zh: '首次启动——右键点击打开', vi: 'Lần đầu khởi động — nhấp chuột phải để mở' },
-  mac_s3_p:    { en: 'Because the app is not yet code-signed, macOS will block it on the first launch with the message: <em>"Layers Teacher.app cannot be opened because it is from an unidentified developer."</em>', ja: 'アプリはまだコード署名されていないため、macOSが初回起動時に<em>「"Layers Teacher.app"は、身元不明の開発元からのものであるため開けません。」</em>とブロックします。', zh: '由于应用尚未经过代码签名，macOS 首次启动时会拦截并显示：<em>"无法打开"Layers Teacher.app"，因为它来自身份不明的开发者。"</em>', vi: 'Vì ứng dụng chưa được ký mã, macOS sẽ chặn khi khởi động lần đầu với thông báo: <em>"Layers Teacher.app không thể mở vì đến từ nhà phát triển chưa được xác định."</em>' },
-  mac_s3_note: { en: '<strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong> — after that, the app opens normally.', ja: 'ApplicationsフォルダでアプリをRight-click→<strong>開く</strong>をクリック→ダイアログで<strong>開く</strong>をクリック。これは<strong>1回だけ</strong>必要です — 以降は通常通り開きます。', zh: '在 Applications 中<strong>右键点击</strong>应用 → 点击<strong>打开</strong> → 在对话框中点击<strong>打开</strong>。只需操作<strong>一次</strong>——之后即可正常打开。', vi: '<strong>Nhấp chuột phải</strong> vào ứng dụng trong Applications → nhấp <strong>Mở</strong> → nhấp <strong>Mở</strong> trong hộp thoại. Chỉ cần làm điều này <strong>một lần</strong> — sau đó ứng dụng mở bình thường.' },
-  mac_s3_alt:  { en: 'Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong> next to the Layers warning.', ja: '別の方法：<strong>システム設定 → プライバシーとセキュリティ</strong>を開き、Layersの警告の横にある<strong>このまま開く</strong>をクリック。', zh: '替代方法：前往<strong>系统设置 → 隐私与安全性</strong>，向下滚动，点击 Layers 警告旁边的<strong>仍然打开</strong>。', vi: 'Cách khác: vào <strong>Cài đặt hệ thống → Quyền riêng tư &amp; Bảo mật</strong>, kéo xuống và nhấp <strong>Vẫn mở</strong> bên cạnh cảnh báo Layers.' },
-  mac_done_h:  { en: 'Done — Layers is running', ja: '完了 — Layersが起動しました', zh: '完成——Layers 正在运行', vi: 'Hoàn tất — Layers đang chạy' },
-  mac_done_title:{ en: 'The toolbar is floating on your screen', ja: 'ツールバーが画面に表示されています', zh: '工具栏正悬浮在屏幕上', vi: 'Thanh công cụ đang nổi trên màn hình của bạn' },
-  mac_done_p:  { en: 'From now on, double-click the app to open it normally. Layers floats above Keynote, Safari, YouTube, and any full-screen app. A 14-day free trial starts automatically — no license key needed to begin.', ja: '以降はアプリをダブルクリックするだけで開きます。LayersはKeynote、Safari、YouTube、フルスクリーンアプリの上に浮かびます。14日間の無料体験が自動的に開始されます — ライセンスキー不要。', zh: '从现在起，双击应用即可正常打开。Layers 会悬浮在 Keynote、Safari、YouTube 及任何全屏应用上方。14 天免费试用自动开始——无需许可证密钥。', vi: 'Từ bây giờ, nhấp đúp vào ứng dụng để mở bình thường. Layers nổi phía trên Keynote, Safari, YouTube và mọi ứng dụng toàn màn hình. 14 ngày dùng thử miễn phí tự động bắt đầu — không cần khóa giấy phép.' },
-  win_intro:   { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。生徒は削除できません。', zh: '此操作会添加一个注册表项，让 Chrome 在 Windows PC 上强制安装 Layers 扩展程序。学生无法删除。', vi: 'Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows. Học sinh không thể gỡ bỏ.' },
-  win_recommended:{ en: 'Recommended', ja: '推奨', zh: '推荐', vi: 'Khuyến nghị' },
-  win_fastest:    { en: 'Fastest', ja: '最速', zh: '最快', vi: 'Nhanh nhất' },
-  win_m1_h:       { en: '⚙️ Registry (.reg file)', ja: '⚙️ レジストリ (.reg ファイル)', zh: '⚙️ 注册表（.reg 文件）', vi: '⚙️ Registry (tệp .reg)' },
-  win_m1_p:       { en: 'Double-click to install. 30 sec per machine.', ja: 'ダブルクリックでインストール。1台30秒。', zh: '双击安装。每台机器 30 秒。', vi: 'Nhấp đúp để cài đặt. 30 giây mỗi máy.' },
-  win_m2_h:       { en: '💻 Silent .bat Script', ja: '💻 サイレント .bat スクリプト', zh: '💻 静默 .bat 脚本', vi: '💻 Script .bat tự động' },
-  win_m2_p:       { en: 'Run from USB or network share. No clicks.', ja: 'USB やネットワーク共有から実行。クリック不要。', zh: '从 USB 或网络共享运行。无需点击。', vi: 'Chạy từ USB hoặc ổ đĩa mạng. Không cần nhấp chuột.' },
-  win_reg_s1_h:   { en: 'Download the .reg file', ja: '.reg ファイルをダウンロード', zh: '下载 .reg 文件', vi: 'Tải tệp .reg' },
-  win_reg_s1_p:   { en: 'Save it anywhere on the target PC.', ja: '対象 PC の任意の場所に保存します。', zh: '保存到目标电脑的任意位置。', vi: 'Lưu vào bất kỳ đâu trên máy tính mục tiêu.' },
-  win_reg_s1_note:{ en: 'Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue. This is normal for .reg files.', ja: 'Windows が「不明な発行元」と警告する場合があります — <strong>はい</strong> をクリックして続行してください。.reg ファイルでは通常の動作です。', zh: 'Windows 可能会警告"未知发布者"——点击<strong>是</strong>继续。这对 .reg 文件是正常的。', vi: 'Windows có thể cảnh báo "Nhà phát hành không xác định" — nhấp <strong>Yes</strong> để tiếp tục. Đây là bình thường với tệp .reg.' },
-  win_reg_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
-  win_reg_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> を右クリック → <strong>結合</strong>（またはダブルクリック）。UAC プロンプトを承認します。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>合并</strong>（或双击）。接受 UAC 提示。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (hoặc nhấp đúp). Chấp nhận yêu cầu UAC.' },
-  win_s3_h:       { en: 'Restart Chrome', ja: 'Chrome を再起動', zh: '重启 Chrome', vi: 'Khởi động lại Chrome' },
-  win_s3_p:       { en: 'Close and reopen Chrome. The extension installs automatically within seconds.', ja: 'Chrome を閉じて再度開きます。数秒で拡張機能が自動インストールされます。', zh: '关闭并重新打开 Chrome。扩展程序会在几秒内自动安装。', vi: 'Đóng và mở lại Chrome. Tiện ích sẽ tự động cài đặt trong vài giây.' },
-  win_done_h:     { en: 'Done', ja: '完了', zh: '完成', vi: 'Hoàn tất' },
-  win_done_title: { en: 'Layers is now force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
-  win_done_p:     { en: 'The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.', ja: 'Chrome ツールバーに 🗂️ アイコンが表示されます。レジストリキーが存在する限り、拡張機能を削除できません。', zh: 'Chrome 工具栏会出现 🗂️ 图标。只要注册表项存在，扩展程序就无法被删除。', vi: 'Biểu tượng 🗂️ sẽ xuất hiện trên thanh công cụ Chrome. Tiện ích không thể bị gỡ bỏ khi mục registry còn tồn tại.' },
-  win_ref:        { en: "What's inside the .reg file (for reference):", ja: '.reg ファイルの内容（参考）：', zh: '.reg 文件内容（参考）：', vi: 'Nội dung tệp .reg (tham khảo):' },
-  win_reg_note2:  { en: 'If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.', ja: '値 <code style="font-family:var(--mono)">"1"</code> が他の拡張機能で使用中の場合は、<code style="font-family:var(--mono)">"2"</code> など未使用の番号に変更してください。', zh: '如果值 <code style="font-family:var(--mono)">"1"</code> 已被其他扩展程序占用，请改为 <code style="font-family:var(--mono)">"2"</code> 或其他未使用的数字。', vi: 'Nếu giá trị <code style="font-family:var(--mono)">"1"</code> đã được tiện ích khác sử dụng, hãy đổi thành <code style="font-family:var(--mono)">"2"</code> hoặc số chưa dùng.' },
-  win_bat_s1_h:   { en: 'Download the .bat script', ja: '.bat スクリプトをダウンロード', zh: '下载 .bat 脚本', vi: 'Tải script .bat' },
-  win_bat_s2_h:   { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
-  win_bat_s2_p:   { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. A black window flashes briefly.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> を右クリック → <strong>管理者として実行</strong>。黒い画面が一瞬表示されます。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>以管理员身份运行</strong>。黑色窗口会短暂闪烁。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>. Cửa sổ đen sẽ xuất hiện thoáng qua.' },
-  win_bat_s2_warn:{ en: 'Must be run as Administrator or the registry write will fail silently.', ja: '管理者として実行しないと、レジストリの書き込みがサイレントに失敗します。', zh: '必须以管理员身份运行，否则注册表写入会静默失败。', vi: 'Phải chạy với quyền Quản trị viên, nếu không việc ghi registry sẽ thất bại mà không báo lỗi.' },
-  win_bat_done_title:{ en: 'Layers is force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
-  win_bat_done_p: { en: 'Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.', ja: '.bat を USB にコピーし、各生徒 PC で実行してください。1台あたり60秒以内で完了します。', zh: '将 .bat 复制到 U 盘，在每台学生电脑上运行，每台不到 60 秒。', vi: 'Sao chép tệp .bat vào USB và chạy trên từng máy tính học sinh, mỗi máy chưa đến 60 giây.' },
-  win_bat_ref:    { en: "What's inside the .bat file:", ja: '.bat ファイルの内容：', zh: '.bat 文件内容：', vi: 'Nội dung tệp .bat:' },
+  tab_mac_p:   { en: 'Download &amp; first-launch setup for macOS', ja: 'macOS向けダウンロードと初回起動の設定', zh: '下载及 macOS 首次启动设置', vi: 'Tải xuống và thiết lập lần đầu cho macOS' },
 
-  // Student
-  st_tagline:  { en: 'Translation, dictionary, notes & timer — floats over any page', ja: '翻訳・辞書・メモ・タイマー — どのページにも表示', zh: '翻译、词典、笔记和计时器 — 悬浮在任何页面上', vi: 'Dịch thuật, từ điển, ghi chú & hẹn giờ — nổi trên mọi trang web' },
+  admin_note_cb:  { en: 'This guide requires <strong>Google Workspace admin access</strong>. If you\'re a teacher without admin rights, ask your school\'s IT department to follow these steps, or use the <strong>Teacher Setup</strong> tab instead.', ja: 'このガイドには<strong>Google Workspace 管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>教師セットアップ</strong>タブをご利用ください。', zh: '本指南需要 <strong>Google Workspace 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>教师设置</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị Google Workspace</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Thiết lập Giáo viên</strong>.' },
+  admin_note_win: { en: 'This guide requires <strong>Windows administrator rights</strong>. If you\'re a teacher without admin access, ask your school\'s IT department to follow these steps, or use the <strong>Teacher Setup</strong> tab instead.', ja: 'このガイドには<strong>Windows の管理者権限</strong>が必要です。管理者権限がない場合は、学校の IT 担当者にこの手順を依頼するか、<strong>教師セットアップ</strong>タブをご利用ください。', zh: '本指南需要 <strong>Windows 管理员权限</strong>。如果您是没有管理员权限的教师，请联系学校 IT 部门执行这些步骤，或使用<strong>教师设置</strong>选项卡。', vi: 'Hướng dẫn này yêu cầu <strong>quyền quản trị viên Windows</strong>. Nếu bạn là giáo viên không có quyền quản trị, hãy nhờ bộ phận IT của trường thực hiện các bước này, hoặc sử dụng tab <strong>Thiết lập Giáo viên</strong>.' },
+  cb_intro:     { en: 'This installs the Layers Chrome extension on <strong>every student Chromebook automatically</strong> — no student action needed. The extension appears immediately and cannot be removed by students.', ja: 'このガイドに従うと、<strong>すべての生徒の Chromebook に Layers 拡張機能を自動インストール</strong>できます。生徒側の操作は一切不要です。', zh: '此操作会在<strong>所有学生 Chromebook 上自动安装</strong> Layers Chrome 扩展程序——无需学生操作。', vi: 'Thao tác này sẽ tự動 cài đặt tiện ích Layers Chrome trên <strong>tất cả Chromebook của học sinh</strong> — không cần học sinh thao tác.' },
+  cb_s1_h:      { en: 'Open Google Admin Console', ja: 'Google 管理コンソールを開く', zh: '打开 Google 管理控制台', vi: 'Mở Google Admin Console' },
+  cb_s1_p:      { en: 'Sign in with your Google Workspace admin account.', ja: 'Google Workspace の管理者アカウントでサインインします。', zh: '使用 Google Workspace 管理员帐号登录。', vi: 'Đăng nhập bằng tài khoản quản trị Google Workspace.' },
+  cb_s2_h:      { en: 'Navigate to Chrome App Management', ja: 'Chrome アプリ管理ページに移動する', zh: '导航到 Chrome 应用管理', vi: 'Điều hướng đến Quản lý ứng dụng Chrome' },
+  cb_s2_p:      { en: 'Follow this path in the left sidebar:', ja: '左サイドバーで次の順にクリックします：', zh: '在左侧栏按以下路径点击：', vi: 'Theo đường dẫn này trên thanh bên trái:' },
+  cb_s2_nav1:   { en: 'Devices', ja: 'デバイス', zh: '设备', vi: 'Thiết bị' },
+  cb_s2_nav3:   { en: 'Apps &amp; Extensions', ja: 'アプリと拡張機能', zh: '应用和扩展程序', vi: 'Ứng dụng &amp; Tiện ích' },
+  cb_s2_nav4:   { en: 'Users &amp; Browsers', ja: 'ユーザーとブラウザ', zh: '用户和浏览器', vi: 'Người dùng &amp; Trình duyệt' },
+  cb_s3_h:      { en: 'Select the Student Organisational Unit', ja: '生徒の組織部門（OU）を選択する', zh: '选择学生组织单位', vi: 'Chọn Đơn vị tổ chức học sinh' },
+  cb_s3_p:      { en: 'In the left panel, click the OU that contains your students (e.g. <em>Students</em> or <em>Year 1</em>). This ensures the extension only installs for students, not staff.', ja: '左パネルで生徒が所属する組織部門（例：<em>生徒</em>、<em>1年生</em>）をクリックします。', zh: '在左侧面板中，点击包含学生的组织单位（如 <em>学生</em> 或 <em>一年级</em>）。', vi: 'Trong bảng bên trái, nhấp vào OU chứa học sinh của bạn (ví dụ: <em>Học sinh</em> hoặc <em>Lớp 1</em>).' },
+  cb_s4_h:      { en: 'Add the Layers Extension', ja: 'Layers 拡張機能を追加する', zh: '添加 Layers 扩展程序', vi: 'Thêm tiện ích Layers' },
+  cb_s4_p:      { en: 'Click the <strong>＋ button</strong> (bottom-right) → <strong>Add from Chrome Web Store</strong>. Search for "Layers", or paste the extension ID:', ja: '右下の <strong>＋ ボタン</strong> をクリック → <strong>Chrome ウェブストアから追加</strong>。「Layers」で検索するか、拡張機能 ID を貼り付けます：', zh: '点击右下角的 <strong>＋ 按钮</strong> → <strong>从 Chrome 网上应用店添加</strong>。搜索"Layers"，或粘贴扩展程序 ID：', vi: 'Nhấp nút <strong>＋</strong> (góc dưới bên phải) → <strong>Thêm từ Chrome Web Store</strong>. Tìm "Layers", hoặc dán ID tiện ích:' },
+  cb_s4_p2:     { en: 'Select the Layers extension and click <strong>Select</strong>.', ja: 'Layers 拡張機能を選択して <strong>選択</strong> をクリックします。', zh: '选择 Layers 扩展程序，然后点击<strong>选择</strong>。', vi: 'Chọn tiện ích Layers và nhấp <strong>Chọn</strong>.' },
+  cb_s5_h:      { en: 'Set Installation Policy to Force Install', ja: 'インストールポリシーを「強制インストール」に設定する', zh: '将安装策略设为强制安装', vi: 'Đặt chính sách cài đặt thành Cài đặt bắt buộc' },
+  cb_s5_p:      { en: 'After adding the extension, a settings panel appears. Set:', ja: '拡張機能を追加すると、設定パネルが表示されます。次のように設定します：', zh: '添加扩展程序后，会出现设置面板。设置如下：', vi: 'Sau khi thêm tiện ích, bảng cài đặt sẽ xuất hiện. Thiết lập:' },
+  cb_s5_policy: { en: 'Installation policy', ja: 'インストールポリシー', zh: '安装策略', vi: 'Chính sách cài đặt' },
+  cb_s5_force:  { en: 'Force install', ja: '強制インストール', zh: '强制安装', vi: 'Cài đặt bắt buộc' },
+  cb_s5_pin:    { en: 'Pin to toolbar', ja: 'ツールバーにピン留め', zh: '固定到工具栏', vi: 'Ghim vào thanh công cụ' },
+  cb_s5_enabled:{ en: 'Enabled (recommended)', ja: '有効（推奨）', zh: '已启用（推荐）', vi: 'Bật (khuyến nghị)' },
+  cb_s5_note:   { en: '<strong>Do not</strong> choose "Allow install" — students must not be able to remove it. Choose <strong>Force install</strong>.', ja: '「インストールを許可」は選ばないでください。必ず<strong>強制インストール</strong>を選択してください。', zh: '<strong>不要</strong>选择"允许安装"。请选择<strong>强制安装</strong>。', vi: '<strong>Không</strong> chọn "Cho phép cài đặt". Hãy chọn <strong>Cài đặt bắt buộc</strong>.' },
+  cb_s6_h:      { en: 'Save', ja: '保存する', zh: '保存', vi: 'Lưu' },
+  cb_s6_p:      { en: 'Click <strong>Save</strong> in the top-right corner. The policy deploys immediately.', ja: '右上の <strong>保存</strong> をクリックします。ポリシーはすぐに反映されます。', zh: '点击右上角的<strong>保存</strong>。策略会立即生效。', vi: 'Nhấp <strong>Lưu</strong> ở góc trên bên phải. Chính sách sẽ được triển khai ngay lập tức.' },
+  cb_done_h:    { en: 'Done — What Happens Next', ja: '完了 — この後の動作', zh: '完成 — 接下来会发生什么', vi: 'Hoàn tất — Điều gì xảy ra tiếp theo' },
+  cb_done_title:{ en: 'Extension auto-installs on all student devices', ja: 'すべての生徒端末に自動インストールされます', zh: '扩展程序会自动安装到所有学生设备', vi: 'Tiện ích sẽ tự động cài đặt trên tất cả thiết bị học sinh' },
+  cb_done_p:    { en: 'Students will see the Layers icon in their Chrome toolbar the next time they sign in or restart Chrome. No student action required.', ja: '次回 Chrome にサインインするか再起動すると、生徒のツールバーに Layers アイコンが表示されます。生徒側の操作は不要です。', zh: '学生下次登录或重启 Chrome 时，工具栏会出现 Layers 图标。无需学生操作。', vi: 'Học sinh sẽ thấy biểu tượng Layers trên thanh công cụ Chrome khi đăng nhập hoặc khởi động lại Chrome lần sau.' },
+
+  mac_intro:      { en: 'Download the Layers Teacher app for Mac (.dmg). The app is not yet code-signed, so the first launch requires one extra step.', ja: 'Mac用Layers教師アプリ（.dmg）をダウンロードします。アプリはまだコード署名されていないため、初回起動時に一手順追加が必要です。', zh: '下载 Mac 版 Layers 教师应用（.dmg）。该应用尚未经过代码签名，因此首次启动需要一个额外步骤。', vi: 'Tải ứng dụng Layers dành cho giáo viên trên Mac (.dmg). Ứng dụng chưa được ký mã, vì vậy lần khởi động đầu tiên cần thêm một bước.' },
+  mac_s1_h:       { en: 'Download the .dmg from Google Drive', ja: 'Google Driveから.dmgをダウンロード', zh: '从 Google Drive 下载 .dmg', vi: 'Tải .dmg từ Google Drive' },
+  mac_s1_p:       { en: 'Open the folder and download the <strong>Layers Teacher.dmg</strong> file.', ja: 'フォルダを開いて<strong>Layers Teacher.dmg</strong>をダウンロードしてください。', zh: '打开文件夹并下载 <strong>Layers Teacher.dmg</strong> 文件。', vi: 'Mở thư mục và tải file <strong>Layers Teacher.dmg</strong>.' },
+  mac_s2_h:       { en: 'Open the .dmg and drag the app to Applications', ja: '.dmgを開いてアプリをApplicationsにドラッグ', zh: '打开 .dmg 并将应用拖到 Applications 文件夹', vi: 'Mở .dmg và kéo ứng dụng vào thư mục Applications' },
+  mac_s2_p:       { en: 'Double-click the downloaded .dmg file. Drag <strong>Layers Teacher.app</strong> into your Applications folder.', ja: 'ダウンロードした.dmgをダブルクリック。<strong>Layers Teacher.app</strong>をApplicationsフォルダにドラッグしてください。', zh: '双击下载的 .dmg 文件。将 <strong>Layers Teacher.app</strong> 拖到 Applications 文件夹。', vi: 'Nhấp đúp vào file .dmg đã tải. Kéo <strong>Layers Teacher.app</strong> vào thư mục Applications.' },
+  mac_s3_h:       { en: 'First launch — right-click to open', ja: '初回起動 — 右クリックして開く', zh: '首次启动——右键点击打开', vi: 'Lần đầu khởi động — nhấp chuột phải để mở' },
+  mac_s3_p:       { en: 'Because the app is not yet code-signed, macOS will block it on the first launch.', ja: 'アプリはまだコード署名されていないため、macOSが初回起動時にブロックします。', zh: '由于应用尚未经过代码签名，macOS 首次启动时会拦截。', vi: 'Vì ứng dụng chưa được ký mã, macOS sẽ chặn khi khởi động lần đầu.' },
+  mac_s3_note:    { en: '<strong>Right-click</strong> the app in Applications → click <strong>Open</strong> → click <strong>Open</strong> in the dialog. You only need to do this <strong>once</strong>.', ja: 'ApplicationsフォルダでアプリをRight-click→<strong>開く</strong>をクリック→ダイアログで<strong>開く</strong>をクリック。<strong>1回だけ</strong>必要です。', zh: '在 Applications 中<strong>右键点击</strong>应用 → 点击<strong>打开</strong> → 在对话框中点击<strong>打开</strong>。只需<strong>一次</strong>。', vi: '<strong>Nhấp chuột phải</strong> vào ứng dụng trong Applications → nhấp <strong>Mở</strong> → nhấp <strong>Mở</strong> trong hộp thoại. Chỉ cần <strong>một lần</strong>.' },
+  mac_s3_alt:     { en: 'Alternative: go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down, and click <strong>Open Anyway</strong>.', ja: '別の方法：<strong>システム設定 → プライバシーとセキュリティ</strong>を開き、<strong>このまま開く</strong>をクリック。', zh: '替代方法：前往<strong>系统设置 → 隐私与安全性</strong>，点击<strong>仍然打开</strong>。', vi: 'Cách khác: vào <strong>Cài đặt hệ thống → Quyền riêng tư &amp; Bảo mật</strong>, nhấp <strong>Vẫn mở</strong>.' },
+  mac_done_h:     { en: 'Done — Layers is running', ja: '完了 — Layersが起動しました', zh: '完成——Layers 正在运行', vi: 'Hoàn tất — Layers đang chạy' },
+  mac_done_title: { en: 'The toolbar is floating on your screen', ja: 'ツールバーが画面に表示されています', zh: '工具栏正悬浮在屏幕上', vi: 'Thanh công cụ đang nổi trên màn hình của bạn' },
+  mac_done_p:     { en: 'From now on, double-click the app to open it normally. A 14-day free trial starts automatically.', ja: '以降はアプリをダブルクリックするだけで開きます。14日間の無料体験が自動的に開始されます。', zh: '从现在起，双击应用即可正常打开。14 天免费试用自动开始。', vi: 'Từ bây giờ, nhấp đúp vào ứng dụng để mở bình thường. 14 ngày dùng thử miễn phí tự động bắt đầu.' },
+
+  win_intro:        { en: 'This adds a registry entry that tells Chrome to force-install the Layers extension on Windows PCs. Students cannot remove it.', ja: 'Windows PC の Chrome に Layers 拡張機能を強制インストールするレジストリ設定を追加します。', zh: '此操作会添加一个注册表项，让 Chrome 在 Windows PC 上强制安装 Layers 扩展程序。', vi: 'Thao tác này thêm một mục registry để Chrome tự động cài đặt bắt buộc tiện ích Layers trên máy tính Windows.' },
+  win_recommended:  { en: 'Recommended', ja: '推奨', zh: '推荐', vi: 'Khuyến nghị' },
+  win_fastest:      { en: 'Fastest', ja: '最速', zh: '最快', vi: 'Nhanh nhất' },
+  win_m1_h:         { en: '⚙️ Registry (.reg file)', ja: '⚙️ レジストリ (.reg ファイル)', zh: '⚙️ 注册表（.reg 文件）', vi: '⚙️ Registry (tệp .reg)' },
+  win_m1_p:         { en: 'Double-click to install. 30 sec per machine.', ja: 'ダブルクリックでインストール。1台30秒。', zh: '双击安装。每台机器 30 秒。', vi: 'Nhấp đúp để cài đặt. 30 giây mỗi máy.' },
+  win_m2_h:         { en: '💻 Silent .bat Script', ja: '💻 サイレント .bat スクリプト', zh: '💻 静默 .bat 脚本', vi: '💻 Script .bat tự động' },
+  win_m2_p:         { en: 'Run from USB or network share. No clicks.', ja: 'USB やネットワーク共有から実行。クリック不要。', zh: '从 USB 或网络共享运行。无需点击。', vi: 'Chạy từ USB hoặc ổ đĩa mạng. Không cần nhấp chuột.' },
+  win_reg_s1_h:     { en: 'Download the .reg file', ja: '.reg ファイルをダウンロード', zh: '下载 .reg 文件', vi: 'Tải tệp .reg' },
+  win_reg_s1_p:     { en: 'Save it anywhere on the target PC.', ja: '対象 PC の任意の場所に保存します。', zh: '保存到目标电脑的任意位置。', vi: 'Lưu vào bất kỳ đâu trên máy tính mục tiêu.' },
+  win_reg_s1_note:  { en: 'Windows may warn "Unknown publisher" — click <strong>Yes</strong> to continue.', ja: 'Windows が「不明な発行元」と警告する場合は <strong>はい</strong> をクリックしてください。', zh: 'Windows 可能会警告"未知发布者"——点击<strong>是</strong>继续。', vi: 'Windows có thể cảnh báo "Nhà phát hành không xác định" — nhấp <strong>Yes</strong> để tiếp tục.' },
+  win_reg_s2_h:     { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
+  win_reg_s2_p:     { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong> (or double-click). Accept the UAC prompt.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> を右クリック → <strong>結合</strong>。UAC プロンプトを承認します。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>合并</strong>。接受 UAC 提示。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.reg</code> → <strong>Merge</strong>. Chấp nhận yêu cầu UAC.' },
+  win_s3_h:         { en: 'Restart Chrome', ja: 'Chrome を再起動', zh: '重启 Chrome', vi: 'Khởi động lại Chrome' },
+  win_s3_p:         { en: 'Close and reopen Chrome. The extension installs automatically within seconds.', ja: 'Chrome を閉じて再度開きます。数秒で拡張機能が自動インストールされます。', zh: '关闭并重新打开 Chrome。扩展程序会在几秒内自动安装。', vi: 'Đóng và mở lại Chrome. Tiện ích sẽ tự động cài đặt trong vài giây.' },
+  win_done_h:       { en: 'Done', ja: '完了', zh: '完成', vi: 'Hoàn tất' },
+  win_done_title:   { en: 'Layers is now force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
+  win_done_p:       { en: 'The 🗂️ icon appears in the Chrome toolbar. The extension cannot be removed while the registry key exists.', ja: 'Chrome ツールバーに 🗂️ アイコンが表示されます。レジストリキーが存在する限り削除できません。', zh: 'Chrome 工具栏会出现 🗂️ 图标。只要注册表项存在就无法删除。', vi: 'Biểu tượng 🗂️ sẽ xuất hiện trên thanh công cụ Chrome. Tiện ích không thể bị gỡ bỏ khi mục registry còn tồn tại.' },
+  win_ref:          { en: "What's inside the .reg file (for reference):", ja: '.reg ファイルの内容（参考）：', zh: '.reg 文件内容（参考）：', vi: 'Nội dung tệp .reg (tham khảo):' },
+  win_reg_note2:    { en: 'If value <code style="font-family:var(--mono)">"1"</code> is already taken by another extension, change it to <code style="font-family:var(--mono)">"2"</code> or any unused number.', ja: '値 <code style="font-family:var(--mono)">"1"</code> が使用中の場合は未使用の番号に変更してください。', zh: '如果值 <code style="font-family:var(--mono)">"1"</code> 已被占用，请改为未使用的数字。', vi: 'Nếu giá trị <code style="font-family:var(--mono)">"1"</code> đã được sử dụng, hãy đổi thành số chưa dùng.' },
+  win_bat_s1_h:     { en: 'Download the .bat script', ja: '.bat スクリプトをダウンロード', zh: '下载 .bat 脚本', vi: 'Tải script .bat' },
+  win_bat_s2_h:     { en: 'Run as Administrator', ja: '管理者として実行', zh: '以管理员身份运行', vi: 'Chạy với quyền Quản trị viên' },
+  win_bat_s2_p:     { en: 'Right-click <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>.', ja: '<code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> を右クリック → <strong>管理者として実行</strong>。', zh: '右键点击 <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>以管理员身份运行</strong>。', vi: 'Nhấp chuột phải <code style="font-family:var(--mono);color:var(--amber)">layers-install.bat</code> → <strong>Run as administrator</strong>.' },
+  win_bat_s2_warn:  { en: 'Must be run as Administrator or the registry write will fail silently.', ja: '管理者として実行しないとレジストリの書き込みが失敗します。', zh: '必须以管理员身份运行，否则注册表写入会静默失败。', vi: 'Phải chạy với quyền Quản trị viên, nếu không việc ghi registry sẽ thất bại.' },
+  win_bat_done_title:{ en: 'Layers is force-installed', ja: 'Layers が強制インストールされました', zh: 'Layers 已强制安装', vi: 'Layers đã được cài đặt bắt buộc' },
+  win_bat_done_p:   { en: 'Copy the .bat to a USB stick and run it on each student PC in under 60 seconds each.', ja: '.bat を USB にコピーし各 PC で実行。1台60秒以内。', zh: '将 .bat 复制到 U 盘，在每台学生电脑上运行。', vi: 'Sao chép tệp .bat vào USB và chạy trên từng máy tính học sinh.' },
+  win_bat_ref:      { en: "What's inside the .bat file:", ja: '.bat ファイルの内容：', zh: '.bat 文件内容：', vi: 'Nội dung tệp .bat:' },
+
+  st_tagline:  { en: 'Translation, dictionary, notes &amp; timer — floats over any page', ja: '翻訳・辞書・メモ・タイマー — どのページにも表示', zh: '翻译、词典、笔记和计时器 — 悬浮在任何页面上', vi: 'Dịch thuật, từ điển, ghi chú &amp; hẹn giờ — nổi trên mọi trang web' },
   st_qr_label: { en: 'Scan the QR code', ja: 'QRコードをスキャン', zh: '扫描二维码', vi: 'Quét mã QR' },
   st_link:     { en: '🔗 Open Chrome Web Store', ja: '🔗 Chrome ウェブストアを開く', zh: '🔗 打开 Chrome 网上应用店', vi: '🔗 Mở Chrome Web Store' },
   st_hint:     { en: "Can't scan? Click the link above", ja: 'スキャンできない場合はこちら', zh: '无法扫描？点击上方链接', vi: 'Không quét được? Nhấp vào liên kết phía trên' },
@@ -1090,33 +2118,34 @@ const i18n = {
 
 const studentSteps = {
   en: [
-    '<strong>Scan the QR code</strong> with your phone, or open this page on your Chromebook',
+    '<strong>Scan the QR code</strong> with your phone, or click the link below',
     'Click <strong>"Add to Chrome"</strong>',
     'Click <strong>"Add extension"</strong> in the confirmation dialog',
-    'Done! You\'ll see the <strong>🗂️ icon</strong> in the top-right of your browser',
+    "Done! You'll see the <strong>🗂️ icon</strong> in the top-right of your browser — open it to join your teacher's room",
   ],
   ja: [
-    'このQRコードを<strong>スマホでスキャン</strong>するか、Chromebookでこのページを開く',
+    'このQRコードを<strong>スマホでスキャン</strong>するか、下のリンクをクリック',
     '<strong>「Chromeに追加」</strong>ボタンをクリック',
     '確認ダイアログで<strong>「拡張機能を追加」</strong>をクリック',
-    'ブラウザ右上に <strong>🗂️ アイコン</strong>が表示されれば完了！',
+    'ブラウザ右上に <strong>🗂️ アイコン</strong>が表示されれば完了！ — クリックして先生のルームに参加しよう',
   ],
   zh: [
-    '用手机<strong>扫描二维码</strong>，或在 Chromebook 上打开此页面',
+    '用手机<strong>扫描二维码</strong>，或点击下方链接',
     '点击<strong>"添加到 Chrome"</strong>',
     '在确认对话框中点击<strong>"添加扩展程序"</strong>',
-    '完成！您会在浏览器右上角看到 <strong>🗂️ 图标</strong>',
+    '完成！您会在浏览器右上角看到 <strong>🗂️ 图标</strong> — 点击加入老师的房间',
   ],
   vi: [
-    '<strong>Quét mã QR</strong> bằng điện thoại, hoặc mở trang này trên Chromebook',
+    '<strong>Quét mã QR</strong> bằng điện thoại, hoặc nhấp vào liên kết bên dưới',
     'Nhấp <strong>"Thêm vào Chrome"</strong>',
     'Nhấp <strong>"Thêm tiện ích"</strong> trong hộp thoại xác nhận',
-    'Hoàn tất! Bạn sẽ thấy <strong>biểu tượng 🗂️</strong> ở góc trên bên phải trình duyệt',
+    'Hoàn tất! Bạn sẽ thấy <strong>biểu tượng 🗂️</strong> ở góc trên bên phải — nhấp để tham gia phòng của giáo viên',
   ]
 };
 
 function renderStudentSteps(lang) {
   const el = document.getElementById('student-steps');
+  if (!el) return;
   el.innerHTML = studentSteps[lang].map((s, i) =>
     `<div class="s-step"><div class="s-step-num">${i+1}</div><div class="s-step-text">${s}</div></div>`
   ).join('');
@@ -1135,7 +2164,6 @@ function setLang(lang) {
     }
   });
 
-  // Update copy buttons text
   const copyLabels = { en: 'Copy', ja: 'コピー', zh: '复制', vi: 'Sao chép' };
   document.querySelectorAll('.copy-btn:not(.copied)').forEach(btn => {
     if (!btn.classList.contains('copied') && !btn.closest('.code-block')) {
@@ -1146,8 +2174,12 @@ function setLang(lang) {
   renderStudentSteps(lang);
 }
 
-// Init
-renderStudentSteps('en');
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  buildSimGrid();
+  renderStudentSteps('en');
+  restoreSteps();
+});
 </script>
 </body>
 </html>
