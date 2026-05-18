@@ -1617,8 +1617,15 @@
               <button class="category-pill" data-cat="social">Social</button>
               <button class="category-pill" data-cat="video">Video</button>
             </div>
-            <div class="add-row">
-              <input class="input" id="addAppExe" type="text" placeholder="e.g. steam.exe" style="flex:1">
+            <!-- Tap a popular Android app to block / unblock it instantly. -->
+            <div style="margin-top:var(--sp-md)">
+              <div style="font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:var(--sp-sm)">
+                Popular apps · tap to block
+              </div>
+              <div class="category-pills" id="popularAppsPills" style="flex-wrap:wrap;gap:var(--sp-xs)"></div>
+            </div>
+            <div class="add-row" style="margin-top:var(--sp-md)">
+              <input class="input" id="addAppExe" type="text" placeholder="e.g. com.google.android.youtube or steam.exe" style="flex:1">
               <input class="input" id="addAppName" type="text" placeholder="Display name" style="flex:1">
               <button class="btn btn-primary btn-sm" id="addAppBtn">Block</button>
             </div>
@@ -4060,24 +4067,122 @@
     };
 
     // ── Category bulk block ──
+    // Each entry includes BOTH the Windows .exe variant and the Android
+    // package name so one click blocks the app on every platform the child
+    // device might be running on.
     const CATEGORIES = {
       games: [
-        { exe: 'steam.exe', display_name: 'Steam' },
-        { exe: 'EpicGamesLauncher.exe', display_name: 'Epic Games' },
-        { exe: 'minecraft.exe', display_name: 'Minecraft' },
-        { exe: 'roblox.exe', display_name: 'Roblox' },
-        { exe: 'FortniteClient.exe', display_name: 'Fortnite' },
+        // PC
+        { exe: 'steam.exe',                 display_name: 'Steam' },
+        { exe: 'EpicGamesLauncher.exe',     display_name: 'Epic Games' },
+        { exe: 'minecraft.exe',             display_name: 'Minecraft (PC)' },
+        { exe: 'roblox.exe',                display_name: 'Roblox (PC)' },
+        { exe: 'FortniteClient.exe',        display_name: 'Fortnite (PC)' },
+        // Android
+        { exe: 'com.roblox.client',         display_name: 'Roblox' },
+        { exe: 'com.mojang.minecraftpe',    display_name: 'Minecraft' },
+        { exe: 'com.miHoYo.GenshinImpact',  display_name: 'Genshin Impact' },
+        { exe: 'com.supercell.brawlstars',  display_name: 'Brawl Stars' },
+        { exe: 'com.supercell.clashroyale', display_name: 'Clash Royale' },
+        { exe: 'com.epicgames.fortnite',    display_name: 'Fortnite' },
+        { exe: 'com.dts.freefiremax',       display_name: 'Free Fire' },
+        { exe: 'com.tencent.ig',            display_name: 'PUBG Mobile' },
+        { exe: 'com.innersloth.spacemafia', display_name: 'Among Us' },
       ],
       social: [
-        { exe: 'discord.exe', display_name: 'Discord' },
-        { exe: 'Telegram.exe', display_name: 'Telegram' },
-        { exe: 'LINE.exe', display_name: 'LINE' },
+        // PC
+        { exe: 'discord.exe',               display_name: 'Discord (PC)' },
+        { exe: 'Telegram.exe',              display_name: 'Telegram (PC)' },
+        { exe: 'LINE.exe',                  display_name: 'LINE (PC)' },
+        // Android
+        { exe: 'com.instagram.android',     display_name: 'Instagram' },
+        { exe: 'com.zhiliaoapp.musically',  display_name: 'TikTok' },
+        { exe: 'com.snapchat.android',      display_name: 'Snapchat' },
+        { exe: 'com.facebook.katana',       display_name: 'Facebook' },
+        { exe: 'com.facebook.orca',         display_name: 'Messenger' },
+        { exe: 'com.twitter.android',       display_name: 'X (Twitter)' },
+        { exe: 'com.reddit.frontpage',      display_name: 'Reddit' },
+        { exe: 'com.discord',               display_name: 'Discord' },
+        { exe: 'org.telegram.messenger',    display_name: 'Telegram' },
+        { exe: 'jp.naver.line.android',     display_name: 'LINE' },
+        { exe: 'com.whatsapp',              display_name: 'WhatsApp' },
       ],
       video: [
-        { exe: 'obs64.exe', display_name: 'OBS Studio' },
-        { exe: 'vlc.exe', display_name: 'VLC' },
+        // PC
+        { exe: 'obs64.exe',                 display_name: 'OBS Studio' },
+        { exe: 'vlc.exe',                   display_name: 'VLC' },
+        // Android
+        { exe: 'com.google.android.youtube',display_name: 'YouTube' },
+        { exe: 'com.netflix.mediaclient',   display_name: 'Netflix' },
+        { exe: 'tv.twitch.android.app',     display_name: 'Twitch' },
+        { exe: 'com.stremio.one',           display_name: 'Stremio' },
+        { exe: 'com.disney.disneyplus',     display_name: 'Disney+' },
       ],
     };
+
+    // ── Popular Android apps — clickable chips for quick block/unblock ──
+    // These let the parent block a specific app by tapping its name
+    // instead of typing a package name into the manual input.  Each chip
+    // toggles between "block" and "unblock" depending on current state.
+    const POPULAR_APPS = [
+      { exe: 'com.google.android.youtube',  display_name: 'YouTube' },
+      { exe: 'com.zhiliaoapp.musically',    display_name: 'TikTok' },
+      { exe: 'com.instagram.android',       display_name: 'Instagram' },
+      { exe: 'com.snapchat.android',        display_name: 'Snapchat' },
+      { exe: 'com.roblox.client',           display_name: 'Roblox' },
+      { exe: 'com.mojang.minecraftpe',      display_name: 'Minecraft' },
+      { exe: 'com.discord',                 display_name: 'Discord' },
+      { exe: 'jp.naver.line.android',       display_name: 'LINE' },
+      { exe: 'com.facebook.katana',         display_name: 'Facebook' },
+      { exe: 'com.facebook.orca',           display_name: 'Messenger' },
+      { exe: 'com.whatsapp',                display_name: 'WhatsApp' },
+      { exe: 'com.netflix.mediaclient',     display_name: 'Netflix' },
+      { exe: 'tv.twitch.android.app',       display_name: 'Twitch' },
+      { exe: 'com.twitter.android',         display_name: 'X (Twitter)' },
+      { exe: 'org.telegram.messenger',      display_name: 'Telegram' },
+      { exe: 'com.reddit.frontpage',        display_name: 'Reddit' },
+      { exe: 'com.miHoYo.GenshinImpact',    display_name: 'Genshin Impact' },
+      { exe: 'com.supercell.brawlstars',    display_name: 'Brawl Stars' },
+      { exe: 'com.epicgames.fortnite',      display_name: 'Fortnite' },
+      { exe: 'com.stremio.one',             display_name: 'Stremio' },
+    ];
+
+    function renderPopularApps() {
+      const container = document.getElementById('popularAppsPills');
+      if (!container) return;
+      container.innerHTML = POPULAR_APPS.map(app => {
+        const isBlocked = blockedApps.some(b => b.exe === app.exe);
+        return `<button class="category-pill popular-app-pill ${isBlocked ? 'active' : ''}"
+                        data-pkg="${escapeAttr(app.exe)}"
+                        data-name="${escapeAttr(app.display_name)}">
+                  ${escapeHtml(app.display_name)}
+                </button>`;
+      }).join('');
+
+      container.querySelectorAll('.popular-app-pill').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const pkg  = btn.dataset.pkg;
+          const name = btn.dataset.name;
+          const isBlocked = blockedApps.some(a => a.exe === pkg);
+          if (isBlocked) {
+            showConfirm(
+              T('controls_unblock_confirm').replace('{name}', name),
+              T('controls_unblock_app_body'),
+              async () => {
+                await writeCommand('unblock_app', { exe: pkg });
+                const newList = blockedApps.filter(a => a.exe !== pkg);
+                await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+              }
+            );
+          } else {
+            await writeCommand('block_app', { exe: pkg, display_name: name });
+            const newList = [...blockedApps, { exe: pkg, display_name: name }];
+            await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+            showToast(T('toast_saved'));
+          }
+        });
+      });
+    }
 
     document.querySelectorAll('#categoryPills .category-pill').forEach(btn => {
       btn.addEventListener('click', async () => {
@@ -4094,6 +4199,7 @@
               }
             }
             await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), blockedApps);
+            renderPopularApps();
             showToast(T('toast_saved'));
           }
         );
@@ -4298,16 +4404,19 @@
       const list = document.getElementById('blockedAppsList');
       if (!blockedApps || blockedApps.length === 0) {
         list.innerHTML = '<div class="empty-state">' + T('controls_blocked_empty').replace('{type}', 'apps') + '</div>';
-        return;
-      }
-      list.innerHTML = blockedApps.map(app => `
-        <div class="blocked-item">
-          <span>${escapeHtml(app.display_name || app.exe)}</span>
-          <div class="blocked-item-actions">
-            <button class="btn btn-sm btn-outline" onclick="unblockApp('${escapeAttr(app.exe)}')">x</button>
+      } else {
+        list.innerHTML = blockedApps.map(app => `
+          <div class="blocked-item">
+            <span>${escapeHtml(app.display_name || app.exe)}</span>
+            <div class="blocked-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="unblockApp('${escapeAttr(app.exe)}')">x</button>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
+      // Re-render the popular-apps pills so their "active" state matches
+      // the canonical blockedApps list after every change.
+      renderPopularApps();
     }
 
     // ── Trends tab — calendar heatmap + monthly stats + top apps ──
