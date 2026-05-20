@@ -4141,9 +4141,12 @@
 
         var segmentsHtml = '';
         if (appEntries.length > 0 && d.mins > 0) {
-          // Calculate each app's share of the bar height
+          // Use appSum as the denominator so segments always fill 100% of the bar.
+          // When the per-app tracker misses some minutes (cross-session, idle, etc.)
+          // the tracked apps still fill the full bar in proportion to each other.
+          var appSum = appEntries.reduce(function(s, a) { return s + a.mins; }, 0) || 1;
           appEntries.forEach(function(app) {
-            var segPct = (app.mins / d.mins) * 100;
+            var segPct = (app.mins / appSum) * 100;
             var color = getAppColor(app.key);
             segmentsHtml += '<div class="app-seg" style="height:' + segPct + '%;background:' + color + '" title="' + prettifyAppName(app.key) + ': ' + app.mins + 'm"></div>';
           });
