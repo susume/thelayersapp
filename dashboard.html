@@ -514,8 +514,11 @@
     .quick-actions .action-pill:active { transform: scale(0.98); }
     .action-pill.emergency { background: var(--danger); color: #fff; }
     .action-pill.emergency.active-state { background: #991B1B; }
+    .action-pill.extend { background: var(--accent); color: #fff; }
     .action-pill.wifi { background: var(--warning); color: #fff; }
     .action-pill.wifi.active-state { background: #92400E; }
+    .extend-option { text-align: left; padding: 14px var(--sp-lg) !important; font-size: 0.9375rem !important; }
+    .extend-option:hover { background: var(--accent) !important; color: #fff !important; }
 
     /* ========== PENDING REQUESTS ========== */
     .request-card {
@@ -545,30 +548,142 @@
     .app-name { font-size: 0.875rem; font-weight: 500; }
     .app-time { font-size: 0.8125rem; color: var(--text-muted); font-family: var(--font-mono); }
 
-    /* ========== 7-DAY BAR CHART ========== */
+    /* ========== 7-DAY BAR CHART (redesigned) ========== */
+    .week-chart-wrap {
+      position: relative;
+      padding: var(--sp-md) 0 var(--sp-xs);
+    }
+    .week-chart-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--sp-md);
+      padding: 0 var(--sp-xs);
+    }
+    .week-chart-summary .wcs-stat { text-align: center; }
+    .week-chart-summary .wcs-value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      color: var(--text);
+    }
+    .week-chart-summary .wcs-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
     .bar-chart {
       display: flex;
       align-items: flex-end;
       gap: var(--sp-sm);
-      height: 130px;
-      padding: var(--sp-sm) 0;
+      height: 160px;
+      padding: 0;
+      position: relative;
     }
     .bar-chart .bar-col {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      cursor: default;
     }
+    .bar-chart .bar-col:hover .bar { filter: brightness(1.1); }
+    .bar-chart .bar-col:hover .bar-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
     .bar-chart .bar {
       width: 100%;
-      border-radius: 6px 6px 0 0;
-      background: var(--accent);
+      max-width: 44px;
+      border-radius: 8px 8px 2px 2px;
+      background: linear-gradient(180deg, var(--accent) 0%, #1E7A45 100%);
       min-height: 4px;
-      transition: height 0.3s ease;
+      transition: height 0.4s ease, filter 0.15s;
+      box-shadow: 0 2px 6px rgba(42,157,92,0.18);
     }
-    .bar-chart .bar.over-limit { background: var(--danger); }
-    .bar-chart .bar-label { font-size: 0.6875rem; color: var(--text-muted); margin-top: var(--sp-xs); }
-    .bar-chart .bar-value { font-size: 0.6875rem; font-family: var(--font-mono); color: var(--text-muted); }
+    .bar-chart .bar.over-limit {
+      background: linear-gradient(180deg, var(--danger) 0%, #991B1B 100%);
+      box-shadow: 0 2px 6px rgba(200,64,64,0.22);
+    }
+    .bar-chart .bar.today-bar {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .bar-chart .bar.zero-bar {
+      background: var(--surface);
+      box-shadow: none;
+      min-height: 6px;
+      border-radius: 4px;
+    }
+    .bar-chart .bar-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+    .bar-chart .bar-label.today-label { color: var(--accent); font-weight: 700; }
+    .bar-chart .bar-value {
+      font-size: 0.6875rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 600;
+    }
+    /* Limit line */
+    .bar-chart-limit-line {
+      position: absolute;
+      left: 0; right: 0;
+      border-top: 2px dashed var(--danger);
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .bar-chart-limit-label {
+      position: absolute;
+      right: 0;
+      font-size: 0.625rem;
+      font-family: var(--font-mono);
+      color: var(--danger);
+      background: var(--card);
+      padding: 0 4px;
+      transform: translateY(-100%);
+      opacity: 0.7;
+    }
+    /* Tooltip on hover */
+    .bar-tooltip {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: var(--text);
+      color: var(--bg);
+      font-size: 0.75rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s, transform 0.15s;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-bottom: 8px;
+    }
+    .bar-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border: 5px solid transparent;
+      border-top-color: var(--text);
+    }
+    /* Chart insight message */
+    .week-chart-insight {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      padding: var(--sp-sm) var(--sp-xs) 0;
+      line-height: 1.4;
+    }
+    .week-chart-insight .insight-icon { margin-right: 4px; }
 
     /* ========== ACTIVITY LOG ========== */
     .log-entry {
@@ -1433,9 +1548,26 @@
           <button class="action-pill emergency" id="emergencyLockBtn">
             &#128274; <span data-i18n="dashboard_emergency_lock">Lock</span>
           </button>
+          <button class="action-pill extend" id="extendTimeBtn">
+            &#9201; <span data-i18n="dashboard_extend_time">Extend Time</span>
+          </button>
           <button class="action-pill wifi" id="internetPauseBtn">
             &#128246; <span data-i18n="dashboard_internet_pause">Wi-Fi</span>
           </button>
+        </div>
+
+        <!-- Extend Time Bottom Sheet -->
+        <div id="extendSheet" class="confirm-overlay">
+          <div class="confirm-box" style="max-width:340px">
+            <h3 id="extendSheetTitle" data-i18n="dashboard_extend_sheet_title">Extend screen time</h3>
+            <p style="color:var(--text-muted);font-size:0.875rem" data-i18n="dashboard_extend_sheet_body">How much extra time would you like to add?</p>
+            <div style="display:flex;flex-direction:column;gap:var(--sp-sm);margin-bottom:var(--sp-lg)">
+              <button class="btn btn-outline extend-option" data-mins="15">&#9201; <span data-i18n="dashboard_extend_15">+15 min</span></button>
+              <button class="btn btn-outline extend-option" data-mins="30">&#9201; <span data-i18n="dashboard_extend_30">+30 min</span></button>
+              <button class="btn btn-outline extend-option" data-mins="60">&#9201; <span data-i18n="dashboard_extend_60">+1 hour</span></button>
+            </div>
+            <button class="btn btn-outline" id="extendSheetCancel" style="width:100%">Cancel</button>
+          </div>
         </div>
 
         <!-- Pending requests + Active apps -->
@@ -1464,7 +1596,11 @@
           <div class="card-header">
             <h3 data-i18n="today_recent_days">Last 7 days</h3>
           </div>
-          <div id="weekChart" class="bar-chart"></div>
+          <div class="week-chart-wrap">
+            <div class="week-chart-summary" id="weekChartSummary"></div>
+            <div id="weekChart" class="bar-chart" style="position:relative"></div>
+            <div class="week-chart-insight" id="weekChartInsight"></div>
+          </div>
         </div>
 
         <!-- Activity log -->
@@ -1905,9 +2041,27 @@
         dashboard_emergency_unlock_title:   'Unlock Device?',
         dashboard_emergency_unlock_body:    'The lock screen will be dismissed on your child\'s PC.',
         dashboard_extend_sheet_title: 'Extend screen time',
+        dashboard_extend_sheet_body:  'How much extra time would you like to add?',
+        dashboard_extend_confirm_title: 'Extend screen time?',
+        dashboard_extend_confirm_body:  'This will add {mins} minutes to today\'s screen time.',
+        dashboard_extend_sent:        'Extended by {mins} minutes',
         dashboard_extend_15:          '+15 min',
         dashboard_extend_30:          '+30 min',
         dashboard_extend_60:          '+1 hour',
+        // Confirmation dialogs
+        confirm_limit_title:          'Update daily limit?',
+        confirm_limit_body_on:        'Daily limit will be set to {time}.',
+        confirm_limit_body_off:       'The daily time limit will be turned off.',
+        confirm_bedtime_title:        'Update bedtime?',
+        confirm_bedtime_body_on:      'Bedtime will lock the device from {start} to {end}.',
+        confirm_bedtime_body_off:     'Bedtime lockout will be turned off.',
+        confirm_block_site_title:     'Block {name}?',
+        confirm_block_site_body:      '{name} will be blocked on your child\'s device right away.',
+        toast_site_blocked:           '{name} blocked',
+        confirm_approve_title:        'Approve this request?',
+        confirm_approve_body:         'This will take effect on your child\'s device right away.',
+        confirm_deny_title:           'Deny this request?',
+        confirm_deny_body:            'Your child will be notified that the request was denied.',
         // Internet pause card
         dashboard_internet_pause:         'Wi-Fi',
         dashboard_internet_paused:        'Wi-Fi Off',
@@ -2060,6 +2214,15 @@
         today_recent_days:             'Last 7 days',
         today_granted_more_time:       'You granted more play time on some days.',
         today_no_activity_yet:         'No activity recorded yet this week.',
+        chart_total:                   'Total',
+        chart_daily_avg:               'Daily avg',
+        chart_active_days:             'Active days',
+        chart_over_limit:              'Over limit',
+        chart_limit:                   'limit',
+        chart_over:                    'over limit',
+        chart_insight_over:            'Screen time went over the daily limit on {n} of the last 7 days.',
+        chart_insight_peak:            '{day} was the busiest day with {time}.',
+        chart_insight_good:            'Averaging {time} per day — within the daily limit.',
         today_lock_btn:                'Lock device',
         today_unlock_btn:              'Unlock device',
         today_pause_btn:               'Pause Wi-Fi',
@@ -2399,6 +2562,15 @@
         today_recent_days:             '過去7日間',
         today_granted_more_time:       '一部の日に追加の遊び時間を許可しました。',
         today_no_activity_yet:         '今週はまだ記録された使用がありません。',
+        chart_total:                   '合計',
+        chart_daily_avg:               '1日平均',
+        chart_active_days:             '使用日数',
+        chart_over_limit:              '超過',
+        chart_limit:                   '制限',
+        chart_over:                    '超過',
+        chart_insight_over:            '過去7日間のうち{n}日でスクリーンタイムが制限を超えました。',
+        chart_insight_peak:            '{day}が最も使用時間が長く、{time}でした。',
+        chart_insight_good:            '1日平均{time} — 制限内です。',
         today_lock_btn:                'デバイスをロック',
         today_unlock_btn:              'ロックを解除',
         today_pause_btn:               'Wi-Fiを一時停止',
@@ -2460,6 +2632,25 @@
         cmd_block_app:                 'アプリをブロック',
         cmd_unblock_app:               'アプリのブロック解除',
         cmd_internet_pause:            'インターネット一時停止',
+        // ── Confirmation dialogs ──
+        dashboard_extend_sheet_title:  'スクリーンタイムを延長',
+        dashboard_extend_sheet_body:   '追加する時間を選択してください。',
+        dashboard_extend_confirm_title:'スクリーンタイムを延長しますか？',
+        dashboard_extend_confirm_body: '今日のスクリーンタイムに{mins}分追加されます。',
+        dashboard_extend_sent:         '{mins}分延長しました',
+        confirm_limit_title:           '1日の制限を更新しますか？',
+        confirm_limit_body_on:         '1日の制限が{time}に設定されます。',
+        confirm_limit_body_off:        '1日の制限がオフになります。',
+        confirm_bedtime_title:         '就寝時間を更新しますか？',
+        confirm_bedtime_body_on:       '{start}から{end}までデバイスがロックされます。',
+        confirm_bedtime_body_off:      '就寝時間ロックがオフになります。',
+        confirm_block_site_title:      '{name}をブロックしますか？',
+        confirm_block_site_body:       '{name}はお子様のデバイスですぐにブロックされます。',
+        toast_site_blocked:            '{name}をブロックしました',
+        confirm_approve_title:         'このリクエストを承認しますか？',
+        confirm_approve_body:          'お子様のデバイスにすぐに反映されます。',
+        confirm_deny_title:            'このリクエストを拒否しますか？',
+        confirm_deny_body:             'お子様にリクエストが拒否されたことが通知されます。',
 
         // ── Web-dashboard-specific: Auth ──
         auth_title:                    'Layers Guard',
@@ -2648,6 +2839,15 @@
         today_recent_days:             '最近 7 天',
         today_granted_more_time:       '您在某些日子授予了额外的游戏时间。',
         today_no_activity_yet:         '本周尚未记录任何活动。',
+        chart_total:                   '总计',
+        chart_daily_avg:               '日均',
+        chart_active_days:             '活跃天数',
+        chart_over_limit:              '超限',
+        chart_limit:                   '限制',
+        chart_over:                    '超限',
+        chart_insight_over:            '过去7天中有{n}天的屏幕时间超过了每日限制。',
+        chart_insight_peak:            '{day}是使用时间最长的一天，共{time}。',
+        chart_insight_good:            '日均{time} — 在限制范围内。',
         today_lock_btn:                '锁定设备',
         today_unlock_btn:              '解锁设备',
         today_pause_btn:               '暂停 Wi-Fi',
@@ -2709,6 +2909,25 @@
         cmd_block_app:                 '屏蔽应用',
         cmd_unblock_app:               '解除应用屏蔽',
         cmd_internet_pause:            '暂停网络',
+        // ── Confirmation dialogs ──
+        dashboard_extend_sheet_title:  '延长屏幕时间',
+        dashboard_extend_sheet_body:   '您想增加多少时间？',
+        dashboard_extend_confirm_title:'延长屏幕时间？',
+        dashboard_extend_confirm_body: '今天的屏幕时间将增加{mins}分钟。',
+        dashboard_extend_sent:         '已延长{mins}分钟',
+        confirm_limit_title:           '更新每日限制？',
+        confirm_limit_body_on:         '每日限制将设置为{time}。',
+        confirm_limit_body_off:        '每日时间限制将关闭。',
+        confirm_bedtime_title:         '更新就寝时间？',
+        confirm_bedtime_body_on:       '设备将在{start}到{end}之间锁定。',
+        confirm_bedtime_body_off:      '就寝时间锁定将关闭。',
+        confirm_block_site_title:      '屏蔽{name}？',
+        confirm_block_site_body:       '{name}将立即在孩子的设备上被屏蔽。',
+        toast_site_blocked:            '已屏蔽{name}',
+        confirm_approve_title:         '批准此请求？',
+        confirm_approve_body:          '这将立即在孩子的设备上生效。',
+        confirm_deny_title:            '拒绝此请求？',
+        confirm_deny_body:             '您的孩子将收到请求被拒绝的通知。',
 
         // ── Web-dashboard-specific: Auth ──
         auth_title:                    'Layers Guard',
@@ -2898,6 +3117,15 @@
         today_recent_days:             '7 ngày qua',
         today_granted_more_time:       'Bạn đã cấp thêm thời gian chơi vào một số ngày.',
         today_no_activity_yet:         'Tuần này chưa ghi nhận hoạt động nào.',
+        chart_total:                   'Tổng',
+        chart_daily_avg:               'TB ngày',
+        chart_active_days:             'Ngày hoạt động',
+        chart_over_limit:              'Vượt giới hạn',
+        chart_limit:                   'giới hạn',
+        chart_over:                    'vượt giới hạn',
+        chart_insight_over:            'Thời gian sử dụng đã vượt giới hạn hàng ngày trong {n} trên 7 ngày qua.',
+        chart_insight_peak:            '{day} là ngày sử dụng nhiều nhất với {time}.',
+        chart_insight_good:            'Trung bình {time} mỗi ngày — trong giới hạn cho phép.',
         today_lock_btn:                'Khoá thiết bị',
         today_unlock_btn:              'Mở khoá thiết bị',
         today_pause_btn:               'Tạm dừng Wi-Fi',
@@ -2959,6 +3187,25 @@
         cmd_block_app:                 'Chặn ứng dụng',
         cmd_unblock_app:               'Bỏ chặn ứng dụng',
         cmd_internet_pause:            'Tạm dừng Internet',
+        // ── Confirmation dialogs ──
+        dashboard_extend_sheet_title:  'Gia hạn thời gian sử dụng',
+        dashboard_extend_sheet_body:   'Bạn muốn thêm bao nhiêu thời gian?',
+        dashboard_extend_confirm_title:'Gia hạn thời gian?',
+        dashboard_extend_confirm_body: 'Thời gian sử dụng hôm nay sẽ được thêm {mins} phút.',
+        dashboard_extend_sent:         'Đã gia hạn {mins} phút',
+        confirm_limit_title:           'Cập nhật giới hạn hàng ngày?',
+        confirm_limit_body_on:         'Giới hạn hàng ngày sẽ được đặt thành {time}.',
+        confirm_limit_body_off:        'Giới hạn thời gian hàng ngày sẽ bị tắt.',
+        confirm_bedtime_title:         'Cập nhật giờ ngủ?',
+        confirm_bedtime_body_on:       'Thiết bị sẽ bị khóa từ {start} đến {end}.',
+        confirm_bedtime_body_off:      'Khóa giờ ngủ sẽ bị tắt.',
+        confirm_block_site_title:      'Chặn {name}?',
+        confirm_block_site_body:       '{name} sẽ bị chặn ngay trên thiết bị của con bạn.',
+        toast_site_blocked:            'Đã chặn {name}',
+        confirm_approve_title:         'Phê duyệt yêu cầu này?',
+        confirm_approve_body:          'Thay đổi sẽ có hiệu lực ngay trên thiết bị của con bạn.',
+        confirm_deny_title:            'Từ chối yêu cầu này?',
+        confirm_deny_body:             'Con bạn sẽ được thông báo rằng yêu cầu đã bị từ chối.',
 
         // ── Web-dashboard-specific: Auth ──
         auth_title:                    'Layers Guard',
@@ -3762,33 +4009,108 @@
       }).join('');
     }
 
-    // ── 7-day bar chart rendering ──
+    // ── 7-day bar chart rendering (redesigned) ──
 
     function renderWeekChart(log) {
       const chart = document.getElementById('weekChart');
+      const summaryEl = document.getElementById('weekChartSummary');
+      const insightEl = document.getElementById('weekChartInsight');
       chart.innerHTML = '';
+
       const days = [];
       const dayNames = [T('weekday_sun'), T('weekday_mon'), T('weekday_tue'), T('weekday_wed'), T('weekday_thu'), T('weekday_fri'), T('weekday_sat')];
+      const now = new Date();
+      const todayKey = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+
       for (let i = 6; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
         const key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         const dayData = log[key] || {};
-        days.push({ key, mins: dayData.total_mins || 0, dayName: dayNames[d.getDay()] });
+        days.push({
+          key,
+          mins: dayData.total_mins || 0,
+          apps: dayData.apps || {},
+          dayName: dayNames[d.getDay()],
+          isToday: key === todayKey,
+          dateLabel: String(d.getDate()) + '/' + String(d.getMonth() + 1),
+        });
       }
-      const maxMins = Math.max(...days.map(d => d.mins), 1);
+
+      // Summary stats
+      const totalMins = days.reduce((s, d) => s + d.mins, 0);
+      const avgMins = Math.round(totalMins / 7);
+      const activeDays = days.filter(d => d.mins > 0).length;
+      const peakDay = days.reduce((a, b) => a.mins > b.mins ? a : b);
       const limitMins = currentSchedule.daily_limit_mins || 120;
+      const limitEnabled = currentSchedule.daily_limit_enabled !== false;
+      const overLimitDays = limitEnabled ? days.filter(d => d.mins >= limitMins).length : 0;
+
+      summaryEl.innerHTML = ''
+        + '<div class="wcs-stat"><div class="wcs-value">' + formatMins(totalMins) + '</div><div class="wcs-label">' + (T('chart_total') || 'Total') + '</div></div>'
+        + '<div class="wcs-stat"><div class="wcs-value">' + formatMins(avgMins) + '</div><div class="wcs-label">' + (T('chart_daily_avg') || 'Daily avg') + '</div></div>'
+        + '<div class="wcs-stat"><div class="wcs-value">' + activeDays + '/7</div><div class="wcs-label">' + (T('chart_active_days') || 'Active days') + '</div></div>'
+        + (limitEnabled && overLimitDays > 0
+          ? '<div class="wcs-stat"><div class="wcs-value" style="color:var(--danger)">' + overLimitDays + '</div><div class="wcs-label">' + (T('chart_over_limit') || 'Over limit') + '</div></div>'
+          : '');
+
+      // Bar chart with limit line
+      const maxMins = Math.max(...days.map(d => d.mins), limitEnabled ? limitMins : 1, 1);
+      const chartHeight = 160;
+
+      // Add limit line if enabled
+      if (limitEnabled) {
+        const limitPct = Math.min((limitMins / maxMins) * 100, 100);
+        const limitLine = document.createElement('div');
+        limitLine.className = 'bar-chart-limit-line';
+        limitLine.style.bottom = limitPct + '%';
+        limitLine.innerHTML = '<span class="bar-chart-limit-label">' + formatMins(limitMins) + ' ' + (T('chart_limit') || 'limit') + '</span>';
+        chart.appendChild(limitLine);
+      }
 
       days.forEach(d => {
-        const pct = Math.max((d.mins / maxMins) * 100, 3);
-        const isOver = d.mins >= limitMins && currentSchedule.daily_limit_enabled !== false;
+        const pct = d.mins > 0 ? Math.max((d.mins / maxMins) * 100, 4) : 0;
+        const isOver = d.mins >= limitMins && limitEnabled;
+
+        // Build top-apps list for tooltip
+        const appEntries = Object.entries(d.apps || {});
+        appEntries.sort((a, b) => b[1] - a[1]);
+        const topApps = appEntries.slice(0, 3).map(function(e) {
+          return e[0].replace(/_/g, '.') + ': ' + e[1] + 'm';
+        }).join('<br>');
+
+        const tooltipContent = '<strong>' + d.dayName + ' ' + d.dateLabel + '</strong><br>'
+          + formatMins(d.mins)
+          + (isOver ? ' <span style="color:#FCA5A5">(' + (T('chart_over') || 'over limit') + ')</span>' : '')
+          + (topApps ? '<br><span style="opacity:0.7;font-size:0.6875rem">' + topApps + '</span>' : '');
+
+        const barClass = 'bar'
+          + (d.mins === 0 ? ' zero-bar' : '')
+          + (isOver ? ' over-limit' : '')
+          + (d.isToday ? ' today-bar' : '');
+
         const col = document.createElement('div');
         col.className = 'bar-col';
-        col.innerHTML = '<div class="bar-value">' + (d.mins > 0 ? formatMins(d.mins) : '') + '</div>'
-          + '<div class="bar' + (isOver ? ' over-limit' : '') + '" style="height:' + pct + '%"></div>'
-          + '<div class="bar-label">' + d.dayName + '</div>';
+        col.innerHTML = ''
+          + '<div class="bar-tooltip">' + tooltipContent + '</div>'
+          + '<div class="bar-value">' + (d.mins > 0 ? formatMins(d.mins) : '-') + '</div>'
+          + '<div class="' + barClass + '" style="height:' + pct + '%"></div>'
+          + '<div class="bar-label' + (d.isToday ? ' today-label' : '') + '">' + d.dayName + '</div>';
         chart.appendChild(col);
       });
+
+      // Generate a natural-language insight
+      let insight = '';
+      if (totalMins === 0) {
+        insight = '<span class="insight-icon">&#128064;</span> ' + (T('today_no_activity_yet') || 'No activity recorded yet this week.');
+      } else if (overLimitDays >= 3) {
+        insight = '<span class="insight-icon">&#9888;&#65039;</span> ' + (T('chart_insight_over') || 'Screen time went over the daily limit on {n} of the last 7 days.').replace('{n}', overLimitDays);
+      } else if (peakDay.mins > avgMins * 1.5 && peakDay.mins > 30) {
+        insight = '<span class="insight-icon">&#128200;</span> ' + (T('chart_insight_peak') || '{day} was the busiest day with {time}.').replace('{day}', peakDay.dayName).replace('{time}', formatMins(peakDay.mins));
+      } else if (avgMins > 0 && avgMins <= limitMins) {
+        insight = '<span class="insight-icon">&#9989;</span> ' + (T('chart_insight_good') || 'Averaging {time} per day — within the daily limit.').replace('{time}', formatMins(avgMins));
+      }
+      insightEl.innerHTML = insight;
     }
 
     // ── Activity log rendering ──
@@ -3976,6 +4298,29 @@
       }
     });
 
+    // ── Extend Time sheet ──
+    document.getElementById('extendTimeBtn').addEventListener('click', () => {
+      document.getElementById('extendSheet').classList.add('open');
+    });
+    document.getElementById('extendSheetCancel').addEventListener('click', () => {
+      document.getElementById('extendSheet').classList.remove('open');
+    });
+    document.querySelectorAll('.extend-option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mins = parseInt(btn.dataset.mins);
+        const label = btn.textContent.trim();
+        document.getElementById('extendSheet').classList.remove('open');
+        showConfirm(
+          T('dashboard_extend_confirm_title') || 'Extend screen time?',
+          (T('dashboard_extend_confirm_body') || 'This will add {mins} minutes to today\'s screen time.').replace('{mins}', mins),
+          async () => {
+            await writeCommand('extend_time', { minutes: mins });
+            showToast((T('dashboard_extend_sent') || 'Extended by {mins} minutes').replace('{mins}', mins));
+          }
+        );
+      });
+    });
+
     // ── Internet pause toggle ──
     document.getElementById('internetPauseBtn').addEventListener('click', () => {
       if (internetPaused) {
@@ -4000,27 +4345,37 @@
     });
 
     // ── Approve/deny pending requests (global scope for inline onclick) ──
-    window.approveRequest = async function(key, type, value) {
-      // Execute the matching command
-      if (type === 'extend_time') {
-        await writeCommand('extend_time', { minutes: parseInt(value) || 15 });
-      } else if (type === 'unblock_site') {
-        await writeCommand('unblock_site', { domain: value });
-      } else if (type === 'unblock_app') {
-        await writeCommand('unblock_app', { exe: value });
-      }
-      // Mark as approved
-      await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'approved' });
-      showToast(T('approval_approve'));
+    window.approveRequest = function(key, type, value) {
+      showConfirm(
+        T('confirm_approve_title') || 'Approve this request?',
+        T('confirm_approve_body') || 'This will take effect on your child\'s device right away.',
+        async () => {
+          if (type === 'extend_time') {
+            await writeCommand('extend_time', { minutes: parseInt(value) || 15 });
+          } else if (type === 'unblock_site') {
+            await writeCommand('unblock_site', { domain: value });
+          } else if (type === 'unblock_app') {
+            await writeCommand('unblock_app', { exe: value });
+          }
+          await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'approved' });
+          showToast(T('approval_approve'));
+        }
+      );
     };
 
-    window.denyRequest = async function(key) {
-      await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'denied' });
-      showToast(T('approval_deny'));
+    window.denyRequest = function(key) {
+      showConfirm(
+        T('confirm_deny_title') || 'Deny this request?',
+        T('confirm_deny_body') || 'Your child will be notified that the request was denied.',
+        async () => {
+          await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'denied' });
+          showToast(T('approval_deny'));
+        }
+      );
     };
 
     // ── Block/unblock site ──
-    document.getElementById('addSiteBtn').addEventListener('click', async () => {
+    document.getElementById('addSiteBtn').addEventListener('click', () => {
       const input = document.getElementById('addSiteInput');
       let domain = input.value.trim().toLowerCase();
       if (!domain) return;
@@ -4028,10 +4383,17 @@
       domain = domain.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
       if (blockedSites.includes(domain)) { showToast('Already blocked'); return; }
 
-      await writeCommand('block_site', { domain });
-      const newList = [...blockedSites, domain];
-      await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_sites'), newList);
-      input.value = '';
+      showConfirm(
+        (T('confirm_block_site_title') || 'Block {name}?').replace('{name}', domain),
+        (T('confirm_block_site_body') || '{name} will be blocked on your child\'s device right away.').replace('{name}', domain),
+        async () => {
+          await writeCommand('block_site', { domain });
+          const newList = [...blockedSites, domain];
+          await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_sites'), newList);
+          input.value = '';
+          showToast((T('toast_site_blocked') || '{name} blocked').replace('{name}', domain));
+        }
+      );
     });
 
     window.unblockSite = function(domain) {
@@ -4279,27 +4641,36 @@
     });
 
     // ── Time limit save ──
-    document.getElementById('timeLimitSave').addEventListener('click', async () => {
+    document.getElementById('timeLimitSave').addEventListener('click', () => {
       const enabled = document.getElementById('timeLimitToggle').classList.contains('on');
       const mins = parseInt(document.getElementById('timeLimitSlider').value);
       const weekendOn = document.getElementById('weekendToggle').classList.contains('on');
       const weekendMins = parseInt(document.getElementById('weekendSlider').value);
+      const summary = enabled
+        ? (T('confirm_limit_body_on') || 'Daily limit will be set to {time}.').replace('{time}', formatMins(mins))
+        : (T('confirm_limit_body_off') || 'The daily time limit will be turned off.');
 
-      try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), {
-          daily_limit_enabled: enabled,
-          daily_limit_mins: mins,
-          weekend_enabled: weekendOn,
-          weekend_daily_limit_mins: weekendMins,
-        });
-        showToast(T('toast_saved'));
-      } catch (err) {
-        showToast(T('error_firebase_write'), true);
-      }
+      showConfirm(
+        T('confirm_limit_title') || 'Update daily limit?',
+        summary,
+        async () => {
+          try {
+            await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), {
+              daily_limit_enabled: enabled,
+              daily_limit_mins: mins,
+              weekend_enabled: weekendOn,
+              weekend_daily_limit_mins: weekendMins,
+            });
+            showToast(T('toast_saved'));
+          } catch (err) {
+            showToast(T('error_firebase_write'), true);
+          }
+        }
+      );
     });
 
     // ── Bedtime save ──
-    document.getElementById('bedtimeSave').addEventListener('click', async () => {
+    document.getElementById('bedtimeSave').addEventListener('click', () => {
       const enabled = document.getElementById('bedtimeToggle').classList.contains('on');
       const start = document.getElementById('bedtimeStart').value;
       const end = document.getElementById('bedtimeEnd').value;
@@ -4307,18 +4678,27 @@
       const wStart = document.getElementById('bedtimeWeekendStart').value;
       const wEnd = document.getElementById('bedtimeWeekendEnd').value;
       const holiday = document.getElementById('holidayToggle').classList.contains('on');
+      const summary = enabled
+        ? (T('confirm_bedtime_body_on') || 'Bedtime will lock the device from {start} to {end}.').replace('{start}', start).replace('{end}', end)
+        : (T('confirm_bedtime_body_off') || 'Bedtime lockout will be turned off.');
 
-      try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), {
-          lockout: { enabled, start, end },
-          weekend_lockout: { enabled: wEnabled, start: wStart, end: wEnd },
-          holiday_today: holiday,
-          holiday_today_date: holiday ? new Date().toISOString().slice(0, 10) : null,
-        });
-        showToast(T('toast_saved'));
-      } catch (err) {
-        showToast(T('error_firebase_write'), true);
-      }
+      showConfirm(
+        T('confirm_bedtime_title') || 'Update bedtime?',
+        summary,
+        async () => {
+          try {
+            await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), {
+              lockout: { enabled, start, end },
+              weekend_lockout: { enabled: wEnabled, start: wStart, end: wEnd },
+              holiday_today: holiday,
+              holiday_today_date: holiday ? new Date().toISOString().slice(0, 10) : null,
+            });
+            showToast(T('toast_saved'));
+          } catch (err) {
+            showToast(T('error_firebase_write'), true);
+          }
+        }
+      );
     });
 
     // ── Per-app limits ──
