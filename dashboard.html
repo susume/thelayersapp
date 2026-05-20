@@ -576,8 +576,8 @@
     .bar-chart {
       display: flex;
       align-items: flex-end;
-      gap: var(--sp-sm);
-      height: 160px;
+      gap: 6px;
+      height: 260px;
       padding: 0;
       position: relative;
     }
@@ -593,7 +593,7 @@
     .bar-chart .bar-col:hover .bar-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
     .bar-chart .bar {
       width: 100%;
-      max-width: 44px;
+      max-width: 72px;
       border-radius: 8px 8px 2px 2px;
       min-height: 4px;
       transition: height 0.4s ease, filter 0.15s;
@@ -603,7 +603,7 @@
     }
     .bar-chart .bar .app-seg {
       width: 100%;
-      min-height: 2px;
+      min-height: 3px;
       transition: height 0.4s ease;
     }
     .bar-chart .bar .app-seg:last-child { border-radius: 8px 8px 0 0; }
