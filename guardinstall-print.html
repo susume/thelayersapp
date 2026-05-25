@@ -3,939 +3,1261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Layers Guard — Setup Guide (Print)</title>
+<title>Layers Guard Family — Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Sora:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap');
+:root {
+  --emerald: #1a7a42;
+  --emerald-dark: #145c32;
+  --emerald-light: #2ed573;
+  --emerald-glow: #34d399;
+  --emerald-bg: #ecfdf5;
+  --emerald-mist: #f0fdf4;
+  --dark: #0a0f0d;
+  --dark-card: #111916;
+  --dark-surface: #1a2420;
+  --slate: #1e293b;
+  --text: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --white: #ffffff;
+  --amber: #f59e0b;
+  --amber-bg: #fffbeb;
+  --blue: #3b82f6;
+  --blue-bg: #eff6ff;
+  --red: #ef4444;
+  --red-bg: #fef2f2;
+  --purple: #8b5cf6;
+  --font: 'Outfit', 'Noto Sans JP', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
 
-  :root {
-    --green: #1a7a42;
-    --green-light: #2A9D5C;
-    --green-bg: #e8f5ee;
-    --blue: #2563eb;
-    --blue-bg: #eff6ff;
-    --amber: #b45309;
-    --amber-bg: #fffbeb;
-    --red: #dc2626;
-    --red-bg: #fef2f2;
-    --purple: #7c3aed;
-    --purple-bg: #f5f3ff;
-    --text: #1a1a1a;
-    --text-secondary: #4b5563;
-    --muted: #9ca3af;
-    --border: #e5e7eb;
-    --border-dark: #d1d5db;
-    --surface: #f9fafb;
-    --mono: 'DM Mono', monospace;
-    --sans: 'Sora', 'Noto Sans JP', sans-serif;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--white);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-  body {
-    background: #fff;
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 14px;
-    line-height: 1.7;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 40px 32px 60px;
-    -webkit-font-smoothing: antialiased;
-  }
+/* ═══════════════════════════════════════════
+   COVER PAGE
+   ═══════════════════════════════════════════ */
+.cover {
+  min-height: 100vh;
+  background: linear-gradient(165deg, #0a0f0d 0%, #112118 40%, #1a3a28 70%, #0d1a12 100%);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 60px 32px;
+  overflow: hidden;
+}
 
-  /* ── Header ── */
-  .print-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding-bottom: 20px;
-    border-bottom: 2px solid var(--green);
-    margin-bottom: 32px;
-  }
-  .print-logo {
-    width: 48px; height: 48px;
-    background: var(--green);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px; flex-shrink: 0;
-  }
-  .print-header-text h1 {
-    font-size: 22px; font-weight: 700;
-    letter-spacing: -0.5px; color: var(--text);
-  }
-  .print-header-text p {
-    font-size: 13px; color: var(--text-secondary);
-    margin-top: 2px;
-  }
-  .print-header-right {
-    margin-left: auto;
-    text-align: right;
-  }
-  .print-badge {
-    display: inline-block;
-    background: var(--green-bg);
-    color: var(--green);
-    border: 1.5px solid var(--green);
-    border-radius: 20px;
-    padding: 4px 14px;
-    font-size: 11px;
-    font-weight: 700;
-    font-family: var(--mono);
-    letter-spacing: 0.3px;
-  }
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 30% 20%, rgba(46, 213, 115, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at 70% 80%, rgba(52, 211, 153, 0.05) 0%, transparent 50%);
+  animation: coverGlow 15s ease-in-out infinite alternate;
+}
 
-  .lang-toggle {
-    display: inline-flex;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 3px;
-    gap: 2px;
-    margin-top: 8px;
-  }
-  .lang-btn {
-    background: none; border: none;
-    padding: 4px 14px; border-radius: 6px;
-    font-family: var(--sans); font-size: 11px; font-weight: 600;
-    color: var(--muted); cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .lang-btn:hover { color: var(--text-secondary); }
-  .lang-btn.active {
-    background: var(--green-bg);
-    color: var(--green);
-  }
+@keyframes coverGlow {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-5%, 3%) scale(1.1); }
+}
 
-  /* ── Hero ── */
-  .hero {
-    text-align: center;
-    padding: 24px 0 36px;
-  }
-  .hero h2 {
-    font-size: 28px; font-weight: 700;
-    letter-spacing: -0.6px; color: var(--text);
-    margin-bottom: 8px;
-  }
-  .hero p {
-    font-size: 14px; color: var(--text-secondary);
-    max-width: 560px; margin: 0 auto;
-  }
-  .hero-bundle {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--green-bg);
-    border: 1.5px solid rgba(26,122,66,0.3);
-    border-radius: 12px;
-    padding: 10px 20px;
-    margin-top: 16px;
-    font-size: 13px; font-weight: 600; color: var(--green);
-  }
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(46,213,115,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46,213,115,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
 
-  /* ── Phase Section ── */
-  .phase {
-    margin-bottom: 28px;
-    border: 1.5px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    page-break-inside: avoid;
-  }
-  .phase-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 18px 22px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  .phase-number {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono);
-    font-size: 14px; font-weight: 700;
-    flex-shrink: 0;
-    background: var(--green-bg);
-    color: var(--green);
-    border: 1.5px solid rgba(26,122,66,0.3);
-  }
-  .phase-info h3 {
-    font-size: 16px; font-weight: 700; color: var(--text);
-    margin-bottom: 2px;
-  }
-  .phase-meta {
-    font-size: 11px; color: var(--muted);
-    font-family: var(--mono);
-  }
-  .phase-content {
-    padding: 20px 22px 24px;
-  }
-  .phase-intro {
-    font-size: 13px; color: var(--text-secondary);
-    margin-bottom: 16px;
-  }
+.cover-badge {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(46, 213, 115, 0.1);
+  border: 1px solid rgba(46, 213, 115, 0.25);
+  border-radius: 100px;
+  padding: 8px 20px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--emerald-glow);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  animation: fadeUp 1s ease-out 0.2s both;
+}
 
-  /* ── Steps ── */
-  .steps { display: flex; flex-direction: column; }
+.cover-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--emerald-glow);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--emerald-glow);
+  animation: pulse 2s ease-in-out infinite;
+}
 
-  .step {
-    display: grid;
-    grid-template-columns: 36px 1fr;
-    gap: 0 14px;
-    position: relative;
-  }
-  .step:not(:last-child) .step-line {
-    position: absolute;
-    left: 17px; top: 38px; bottom: 0;
-    width: 2px;
-    background: var(--border);
-  }
-  .step-num {
-    width: 36px; height: 36px;
-    border: 2px solid var(--border-dark);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono);
-    font-size: 13px; font-weight: 600;
-    color: var(--text-secondary);
-    background: #fff;
-    flex-shrink: 0;
-    position: relative; z-index: 2;
-  }
-  .step-num.done {
-    border-color: var(--green);
-    color: var(--green);
-    background: var(--green-bg);
-  }
-  .step-body { padding: 5px 0 24px; }
-  .step-body h4 {
-    font-size: 14px; font-weight: 700; color: var(--text);
-    margin-bottom: 4px;
-  }
-  .step-body p {
-    color: var(--text-secondary); font-size: 13px;
-    margin-bottom: 8px;
-  }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
 
-  /* ── Callout Boxes ── */
-  .note {
-    background: var(--amber-bg);
-    border: 1px solid rgba(180,83,9,0.25);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 12px; color: var(--amber);
-    display: flex; gap: 8px;
-    align-items: flex-start;
-    margin-top: 6px;
-  }
-  .warn {
-    background: var(--red-bg);
-    border: 1px solid rgba(220,38,38,0.25);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 12px; color: var(--red);
-    display: flex; gap: 8px;
-    margin-top: 6px;
-  }
-  .tip {
-    background: var(--green-bg);
-    border: 1px solid rgba(26,122,66,0.25);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 12px; color: var(--green);
-    display: flex; gap: 8px;
-    align-items: flex-start;
-    margin-top: 6px;
-  }
-  .done-box {
-    background: var(--green-bg);
-    border: 1px solid rgba(42,157,92,0.3);
-    border-radius: 12px;
-    padding: 14px 16px;
-    display: flex; gap: 10px;
-    align-items: flex-start;
-    margin-top: 6px;
-  }
-  .done-box .icon { font-size: 18px; }
-  .done-box h5 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 2px; }
-  .done-box p { font-size: 12px; color: #15803d; }
+.cover-shield {
+  position: relative;
+  z-index: 2;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 40px;
+  animation: fadeUp 1s ease-out 0.4s both;
+}
 
-  /* ── Device Section Headers ── */
-  .device-section {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px dashed var(--border);
-  }
-  .device-section:first-of-type {
-    margin-top: 0;
-    padding-top: 0;
-    border-top: none;
-  }
-  .device-label {
-    display: inline-flex;
-    align-items: center; gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 16px;
-    margin-bottom: 16px;
-    font-size: 14px; font-weight: 700;
-    color: var(--text);
-  }
-  .device-label .icon { font-size: 20px; }
+.cover-shield svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 40px rgba(46, 213, 115, 0.3));
+}
 
-  /* ── Pairing Visual ── */
-  .pair-visual {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    margin: 16px 0;
-    flex-wrap: wrap;
-  }
-  .pair-device { text-align: center; flex: 0 0 120px; }
-  .pair-device .pair-icon { font-size: 36px; display: block; margin-bottom: 6px; }
-  .pair-device .pair-label { font-size: 12px; color: var(--text-secondary); font-weight: 600; }
-  .pair-arrow { font-size: 22px; color: var(--green); }
-  .pair-code {
-    background: #fff;
-    border: 2px dashed rgba(26,122,66,0.4);
-    border-radius: 12px;
-    padding: 12px 20px;
-    text-align: center;
-  }
-  .pair-code .code-label {
-    font-size: 10px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 1px;
-    font-weight: 700; margin-bottom: 6px;
-  }
-  .pair-code .code-value {
-    font-size: 24px; font-family: var(--mono);
-    font-weight: 700; color: var(--green);
-    letter-spacing: 4px;
-  }
+.cover h1 {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(42px, 7vw, 72px);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  animation: fadeUp 1s ease-out 0.6s both;
+}
 
-  /* ── Feature Grid ── */
-  .feature-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  .feature-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    page-break-inside: avoid;
-  }
-  .feature-card .feature-icon { font-size: 20px; margin-bottom: 8px; display: block; }
-  .feature-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .feature-card p { font-size: 11px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; }
-  .feature-tag {
-    display: inline-block;
-    font-size: 9px; font-weight: 700;
-    font-family: var(--mono);
-    padding: 2px 7px;
-    border-radius: 4px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  .tag-green { background: var(--green-bg); color: var(--green); }
-  .tag-blue { background: var(--blue-bg); color: var(--blue); }
-  .tag-red { background: var(--red-bg); color: var(--red); }
-  .tag-amber { background: var(--amber-bg); color: var(--amber); }
-  .tag-purple { background: var(--purple-bg); color: var(--purple); }
+.cover h1 span {
+  background: linear-gradient(135deg, var(--emerald-glow), #6ee7b7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  /* ── Completion Banner ── */
-  .completion-banner {
-    background: var(--green-bg);
-    border: 2px solid var(--green);
-    border-radius: 16px;
-    padding: 24px 28px;
-    text-align: center;
-    margin-top: 32px;
-    page-break-inside: avoid;
-  }
-  .completion-banner h2 {
-    font-size: 20px; font-weight: 700;
-    color: var(--green); margin-bottom: 4px;
-  }
-  .completion-banner p {
-    color: var(--text-secondary); font-size: 13px;
-    max-width: 460px; margin: 0 auto;
-  }
+.cover-sub {
+  position: relative;
+  z-index: 2;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+  margin-bottom: 48px;
+  animation: fadeUp 1s ease-out 0.8s both;
+}
 
-  /* ── Footer ── */
-  .print-footer {
-    margin-top: 40px;
-    padding-top: 16px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    font-size: 11px;
-    color: var(--muted);
-  }
-  .print-footer a {
-    color: var(--green);
-    text-decoration: none;
-    font-weight: 600;
-  }
+.cover-features {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1s ease-out 1s both;
+}
 
-  /* ── Support Box ── */
-  .support-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    margin-top: 24px;
-    text-align: center;
-    font-size: 12px; color: var(--text-secondary);
-    page-break-inside: avoid;
-  }
-  .support-box strong { color: var(--text); }
+.cover-feat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.4);
+  font-size: 13px;
+  font-weight: 500;
+}
 
-  /* ── Print Styles ── */
-  @media print {
-    body {
-      padding: 0;
-      font-size: 12px;
-      max-width: 100%;
-    }
-    .lang-toggle { display: none !important; }
-    .phase { break-inside: avoid; }
-    .step { break-inside: avoid; }
-    .feature-card { break-inside: avoid; }
-    .done-box { break-inside: avoid; }
-    .note, .tip, .warn { break-inside: avoid; }
-    .completion-banner { break-inside: avoid; }
-    .no-print { display: none !important; }
+.cover-feat-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(46, 213, 115, 0.1);
+  border: 1px solid rgba(46, 213, 115, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
 
-    .print-header {
-      border-bottom-width: 1.5px;
-    }
-    .print-logo {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-    .phase-header, .feature-card, .done-box, .note, .tip, .warn,
-    .completion-banner, .device-label, .pair-visual, .support-box,
-    .print-badge, .hero-bundle, .phase-number, .step-num.done,
-    .feature-tag, .pair-code {
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  /* ── Responsive ── */
-  @media (max-width: 640px) {
-    body { padding: 20px 16px 40px; }
-    .hero h2 { font-size: 22px; }
-    .feature-grid { grid-template-columns: 1fr; }
-    .pair-visual { flex-direction: column; gap: 12px; }
-    .pair-arrow { transform: rotate(90deg); }
-  }
+/* ═══════════════════════════════════════════
+   CONTENT WRAPPER
+   ═══════════════════════════════════════════ */
+.content {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HERO IMAGES
+   ═══════════════════════════════════════════ */
+.section-hero {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 340px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: -40px;
+}
+
+.section-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.section-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, var(--white) 100%);
+}
+
+/* ═══════════════════════════════════════════
+   STEP SECTIONS
+   ═══════════════════════════════════════════ */
+.step-section {
+  padding: 80px 0 40px;
+}
+
+.step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--emerald);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.step-label::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: var(--emerald);
+  border-radius: 1px;
+}
+
+.step-title {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.step-desc {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin-bottom: 40px;
+}
+
+.time-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--emerald-bg);
+  color: var(--emerald);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+/* ═══════════════════════════════════════════
+   DEVICE CARDS
+   ═══════════════════════════════════════════ */
+.device-cards {
+  display: grid;
+  gap: 24px;
+}
+
+.device-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.device-card:hover {
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.device-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.device-card-body {
+  padding: 28px 28px 32px;
+}
+
+.device-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.device-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.device-icon.windows { background: #dbeafe; }
+.device-icon.mac { background: #f1f5f9; }
+.device-icon.android { background: #dcfce7; }
+.device-icon.ios { background: #fef3c7; }
+.device-icon.web { background: #ede9fe; }
+
+.device-name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.device-platform {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   INSTRUCTION STEPS
+   ═══════════════════════════════════════════ */
+.instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.inst {
+  display: flex;
+  gap: 16px;
+}
+
+.inst-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.inst-content h4 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.inst-content p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   CALLOUT BOXES
+   ═══════════════════════════════════════════ */
+.callout {
+  display: flex;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  margin-top: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.callout-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.callout.warning {
+  background: var(--amber-bg);
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.callout.info {
+  background: var(--blue-bg);
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.callout.tip {
+  background: var(--emerald-bg);
+  color: var(--emerald-dark);
+  border: 1px solid #a7f3d0;
+}
+
+/* ═══════════════════════════════════════════
+   PAIRING CODE BOX
+   ═══════════════════════════════════════════ */
+.pairing-box {
+  background: linear-gradient(135deg, #0d1a12 0%, #1a2e22 100%);
+  border-radius: 16px;
+  padding: 28px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pairing-box-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.pairing-code-slots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.pairing-prefix {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--emerald-glow);
+  margin-right: 8px;
+}
+
+.pairing-slot {
+  width: 48px;
+  height: 56px;
+  background: rgba(255,255,255,0.06);
+  border: 2px dashed rgba(46, 213, 115, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ═══════════════════════════════════════════
+   DONE BADGE
+   ═══════════════════════════════════════════ */
+.done-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--emerald-bg);
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-top: 24px;
+}
+
+.done-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--emerald);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.done-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--emerald-dark);
+}
+
+.done-text span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--emerald);
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   PHOTO GRID DIVIDER
+   ═══════════════════════════════════════════ */
+.photo-divider {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+  margin: 60px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.photo-divider img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* ═══════════════════════════════════════════
+   FEATURES GRID
+   ═══════════════════════════════════════════ */
+.features-section {
+  padding: 60px 0 80px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card:hover {
+  border-color: #a7f3d0;
+  box-shadow: 0 8px 30px rgba(26, 122, 66, 0.08);
+}
+
+.feature-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.feature-card-icon.time { background: #dbeafe; }
+.feature-card-icon.bedtime { background: #e0e7ff; }
+.feature-card-icon.block { background: #fee2e2; }
+.feature-card-icon.alert { background: #fef3c7; }
+.feature-card-icon.lock { background: #ede9fe; }
+.feature-card-icon.devices { background: #dcfce7; }
+
+.feature-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.2px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.feature-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-top: 12px;
+  letter-spacing: 0.5px;
+}
+
+.feature-tag.auto { background: #dcfce7; color: #166534; }
+.feature-tag.schedule { background: #dbeafe; color: #1e40af; }
+.feature-tag.dns { background: #fef3c7; color: #92400e; }
+.feature-tag.realtime { background: #fee2e2; color: #991b1b; }
+.feature-tag.instant { background: #ede9fe; color: #5b21b6; }
+
+/* ═══════════════════════════════════════════
+   COMPLETION SECTION
+   ═══════════════════════════════════════════ */
+.completion {
+  background: linear-gradient(165deg, #0a0f0d 0%, #112118 40%, #1a3a28 70%, #0d1a12 100%);
+  padding: 80px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.completion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(46, 213, 115, 0.08) 0%, transparent 60%);
+}
+
+.completion-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.completion-shield {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+}
+
+.completion-shield svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 30px rgba(46, 213, 115, 0.4));
+}
+
+.completion h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+
+.completion h2 span {
+  background: linear-gradient(135deg, var(--emerald-glow), #6ee7b7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.completion p {
+  color: rgba(255,255,255,0.5);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  background: #0a0f0d;
+  padding: 32px;
+  text-align: center;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.footer-links a {
+  color: var(--emerald-glow);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.footer-copy {
+  color: rgba(255,255,255,0.25);
+  font-size: 12px;
+}
+
+/* ═══════════════════════════════════════════
+   OPTION TABS
+   ═══════════════════════════════════════════ */
+.option-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.option-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.option-card:hover {
+  box-shadow: 0 16px 50px rgba(0,0,0,0.07);
+}
+
+.option-card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.option-card-body {
+  padding: 24px;
+}
+
+.option-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--emerald);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .features-grid,
+  .option-split { grid-template-columns: 1fr; }
+  .cover-features { flex-direction: column; align-items: center; }
+  .photo-divider { grid-template-columns: 1fr; }
+  .photo-divider img { height: 180px; }
+  .step-title { font-size: 28px; }
+}
+
+/* ═══════════════════════════════════════════
+   PRINT STYLES
+   ═══════════════════════════════════════════ */
+@media print {
+  .cover { min-height: auto; padding: 40px 32px; break-after: page; }
+  .device-card, .option-card, .feature-card { break-inside: avoid; }
+  .section-hero { height: 200px; }
+  body { font-size: 12px; }
+}
+
+/* ═══════════════════════════════════════════
+   INLINE IMAGE SECTION
+   ═══════════════════════════════════════════ */
+.inline-photo {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 24px 0;
+}
+
+.inline-photo img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+/* connector line between steps */
+.step-connector {
+  width: 2px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--emerald), transparent);
+  margin: 0 auto;
+}
 </style>
 </head>
 <body>
 
-<!-- ── Header ── -->
-<div class="print-header">
-  <div class="print-logo">&#x1f6e1;&#xfe0f;</div>
-  <div class="print-header-text">
-    <h1 data-i18n="header_title">Layers Guard Family — Setup Guide</h1>
-    <p data-i18n="header_sub">Protect your child's digital world</p>
+<!-- ══════════════════════════════════════════════
+     COVER PAGE
+     ══════════════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-badge">Founder Edition</div>
+
+  <div class="cover-shield">
+    <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="shieldGrad" x1="20" y1="10" x2="100" y2="110">
+          <stop offset="0%" stop-color="#34d399"/>
+          <stop offset="100%" stop-color="#059669"/>
+        </linearGradient>
+      </defs>
+      <path d="M60 8L16 28V56C16 84.5 34.5 108 60 116C85.5 108 104 84.5 104 56V28L60 8Z" fill="url(#shieldGrad)" opacity="0.15" stroke="url(#shieldGrad)" stroke-width="2"/>
+      <path d="M50 62L56 68L72 52" stroke="#34d399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
-  <div class="print-header-right">
-    <div class="print-badge">FOUNDER EDITION</div>
-    <div class="lang-toggle no-print">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('ja')">JA</button>
+
+  <h1>Layers <span>Guard</span><br>Family</h1>
+  <p class="cover-sub">Setup Guide — Protect your child's digital world</p>
+
+  <div class="cover-features">
+    <div class="cover-feat">
+      <div class="cover-feat-icon">🛡️</div>
+      6-App Bundle
+    </div>
+    <div class="cover-feat">
+      <div class="cover-feat-icon">📱</div>
+      Up to 7 Devices
+    </div>
+    <div class="cover-feat">
+      <div class="cover-feat-icon">♾️</div>
+      No Subscription
+    </div>
+    <div class="cover-feat">
+      <div class="cover-feat-icon">⏱️</div>
+      10-Min Setup
     </div>
   </div>
-</div>
-
-<!-- ── Hero ── -->
-<section class="hero">
-  <h2 data-i18n="hero_h">Set up Guard Family</h2>
-  <p data-i18n="hero_p">Follow these four steps to install protection on your child's device and connect it to your parent dashboard. The entire setup takes about 10 minutes.</p>
-  <div class="hero-bundle" data-i18n="hero_bundle">&#x1f6e1;&#xfe0f; 5-app bundle &middot; Up to 7 devices &middot; No subscription</div>
 </section>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- PHASE 1: SET UP CHILD'S DEVICE               -->
-<!-- ══════════════════════════════════════════════ -->
-<div class="phase">
-  <div class="phase-header">
-    <div class="phase-number">1</div>
-    <div class="phase-info">
-      <h3 data-i18n="f_sec1_short">Set up child's device</h3>
-      <div class="phase-meta" data-i18n="f_sec1_time">&#x23F1; ~3 minutes</div>
-    </div>
-  </div>
-  <div class="phase-content">
-    <p class="phase-intro" data-i18n="f_child_intro">Install the Guard agent on the device your child uses. Find your device type below and follow the steps.</p>
-
-    <!-- ── Windows PC ── -->
-    <div class="device-section">
-      <div class="device-label"><span class="icon">&#x1f5a5;&#xfe0f;</span> <span data-i18n="dev_win">Windows PC</span></div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4 data-i18n="f_win_s1_h">Download Guard Desktop</h4>
-            <p data-i18n="f_win_s1_p">Copy <strong>LayersGuardDesktop.exe</strong> from the USB or Google Drive folder to your child's Windows PC and run it. The app runs silently in the system tray.</p>
-            <div class="note">
-              <span>&#x26a0;&#xfe0f;</span>
-              <span data-i18n="f_win_s1_note">Windows SmartScreen may block the first launch. Click <strong>"More info"</strong> &rarr; <strong>"Run anyway"</strong>. This only happens once.</span>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4 data-i18n="f_win_s2_h">Write down the pairing code</h4>
-            <p data-i18n="f_win_s2_p">Guard Desktop shows a <strong>pairing code</strong> (e.g. <code>LG-A7X3</code>) on first launch. Write this code here &mdash; you'll enter it in Step 3.</p>
-            <div style="background:var(--surface);border:2px dashed var(--border-dark);border-radius:10px;padding:14px 20px;text-align:center;margin-top:8px;">
-              <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:4px;" data-i18n="write_code">Write your code here</div>
-              <div style="font-size:24px;font-family:var(--mono);font-weight:700;color:var(--border-dark);letter-spacing:6px;">LG-_ _ _ _</div>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num done">&#10003;</div>
-          <div class="step-body">
-            <div class="done-box">
-              <span class="icon">&#x1f5a5;&#xfe0f;</span>
-              <div>
-                <h5 data-i18n="f_win_done_title">Guard Desktop is running in the background</h5>
-                <p data-i18n="f_win_done_p">It blocks sites via DNS, monitors apps, enforces time limits, and reports to your dashboard &mdash; all silently.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Mac ── -->
-    <div class="device-section">
-      <div class="device-label"><span class="icon">&#x1f34e;</span> <span data-i18n="dev_mac">Mac</span></div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4 data-i18n="f_mac_s1_h">Install Guard Mac</h4>
-            <p data-i18n="f_mac_s1_p">Copy the <strong>Layers Guard .dmg</strong> from the USB or Google Drive. Open it and drag the app into <strong>Applications</strong>. Launch it &mdash; a shield icon appears in the menu bar.</p>
-            <div class="note">
-              <span>&#x26a0;&#xfe0f;</span>
-              <span data-i18n="f_mac_s1_note">macOS may warn about an unidentified developer. Go to <strong>System Settings &rarr; Privacy &amp; Security</strong> and click <strong>"Open Anyway"</strong>.</span>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4 data-i18n="f_mac_s2_h">Write down the pairing code</h4>
-            <p data-i18n="f_mac_s2_p">Guard Mac shows a <strong>pairing code</strong> (e.g. <code>LG-A7X3</code>) on first launch. Write this code down for Step 3.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num done">&#10003;</div>
-          <div class="step-body">
-            <div class="done-box">
-              <span class="icon">&#x1f34e;</span>
-              <div>
-                <h5 data-i18n="f_mac_done_title">Guard Mac is running in the menu bar</h5>
-                <p data-i18n="f_mac_done_p">It blocks sites via DNS, monitors apps, enforces time limits, scans content, and reports to your dashboard.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Android ── -->
-    <div class="device-section">
-      <div class="device-label"><span class="icon">&#x1f4f1;</span> <span data-i18n="dev_android">Android Phone</span></div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4 data-i18n="f_android_s1_h">Install Guard Child</h4>
-            <p data-i18n="f_android_s1_p">Copy <strong>LayersGuardChild.apk</strong> from the USB or Google Drive to your child's Android phone. Open it and tap <strong>Install</strong>. Follow the on-screen setup &mdash; it will ask for Accessibility and VPN permissions.</p>
-            <div class="note">
-              <span>&#x1f4a1;</span>
-              <span data-i18n="f_android_s1_note">These permissions let Guard monitor app usage and block harmful content. Guard does <strong>not</strong> read personal messages or passwords.</span>
-            </div>
-            <div class="tip" style="margin-top:6px;">
-              <span>&#x1f4f2;</span>
-              <span data-i18n="f_android_sideload">To install APK files, you may need to enable <strong>"Install from unknown sources"</strong> in your phone's settings. Go to <strong>Settings &rarr; Apps &rarr; Special access &rarr; Install unknown apps</strong> and allow your file manager.</span>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">2</div>
-          <div class="step-body">
-            <h4 data-i18n="f_android_s2_h">Write down the pairing code</h4>
-            <p data-i18n="f_android_s2_p">After setup, Guard Child shows a <strong>pairing code</strong> (e.g. <code>LG-A7X3</code>) on screen. Write this code down for Step 3.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num done">&#10003;</div>
-          <div class="step-body">
-            <div class="done-box">
-              <span class="icon">&#x1f4f1;</span>
-              <div>
-                <h5 data-i18n="f_android_done_title">Guard Child is running</h5>
-                <p data-i18n="f_android_done_p">It monitors screen time, blocks apps, scans chat messages for harmful content, and enforces schedules &mdash; all in the background.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
+<!-- ══════════════════════════════════════════════
+     STEP 1 — CHILD DEVICE
+     ══════════════════════════════════════════════ -->
+<div class="section-hero">
+  <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1600&q=80" alt="Parent helping child with tablet" crossorigin="anonymous">
+  <div class="section-hero-overlay"></div>
 </div>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- PHASE 2: SET UP PARENT ACCESS                -->
-<!-- ══════════════════════════════════════════════ -->
-<div class="phase">
-  <div class="phase-header">
-    <div class="phase-number">2</div>
-    <div class="phase-info">
-      <h3 data-i18n="f_sec2_short">Set up parent access</h3>
-      <div class="phase-meta" data-i18n="f_sec2_time">&#x23F1; ~2 minutes</div>
-    </div>
-  </div>
-  <div class="phase-content">
-    <p class="phase-intro" data-i18n="f_parent_intro">Choose how you want to monitor your child's device. You can use both options &mdash; they connect to the same account.</p>
+<div class="content">
+  <section class="step-section">
+    <div class="step-label">Step 01</div>
+    <h2 class="step-title">Set up your child's device</h2>
+    <p class="step-desc">Install the Guard agent on the device your child uses. Choose their platform below.</p>
+    <div class="time-pill">⏱️ About 3 minutes</div>
 
-    <!-- ── Phone App ── -->
-    <div class="device-section">
-      <div class="device-label"><span class="icon">&#x1f4f2;</span> <span data-i18n="dev_phone">Option A: Phone App</span></div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4 data-i18n="f_phone_s1_h">Install Guard Controller</h4>
-            <p data-i18n="f_phone_s1_p">Copy <strong>LayersGuardController.apk</strong> from the USB or Google Drive to <strong>your own</strong> Android phone and install it. This is the parent app &mdash; it controls the child's device remotely.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num done">&#10003;</div>
-          <div class="step-body">
-            <div class="done-box">
-              <span class="icon">&#x1f4f2;</span>
-              <div>
-                <h5 data-i18n="f_phone_done_title">Controller is ready</h5>
-                <p data-i18n="f_phone_done_p">Open the app and proceed to Step 3 (Pair Devices).</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="device-cards">
 
-    <!-- ── Web Dashboard ── -->
-    <div class="device-section">
-      <div class="device-label"><span class="icon">&#x1f310;</span> <span data-i18n="dev_web">Option B: Web Dashboard</span></div>
-      <div class="steps">
-        <div class="step">
-          <div class="step-line"></div>
-          <div class="step-num">1</div>
-          <div class="step-body">
-            <h4 data-i18n="f_web_s1_h">Open the Guard Dashboard</h4>
-            <p data-i18n="f_web_s1_p">On any computer or phone browser, go to:</p>
-            <div style="background:var(--surface);border:1.5px solid var(--border-dark);border-radius:8px;padding:10px 16px;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--green);text-align:center;margin:8px 0;">
-              thelayersapp.com/dashboard
-            </div>
-            <p data-i18n="f_web_s1_p2">Create an account with your email, then enter your <strong>license key</strong> to activate.</p>
-            <div class="note">
-              <span>&#x1f511;</span>
-              <span data-i18n="f_web_s1_note">Your license key was emailed after purchase. Check your Gumroad receipt if you can't find it.</span>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num done">&#10003;</div>
-          <div class="step-body">
-            <div class="done-box">
-              <span class="icon">&#x1f310;</span>
-              <div>
-                <h5 data-i18n="f_web_done_title">Dashboard is ready</h5>
-                <p data-i18n="f_web_done_p">Proceed to Step 3 to pair your child's device.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════════════ -->
-<!-- PHASE 3: PAIR DEVICES                        -->
-<!-- ══════════════════════════════════════════════ -->
-<div class="phase">
-  <div class="phase-header">
-    <div class="phase-number">3</div>
-    <div class="phase-info">
-      <h3 data-i18n="f_sec3_short">Pair devices</h3>
-      <div class="phase-meta" data-i18n="f_sec3_time">&#x23F1; ~1 minute</div>
-    </div>
-  </div>
-  <div class="phase-content">
-    <div class="pair-visual">
-      <div class="pair-device">
-        <span class="pair-icon">&#x1f9d2;</span>
-        <span class="pair-label" data-i18n="f_pair_child_label">Child's device</span>
-      </div>
-      <div>
-        <div class="pair-code">
-          <div class="code-label" data-i18n="f_pair_code_label">Pairing code</div>
-          <div class="code-value">LG-A7X3</div>
-        </div>
-      </div>
-      <span class="pair-arrow">&rarr;</span>
-      <div class="pair-device">
-        <span class="pair-icon">&#x1f464;</span>
-        <span class="pair-label" data-i18n="f_pair_parent_label">Your device</span>
-      </div>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-line"></div>
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <h4 data-i18n="f_pair_s1_h">Find the pairing code</h4>
-          <p data-i18n="f_pair_s1_p">Use the code from Step 1 (the one you wrote down when setting up the child's device).</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-line"></div>
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <h4 data-i18n="f_pair_s2_h">Enter the code on your parent device</h4>
-          <p data-i18n="f_pair_s2_p">In the Guard Controller app or Web Dashboard, tap <strong>"Enter Pairing Code"</strong> and type the code. The devices will connect within a few seconds.</p>
-          <div class="tip">
-            <span>&#x2705;</span>
-            <span data-i18n="f_pair_s2_tip">Once paired, the connection is permanent. You don't need to pair again unless you reset the child's device.</span>
-          </div>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num done">&#10003;</div>
-        <div class="step-body">
-          <div class="done-box">
-            <span class="icon">&#x1f517;</span>
+      <!-- WINDOWS -->
+      <div class="device-card">
+        <img class="device-card-image" src="https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=800&q=80" alt="Windows laptop on desk" crossorigin="anonymous">
+        <div class="device-card-body">
+          <div class="device-icon-row">
+            <div class="device-icon windows">🖥️</div>
             <div>
-              <h5 data-i18n="f_pair_done_title">Devices are connected!</h5>
-              <p data-i18n="f_pair_done_p">Your dashboard now shows the child's online status, active apps, and screen time. Next, configure the protection rules.</p>
+              <div class="device-name">Windows PC</div>
+              <div class="device-platform">Guard Desktop</div>
+            </div>
+          </div>
+          <div class="instructions">
+            <div class="inst">
+              <div class="inst-num">1</div>
+              <div class="inst-content">
+                <h4>Download Guard Desktop</h4>
+                <p>Copy <strong>LayersGuardDesktop.exe</strong> from the USB or Google Drive folder to your child's Windows PC and run it. The app runs silently in the system tray.</p>
+                <div class="callout warning">
+                  <span class="callout-icon">⚠️</span>
+                  <span>Windows SmartScreen may block the first launch. Click <strong>"More info"</strong> → <strong>"Run anyway"</strong>. This only happens once.</span>
+                </div>
+              </div>
+            </div>
+            <div class="inst">
+              <div class="inst-num">2</div>
+              <div class="inst-content">
+                <h4>Write down the pairing code</h4>
+                <p>Guard Desktop shows a pairing code (e.g. LG-A7X3) on first launch. You'll enter this code in Step 3.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pairing-box">
+            <div class="pairing-box-label">Your pairing code</div>
+            <div class="pairing-code-slots">
+              <span class="pairing-prefix">LG-</span>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+            </div>
+          </div>
+          <div class="done-badge">
+            <div class="done-check">✓</div>
+            <div class="done-text">
+              Guard Desktop is running in the background
+              <span>Blocks sites via DNS, monitors apps, enforces time limits, and reports to your dashboard.</span>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- MAC -->
+      <div class="device-card">
+        <img class="device-card-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80" alt="MacBook on desk" crossorigin="anonymous">
+        <div class="device-card-body">
+          <div class="device-icon-row">
+            <div class="device-icon mac">🍎</div>
+            <div>
+              <div class="device-name">Mac</div>
+              <div class="device-platform">Guard Mac</div>
+            </div>
+          </div>
+          <div class="instructions">
+            <div class="inst">
+              <div class="inst-num">1</div>
+              <div class="inst-content">
+                <h4>Install Guard Mac</h4>
+                <p>Copy the <strong>Layers Guard .dmg</strong> from the USB or Google Drive. Open it and drag the app into <strong>Applications</strong>. Launch it — a shield icon appears in the menu bar.</p>
+                <div class="callout warning">
+                  <span class="callout-icon">⚠️</span>
+                  <span>macOS may warn about an unidentified developer. Go to <strong>System Settings → Privacy & Security</strong> and click <strong>"Open Anyway"</strong>.</span>
+                </div>
+              </div>
+            </div>
+            <div class="inst">
+              <div class="inst-num">2</div>
+              <div class="inst-content">
+                <h4>Write down the pairing code</h4>
+                <p>Guard Mac shows a pairing code (e.g. LG-A7X3) on first launch. Write this code down for Step 3.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pairing-box">
+            <div class="pairing-box-label">Your pairing code</div>
+            <div class="pairing-code-slots">
+              <span class="pairing-prefix">LG-</span>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+            </div>
+          </div>
+          <div class="done-badge">
+            <div class="done-check">✓</div>
+            <div class="done-text">
+              Guard Mac is running in the menu bar
+              <span>Blocks sites via DNS, monitors apps, enforces time limits, scans content, and reports to your dashboard.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANDROID -->
+      <div class="device-card">
+        <img class="device-card-image" src="https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&q=80" alt="Android phone" crossorigin="anonymous">
+        <div class="device-card-body">
+          <div class="device-icon-row">
+            <div class="device-icon android">📱</div>
+            <div>
+              <div class="device-name">Android Phone</div>
+              <div class="device-platform">Guard Child</div>
+            </div>
+          </div>
+          <div class="instructions">
+            <div class="inst">
+              <div class="inst-num">1</div>
+              <div class="inst-content">
+                <h4>Install Guard Child</h4>
+                <p>Copy <strong>LayersGuardChild.apk</strong> from the USB or Google Drive to your child's Android phone. Open it and tap <strong>Install</strong>. Follow the on-screen setup — it will ask for Accessibility and VPN permissions.</p>
+                <div class="callout info">
+                  <span class="callout-icon">💡</span>
+                  <span>These permissions let Guard monitor app usage and block harmful content. Guard does <strong>not</strong> read personal messages or passwords.</span>
+                </div>
+                <div class="callout tip">
+                  <span class="callout-icon">📲</span>
+                  <span>To install APK files, you may need to enable <strong>"Install from unknown sources"</strong> in Settings → Apps → Special access → Install unknown apps.</span>
+                </div>
+              </div>
+            </div>
+            <div class="inst">
+              <div class="inst-num">2</div>
+              <div class="inst-content">
+                <h4>Write down the pairing code</h4>
+                <p>After setup, Guard Child shows a pairing code on screen. Write this code down for Step 3.</p>
+              </div>
+            </div>
+          </div>
+          <div class="pairing-box">
+            <div class="pairing-box-label">Your pairing code</div>
+            <div class="pairing-code-slots">
+              <span class="pairing-prefix">LG-</span>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+              <div class="pairing-slot">_</div>
+            </div>
+          </div>
+          <div class="done-badge">
+            <div class="done-check">✓</div>
+            <div class="done-text">
+              Guard Child is running
+              <span>Monitors screen time, blocks apps, scans chat messages for harmful content, and enforces schedules.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PHOTO DIVIDER
+     ══════════════════════════════════════════════ -->
+<div class="photo-divider">
+  <img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=600&q=80" alt="Family" crossorigin="anonymous">
+  <img src="https://images.unsplash.com/photo-1491013516836-7db643ee125a?w=600&q=80" alt="Child smiling" crossorigin="anonymous">
+  <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80" alt="Kids learning" crossorigin="anonymous">
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STEP 2 — PARENT ACCESS
+     ══════════════════════════════════════════════ -->
+<div class="content">
+  <section class="step-section">
+    <div class="step-label">Step 02</div>
+    <h2 class="step-title">Set up parent access</h2>
+    <p class="step-desc">Choose how you want to monitor and control your child's device — from your phone or any browser.</p>
+    <div class="time-pill">⏱️ About 2 minutes</div>
+
+    <div class="option-split">
+      <!-- Option A -->
+      <div class="option-card">
+        <img class="option-card-image" src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80" alt="Phone app" crossorigin="anonymous">
+        <div class="option-card-body">
+          <div class="option-label">Option A</div>
+          <div class="device-icon-row">
+            <div class="device-icon android">📲</div>
+            <div>
+              <div class="device-name">Phone App</div>
+              <div class="device-platform">Guard Controller · Android</div>
+            </div>
+          </div>
+          <div class="instructions">
+            <div class="inst">
+              <div class="inst-num">1</div>
+              <div class="inst-content">
+                <h4>Install Guard Controller</h4>
+                <p>Copy <strong>LayersGuardController.apk</strong> from the USB or Google Drive to <strong>your own</strong> Android phone and install it. This is the parent app.</p>
+              </div>
+            </div>
+          </div>
+          <div class="done-badge">
+            <div class="done-check">✓</div>
+            <div class="done-text">Controller is ready<span>Open the app and proceed to Step 3.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option B -->
+      <div class="option-card">
+        <img class="option-card-image" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Dashboard on laptop" crossorigin="anonymous">
+        <div class="option-card-body">
+          <div class="option-label">Option B</div>
+          <div class="device-icon-row">
+            <div class="device-icon web">🌐</div>
+            <div>
+              <div class="device-name">Web Dashboard</div>
+              <div class="device-platform">Any browser · Any device</div>
+            </div>
+          </div>
+          <div class="instructions">
+            <div class="inst">
+              <div class="inst-num">1</div>
+              <div class="inst-content">
+                <h4>Open the Guard Dashboard</h4>
+                <p>On any computer or phone browser, go to <strong>thelayersapp.com/dashboard</strong>. Create an account, then enter your license key to activate.</p>
+                <div class="callout info">
+                  <span class="callout-icon">🔑</span>
+                  <span>Your license key was emailed after purchase. Check your Gumroad receipt if you can't find it.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="done-badge">
+            <div class="done-check">✓</div>
+            <div class="done-text">Dashboard is ready<span>Proceed to Step 3 to pair your child's device.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STEP 3 — PAIR DEVICES
+     ══════════════════════════════════════════════ -->
+<div class="section-hero">
+  <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=1600&q=80" alt="Connecting devices" crossorigin="anonymous">
+  <div class="section-hero-overlay"></div>
+</div>
+
+<div class="content">
+  <section class="step-section">
+    <div class="step-label">Step 03</div>
+    <h2 class="step-title">Pair your devices</h2>
+    <p class="step-desc">Connect the child's device to your parent dashboard with the pairing code.</p>
+    <div class="time-pill">⏱️ About 1 minute</div>
+
+    <div class="device-card" style="max-width: 100%;">
+      <div class="device-card-body" style="padding: 36px;">
+        <div class="instructions">
+          <div class="inst">
+            <div class="inst-num">1</div>
+            <div class="inst-content">
+              <h4>Find your pairing code</h4>
+              <p>Use the code you wrote down in Step 1 when setting up the child's device.</p>
+            </div>
+          </div>
+          <div class="inst">
+            <div class="inst-num">2</div>
+            <div class="inst-content">
+              <h4>Enter the code on your parent device</h4>
+              <p>In the Guard Controller app or Web Dashboard, tap <strong>"Enter Pairing Code"</strong> and type the code. The devices connect within seconds.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout tip" style="margin-top: 24px;">
+          <span class="callout-icon">✅</span>
+          <span>Once paired, the connection is permanent. You don't need to pair again unless you reset the child's device.</span>
+        </div>
+
+        <div class="done-badge" style="margin-top: 24px;">
+          <div class="done-check">🔗</div>
+          <div class="done-text">
+            Devices are connected!
+            <span>Your dashboard now shows the child's online status, active apps, and screen time.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PHOTO DIVIDER 2
+     ══════════════════════════════════════════════ -->
+<div class="photo-divider">
+  <img src="https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=600&q=80" alt="Child with headphones" crossorigin="anonymous">
+  <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=80" alt="Happy child" crossorigin="anonymous">
+  <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&q=80" alt="Family outdoors" crossorigin="anonymous">
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STEP 4 — CONFIGURE PROTECTION
+     ══════════════════════════════════════════════ -->
+<div class="content">
+  <section class="step-section features-section">
+    <div class="step-label">Step 04</div>
+    <h2 class="step-title">Configure protection</h2>
+    <p class="step-desc">Your dashboard gives you full control. Configure as many or as few features as you need.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-card-icon time">⏱️</div>
+        <h3>Daily Time Limit</h3>
+        <p>Set max screen-time minutes per day. When time runs out, the device locks. Separate limits for weekdays and weekends.</p>
+        <span class="feature-tag auto">Auto-enforced</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon bedtime">🌙</div>
+        <h3>Bedtime Lockout</h3>
+        <p>Set hours when the device is fully locked (e.g. 22:00–07:00). All apps and internet blocked during these hours.</p>
+        <span class="feature-tag schedule">Schedule</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon block">🚫</div>
+        <h3>Block Sites & Apps</h3>
+        <p>Block domains via DNS — works across all browsers and apps. Block specific apps with per-app time limits.</p>
+        <span class="feature-tag dns">DNS-level</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon alert">🚨</div>
+        <h3>Content Alerts</h3>
+        <p>Get notified when harmful content is detected — violence, bullying, sexual content, or stranger-danger language.</p>
+        <span class="feature-tag realtime">Real-time</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon lock">🔒</div>
+        <h3>Emergency Lock</h3>
+        <p>Instantly lock the child's device from your phone or dashboard. Blocks everything immediately.</p>
+        <span class="feature-tag instant">Instant</span>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon devices">📱</div>
+        <h3>Multi-Device</h3>
+        <p>Manage up to 7 child devices from one account. Windows, Mac, Android, iOS, and Chrome — all in one dashboard.</p>
+        <span class="feature-tag auto">Up to 7 devices</span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     COMPLETION
+     ══════════════════════════════════════════════ -->
+<section class="completion">
+  <div class="completion-inner">
+    <div class="completion-shield">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 8L16 28V56C16 84.5 34.5 108 60 116C85.5 108 104 84.5 104 56V28L60 8Z" fill="#34d399" opacity="0.15" stroke="#34d399" stroke-width="2"/>
+        <path d="M50 62L56 68L72 52" stroke="#34d399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Guard Family is <span>Active!</span></h2>
+    <p>Your child's device is now protected and paired with your parent dashboard. You'll receive real-time alerts and can adjust controls anytime from your phone or any browser.</p>
   </div>
-</div>
+</section>
 
-<!-- ══════════════════════════════════════════════ -->
-<!-- PHASE 4: CONFIGURE PROTECTION                -->
-<!-- ══════════════════════════════════════════════ -->
-<div class="phase">
-  <div class="phase-header">
-    <div class="phase-number">4</div>
-    <div class="phase-info">
-      <h3 data-i18n="f_sec4_short">Configure protection</h3>
-      <div class="phase-meta" data-i18n="f_sec4_time">&#x23F1; ~3 minutes</div>
-    </div>
+<!-- ══════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-links">
+    <a href="https://thelayersapp.com/support">Support</a>
+    <a href="mailto:peter@thelayersapp.com">peter@thelayersapp.com</a>
+    <a href="https://thelayersapp.com">thelayersapp.com</a>
   </div>
-  <div class="phase-content">
-    <p class="phase-intro" data-i18n="f_config_intro">Your dashboard gives you full control. Configure as many or as few features as you need.</p>
+  <p class="footer-copy">© 2026 Layers · Guard Family Founder Edition</p>
+</footer>
 
-    <div class="feature-grid">
-      <div class="feature-card">
-        <span class="feature-icon">&#x23F1;&#xfe0f;</span>
-        <h4 data-i18n="f_feat_time_h">Daily Time Limit</h4>
-        <p data-i18n="f_feat_time_p">Set max screen-time minutes per day. When time runs out, the device locks. Separate limits for weekdays and weekends.</p>
-        <span class="feature-tag tag-green" data-i18n="f_feat_time_tag">Auto-enforced</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#x1f319;</span>
-        <h4 data-i18n="f_feat_bedtime_h">Bedtime Lockout</h4>
-        <p data-i18n="f_feat_bedtime_p">Set hours when the device is fully locked (e.g. 22:00&ndash;07:00). All apps and internet blocked.</p>
-        <span class="feature-tag tag-purple" data-i18n="f_feat_bedtime_tag">Schedule</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#x1f6ab;</span>
-        <h4 data-i18n="f_feat_sites_h">Block Sites</h4>
-        <p data-i18n="f_feat_sites_p">Block domains via DNS &mdash; works across all browsers and apps. Add individual sites or use categories.</p>
-        <span class="feature-tag tag-red" data-i18n="f_feat_sites_tag">DNS-level</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#x1f4f5;</span>
-        <h4 data-i18n="f_feat_apps_h">Block Apps</h4>
-        <p data-i18n="f_feat_apps_p">Block specific apps on the child's device. Blocked apps close automatically. Set per-app time limits.</p>
-        <span class="feature-tag tag-amber" data-i18n="f_feat_apps_tag">Per-app limits</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#x1f6a8;</span>
-        <h4 data-i18n="f_feat_alerts_h">Content Alerts</h4>
-        <p data-i18n="f_feat_alerts_p">Get notified when harmful content is detected &mdash; violence, bullying, sexual content, or stranger-danger language.</p>
-        <span class="feature-tag tag-red" data-i18n="f_feat_alerts_tag">Real-time</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">&#x1f512;</span>
-        <h4 data-i18n="f_feat_lock_h">Emergency Lock</h4>
-        <p data-i18n="f_feat_lock_p">Instantly lock the child's device from your phone or dashboard. Blocks everything immediately.</p>
-        <span class="feature-tag tag-red" data-i18n="f_feat_lock_tag">Instant</span>
-      </div>
-    </div>
-
-    <div class="tip">
-      <span>&#x1f4a1;</span>
-      <span data-i18n="f_config_tip">You can manage up to <strong>7 child devices</strong> from one account. </span>
-    </div>
-  </div>
-</div>
-
-<!-- ── Completion ── -->
-<div class="completion-banner">
-  <h2 data-i18n="f_complete_h">&#x1f6e1;&#xfe0f; Guard Family is active!</h2>
-  <p data-i18n="f_complete_p">Your child's device is now protected and paired with your parent dashboard. You'll receive real-time alerts and can adjust controls anytime.</p>
-</div>
-
-<!-- ── Support ── -->
-<div class="support-box">
-  <p data-i18n="support_text"><strong>Need help?</strong> Visit <strong>thelayersapp.com/support</strong> or email <strong>peter@thelayersapp.com</strong></p>
-</div>
-
-<!-- ── Footer ── -->
-<div class="print-footer">
-  <p>&copy; 2026 Layers &middot; <a href="https://thelayersapp.com">thelayersapp.com</a> &middot; <span data-i18n="footer_text">Guard Family Founder Edition</span></p>
-</div>
-
-<script>
-let currentLang = 'en';
-
-const i18n = {
-  header_title:    { en: 'Layers Guard Family — Setup Guide', ja: 'Layers Guard Family — セットアップガイド' },
-  header_sub:      { en: "Protect your child’s digital world", ja: 'お子様のデジタル世界を守る' },
-  hero_h:          { en: 'Set up Guard Family', ja: 'Guard Family をセットアップ' },
-  hero_p:          { en: 'Follow these four steps to install protection on your child’s device and connect it to your parent dashboard. The entire setup takes about 10 minutes.', ja: '以下の4ステップでお子様のデバイスに保護をインストールし、親のダッシュボードに接続します。セットアップは約10分で完了します。' },
-  hero_bundle:     { en: '🛡️ 5-app bundle · Up to 7 devices · No subscription', ja: '🛡️ 5アプリバンドル · 最大7台 · サブスク不要' },
-
-  f_sec1_short:    { en: "Set up child’s device", ja: 'お子様のデバイスをセットアップ' },
-  f_sec1_time:     { en: '⏱ ~3 minutes', ja: '⏱ 約3分' },
-  f_child_intro:   { en: 'Install the Guard agent on the device your child uses. Find your device type below and follow the steps.', ja: 'お子様が使用するデバイスにGuardエージェントをインストールします。下からデバイスの種類を見つけて手順に従ってください。' },
-  dev_win:         { en: 'Windows PC', ja: 'Windows PC' },
-  dev_mac:         { en: 'Mac', ja: 'Mac' },
-  dev_android:     { en: 'Android Phone', ja: 'Androidスマホ' },
-  f_win_s1_h:      { en: 'Download Guard Desktop', ja: 'Guard Desktopをダウンロード' },
-  f_win_s1_p:      { en: 'Copy <strong>LayersGuardDesktop.exe</strong> from the USB or Google Drive folder to your child’s Windows PC and run it. The app runs silently in the system tray.', ja: 'USBまたはGoogle Driveフォルダから<strong>LayersGuardDesktop.exe</strong>をお子様のWindows PCにコピーして実行します。アプリはシステムトレイでサイレントに動作します。' },
-  f_win_s1_note:   { en: 'Windows SmartScreen may block the first launch. Click <strong>“More info”</strong> → <strong>“Run anyway”</strong>. This only happens once.', ja: 'Windows SmartScreenが初回起動をブロックする場合があります。<strong>「詳細情報」</strong>→<strong>「実行」</strong>をクリックしてください。これは1回だけです。' },
-  f_win_s2_h:      { en: 'Write down the pairing code', ja: 'ペアリングコードをメモする' },
-  f_win_s2_p:      { en: 'Guard Desktop shows a <strong>pairing code</strong> (e.g. <code>LG-A7X3</code>) on first launch. Write this code here — you’ll enter it in Step 3.', ja: 'Guard Desktopの初回起動時に<strong>ペアリングコード</strong>（例：<code>LG-A7X3</code>）が表示されます。このコードをメモしてください。ステップ3で入力します。' },
-  write_code:      { en: 'Write your code here', ja: 'コードをここに記入' },
-  f_win_done_title:{ en: 'Guard Desktop is running in the background', ja: 'Guard Desktopがバックグラウンドで実行中' },
-  f_win_done_p:    { en: 'It blocks sites via DNS, monitors apps, enforces time limits, and reports to your dashboard — all silently.', ja: 'DNSでサイトをブロックし、アプリを監視し、時間制限を適用し、ダッシュボードに報告します。' },
-  f_mac_s1_h:      { en: 'Install Guard Mac', ja: 'Guard Macをインストール' },
-  f_mac_s1_p:      { en: 'Copy the <strong>Layers Guard .dmg</strong> from the USB or Google Drive. Open it and drag the app into <strong>Applications</strong>. Launch it — a shield icon appears in the menu bar.', ja: 'USBまたはGoogle Driveから<strong>Layers Guard .dmg</strong>をコピーします。開いてアプリを<strong>アプリケーション</strong>にドラッグします。起動するとメニューバーにシールドアイコンが表示されます。' },
-  f_mac_s1_note:   { en: 'macOS may warn about an unidentified developer. Go to <strong>System Settings → Privacy & Security</strong> and click <strong>“Open Anyway”</strong>.', ja: 'macOSが未確認の開発者という警告を表示する場合があります。<strong>システム設定 → プライバシーとセキュリティ</strong>で<strong>「このまま開く」</strong>をクリックしてください。' },
-  f_mac_s2_h:      { en: 'Write down the pairing code', ja: 'ペアリングコードをメモする' },
-  f_mac_s2_p:      { en: 'Guard Mac shows a <strong>pairing code</strong> (e.g. <code>LG-A7X3</code>) on first launch. Write this code down for Step 3.', ja: 'Guard Macの初回起動時に<strong>ペアリングコード</strong>（例：<code>LG-A7X3</code>）が表示されます。ステップ3のためにメモしてください。' },
-  f_mac_done_title:{ en: 'Guard Mac is running in the menu bar', ja: 'Guard Macがメニューバーで実行中' },
-  f_mac_done_p:    { en: 'It blocks sites via DNS, monitors apps, enforces time limits, scans content, and reports to your dashboard.', ja: 'DNSでサイトをブロックし、アプリを監視し、時間制限を適用し、コンテンツをスキャンし、ダッシュボードに報告します。' },
-  f_android_s1_h:  { en: 'Install Guard Child', ja: 'Guard Childをインストール' },
-  f_android_s1_p:  { en: 'Copy <strong>LayersGuardChild.apk</strong> from the USB or Google Drive to your child’s Android phone. Open it and tap <strong>Install</strong>. Follow the on-screen setup — it will ask for Accessibility and VPN permissions.', ja: 'USBまたはGoogle Driveから<strong>LayersGuardChild.apk</strong>をお子様のAndroidスマホにコピーします。開いて<strong>インストール</strong>をタップします。画面の指示に従ってセットアップします。アクセシビリティとVPNの権限が求められます。' },
-  f_android_s1_note:{ en: 'These permissions let Guard monitor app usage and block harmful content. Guard does <strong>not</strong> read personal messages or passwords.', ja: 'これらの権限により、Guardはアプリの使用状況を監視し、有害なコンテンツをブロックできます。Guardは個人メッセージやパスワードを<strong>読み取りません</strong>。' },
-  f_android_sideload:{ en: 'To install APK files, you may need to enable <strong>“Install from unknown sources”</strong> in your phone’s settings. Go to <strong>Settings → Apps → Special access → Install unknown apps</strong> and allow your file manager.', ja: 'APKファイルをインストールするには、電話の設定で<strong>「不明なソースからのインストール」</strong>を有効にする必要がある場合があります。<strong>設定 → アプリ → 特別なアクセス → 不明なアプリのインストール</strong>でファイルマネージャーを許可してください。' },
-  f_android_s2_h:  { en: 'Write down the pairing code', ja: 'ペアリングコードをメモする' },
-  f_android_s2_p:  { en: 'After setup, Guard Child shows a <strong>pairing code</strong> (e.g. <code>LG-A7X3</code>) on screen. Write this code down for Step 3.', ja: 'セットアップ後、Guard Childは画面に<strong>ペアリングコード</strong>（例：<code>LG-A7X3</code>）を表示します。ステップ3のためにメモしてください。' },
-  f_android_done_title:{ en: 'Guard Child is running', ja: 'Guard Childが実行中' },
-  f_android_done_p:{ en: 'It monitors screen time, blocks apps, scans chat messages for harmful content, and enforces schedules — all in the background.', ja: 'スクリーンタイムを監視し、アプリをブロックし、チャットメッセージの有害コンテンツをスキャンし、スケジュールを適用します。' },
-
-  f_sec2_short:    { en: 'Set up parent access', ja: '親のアクセスをセットアップ' },
-  f_sec2_time:     { en: '⏱ ~2 minutes', ja: '⏱ 約2分' },
-  f_parent_intro:  { en: 'Choose how you want to monitor your child’s device. You can use both options — they connect to the same account.', ja: 'お子様のデバイスを監視する方法を選んでください。両方のオプションを使用できます。同じアカウントに接続されます。' },
-  dev_phone:       { en: 'Option A: Phone App', ja: 'オプションA：スマホアプリ' },
-  dev_web:         { en: 'Option B: Web Dashboard', ja: 'オプションB：Webダッシュボード' },
-  f_phone_s1_h:    { en: 'Install Guard Controller', ja: 'Guard Controllerをインストール' },
-  f_phone_s1_p:    { en: 'Copy <strong>LayersGuardController.apk</strong> from the USB or Google Drive to <strong>your own</strong> Android phone and install it. This is the parent app — it controls the child’s device remotely.', ja: 'USBまたはGoogle Driveから<strong>LayersGuardController.apk</strong>を<strong>自分の</strong>Androidスマホにコピーしてインストールします。これは親のアプリで、お子様のデバイスをリモートで管理します。' },
-  f_phone_done_title:{ en: 'Controller is ready', ja: 'Controllerの準備完了' },
-  f_phone_done_p:  { en: 'Open the app and proceed to Step 3 (Pair Devices).', ja: 'アプリを開いてステップ3（デバイスのペアリング）に進みます。' },
-  f_web_s1_h:      { en: 'Open the Guard Dashboard', ja: 'Guardダッシュボードを開く' },
-  f_web_s1_p:      { en: 'On any computer or phone browser, go to:', ja: '任意のコンピュータまたはスマホのブラウザで以下にアクセス：' },
-  f_web_s1_p2:     { en: 'Create an account with your email, then enter your <strong>license key</strong> to activate.', ja: 'メールでアカウントを作成し、<strong>ライセンスキー</strong>を入力して有効にします。' },
-  f_web_s1_note:   { en: 'Your license key was emailed after purchase. Check your Gumroad receipt if you can’t find it.', ja: 'ライセンスキーは購入後にメールで送信されています。見つからない場合はGumroadの領収書を確認してください。' },
-  f_web_done_title:{ en: 'Dashboard is ready', ja: 'ダッシュボードの準備完了' },
-  f_web_done_p:    { en: 'Proceed to Step 3 to pair your child’s device.', ja: 'ステップ3に進んでお子様のデバイスをペアリングします。' },
-
-  f_sec3_short:    { en: 'Pair devices', ja: 'デバイスをペアリング' },
-  f_sec3_time:     { en: '⏱ ~1 minute', ja: '⏱ 約1分' },
-  f_pair_child_label:{ en: "Child’s device", ja: 'お子様のデバイス' },
-  f_pair_code_label: { en: 'Pairing code', ja: 'ペアリングコード' },
-  f_pair_parent_label:{ en: 'Your device', ja: 'あなたのデバイス' },
-  f_pair_s1_h:     { en: 'Find the pairing code', ja: 'ペアリングコードを確認' },
-  f_pair_s1_p:     { en: 'Use the code from Step 1 (the one you wrote down when setting up the child’s device).', ja: 'ステップ1でメモしたコードを使用します。' },
-  f_pair_s2_h:     { en: 'Enter the code on your parent device', ja: '親デバイスでコードを入力' },
-  f_pair_s2_p:     { en: 'In the Guard Controller app or Web Dashboard, tap <strong>“Enter Pairing Code”</strong> and type the code. The devices connect within seconds.', ja: 'Guard ControllerアプリまたはWebダッシュボードで<strong>「ペアリングコードを入力」</strong>をタップし、コードを入力します。数秒以内にデバイスが接続されます。' },
-  f_pair_s2_tip:   { en: 'Once paired, the connection is permanent. You don’t need to pair again unless you reset the child’s device.', ja: 'ペアリングが完了すると接続は永続的です。お子様のデバイスをリセットしない限り、再ペアリングは不要です。' },
-  f_pair_done_title:{ en: 'Devices are connected!', ja: 'デバイスが接続されました！' },
-  f_pair_done_p:   { en: 'Your dashboard now shows the child’s online status, active apps, and screen time. Next, configure the protection rules.', ja: 'ダッシュボードにお子様のオンライン状態、使用中のアプリ、スクリーンタイムが表示されます。次に保護ルールを設定します。' },
-
-  f_sec4_short:    { en: 'Configure protection', ja: '保護を設定' },
-  f_sec4_time:     { en: '⏱ ~3 minutes', ja: '⏱ 約3分' },
-  f_config_intro:  { en: 'Your dashboard gives you full control. Configure as many or as few features as you need.', ja: 'ダッシュボードから完全に管理できます。必要な機能を設定してください。' },
-  f_feat_time_h:   { en: 'Daily Time Limit', ja: '毎日の利用時間制限' },
-  f_feat_time_p:   { en: 'Set max screen-time minutes per day. When time runs out, the device locks. Separate limits for weekdays and weekends.', ja: '1日のスクリーンタイムの上限を設定。時間切れでデバイスがロック。平日と週末で別々の制限。' },
-  f_feat_time_tag: { en: 'Auto-enforced', ja: '自動適用' },
-  f_feat_bedtime_h:{ en: 'Bedtime Lockout', ja: '就寝時間ロックアウト' },
-  f_feat_bedtime_p:{ en: 'Set hours when the device is fully locked (e.g. 22:00–07:00). All apps and internet blocked.', ja: 'デバイスが完全にロックされる時間帯を設定（例：22:00〜07:00）。すべてのアプリとインターネットがブロック。' },
-  f_feat_bedtime_tag:{ en: 'Schedule', ja: 'スケジュール' },
-  f_feat_sites_h:  { en: 'Block Sites', ja: 'サイトをブロック' },
-  f_feat_sites_p:  { en: 'Block domains via DNS — works across all browsers and apps. Add individual sites or use categories.', ja: 'DNSでドメインをブロック。すべてのブラウザとアプリで機能。' },
-  f_feat_sites_tag:{ en: 'DNS-level', ja: 'DNSレベル' },
-  f_feat_apps_h:   { en: 'Block Apps', ja: 'アプリをブロック' },
-  f_feat_apps_p:   { en: 'Block specific apps on the child’s device. Blocked apps close automatically. Set per-app time limits.', ja: 'お子様のデバイスで特定のアプリをブロック。ブロックされたアプリは自動的に閉じられます。' },
-  f_feat_apps_tag: { en: 'Per-app limits', ja: 'アプリごとの制限' },
-  f_feat_alerts_h: { en: 'Content Alerts', ja: 'コンテンツアラート' },
-  f_feat_alerts_p: { en: 'Get notified when harmful content is detected — violence, bullying, sexual content, or stranger-danger language.', ja: '有害なコンテンツが検出されると通知。暴力、いじめ、性的コンテンツ、不審者の言葉。' },
-  f_feat_alerts_tag:{ en: 'Real-time', ja: 'リアルタイム' },
-  f_feat_lock_h:   { en: 'Emergency Lock', ja: '緊急ロック' },
-  f_feat_lock_p:   { en: 'Instantly lock the child’s device from your phone or dashboard. Blocks everything immediately.', ja: 'スマホやダッシュボードからお子様のデバイスを即座にロック。すべてを直ちにブロック。' },
-  f_feat_lock_tag: { en: 'Instant', ja: '即時' },
-  f_config_tip:    { en: 'You can manage up to <strong>7 child devices</strong> from one account.', ja: '1つのアカウントで最大<strong>7台の子デバイス</strong>を管理できます。' },
-
-  f_complete_h:    { en: '🛡️ Guard Family is active!', ja: '🛡️ Guard Familyが有効になりました！' },
-  f_complete_p:    { en: 'Your child’s device is now protected and paired with your parent dashboard. You’ll receive real-time alerts and can adjust controls anytime.', ja: 'お子様のデバイスは保護され、親のダッシュボードとペアリングされました。リアルタイムでアラートを受信し、いつでもコントロールを調整できます。' },
-  support_text:    { en: '<strong>Need help?</strong> Visit <strong>thelayersapp.com/support</strong> or email <strong>peter@thelayersapp.com</strong>', ja: '<strong>お困りですか？</strong> <strong>thelayersapp.com/support</strong>を訪問または<strong>peter@thelayersapp.com</strong>にメール' },
-  footer_text:     { en: 'Guard Family Founder Edition', ja: 'Guard Family Founder Edition' },
-};
-
-function setLang(lang) {
-  currentLang = lang;
-  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
-  document.querySelector('.lang-btn[onclick="setLang(\'' + lang + '\')"]').classList.add('active');
-  document.querySelectorAll('[data-i18n]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n');
-    if (i18n[key] && i18n[key][lang]) {
-      el.innerHTML = i18n[key][lang];
-    }
-  });
-}
-</script>
 </body>
 </html>

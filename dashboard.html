@@ -3345,6 +3345,8 @@
     let currentSchedule = {};
     let currentUsedMins = 0;
     let todayTimeLog = {};
+    let _statusScreenTimeMins = 0;
+    let _latestTimeLog = {};
     let allAlerts = {};
     let blockedSites = [];
     let blockedApps = [];
@@ -3837,6 +3839,8 @@
       showLoadingState();
       currentUsedMins = 0;
       currentSchedule = {};
+      _statusScreenTimeMins = 0;
+      _latestTimeLog = {};
       const did = currentDeviceId;
 
       // Device info listener — updates active device button in sidebar list
@@ -3853,7 +3857,7 @@
       });
       listeners.push(() => off(infoRef));
 
-      // Status listener — renderStatus, renderHero, renderActiveApps
+      // Status listener — renderStatus, renderHero, renderActiveApps, chart fallback
       const statusRef = ref(db, GUARD_ROOT + '/' + did + '/status');
       onValue(statusRef, (snap) => {
         const s = snap.val() || {};
@@ -3861,6 +3865,10 @@
         renderStatus(s, isOnline);
         renderHero(s);
         renderActiveApps(s.active_apps || []);
+        // Re-render chart so today's bar reflects the latest status heartbeat
+        if (_statusScreenTimeMins > 0 && Object.keys(_latestTimeLog).length > 0) {
+          renderWeekChart(_latestTimeLog);
+        }
       });
       listeners.push(() => off(statusRef));
 
@@ -3879,6 +3887,7 @@
       const timeRef = ref(db, GUARD_ROOT + '/' + did + '/time_log');
       onValue(timeRef, (snap) => {
         const log = snap.val() || {};
+        _latestTimeLog = log;
         todayTimeLog = log[today] || {};
         renderWeekChart(log);
         renderHeroFromTimeLog(log, today);
@@ -3927,6 +3936,21 @@
       // Active apps count
       document.getElementById('heroApps').textContent = (status.active_apps || []).length;
 
+      // Real-time screen time from status heartbeat (updates every 30s)
+      const statusMins = status.screen_time_today_mins;
+      if (typeof statusMins === 'number' && statusMins >= 0) {
+        _statusScreenTimeMins = statusMins;
+        // Use whichever is higher: status heartbeat or last time_log flush
+        const mins = Math.max(statusMins, currentUsedMins);
+        currentUsedMins = mins;
+        const h = Math.floor(mins / 60);
+        const m = mins % 60;
+        document.getElementById('heroTime').textContent = h + 'h ' + m + 'm';
+        document.getElementById('heroUsed').textContent = formatMins(mins);
+        updateProgressRing();
+        renderHeroLimit();
+      }
+
       // Time-of-day greeting
       const hour = new Date().getHours();
       let greeting = T('hero_greeting_morning');
@@ -3938,7 +3962,8 @@
 
     function renderHeroFromTimeLog(log, today) {
       const todayData = log[today] || {};
-      currentUsedMins = todayData.total_mins || 0;
+      // Use whichever is higher: time_log flush or status heartbeat
+      currentUsedMins = Math.max(todayData.total_mins || 0, _statusScreenTimeMins);
       const h = Math.floor(currentUsedMins / 60);
       const m = currentUsedMins % 60;
       document.getElementById('heroTime').textContent = h + 'h ' + m + 'm';
@@ -4085,12 +4110,16 @@
         Object.keys(apps).forEach(function(a) {
           allApps[a] = (allApps[a] || 0) + (Number(apps[a]) || 0);
         });
+        var isToday = key === todayKey;
+        var logMins = dayData.total_mins || 0;
+        // For today: use status heartbeat as fallback when time_log hasn't flushed yet
+        var mins = isToday ? Math.max(logMins, _statusScreenTimeMins) : logMins;
         days.push({
           key: key,
-          mins: dayData.total_mins || 0,
+          mins: mins,
           apps: apps,
           dayName: dayNames[d.getDay()],
-          isToday: key === todayKey,
+          isToday: isToday,
           dateLabel: String(d.getDate()) + '/' + String(d.getMonth() + 1),
         });
       }
