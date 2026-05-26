@@ -209,6 +209,67 @@
     transform: rotate(90deg);
   }
 
+  /* ── Rotate Button ── */
+  #rotate-btn {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.12);
+    background: rgba(30,30,30,0.5);
+    color: rgba(255,255,255,0.25);
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s, border-color 0.2s, color 0.2s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 0;
+    line-height: 1;
+  }
+  body:hover #rotate-btn,
+  body.settings-open #rotate-btn { opacity: 1; }
+  #rotate-btn:hover,
+  #rotate-btn:focus-visible {
+    border-color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.6);
+    outline: none;
+  }
+  #rotate-btn:active { transform: scale(0.92); }
+
+  /* ── Marquee Rotation ── */
+  #marquee-container {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+  }
+  #marquee-container.rotate-90 {
+    transform: rotate(90deg);
+    width: 100vh; width: 100dvh;
+    height: 100vw;
+    position: absolute;
+    top: 50%; left: 50%;
+    margin-top: calc(-50vw);
+    margin-left: calc(-50vh);
+  }
+  #marquee-container.rotate-180 {
+    transform: rotate(180deg);
+  }
+  #marquee-container.rotate-270 {
+    transform: rotate(270deg);
+    width: 100vh; width: 100dvh;
+    height: 100vw;
+    position: absolute;
+    top: 50%; left: 50%;
+    margin-top: calc(-50vw);
+    margin-left: calc(-50vh);
+  }
+
   /* ── Backdrop ── */
   #settings-backdrop {
     position: fixed;
@@ -755,6 +816,7 @@
 </div>
 
 <button id="settings-btn" aria-label="Open settings" aria-expanded="false" aria-controls="settings-panel">⚙</button>
+<button id="rotate-btn" aria-label="Rotate display">⟳</button>
 
 <div id="settings-backdrop"></div>
 
@@ -941,6 +1003,7 @@ let cursorTimer = null;
 let saveTimer = null;
 let images = [];
 let imgPlacement = 'after';
+let rotation = 0;
 
 // ── Speed mapping: slider 1-100 → duration in seconds ──
 // slider 1 = 40s (slowest), slider 100 = 2s (fastest)
@@ -1197,6 +1260,7 @@ function applyClasses() {
   if (state.effect !== 'none') classes.push('effect-' + state.effect);
   if (state.mirror) classes.push('mirror');
   if (!state.glow) classes.push('no-glow');
+  if (rotation) classes.push('rotate-' + rotation);
   container.className = classes.join(' ');
   restartAnimation();
 }
@@ -1206,6 +1270,21 @@ function restartAnimation() {
   void marqueeText.offsetHeight;
   marqueeText.style.animation = '';
 }
+
+// ── Rotate Display ──
+const rotateSteps = [0, 90, 180, 270];
+
+function applyRotation() {
+  container.classList.remove('rotate-90', 'rotate-180', 'rotate-270');
+  if (rotation) container.classList.add('rotate-' + rotation);
+}
+
+$('rotate-btn').addEventListener('click', () => {
+  const idx = (rotateSteps.indexOf(rotation) + 1) % rotateSteps.length;
+  rotation = rotateSteps[idx];
+  applyRotation();
+  scheduleSave();
+});
 
 // ── Screen Wake Lock ──
 async function requestWakeLock() {
@@ -1314,6 +1393,7 @@ $('btn-reset').addEventListener('click', () => {
 
   images = [];
   imgPlacement = 'after';
+  rotation = 0;
   renderImageList();
   document.querySelectorAll('.img-placement-row .btn-option').forEach((b, i) => {
     b.classList.toggle('active', i === 0);
@@ -1575,6 +1655,7 @@ function saveState() {
     effect: state.effect,
     images: images,
     imgPlacement: imgPlacement,
+    rotation: rotation,
     ...state
   };
   try { localStorage.setItem('led-marquee', JSON.stringify(data)); } catch (e) {}
@@ -1645,6 +1726,10 @@ function loadState() {
   document.querySelectorAll('.toggle[role="switch"]').forEach(t => {
     t.setAttribute('aria-checked', !!state[t.dataset.key]);
   });
+
+  if (data.rotation) {
+    rotation = data.rotation;
+  }
 
   if (Array.isArray(data.images)) {
     images = data.images;
