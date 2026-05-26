@@ -606,6 +606,120 @@
     margin-top: 6px;
   }
 
+  /* ── Emoji Picker ── */
+  .emoji-toggle-btn {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #1a1a1e;
+    color: #999;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .emoji-toggle-btn:hover { border-color: #666; color: #fff; }
+  .emoji-toggle-btn .emoji-icon { font-size: 16px; }
+
+  .emoji-panel {
+    display: none;
+    margin-top: 10px;
+    border: 1px solid #2a2a2e;
+    border-radius: 8px;
+    background: #151518;
+    overflow: hidden;
+  }
+  .emoji-panel.open { display: block; }
+
+  .emoji-categories {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid #2a2a2e;
+    padding: 0;
+    scrollbar-width: none;
+  }
+  .emoji-categories::-webkit-scrollbar { display: none; }
+
+  .emoji-cat-btn {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 2px solid transparent;
+    line-height: 1;
+  }
+  .emoji-cat-btn:hover { background: rgba(255,255,255,0.05); }
+  .emoji-cat-btn.active {
+    background: rgba(255,255,255,0.08);
+    border-bottom-color: var(--text-color);
+  }
+
+  .emoji-search {
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    border-bottom: 1px solid #2a2a2e;
+    background: #1a1a1e;
+    color: #fff;
+    font-size: 13px;
+    font-family: 'Orbitron', sans-serif;
+    outline: none;
+  }
+  .emoji-search::placeholder { color: #555; }
+
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    padding: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+  .emoji-grid::-webkit-scrollbar { width: 4px; }
+  .emoji-grid::-webkit-scrollbar-track { background: transparent; }
+  .emoji-grid::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
+
+  .emoji-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.1s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+  .emoji-btn:hover {
+    background: rgba(255,255,255,0.1);
+    transform: scale(1.15);
+  }
+
+  .emoji-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 16px;
+    color: #555;
+    font-family: 'VT323', monospace;
+    font-size: 15px;
+  }
+
   /* Wake lock indicator */
   #wake-indicator {
     position: fixed;
@@ -654,6 +768,19 @@
   <div class="setting-group">
     <label class="setting-label" for="msg-input">Message</label>
     <input type="text" id="msg-input" value="HELLO WORLD" maxlength="200" placeholder="Type your message..." autocomplete="off">
+  </div>
+
+  <!-- Emoji Picker -->
+  <div class="setting-group">
+    <div class="setting-label">Emoji</div>
+    <button class="emoji-toggle-btn" id="emoji-toggle">
+      <span class="emoji-icon">😀</span> INSERT EMOJI
+    </button>
+    <div class="emoji-panel" id="emoji-panel">
+      <div class="emoji-categories" id="emoji-cats"></div>
+      <input type="text" class="emoji-search" id="emoji-search" placeholder="Search emoji..." autocomplete="off">
+      <div class="emoji-grid" id="emoji-grid"></div>
+    </div>
   </div>
 
   <!-- Images -->
@@ -1199,6 +1326,115 @@ $('btn-reset').addEventListener('click', () => {
   restartAnimation();
   scheduleSave();
 });
+
+// ── Emoji Picker ──
+const emojiData = {
+  'Smileys':  ['😀','😃','😄','😁','😆','😅','🤣','😂','🙂','😊','😇','🥰','😍','🤩','😘','😗','😚','😋','😛','😜','🤪','😝','🤑','🤗','🤭','🤫','🤔','😐','😑','😶','😏','😒','🙄','😬','😮‍💨','🤥','😌','😔','😪','🤤','😴','😷','🤒','🤕','🤢','🤮','🥴','😵','🤯','🥳','🥸','😎','🤓','🧐','😕','😟','🙁','😮','😯','😲','😳','🥺','😦','😧','😨','😰','😥','😢','😭','😱','😖','😣','😞','😓','😩','😫','🥱','😤','😡','😠','🤬','👿','💀','☠️','💩','🤡','👹','👺','👻','👽','👾','🤖'],
+  'Hearts':   ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❤️‍🔥','❤️‍🩹','💕','💞','💓','💗','💖','💘','💝','💟','♥️','🩷','🩵','🩶'],
+  'Hands':    ['👋','🤚','🖐️','✋','🖖','👌','🤌','🤏','✌️','🤞','🤟','🤘','🤙','👈','👉','👆','👇','☝️','👍','👎','✊','👊','🤛','🤜','👏','🙌','👐','🤲','🤝','🙏','💪'],
+  'People':   ['👶','👧','🧒','👦','👩','🧑','👨','👩‍🦱','👨‍🦱','👩‍🦰','👨‍🦰','👱‍♀️','👱','👩‍🦳','👨‍🦳','👩‍🦲','👨‍🦲','🧔','👵','🧓','👴','👸','🤴','🦸','🦹','🧙','🧚','🧛','🧜','🧝','🧞','🧟','💆','💇','🚶','🧍','🧎','🏃','💃','🕺','👯'],
+  'Animals':  ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐻‍❄️','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🙈','🙉','🙊','🐒','🐔','🐧','🐦','🐤','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🪱','🐛','🦋','🐌','🐞','🐜','🪰','🪲','🐢','🐍','🦎','🦂','🦀','🦑','🐙','🐠','🐟','🐡','🐬','🦈','🐳','🐋','🐊','🐆','🐅','🐃','🦬','🐂','🐄','🦌','🐪','🐫','🦙','🦒','🐘','🦣','🦏','🦛','🐁','🐀','🦔','🐇','🐿️','🦫','🦨','🦡','🦃','🐓','🦚','🦜','🦢','🦩','🐕','🐈','🐈‍⬛','🐩','🦮','🐏','🐑','🐐','🦌','🐿️'],
+  'Food':     ['🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🫑','🌽','🥕','🫒','🧄','🧅','🥔','🍠','🫘','🥐','🍞','🥖','🥨','🧀','🥚','🍳','🧈','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🫔','🌮','🌯','🫕','🥗','🥘','🫙','🥫','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🦪','🍤','🍙','🍚','🍘','🍥','🥠','🥮','🍢','🍡','🍧','🍨','🍦','🥧','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','🌰','🥜','🍯','☕','🍵','🫖','🧃','🥤','🧋','🍶','🍺','🍻','🥂','🍷','🥃','🍸','🍹','🧉','🍾','🧊'],
+  'Travel':   ['🚗','🚕','🚙','🏎️','🚓','🚑','🚒','🚐','🛻','🚚','🚛','🚜','🛵','🏍️','🚲','🛴','🚌','🚍','🚎','🚂','🚃','🚄','🚅','🚆','🚇','🚈','🚉','✈️','🛩️','🛫','🛬','🚀','🛸','🚁','⛵','🛥️','🚢','🏠','🏡','🏢','🏣','🏥','🏦','🏨','🏩','🏪','🏫','🏬','🗼','🗽','⛪','🕌','🛕','🕍','⛩️','🏰','🏯','🗻','⛺','🏝️','🌋','🗺️','🧭'],
+  'Objects':  ['⌚','📱','💻','⌨️','🖥️','🖨️','🖱️','💾','💿','📷','📹','🎥','📺','📻','🎙️','🎚️','🎛️','⏱️','⏰','🔔','📢','📣','🔑','🗝️','🔨','🪓','⛏️','🔧','🔩','🪛','🔫','🏹','🛡️','🪚','🔪','🗡️','💣','🪃','🏺','🔮','📿','🧿','💈','🔭','🔬','🧪','🧫','🧬','💊','💉','🩺','🩹','🩻','🩼','🏷️','🔖','📌','📍','✂️','🖊️','🖋️','✒️','📝','📁','📂','📅','📆','📎','🖇️','📐','📏','🧮','📒','📕','📗','📘','📙','📓','📔','📚','📖','🔗','💡','🔦','🕯️','🪔','🧯','🛢️','💰','💴','💵','💶','💷','🪙','💳','🎁','🎀','🎊','🎉','🎈','🎏','🎐','🎋','🎍','🎎','🎑','🎃','🎄','🎆','🎇','🧨','✨','🎗️','🎟️','🎫'],
+  'Symbols':  ['⭐','🌟','💫','✨','⚡','🔥','💥','☀️','🌈','🌙','⭕','❌','❗','❓','‼️','⁉️','💯','🔴','🟠','🟡','🟢','🔵','🟣','🟤','⚫','⚪','🔶','🔷','🔺','🔻','💠','🔘','🏁','🚩','🎌','🏴','🏳️','🏳️‍🌈','🏳️‍⚧️','♻️','☮️','☯️','✡️','🔯','☪️','✝️','☦️','🕉️','⛎','♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓','🆔','⚛️','🔰','♾️','🎵','🎶','🎼','🎤','🎧','🎷','🎸','🎹','🪗','🥁','🪘','📯','🎺','🪈','🎻'],
+  'Flags':    ['🇯🇵','🇺🇸','🇬🇧','🇫🇷','🇩🇪','🇮🇹','🇪🇸','🇧🇷','🇨🇦','🇦🇺','🇰🇷','🇨🇳','🇮🇳','🇲🇽','🇷🇺','🇻🇳','🇹🇭','🇵🇭','🇮🇩','🇸🇬','🇳🇿','🇿🇦','🇦🇷','🇨🇴','🇵🇪','🇨🇱','🇪🇬','🇳🇬','🇰🇪','🇬🇭','🇲🇦','🇹🇷','🇸🇦','🇦🇪','🇮🇱','🇵🇰','🇧🇩','🇲🇾','🇵🇱','🇳🇱','🇧🇪','🇸🇪','🇳🇴','🇩🇰','🇫🇮','🇨🇭','🇦🇹','🇵🇹','🇬🇷','🇭🇺','🇨🇿','🇷🇴','🇺🇦','🇮🇪','🏴󠁧󠁢󠁥󠁮󠁧󠁿','🏴󠁧󠁢󠁳󠁣󠁴󠁿','🏴󠁧󠁢󠁷󠁬󠁳󠁿']
+};
+
+const catIcons = {
+  'Smileys': '😀', 'Hearts': '❤️', 'Hands': '👋', 'People': '🧑',
+  'Animals': '🐶', 'Food': '🍔', 'Travel': '🚗', 'Objects': '💡',
+  'Symbols': '⭐', 'Flags': '🏳️'
+};
+
+let currentCat = 'Smileys';
+
+function buildEmojiPicker() {
+  const catsEl = $('emoji-cats');
+  const gridEl = $('emoji-grid');
+
+  Object.keys(emojiData).forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'emoji-cat-btn' + (cat === currentCat ? ' active' : '');
+    btn.textContent = catIcons[cat];
+    btn.setAttribute('aria-label', cat);
+    btn.setAttribute('title', cat);
+    btn.addEventListener('click', () => {
+      catsEl.querySelectorAll('.emoji-cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCat = cat;
+      $('emoji-search').value = '';
+      renderEmojiGrid(emojiData[cat]);
+    });
+    catsEl.appendChild(btn);
+  });
+
+  renderEmojiGrid(emojiData[currentCat]);
+}
+
+function renderEmojiGrid(emojis) {
+  const gridEl = $('emoji-grid');
+  gridEl.innerHTML = '';
+  if (!emojis.length) {
+    gridEl.innerHTML = '<div class="emoji-empty">No emoji found</div>';
+    return;
+  }
+  emojis.forEach(emoji => {
+    const btn = document.createElement('button');
+    btn.className = 'emoji-btn';
+    btn.textContent = emoji;
+    btn.setAttribute('aria-label', emoji);
+    btn.addEventListener('click', () => insertEmoji(emoji));
+    gridEl.appendChild(btn);
+  });
+}
+
+function insertEmoji(emoji) {
+  const input = $('msg-input');
+  const start = input.selectionStart;
+  const end = input.selectionEnd;
+  const val = input.value;
+  input.value = val.slice(0, start) + emoji + val.slice(end);
+  const pos = start + emoji.length;
+  input.setSelectionRange(pos, pos);
+  input.focus();
+  updateDisplayText(input.value);
+  restartAnimation();
+  scheduleSave();
+}
+
+$('emoji-toggle').addEventListener('click', () => {
+  $('emoji-panel').classList.toggle('open');
+  if ($('emoji-panel').classList.contains('open')) {
+    $('emoji-search').focus();
+  }
+});
+
+$('emoji-search').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase().trim();
+  if (!q) {
+    $('emoji-cats').querySelectorAll('.emoji-cat-btn').forEach((b, i) => {
+      b.classList.toggle('active', Object.keys(emojiData)[i] === currentCat);
+    });
+    renderEmojiGrid(emojiData[currentCat]);
+    return;
+  }
+  $('emoji-cats').querySelectorAll('.emoji-cat-btn').forEach(b => b.classList.remove('active'));
+  const all = [];
+  Object.entries(emojiData).forEach(([cat, emojis]) => {
+    if (cat.toLowerCase().includes(q)) {
+      all.push(...emojis);
+    }
+  });
+  if (!all.length) {
+    const flat = Object.values(emojiData).flat();
+    renderEmojiGrid(flat.filter(e => e.includes(q)));
+  } else {
+    renderEmojiGrid(all);
+  }
+});
+
+buildEmojiPicker();
 
 // ── Image Management ──
 const MAX_IMAGES = 10;
