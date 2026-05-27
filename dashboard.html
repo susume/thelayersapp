@@ -4092,8 +4092,112 @@
       }
       return _appColorMap[appKey];
     }
+    var _KNOWN_APPS = {
+      'com_facebook_katana': 'Facebook',
+      'com_facebook_orca': 'Messenger',
+      'com_facebook_lite': 'Facebook Lite',
+      'com_instagram_android': 'Instagram',
+      'com_instagram_barcelona': 'Threads',
+      'com_whatsapp': 'WhatsApp',
+      'com_whatsapp_w4b': 'WhatsApp Business',
+      'com_google_android_youtube': 'YouTube',
+      'com_google_android_apps_youtube_music': 'YouTube Music',
+      'com_google_android_apps_maps': 'Google Maps',
+      'com_google_android_apps_photos': 'Google Photos',
+      'com_google_android_apps_docs': 'Google Docs',
+      'com_google_android_apps_messaging': 'Google Messages',
+      'com_google_android_gm': 'Gmail',
+      'com_google_android_apps_tachyon': 'Google Meet',
+      'com_google_android_calendar': 'Google Calendar',
+      'com_google_android_inputmethod_latin': 'Gboard',
+      'com_google_android_deskclock': 'Clock',
+      'com_google_android_dialer': 'Phone',
+      'com_google_android_contacts': 'Contacts',
+      'com_google_android_apps_nbu_files': 'Files by Google',
+      'com_google_android_googlequicksearchbox': 'Google',
+      'com_android_chrome': 'Chrome',
+      'com_android_vending': 'Play Store',
+      'com_android_settings': 'Settings',
+      'com_android_camera2': 'Camera',
+      'com_android_calculator2': 'Calculator',
+      'org_mozilla_firefox': 'Firefox',
+      'com_brave_browser': 'Brave',
+      'com_microsoft_emmx': 'Edge',
+      'com_opera_browser': 'Opera',
+      'com_spotify_music': 'Spotify',
+      'com_netflix_mediaclient': 'Netflix',
+      'com_amazon_avod': 'Prime Video',
+      'com_disney_disneyplus': 'Disney+',
+      'com_tiktok_android': 'TikTok',
+      'com_zhiliaoapp_musically': 'TikTok',
+      'com_snapchat_android': 'Snapchat',
+      'com_twitter_android': 'X (Twitter)',
+      'com_reddit_frontpage': 'Reddit',
+      'com_discord': 'Discord',
+      'com_pinterest': 'Pinterest',
+      'com_linkedin_android': 'LinkedIn',
+      'com_skype_raider': 'Skype',
+      'com_telegram_messenger': 'Telegram',
+      'com_viber_voip': 'Viber',
+      'org_signal_android': 'Signal',
+      'jp_naver_line_android': 'LINE',
+      'com_kakao_talk': 'KakaoTalk',
+      'com_Slack': 'Slack',
+      'com_microsoft_teams': 'Teams',
+      'com_supercell_clashofclans': 'Clash of Clans',
+      'com_supercell_clashroyale': 'Clash Royale',
+      'com_supercell_brawlstars': 'Brawl Stars',
+      'com_miHoYo_GenshinImpact': 'Genshin Impact',
+      'com_activision_callofduty_shooter': 'Call of Duty Mobile',
+      'com_roblox_client': 'Roblox',
+      'com_mojang_minecraftpe': 'Minecraft',
+      'jp_pokemon_pokemontcg': 'Pokemon TCG',
+      'com_nianticlabs_pokemongo': 'Pokemon GO',
+      'com_king_candycrushsaga': 'Candy Crush',
+      'com_innersloth_spacemafia': 'Among Us',
+      'com_kiloo_subwaysurf': 'Subway Surfers',
+      'com_dts_freefireth': 'Free Fire',
+      'com_pubg_krmobile': 'PUBG Mobile',
+      'com_epicgames_fortnite': 'Fortnite',
+      'com_ea_gp_fifamobile': 'EA FC Mobile',
+      'com_samsung_android_messaging': 'Samsung Messages',
+      'com_samsung_android_dialer': 'Samsung Phone',
+      'com_samsung_android_app_notes': 'Samsung Notes',
+      'com_samsung_android_calendar': 'Samsung Calendar',
+      'com_samsung_android_app_camera': 'Samsung Camera',
+      'com_samsung_android_gallery': 'Samsung Gallery',
+      'com_samsung_android_biometrics_app_setting': 'Samsung Biometrics',
+      'com_sec_android_app_sbrowser': 'Samsung Internet',
+      'com_samsung_android_game_gamecenter': 'Game Launcher',
+      'com_apple_android_music': 'Apple Music',
+      'com_amazon_mShop_android_shopping': 'Amazon Shopping',
+      'com_shopee_id': 'Shopee',
+      'com_ebay_mobile': 'eBay',
+      'com_alibaba_aliexpresshd': 'AliExpress',
+    };
     function prettifyAppName(key) {
-      return key.replace(/_/g, '.').replace(/\.exe$/i, '').replace(/^./, function(c) { return c.toUpperCase(); });
+      if (_KNOWN_APPS[key]) return _KNOWN_APPS[key];
+      // Fallback: strip common prefixes, convert to title case
+      var name = key.replace(/_/g, '.').replace(/\.exe$/i, '');
+      // Try extracting the last meaningful segment (e.g. "com.spotify.music" → "Music")
+      var parts = name.split('.');
+      if (parts.length >= 3) {
+        // Skip generic prefixes: com, org, android, google, samsung, etc.
+        var meaningful = parts.filter(function(p) {
+          return !(/^(com|org|net|io|jp|kr|cn|android|google|samsung|sec|huawei|app|apps|mobile|client)$/i.test(p));
+        });
+        if (meaningful.length > 0) {
+          name = meaningful.map(function(p) {
+            return p.charAt(0).toUpperCase() + p.slice(1);
+          }).join(' ');
+        } else {
+          name = parts[parts.length - 1];
+          name = name.charAt(0).toUpperCase() + name.slice(1);
+        }
+      } else {
+        name = name.replace(/^./, function(c) { return c.toUpperCase(); });
+      }
+      return name;
     }
 
     function renderWeekChart(log) {
