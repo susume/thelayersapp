@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arcana — Tarot & Cartomancy Reading</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0d0d1a;--surface:#1a1035;--surface-2:#12101f;
+--gold:#c9a96e;--gold-light:#f0d9a0;--gold-dim:#c9a96e33;
+--text:#e8d5b0;--muted:#9b8db0;--border:#c9a96e33;
+--danger:#e85454;--success:#5ae854;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Cinzel',serif;color:var(--gold);letter-spacing:2px}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#app{max-width:720px;margin:0 auto;padding:20px;min-height:100vh;position:relative}
+.screen{display:none;animation:fadeIn .4s ease}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;animation:twinkle 3s infinite alternate}
+@keyframes twinkle{from{opacity:.15}to{opacity:.6}}
+
+.logo{text-align:center;padding:40px 0 20px}
+.logo-sym{font-size:36px;display:block;margin-bottom:8px}
+.logo h1{font-size:32px;letter-spacing:6px;text-transform:uppercase;background:linear-gradient(135deg,var(--gold),var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.logo .tagline{font-style:italic;color:var(--muted);font-size:13px;margin-top:4px;letter-spacing:1px}
+
+.divider{width:100px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto}
+
+.onboard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:13px;color:var(--muted);line-height:1.7;font-style:italic}
+.onboard strong{color:var(--gold);font-style:normal}
+
+.step-dots{display:flex;justify-content:center;gap:8px;margin-bottom:24px}
+.step-dots .dot{width:10px;height:10px;border-radius:50%;background:var(--surface);border:1px solid var(--gold-dim);transition:.3s}
+.step-dots .dot.active{background:var(--gold);border-color:var(--gold)}
+.step-dots .dot.done{background:var(--gold);opacity:.4;border-color:var(--gold)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;border-radius:8px;border:1px solid var(--gold);background:transparent;color:var(--gold);font-family:'Cinzel',serif;font-size:13px;letter-spacing:2px;cursor:pointer;transition:.2s;text-transform:uppercase}
+.btn:hover{background:var(--gold);color:var(--bg)}
+.btn-primary{background:var(--gold);color:var(--bg)}
+.btn-primary:hover{background:var(--gold-light)}
+.btn-sm{padding:6px 14px;font-size:11px;letter-spacing:1px}
+.btn-danger{border-color:var(--danger);color:var(--danger)}
+.btn-danger:hover{background:var(--danger);color:#fff}
+
+.nav-row{display:flex;justify-content:space-between;margin-top:24px}
+
+.card-opt{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;cursor:pointer;transition:.2s;margin-bottom:12px}
+.card-opt:hover,.card-opt.selected{border-color:var(--gold);background:#221545}
+.card-opt h3{font-size:15px;margin-bottom:4px}
+.card-opt p{font-size:12px;color:var(--muted)}
+.card-opt .badge{display:inline-block;background:var(--gold-dim);color:var(--gold);font-size:10px;padding:2px 8px;border-radius:10px;margin-top:6px;letter-spacing:1px;text-transform:uppercase}
+
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+@media(max-width:500px){.mode-grid{grid-template-columns:1fr}}
+.mode-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px 16px;text-align:center;cursor:pointer;transition:.2s}
+.mode-card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.mode-card .icon{font-size:28px;margin-bottom:8px}
+.mode-card h3{font-size:14px;margin-bottom:6px}
+.mode-card p{font-size:11px;color:var(--muted)}
+
+.spread-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:500px){.spread-grid{grid-template-columns:1fr}}
+.spread-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;cursor:pointer;transition:.2s}
+.spread-card:hover,.spread-card.selected{border-color:var(--gold)}
+.spread-card h4{font-size:13px;margin-bottom:2px}
+.spread-card .count{font-size:11px;color:var(--gold);margin-bottom:4px}
+.spread-card .pos-list{font-size:10px;color:var(--muted)}
+
+input[type="text"],input[type="password"],textarea,select{width:100%;padding:10px 14px;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold)}
+textarea{min-height:80px;resize:vertical}
+
+.concern-row{display:flex;gap:8px;margin-bottom:8px}
+.concern-row input{flex:1}
+.concern-row button{flex-shrink:0}
+.tag-chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.tag-chip{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:12px;cursor:pointer;transition:.2s}
+.tag-chip:hover,.tag-chip.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+
+.tab-bar{display:flex;border-bottom:1px solid var(--border);margin-bottom:16px}
+.tab-btn{padding:10px 20px;background:none;border:none;color:var(--muted);font-family:'Cinzel',serif;font-size:12px;letter-spacing:1px;cursor:pointer;border-bottom:2px solid transparent;text-transform:uppercase}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:40px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:16px}
+.upload-zone:hover{border-color:var(--gold)}
+.upload-zone.has-image{border-style:solid;padding:10px}
+.upload-zone img{max-width:100%;border-radius:6px}
+
+.card-entry-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.card-entry-row .pos-name{width:120px;flex-shrink:0;font-size:12px;color:var(--gold);font-family:'Cinzel',serif}
+.card-entry-row input{flex:1}
+.card-entry-row .orient-btn{padding:6px 10px;border-radius:4px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);cursor:pointer;font-size:12px;min-width:32px;text-align:center}
+.card-entry-row .orient-btn.reversed{color:var(--danger);border-color:var(--danger)}
+.search-dropdown{position:absolute;z-index:100;background:var(--surface);border:1px solid var(--gold);border-radius:6px;max-height:200px;overflow-y:auto;width:calc(100% - 180px)}
+.search-dropdown .dd-item{padding:8px 12px;cursor:pointer;font-size:13px;border-bottom:1px solid var(--border)}
+.search-dropdown .dd-item:hover,.search-dropdown .dd-item.hl{background:var(--gold-dim);color:var(--gold)}
+
+.overview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:16px 0}
+.overview-tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;position:relative}
+.overview-tile .suit-sym{font-size:20px;margin-bottom:4px}
+.overview-tile .c-name{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);margin-bottom:2px}
+.overview-tile .c-pos{font-size:11px;color:var(--muted);margin-bottom:6px}
+.overview-tile .orient{font-size:10px;padding:2px 8px;border-radius:10px;display:inline-block}
+.orient.upright{background:#5ae85422;color:var(--success)}
+.orient.reversed{background:#e8545422;color:var(--danger)}
+.overview-tile .kw{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:8px}
+.overview-tile .kw span{font-size:9px;padding:2px 6px;border-radius:10px;background:var(--gold-dim);color:var(--gold)}
+
+.dropped-card-section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:16px}
+.dropped-card-section h4{font-size:13px;margin-bottom:6px}
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.toggle{width:40px;height:22px;border-radius:11px;background:var(--surface-2);border:1px solid var(--border);cursor:pointer;position:relative;transition:.2s}
+.toggle.on{background:var(--gold);border-color:var(--gold)}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.2s}
+.toggle.on::after{left:20px}
+
+.guided-prompt{text-align:center;padding:30px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;animation:fadeIn .6s ease}
+.guided-prompt .prompt-text{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);margin-bottom:6px;line-height:1.5}
+.guided-prompt .prompt-sub{font-size:13px;color:var(--muted);font-style:italic}
+.guided-prompt .prompt-pos{font-size:20px;color:var(--gold-light);font-family:'Cinzel',serif;margin:12px 0}
+
+.reading-section{margin-bottom:24px;animation:fadeIn .5s ease}
+.reading-section h3{font-size:15px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.reading-section p,.reading-section li{font-size:14px;line-height:1.8;color:var(--text);margin-bottom:8px}
+.reading-section ul{padding-left:20px}
+.reading-toggle{display:flex;gap:8px;margin-bottom:16px;justify-content:center}
+
+.history-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden}
+.history-header{padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.history-header:hover{background:var(--gold-dim)}
+.history-header h4{font-size:13px}
+.history-header .h-date{font-size:11px;color:var(--muted)}
+.history-body{display:none;padding:16px;border-top:1px solid var(--border)}
+.history-body.open{display:block}
+
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:12px;max-width:520px;width:100%;max-height:80vh;overflow-y:auto;padding:24px}
+.modal h2{font-size:18px;margin-bottom:16px}
+.modal label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;margin-top:12px}
+.modal .close-btn{float:right;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+
+.footer-links{display:flex;justify-content:center;gap:20px;margin-top:20px;padding:16px 0}
+.footer-link{color:var(--muted);font-size:12px;cursor:pointer;letter-spacing:1px}
+.footer-link:hover{color:var(--gold)}
+
+.api-note{text-align:center;font-size:11px;color:#5a4d72;margin-top:12px}
+
+.loading{text-align:center;padding:40px;color:var(--muted)}
+.loading .spinner{display:inline-block;width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:12px}
+.loading p{font-style:italic;animation:pulse 2s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+
+.suit-filter{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.suit-btn{padding:4px 10px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:11px;cursor:pointer}
+.suit-btn.active,.suit-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+.help-section{margin-bottom:16px}
+.help-section h3{font-size:14px;margin-bottom:6px}
+.help-section p{font-size:13px;color:var(--muted);line-height:1.7}
+
+.print-only{display:none}
+@media print{
+  .no-print{display:none!important}
+  .print-only{display:block}
+  body{background:#fff!important;color:#222!important}
+  .stars{display:none!important}
+  #app{max-width:100%;padding:20px}
+  .reading-section{break-inside:avoid;border-color:#ccc!important;page-break-inside:avoid}
+  .reading-section h3{color:#333!important}
+  .reading-section p,.reading-section li{color:#222!important}
+  .overview-tile{border-color:#ccc!important;background:#f9f9f9!important}
+  .overview-tile .c-name{color:#333!important;-webkit-text-fill-color:#333!important}
+  h2{color:#333!important;-webkit-text-fill-color:#333!important}
+}
+
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--gold);color:var(--bg);padding:10px 24px;border-radius:8px;font-size:13px;font-family:'Cinzel',serif;letter-spacing:1px;z-index:2000;opacity:0;transition:all .4s ease;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* Spread layout diagram */
+.spread-diagram{position:relative;margin:16px auto;padding:10px}
+.spread-diagram .slot{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:70px;height:100px;border:2px dashed var(--border);border-radius:8px;
+  background:var(--surface-2);font-size:10px;color:var(--muted);text-align:center;
+  transition:.4s;position:relative;padding:4px;
+}
+.spread-diagram .slot.active{border-color:var(--gold);background:var(--gold-dim);box-shadow:0 0 16px rgba(201,169,110,.3);animation:pulseSlot 1.5s ease infinite}
+.spread-diagram .slot.done{border-style:solid;border-color:var(--gold);opacity:.5}
+.spread-diagram .slot.done .slot-num{color:var(--success)}
+.spread-diagram .slot .slot-num{font-family:'Cinzel',serif;font-size:18px;color:var(--gold);font-weight:700}
+.spread-diagram .slot .slot-label{font-size:8px;line-height:1.2;margin-top:2px;color:var(--muted)}
+@keyframes pulseSlot{0%,100%{box-shadow:0 0 8px rgba(201,169,110,.2)}50%{box-shadow:0 0 20px rgba(201,169,110,.5)}}
+.spread-row{display:flex;justify-content:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.guided-ritual{text-align:center;padding:20px;margin-bottom:12px}
+.guided-ritual .ritual-text{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);line-height:1.6;margin-bottom:6px}
+.guided-ritual .ritual-pos{font-size:20px;color:var(--gold-light);font-family:'Cinzel',serif;margin:10px 0;letter-spacing:3px}
+.guided-ritual .ritual-desc{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:12px}
+.guided-ritual .ritual-counter{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<div id="app">
+
+<!-- ========== WELCOME ========== -->
+<div class="screen active" id="screen-welcome">
+  <div class="logo">
+    <span class="logo-sym">✦</span>
+    <h1>Arcana</h1>
+    <div class="divider"></div>
+    <p class="tagline">Tarot & Cartomancy Reading</p>
+  </div>
+  <div class="onboard">
+    Welcome. This is a space for reflection and insight — whether you use <strong>Traditional Tarot</strong>,
+    playing cards, or your own intuition. Begin a <strong>guided reading</strong> to be walked through each step,
+    or jump straight in with a <strong>quick reading</strong> by uploading a photo of your spread. No experience needed.
+  </div>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="startGuided()">
+      <div class="icon">🌙</div>
+      <h3>Guided Reading</h3>
+      <p>Step by step through card system, spread, and interpretation</p>
+      <span class="badge" style="margin-top:8px">Recommended</span>
+    </div>
+    <div class="mode-card" onclick="startQuick()">
+      <div class="icon">⚡</div>
+      <h3>Quick Reading</h3>
+      <p>Upload a photo of your spread and get an instant AI reading</p>
+      <span class="badge" style="margin-top:8px">Advanced</span>
+    </div>
+  </div>
+  <div class="footer-links">
+    <span class="footer-link" onclick="goScreen('screen-history')">📖 History</span>
+    <span class="footer-link" onclick="openModal('modal-settings')">⚙ Settings</span>
+    <span class="footer-link" onclick="openModal('modal-help')">? Help</span>
+  </div>
+  <div class="api-note">AI features require a free Google Gemini API key · All readings saved locally on your device</div>
+</div>
+
+<!-- ========== CONCERNS ========== -->
+<div class="screen" id="screen-concerns">
+  <div class="step-dots" id="dots-concerns"></div>
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Your Concerns</h2>
+  <div class="onboard">
+    Before we begin, what areas of your life are you seeking guidance on today? This helps focus the reading.
+    You can enter <strong>one concern or several</strong> — or skip this step entirely for a general reading.
+  </div>
+  <div id="concern-list">
+    <div class="concern-row"><input type="text" placeholder="What's on your mind?" class="concern-input"><button class="btn btn-sm btn-danger" onclick="removeConcern(this)" title="Remove">✕</button></div>
+  </div>
+  <button class="btn btn-sm" onclick="addConcern()" style="margin:8px 0">+ Add Another</button>
+  <div class="tag-chips">
+    <span class="tag-chip" onclick="tagConcern(this)">Love & Relationships</span>
+    <span class="tag-chip" onclick="tagConcern(this)">Career</span>
+    <span class="tag-chip" onclick="tagConcern(this)">Family</span>
+    <span class="tag-chip" onclick="tagConcern(this)">Personal Growth</span>
+    <span class="tag-chip" onclick="tagConcern(this)">Finances</span>
+    <span class="tag-chip" onclick="tagConcern(this)">Spiritual</span>
+    <span class="tag-chip" onclick="tagConcern(this)">General Guidance</span>
+  </div>
+  <div class="nav-row">
+    <button class="btn" onclick="goScreen('screen-welcome')">← Back</button>
+    <button class="btn btn-primary" onclick="saveConcerns()">Continue →</button>
+  </div>
+</div>
+
+<!-- ========== CARD SYSTEM ========== -->
+<div class="screen" id="screen-card-system">
+  <div class="step-dots" id="dots-system"></div>
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Card System</h2>
+  <div class="onboard">
+    Choose the cards you'll be reading with today. Each system has its own language and tradition.
+    <strong>Traditional Tarot</strong> uses 78 cards with rich symbolism; <strong>Playing Cards</strong> are the classic
+    52-card cartomancy deck used for centuries.
+  </div>
+  <div class="card-opt" onclick="selectSystem('tarot',this)">
+    <h3>Traditional Tarot</h3>
+    <p>78 cards — 22 Major Arcana + 56 Minor Arcana (Wands, Cups, Swords, Pentacles). Rich symbolism, centuries of tradition.</p>
+  </div>
+  <div class="card-opt" onclick="selectSystem('playing',this)">
+    <h3>Playing Cards</h3>
+    <p>Standard 52-card deck — Hearts, Diamonds, Clubs, Spades. Classic cartomancy readings.</p>
+  </div>
+  <div class="card-opt" onclick="selectSystem('playing-joker',this)">
+    <h3>Playing Cards + Joker</h3>
+    <p>53 cards. The Joker represents unlimited potential — taking a big risk but trusting that all will be well.</p>
+  </div>
+  <div class="nav-row">
+    <button class="btn" onclick="goScreen('screen-concerns')">← Back</button>
+    <button class="btn btn-primary" onclick="confirmSystem()">Continue →</button>
+  </div>
+</div>
+
+<!-- ========== SPREAD ========== -->
+<div class="screen" id="screen-spread">
+  <div class="step-dots" id="dots-spread"></div>
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Choose Your Spread</h2>
+  <div class="onboard">
+    A spread is the pattern in which cards are laid out. Each position has a specific meaning that shapes
+    the interpretation. Simpler spreads are great for <strong>daily guidance</strong>, while larger spreads
+    provide <strong>deeper insight</strong> into complex situations.
+  </div>
+  <div class="spread-grid" id="spread-grid"></div>
+  <div id="custom-spread-form" style="display:none;margin-top:16px">
+    <label style="color:var(--muted);font-size:12px;margin-bottom:4px;display:block">Number of positions:</label>
+    <input type="text" id="custom-count" placeholder="e.g. 4" style="margin-bottom:8px;width:100px">
+    <div id="custom-positions"></div>
+    <button class="btn btn-sm" onclick="buildCustomPositions()" style="margin-top:8px">Set Positions</button>
+  </div>
+  <div class="nav-row">
+    <button class="btn" onclick="goScreen('screen-card-system')">← Back</button>
+    <button class="btn btn-primary" onclick="confirmSpread()">Continue →</button>
+  </div>
+</div>
+
+<!-- ========== CARD ENTRY ========== -->
+<div class="screen" id="screen-card-entry">
+  <div class="step-dots" id="dots-entry"></div>
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Enter Your Cards</h2>
+
+  <div class="dropped-card-section">
+    <div class="toggle-row">
+      <div class="toggle" id="drop-toggle" onclick="toggleDrop()"></div>
+      <h4>Did a card fall out during shuffling?</h4>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:8px">A card that drops while shuffling can carry special significance — it may reveal an underlying theme or energy influencing your entire reading.</p>
+    <div id="drop-card-entry" style="display:none">
+      <div class="card-entry-row">
+        <span class="pos-name">Dropped Card</span>
+        <input type="text" placeholder="Search card name…" oninput="searchCard(this,'drop')" onfocus="searchCard(this,'drop')" data-pos="drop">
+        <div class="orient-btn" onclick="toggleOrient(this)" data-orient="upright" title="Click to toggle orientation">↑</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('tab-guided',this)">Guided Draw</button>
+    <button class="tab-btn" onclick="switchTab('tab-upload',this)">Upload Photo</button>
+    <button class="tab-btn" onclick="switchTab('tab-manual',this)">Manual Entry</button>
+  </div>
+
+  <div id="tab-guided">
+    <div class="onboard">
+      Draw your cards <strong>one at a time</strong> from your physical deck. The app will guide you through each position —
+      telling you where to place each card. After all cards are placed, <strong>take a photo</strong> of your spread
+      and AI will identify them. No typing needed.
+    </div>
+    <div id="guided-ritual-prompt"></div>
+    <div id="guided-spread-diagram"></div>
+    <div id="guided-actions" style="text-align:center;margin-top:12px"></div>
+    <div id="guided-photo-section" style="display:none;margin-top:16px">
+      <div class="divider" style="margin-bottom:16px"></div>
+      <p style="text-align:center;color:var(--gold);font-family:'Cinzel',serif;font-size:14px;margin-bottom:12px">All cards placed ✦ Now photograph your spread</p>
+      <div class="upload-zone" id="guided-upload-zone" onclick="document.getElementById('guided-file-input').click()" ondragover="event.preventDefault();this.style.borderColor='var(--gold)'" ondragleave="this.style.borderColor=''" ondrop="handleGuidedDrop(event)">
+        <p style="color:var(--muted)">📷 Click or drag a photo of your completed spread<br><span style="font-size:11px">JPG, PNG, WEBP</span></p>
+      </div>
+      <input type="file" id="guided-file-input" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleGuidedUpload(this)">
+      <button class="btn btn-primary" id="guided-identify-btn" style="display:none;width:100%;margin-top:8px" onclick="identifyGuidedCards()">✨ Identify Cards with AI</button>
+      <div id="guided-identify-results"></div>
+      <p style="text-align:center;margin-top:12px"><span class="footer-link" onclick="switchTab('tab-manual',document.querySelectorAll('.tab-btn')[2])">Or enter cards manually →</span></p>
+    </div>
+  </div>
+
+  <div id="tab-upload" style="display:none">
+    <div class="onboard">
+      Take a clear photo of your spread with cards face-up. <strong>AI will attempt to identify each card.</strong>
+      You can correct any mistakes before continuing. Requires a Gemini API key (set in Settings).
+    </div>
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()" ondragover="event.preventDefault();this.style.borderColor='var(--gold)'" ondragleave="this.style.borderColor=''" ondrop="handleDrop(event)">
+      <p style="color:var(--muted)">📷 Click or drag a photo here<br><span style="font-size:11px">JPG, PNG, WEBP</span></p>
+    </div>
+    <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleUpload(this)">
+    <button class="btn btn-primary" id="identify-btn" style="display:none;width:100%" onclick="identifyCards()">✨ Identify Cards with AI</button>
+    <div id="upload-results"></div>
+  </div>
+
+  <div id="tab-manual" style="display:none">
+    <div class="onboard">
+      Enter each card by name. Use the search to find cards quickly. Toggle the <strong>orientation</strong> (upright ↑ or reversed ↓) for each one.
+    </div>
+    <div class="suit-filter" id="suit-filter"></div>
+    <div id="manual-entries"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="btn" onclick="goScreen('screen-spread')">← Back</button>
+    <button class="btn btn-primary" onclick="confirmCards()">Review Cards →</button>
+  </div>
+</div>
+
+<!-- ========== OVERVIEW ========== -->
+<div class="screen" id="screen-overview">
+  <div class="step-dots" id="dots-overview"></div>
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Card Overview</h2>
+  <div class="onboard">
+    Here is your spread at a glance. <strong>Review each card</strong> before generating your reading.
+    Click any card to edit it.
+  </div>
+  <div id="dropped-overview" style="display:none;margin-bottom:16px"></div>
+  <div class="overview-grid" id="overview-grid"></div>
+  <div class="nav-row">
+    <button class="btn" onclick="goScreen('screen-card-entry')">← Edit Cards</button>
+    <button class="btn btn-primary" onclick="generateReading()">✨ Generate Reading</button>
+  </div>
+</div>
+
+<!-- ========== READING ========== -->
+<div class="screen" id="screen-reading">
+  <div class="step-dots" id="dots-reading"></div>
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Your Reading</h2>
+  <div class="reading-toggle no-print">
+    <button class="btn btn-sm" id="btn-ai-read" onclick="switchReadingMode('ai')">✨ AI Reading</button>
+    <button class="btn btn-sm" id="btn-classic-read" onclick="switchReadingMode('classic')">📖 Classic Reading</button>
+  </div>
+  <div id="reading-content"></div>
+  <div class="nav-row no-print" style="flex-wrap:wrap;gap:8px">
+    <button class="btn" onclick="goScreen('screen-welcome')">← New Reading</button>
+    <button class="btn" onclick="window.print()">🖨 Print</button>
+    <button class="btn btn-primary" onclick="saveReading()">💾 Save Reading</button>
+  </div>
+</div>
+
+<!-- ========== HISTORY ========== -->
+<div class="screen" id="screen-history">
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Reading History</h2>
+  <div class="onboard">
+    Your saved readings are stored locally on this device. Click a reading to review it, add journal notes,
+    or reflect on past insights.
+  </div>
+  <div id="history-list"></div>
+  <div style="text-align:center;margin-top:16px">
+    <button class="btn" onclick="goScreen('screen-welcome')">← Back to Home</button>
+  </div>
+</div>
+
+<!-- ========== QUICK READING ========== -->
+<div class="screen" id="screen-quick">
+  <h2 style="text-align:center;font-size:18px;margin-bottom:12px">Quick Reading</h2>
+  <div class="onboard">
+    Upload a photo of your card spread. AI will identify the cards, determine the spread type,
+    and generate your reading. <strong>Optionally</strong> enter a concern below to focus the interpretation.
+  </div>
+  <input type="text" id="quick-concern" placeholder="Optional: what's on your mind?" style="margin-bottom:12px">
+  <div class="upload-zone" id="quick-upload-zone" onclick="document.getElementById('quick-file').click()" ondragover="event.preventDefault();this.style.borderColor='var(--gold)'" ondragleave="this.style.borderColor=''" ondrop="handleQuickDrop(event)">
+    <p style="color:var(--muted)">📷 Click or drag a photo of your spread<br><span style="font-size:11px">JPG, PNG, WEBP</span></p>
+  </div>
+  <input type="file" id="quick-file" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="handleQuickUpload(this)">
+  <button class="btn btn-primary" id="quick-go" style="display:none;width:100%" onclick="quickRead()">✨ Read My Cards</button>
+  <div id="quick-results"></div>
+  <div style="margin-top:16px">
+    <button class="btn" onclick="goScreen('screen-welcome')">← Back</button>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<!-- ========== SETTINGS MODAL ========== -->
+<div class="modal-overlay" id="modal-settings">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('modal-settings')">✕</button>
+    <h2>Settings</h2>
+    <label>Gemini API Key</label>
+    <input type="password" id="api-key-input" placeholder="Paste your API key here">
+    <p style="font-size:11px;color:var(--muted);margin-top:4px">Get a free key at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></p>
+    <button class="btn btn-sm" onclick="testApiKey()" style="margin-top:8px">Test Key</button>
+    <span id="key-status" style="margin-left:8px;font-size:12px"></span>
+    <label>Reading Style</label>
+    <select id="reading-style">
+      <option>Traditional</option><option>Psychological</option><option>Spiritual</option><option>Practical</option><option>Shadow Work</option>
+    </select>
+    <label>Reading Tone</label>
+    <select id="reading-tone">
+      <option>Gentle</option><option>Neutral</option><option>Direct</option><option>Mystical</option>
+    </select>
+    <div style="margin-top:20px;padding-top:12px;border-top:1px solid var(--border)">
+      <button class="btn btn-sm btn-danger" onclick="if(confirm('Delete all saved readings and settings?')){localStorage.removeItem('arcana_readings');localStorage.removeItem('arcana_settings');location.reload()}">Clear All Data</button>
+    </div>
+    <div style="margin-top:12px;text-align:right">
+      <button class="btn btn-primary btn-sm" onclick="saveSettings()">Save Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== HELP MODAL ========== -->
+<div class="modal-overlay" id="modal-help">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('modal-help')">✕</button>
+    <h2>Guide</h2>
+    <div class="help-section"><h3>What is Tarot?</h3><p>Tarot is a system of 78 cards used for reflection, insight, and guidance. It's not about predicting the future — it's a tool for exploring your thoughts, feelings, and possibilities.</p></div>
+    <div class="help-section"><h3>Major & Minor Arcana</h3><p>The 22 <strong>Major Arcana</strong> cards represent life's big themes and spiritual lessons (The Fool, The Tower, The Star…). The 56 <strong>Minor Arcana</strong> cards deal with everyday situations across four suits.</p></div>
+    <div class="help-section"><h3>Suits</h3><p><strong>Wands</strong> (♣ Clubs) = passion, creativity, action. <strong>Cups</strong> (♥ Hearts) = emotions, relationships, intuition. <strong>Swords</strong> (♠ Spades) = intellect, conflict, truth. <strong>Pentacles</strong> (♦ Diamonds) = material world, money, health.</p></div>
+    <div class="help-section"><h3>Court Cards</h3><p><strong>Pages/Jacks</strong> = youth, messages, learning. <strong>Knights</strong> = action, movement, pursuit. <strong>Queens</strong> = maturity, nurturing, mastery. <strong>Kings</strong> = authority, leadership, responsibility.</p></div>
+    <div class="help-section"><h3>Reversed Cards</h3><p>A reversed card appears upside-down. Its meaning isn't necessarily "bad" — it often indicates blocked energy, internalized qualities, or the shadow side of the card's upright meaning.</p></div>
+    <div class="help-section"><h3>Dropped Cards</h3><p>If a card falls out while you're shuffling, pay attention — many readers believe these "jumper" cards carry a message your subconscious wants you to see. Arcana lets you record this card separately.</p></div>
+    <div class="help-section"><h3>Spreads</h3><p>A spread is the layout pattern for your cards. Each position has a specific meaning (past, present, future, obstacle, advice, etc.). The cards interact with each other through their positions.</p></div>
+    <div class="help-section"><h3>AI vs Classic Readings</h3><p><strong>AI readings</strong> use Google Gemini to weave a personalized narrative. <strong>Classic readings</strong> use pre-written card meanings assembled into a structured interpretation — no internet required.</p></div>
+  </div>
+</div>
+
+<script>
+// ===== CARD DATABASE =====
+const TAROT_MAJOR = [
+{name:'The Fool',arcana:'major',suit:null,number:0,keywords:['beginnings','innocence','spontaneity','leap of faith'],upright:'A leap of faith into the unknown. New beginnings, unlimited potential, and the courage to start a journey without knowing the destination.',reversed:'Recklessness, naivety, foolish risk-taking. Holding back from a necessary leap due to fear.'},
+{name:'The Magician',arcana:'major',suit:null,number:1,keywords:['willpower','manifestation','skill','resourcefulness'],upright:'You have all the tools you need. Channel your willpower to manifest your desires. Skill and resourcefulness lead to success.',reversed:'Manipulation, trickery, untapped potential. Misuse of talent or deception.'},
+{name:'The High Priestess',arcana:'major',suit:null,number:2,keywords:['intuition','mystery','subconscious','inner voice'],upright:'Trust your intuition. Hidden knowledge is revealing itself. Look beyond the surface and listen to your inner voice.',reversed:'Secrets withheld, disconnection from intuition, superficial understanding.'},
+{name:'The Empress',arcana:'major',suit:null,number:3,keywords:['abundance','nurturing','fertility','nature'],upright:'Abundance flows to you through nurturing and creativity. A time of growth, comfort, and connection with the natural world.',reversed:'Creative block, dependence, neglect of self-care or others.'},
+{name:'The Emperor',arcana:'major',suit:null,number:4,keywords:['authority','structure','stability','leadership'],upright:'Establish order and structure. Authority exercised wisely brings stability. Take charge of your situation with discipline.',reversed:'Rigidity, tyranny, lack of discipline, loss of control.'},
+{name:'The Hierophant',arcana:'major',suit:null,number:5,keywords:['tradition','guidance','conformity','spiritual wisdom'],upright:'Seek wisdom through established traditions and mentors. Spiritual guidance is available if you are open to learning.',reversed:'Challenging convention, unorthodox approaches, rejecting tradition.'},
+{name:'The Lovers',arcana:'major',suit:null,number:6,keywords:['love','union','choices','alignment'],upright:'A deep connection or important choice. Alignment of values and desires. Union of complementary forces.',reversed:'Disharmony, misalignment, difficult choices, broken trust.'},
+{name:'The Chariot',arcana:'major',suit:null,number:7,keywords:['determination','willpower','victory','control'],upright:'Victory through determination and willpower. Harness opposing forces and drive forward with confidence.',reversed:'Lack of direction, aggression, obstacles overwhelming willpower.'},
+{name:'Strength',arcana:'major',suit:null,number:8,keywords:['courage','patience','inner strength','compassion'],upright:'True strength comes from patience and compassion, not force. Tame your inner fears with gentle courage.',reversed:'Self-doubt, weakness, raw emotion overwhelming reason.'},
+{name:'The Hermit',arcana:'major',suit:null,number:9,keywords:['solitude','introspection','wisdom','inner light'],upright:'Withdraw from the noise and seek answers within. Solitude brings wisdom. Your inner light guides the way.',reversed:'Isolation, loneliness, withdrawal from help, lost direction.'},
+{name:'Wheel of Fortune',arcana:'major',suit:null,number:10,keywords:['cycles','fate','turning point','luck'],upright:'The wheel turns — change is coming. A turning point in your journey. Embrace the cycles of fortune.',reversed:'Bad luck, resistance to change, feeling stuck in a cycle.'},
+{name:'Justice',arcana:'major',suit:null,number:11,keywords:['fairness','truth','accountability','balance'],upright:'Truth and fairness prevail. Take responsibility for your actions. A balanced decision is required.',reversed:'Injustice, dishonesty, lack of accountability, unfair treatment.'},
+{name:'The Hanged Man',arcana:'major',suit:null,number:12,keywords:['surrender','new perspective','pause','sacrifice'],upright:'Surrender control and see things from a new perspective. A willing pause that leads to enlightenment.',reversed:'Stalling, resistance to necessary sacrifice, indecision.'},
+{name:'Death',arcana:'major',suit:null,number:13,keywords:['transformation','endings','rebirth','transition'],upright:'A profound transformation. Something must end for something new to begin. Embrace the rebirth.',reversed:'Resistance to change, stagnation, fear of letting go.'},
+{name:'Temperance',arcana:'major',suit:null,number:14,keywords:['balance','moderation','patience','harmony'],upright:'Find the middle path. Patience and moderation bring harmony. Blend opposing elements into something beautiful.',reversed:'Imbalance, excess, impatience, lack of harmony.'},
+{name:'The Devil',arcana:'major',suit:null,number:15,keywords:['bondage','materialism','shadow self','temptation'],upright:'Examine what binds you — addiction, materialism, toxic patterns. Awareness of your shadow self is the first step to freedom.',reversed:'Breaking free, releasing attachments, reclaiming power.'},
+{name:'The Tower',arcana:'major',suit:null,number:16,keywords:['upheaval','sudden change','revelation','awakening'],upright:'Sudden upheaval shatters false structures. Though shocking, this destruction clears the way for truth and rebuilding.',reversed:'Avoidance of disaster, fear of change, personal transformation.'},
+{name:'The Star',arcana:'major',suit:null,number:17,keywords:['hope','healing','inspiration','renewal'],upright:'A guiding light appears after darkness. Hope, healing, and renewed faith. Trust that you are on the right path.',reversed:'Despair, disconnection, lack of faith, lost inspiration.'},
+{name:'The Moon',arcana:'major',suit:null,number:18,keywords:['illusion','fear','subconscious','uncertainty'],upright:'Things are not as they seem. Navigate through uncertainty by trusting your instincts. Face your fears and illusions.',reversed:'Release of fear, clarity emerging, overcoming confusion.'},
+{name:'The Sun',arcana:'major',suit:null,number:19,keywords:['joy','success','vitality','clarity'],upright:'Radiant joy and success. Everything becomes clear under the sun. Vitality, warmth, and achievement.',reversed:'Temporary sadness, lack of clarity, delayed success.'},
+{name:'Judgement',arcana:'major',suit:null,number:20,keywords:['rebirth','calling','reflection','reckoning'],upright:'A calling to rise up and embrace your purpose. Reflect on your journey and answer the call to transformation.',reversed:'Self-doubt, refusal to learn, harsh self-judgement.'},
+{name:'The World',arcana:'major',suit:null,number:21,keywords:['completion','integration','accomplishment','wholeness'],upright:'A cycle reaches completion. Integration of all you have learned. Wholeness, accomplishment, and celebration.',reversed:'Incomplete, shortcuts taken, lack of closure.'}
+];
+
+const TAROT_SUITS = ['wands','cups','swords','pentacles'];
+const TAROT_SUIT_NAMES = {wands:'Wands',cups:'Cups',swords:'Swords',pentacles:'Pentacles'};
+const TAROT_SUIT_SYM = {wands:'🔥',cups:'💧',swords:'🗡️',pentacles:'⭐'};
+const MINOR_MEANINGS = {
+wands:{
+  keywords:[['creation','inspiration','willpower','passion'],['planning','decisions','discovery','future'],['expansion','foresight','enterprise','trade'],['celebration','harmony','homecoming','peace'],['conflict','competition','tension','disagreement'],['victory','recognition','pride','reward'],['perseverance','defiance','courage','challenge'],['speed','movement','action','change'],['resilience','persistence','boundaries','stamina'],['burden','responsibility','hard work','pressure']],
+  upright:['Creative spark and inspired action.','Planning your future path with both options open.','Expansion and looking ahead — your ships are coming in.','Celebration, stability, and joyful homecoming.','Petty conflict and competitive tension.','Public recognition and victory after effort.','Holding your ground despite opposition.','Swift movement and rapid developments.','Standing firm through perseverance and endurance.','Carrying heavy burdens and responsibilities.'],
+  reversed:['Delays in new ventures, lack of direction.','Fear of the unknown, poor planning.','Setbacks in plans, lack of foresight.','Instability, transition, feeling unwelcome.','Avoiding conflict, inner tension.','Failure, lack of recognition, self-doubt.','Giving up, overwhelmed, cannot keep fighting.','Delays, frustration, losing momentum.','Paranoia, defensiveness, stubbornness.','Burnout, taking on too much, inability to delegate.']
+},
+cups:{
+  keywords:[['love','new feelings','intuition','compassion'],['partnership','unity','mutual attraction','connection'],['celebration','friendship','joy','creativity'],['apathy','contemplation','reevaluation','boredom'],['grief','loss','regret','disappointment'],['nostalgia','childhood','innocence','memories'],['illusion','fantasy','choices','wishful thinking'],['departure','letting go','moving on','searching'],['contentment','satisfaction','gratitude','pleasure'],['harmony','family','love','emotional fulfillment']],
+  upright:['New emotional beginning, love offered or received.','Deep connection and mutual attraction forming.','Celebration with friends, creative collaboration, joy.','Turning inward, emotional apathy, missed opportunities.','Grief and loss, but something remains — focus on what is left.','Sweet nostalgia and happy memories, an old friend returns.','So many dreams, but which is real? Choose carefully.','Walking away from what no longer serves you.','Wishes fulfilled, emotional and material satisfaction.','Loving family, deep emotional fulfillment, lasting happiness.'],
+  reversed:['Blocked emotions, love unrequited.','Imbalance in relationship, broken connection.','Overindulgence, scattered creativity, isolation.','Motivation returns, new opportunity noticed.','Acceptance, moving on, finding peace after loss.','Living in the past, unrealistic expectations.','Confusion clears, grounding in reality.','Fear of change, clinging to comfort.','Smugness, materialism, dissatisfaction despite having enough.','Family discord, broken home, misaligned values.']
+},
+swords:{
+  keywords:[['clarity','truth','breakthrough','new idea'],['stalemate','denial','blocked emotions','avoidance'],['heartbreak','sorrow','grief','painful truth'],['rest','recovery','contemplation','solitude'],['conflict','defeat','dishonor','betrayal'],['transition','moving on','mental shift','recovery'],['deception','betrayal','stealth','strategy'],['restriction','powerlessness','isolation','victimhood'],['anxiety','nightmares','worry','despair'],['ending','pain','betrayal','loss','rock bottom']],
+  upright:['A breakthrough of clarity and truth.','Refusing to see or address a difficult situation.','Heartbreak and deep sorrow; a painful but necessary truth.','Rest and recovery — you need to step back and heal.','Conflict and defeat, possibly through dishonor.','A necessary transition; moving toward something better.','Strategic action, possibly deception — check your motives.','Feeling trapped and powerless, but the bonds are mental.','Overwhelming anxiety and worry keeping you up at night.','A painful ending, but the worst is over.'],
+  reversed:['Confusion, miscommunication, mental fog.','Releasing denial, confronting truth.','Recovery from heartbreak, releasing pain.','Restlessness, burnout from refusing rest.','Learning from defeat, making amends.','Resistance to change, unfinished business.','Coming clean, being caught, confession.','Finding a way out, self-empowerment.','Recovery from anxiety, hope returning.','Survival, rising from disaster, unable to let go.']
+},
+pentacles:{
+  keywords:[['opportunity','prosperity','new venture','manifestation'],['balance','adaptability','juggling','resourcefulness'],['mastery','teamwork','craftsmanship','skill'],['control','security','possessiveness','stability'],['hardship','loss','poverty','isolation'],['generosity','charity','sharing','kindness'],['patience','investment','long-term vision','assessment'],['dedication','craftsmanship','mastery','diligence'],['independence','luxury','self-sufficiency','abundance'],['legacy','wealth','family','inheritance','establishment']],
+  upright:['A new financial or material opportunity manifests.','Balancing multiple priorities with adaptability.','Teamwork producing quality results; recognition of skill.','Holding tight to what you have; security through control.','Financial hardship and feeling left out in the cold.','Generous spirit, giving or receiving needed help.','Patience as long-term investments take root.','Dedicated mastery through disciplined practice.','Self-sufficient abundance and well-earned independence.','Lasting legacy, family wealth, and material fulfillment.'],
+  reversed:['Missed opportunity, poor financial planning.','Overcommitted, financial disorganization.','Mediocre work, lack of teamwork, shortcuts.','Greed, financial insecurity despite having enough.','Recovery from financial setback, spiritual poverty.','Strings attached to generosity, debt.','Impatience, poor returns, frustration with slow progress.','Cutting corners, lack of ambition, dead-end work.','Over-investment in material life, financial setbacks.','Family disputes over money, failure to plan legacy.']
+}
+};
+const COURT_MEANINGS = {
+wands:{page:{kw:['exploration','enthusiasm','discovery','free spirit'],u:'An enthusiastic messenger bringing exciting news or opportunities.',r:'Setbacks to plans, hasty actions, lack of direction.'},knight:{kw:['adventure','energy','passion','impulsiveness'],u:'Passionate pursuit of a goal with fiery determination.',r:'Recklessness, scattered energy, delays in travel.'},queen:{kw:['confidence','warmth','determination','vibrancy'],u:'A warm, confident presence who inspires others with courage.',r:'Jealousy, selfishness, demanding temperament.'},king:{kw:['leadership','vision','entrepreneurship','honor'],u:'Bold leadership with a clear vision and natural charisma.',r:'Impulsiveness, ruthlessness, unrealistic expectations.'}},
+cups:{page:{kw:['creativity','intuition','sensitivity','dreamer'],u:'A sensitive soul bringing creative inspiration or emotional news.',r:'Emotional immaturity, creative blocks, escapism.'},knight:{kw:['romance','charm','imagination','following the heart'],u:'A romantic idealist following their heart toward new horizons.',r:'Moodiness, unrealistic expectations, emotional manipulation.'},queen:{kw:['compassion','calm','emotional security','intuition'],u:'Deep emotional wisdom and compassion; nurturing intuition.',r:'Codependency, emotional insecurity, martyrdom.'},king:{kw:['emotional balance','diplomacy','generosity','wisdom'],u:'Emotionally balanced leadership with generous wisdom.',r:'Emotional manipulation, volatility, moodiness.'}},
+swords:{page:{kw:['curiosity','mental agility','new ideas','communication'],u:'A sharp mind eager to learn and communicate new ideas.',r:'Gossip, deception, all talk and no action.'},knight:{kw:['ambition','speed','directness','intellect'],u:'Swift intellectual pursuit, charging ahead with determination.',r:'Aggression, impatience, scattered thinking.'},queen:{kw:['perception','clarity','independence','direct communication'],u:'Clear-sighted perception that cuts through deception.',r:'Cruelty, cold-heartedness, bitterness.'},king:{kw:['authority','intellect','truth','ethical leadership'],u:'Intellectual authority wielded with ethical clarity.',r:'Tyrannical thinking, abuse of power, manipulation.'}},
+pentacles:{page:{kw:['ambition','desire to learn','new skill','opportunity'],u:'A diligent student manifesting new practical opportunities.',r:'Lack of focus, procrastination, missed opportunities.'},knight:{kw:['hard work','routine','patience','reliability'],u:'Steady, reliable progress through patient hard work.',r:'Laziness, boredom, stagnation, perfectionism.'},queen:{kw:['nurturing','practical','generous','down-to-earth'],u:'Practical generosity and nurturing abundance in daily life.',r:'Neglect of finances, smothering, work-life imbalance.'},king:{kw:['wealth','business','security','discipline'],u:'Material mastery and disciplined abundance; a provider.',r:'Greed, materialism, stubbornness, poor financial management.'}}
+};
+
+function buildTarotMinor(){
+  const cards=[];
+  const ranks=['Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'];
+  const courts=['Page','Knight','Queen','King'];
+  TAROT_SUITS.forEach(suit=>{
+    ranks.forEach((rank,i)=>{
+      cards.push({name:`${rank} of ${TAROT_SUIT_NAMES[suit]}`,arcana:'minor',suit,number:i+1,
+        keywords:MINOR_MEANINGS[suit].keywords[i],
+        upright:MINOR_MEANINGS[suit].upright[i],
+        reversed:MINOR_MEANINGS[suit].reversed[i]});
+    });
+    courts.forEach(court=>{
+      const c=COURT_MEANINGS[suit][court.toLowerCase()];
+      cards.push({name:`${court} of ${TAROT_SUIT_NAMES[suit]}`,arcana:'minor',suit,number:court==='Page'?11:court==='Knight'?12:court==='Queen'?13:14,
+        keywords:c.kw,upright:c.u,reversed:c.r});
+    });
+  });
+  return cards;
+}
+const TAROT_CARDS = [...TAROT_MAJOR,...buildTarotMinor()].map(c=>({...c,system:'tarot'}));
+
+const PLAYING_SUITS=['hearts','spades','diamonds','clubs'];
+const PLAYING_SYM={hearts:'♥',spades:'♠',diamonds:'♦',clubs:'♣'};
+const PLAYING_RANKS=['Ace','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','Queen','King'];
+const PLAYING_MEANINGS={
+hearts:['New friendship, romance','Deepening attraction','Joy in company, friendship, celebration','Turning inwards, apathy','Loss, despair','Childhood, nostalgia, good memories, an old friendship resumes','Daydreaming, wishful thinking, choices','Emotional detachment, leaving love behind, making a hard choice','Satisfaction, sensual pleasure, spiritual growth','Contentment, fulfilment, joy, family','Falls in love easily, romantic, chatterbox','Emotional, dependent, empathic','Wise, tolerant, diplomatic, feeling, patient'],
+spades:['New insights, realizations','Failure to communicate','Miscommunication, misunderstanding','Recuperation, recovery, contemplation','Discord, dishonour, hollow victory','Moving on, travel, mentally getting to a better place','Lying, deceitfulness, theft, irresponsibility','Illusion of being trapped, powerlessness','Nightmares, problems, worry, guilt','Giving up, victim, martyrdom','Rebel, fights for a cause, intellectual, political','Sharp, intelligent, ruthless, insightful, organized','Introspective, ethical, communicator, stern'],
+diamonds:['New project, job, home, win','Juggling resources, waiting on results','Teamwork, improving skills','Miserliness, possessiveness','Loss of possessions or job or money','Giving or receiving money, a pay-rise, obtaining resources','Reassessment, turning point, mild dissatisfaction','Paying attention to detail, focus, practice','Independence, self-reliance, increasing wealth','Great wealth, family property, inheritance','Reliable, hard-working, quiet, hidden depths','Practical, warm, dependable, motherhood','Self-made, business owner, encouraging, enjoys the fruits of his labors, jolly'],
+clubs:['New idea, business, action','Planning and preparation','Leadership, exploration','A goal achieved, rest from action','Competition, disagreement, irritation','Victory, achievement, passing exams','Defence, conviction, strong belief','Organization, moving quickly, pregnancy','Continuing a battle, endurance, physical strength','Carrying burdens, responsibility, debt','Unreliable, hot-headed, risk taker, athletic','Energetic, career-minded, untidy, disorganized','Creative, forceful, entrepreneurial, charismatic, hot-tempered']
+};
+
+function buildPlayingCards(includeJoker){
+  const cards=[];
+  PLAYING_SUITS.forEach(suit=>{
+    PLAYING_RANKS.forEach((rank,i)=>{
+      const meaning=PLAYING_MEANINGS[suit][i];
+      const kws=meaning.split(',').map(s=>s.trim()).slice(0,4);
+      const isNumber=i<10;
+      const rev=isNumber?`Blocked: ${meaning.toLowerCase()} — energy delayed or inverted.`:`Shadow side: ${meaning.toLowerCase()} — qualities become excessive or harmful.`;
+      cards.push({system:'playing',name:`${rank} of ${suit.charAt(0).toUpperCase()+suit.slice(1)}`,suit,number:i+1,keywords:kws,upright:meaning,reversed:rev});
+    });
+  });
+  if(includeJoker){
+    cards.push({system:'playing',name:'The Joker',suit:null,number:0,keywords:['unlimited potential','wild card','trust','risk'],upright:'Unlimited potential — taking a big risk but having trust that all will be well.',reversed:'Foolish risk, chaos, lack of direction.'});
+  }
+  return cards;
+}
+
+// ===== SPREAD DEFINITIONS =====
+const SPREADS=[
+{id:'one-card',name:'One Card Draw',description:'Daily guidance or a quick answer',cardCount:1,positions:[{id:1,name:'The Card',description:'Your message for today'}],layout:'row'},
+{id:'three-card',name:'Three Card',description:'Past · Present · Future',cardCount:3,positions:[{id:1,name:'Past',description:'What has led to this moment'},{id:2,name:'Present',description:'What is happening now'},{id:3,name:'Future',description:'Where things are heading'}],layout:'row'},
+{id:'five-card',name:'Five Card',description:'Situation · Obstacle · Hidden · Advice · Outcome',cardCount:5,positions:[{id:1,name:'Situation',description:'Your current situation'},{id:2,name:'Obstacle',description:'What stands in your way'},{id:3,name:'Hidden Influence',description:'An unseen force affecting things'},{id:4,name:'Advice',description:'Guidance for your path'},{id:5,name:'Outcome',description:'The likely outcome'}],layout:'cross'},
+{id:'celtic-cross',name:'Celtic Cross',description:'Traditional 10-card deep reading',cardCount:10,positions:[{id:1,name:'Present',description:'Your current situation'},{id:2,name:'Challenge',description:'The immediate challenge'},{id:3,name:'Foundation',description:'The root of the matter'},{id:4,name:'Recent Past',description:'What is passing away'},{id:5,name:'Crown',description:'Best possible outcome'},{id:6,name:'Near Future',description:'What is coming next'},{id:7,name:'Your Attitude',description:'How you see the situation'},{id:8,name:'Environment',description:'External influences'},{id:9,name:'Hopes & Fears',description:'What you hope for and fear'},{id:10,name:'Outcome',description:'The final outcome'}],layout:'cross'},
+{id:'relationship',name:'Relationship',description:'You · Other · Connection · Challenge · Potential',cardCount:5,positions:[{id:1,name:'You',description:'Your role in the relationship'},{id:2,name:'Other Person',description:'The other person\'s energy'},{id:3,name:'Connection',description:'What binds you together'},{id:4,name:'Challenge',description:'What challenges the relationship'},{id:5,name:'Potential Outcome',description:'Where this could lead'}],layout:'row'},
+{id:'career',name:'Career',description:'Position · Opportunity · Obstacle · Advice · Future',cardCount:5,positions:[{id:1,name:'Current Position',description:'Where you are now professionally'},{id:2,name:'Opportunity',description:'An opportunity presenting itself'},{id:3,name:'Obstacle',description:'What blocks professional growth'},{id:4,name:'Advice',description:'Guidance for your career path'},{id:5,name:'Future Direction',description:'Where your career is heading'}],layout:'row'},
+{id:'twos-pathway',name:"Two's Pathway",description:'7-card insight into a question',cardCount:7,positions:[{id:1,name:'Past Impact',description:'The past impact to the question'},{id:2,name:'Present Impact',description:'The present impact to the question'},{id:3,name:'Future to Consider',description:'The future you should consider'},{id:4,name:'Action to Take',description:'The action you should consider'},{id:5,name:"People's Feelings",description:'How people around you feel'},{id:6,name:'Possible Delay',description:'A possible delay or obstacle'},{id:7,name:'Possible Outcome',description:'The possible outcome'}],layout:'grid'},
+{id:'future-love',name:'Future True Love',description:'6-card love reading',cardCount:6,positions:[{id:1,name:'Your Future Love',description:'Your future true love'},{id:2,name:'Instant Attraction?',description:'Will the attraction be instant?'},{id:3,name:'Their Character',description:'True love\'s character'},{id:4,name:'Challenges',description:'Challenges and delays'},{id:5,name:'What Will Help',description:'What is going to help'},{id:6,name:'When/Where/How',description:'When, where or how you meet'}],layout:'pyramid'},
+{id:'two-pathways',name:'Two Pathways',description:'14-card decision spread: compare two choices',cardCount:14,positions:[{id:1,name:'You',description:'Your current self'},{id:2,name:'The Problem',description:'The issue or decision'},{id:3,name:'Choice 1',description:'First option'},{id:4,name:'C1 Near Future A',description:'Choice 1 — near future'},{id:5,name:'C1 Near Future B',description:'Choice 1 — near future'},{id:6,name:'C1 Far Future A',description:'Choice 1 — far future'},{id:7,name:'C1 Far Future B',description:'Choice 1 — far future'},{id:8,name:'C1 Outcome',description:'Choice 1 — outcome'},{id:9,name:'Choice 2',description:'Second option'},{id:10,name:'C2 Near Future A',description:'Choice 2 — near future'},{id:11,name:'C2 Near Future B',description:'Choice 2 — near future'},{id:12,name:'C2 Far Future A',description:'Choice 2 — far future'},{id:13,name:'C2 Far Future B',description:'Choice 2 — far future'},{id:14,name:'C2 Outcome',description:'Choice 2 — outcome'}],layout:'grid'},
+{id:'timeline',name:'Timeline',description:'5-card past to future',cardCount:5,positions:[{id:1,name:'Distant Past',description:'Events long ago shaping the present'},{id:2,name:'Recent Past',description:'What happened recently'},{id:3,name:'Present',description:'Where you are now'},{id:4,name:'Near Future',description:'What is coming soon'},{id:5,name:'Far Future',description:'The long-term direction'}],layout:'row'},
+{id:'custom',name:'Custom Spread',description:'Define your own positions',cardCount:0,positions:[],layout:'custom'}
+];
+
+// ===== APP STATE =====
+let state={
+  mode:'guided',concerns:[],cardSystem:'tarot',spreadId:null,
+  cards:{},droppedCard:null,hasDroppedCard:false,
+  uploadedImage:null,narrative:'',readingMode:'ai',
+  guidedStep:0
+};
+let currentCards=[];
+
+function getCards(){
+  if(state.cardSystem==='tarot')return TAROT_CARDS;
+  return buildPlayingCards(state.cardSystem==='playing-joker');
+}
+function getSpread(){return SPREADS.find(s=>s.id===state.spreadId)}
+function getSuitSym(card){
+  if(card.system==='tarot'){
+    if(card.arcana==='major')return '✦';
+    return TAROT_SUIT_SYM[card.suit]||'';
+  }
+  return PLAYING_SYM[card.suit]||'🃏';
+}
+
+// ===== NAVIGATION =====
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='screen-history')renderHistory();
+  updateDots(id);
+}
+const GUIDED_SCREENS=['screen-concerns','screen-card-system','screen-spread','screen-card-entry','screen-overview','screen-reading'];
+function updateDots(screenId){
+  const idx=GUIDED_SCREENS.indexOf(screenId);
+  if(idx<0)return;
+  document.querySelectorAll('.step-dots').forEach(container=>{
+    container.innerHTML='';
+    GUIDED_SCREENS.forEach((_,i)=>{
+      const d=document.createElement('div');
+      d.className='dot'+(i===idx?' active':'')+(i<idx?' done':'');
+      container.appendChild(d);
+    });
+  });
+}
+
+// ===== WELCOME =====
+function startGuided(){
+  state.mode='guided';
+  state.narrative='';
+  state.cards={};
+  state.droppedCard=null;
+  state.hasDroppedCard=false;
+  state.uploadedImage=null;
+  state.spreadId=null;
+  state.guidedStep=0;
+  state.concerns=[];
+  // Reset drop toggle UI
+  const tog=document.getElementById('drop-toggle');
+  if(tog){tog.classList.remove('on')}
+  document.getElementById('drop-card-entry').style.display='none';
+  // Reset concern inputs
+  const cl=document.getElementById('concern-list');
+  cl.innerHTML='<div class="concern-row"><input type="text" placeholder="What\'s on your mind?" class="concern-input"><button class="btn btn-sm btn-danger" onclick="removeConcern(this)" title="Remove">✕</button></div>';
+  document.querySelectorAll('.tag-chip').forEach(t=>t.classList.remove('active'));
+  goScreen('screen-concerns');
+}
+function startQuick(){
+  state.mode='quick';
+  state.uploadedImage=null;
+  state.narrative='';
+  state.cards={};
+  document.getElementById('quick-results').innerHTML='';
+  document.getElementById('quick-concern').value='';
+  const zone=document.getElementById('quick-upload-zone');
+  zone.classList.remove('has-image');
+  zone.innerHTML='<p style="color:var(--muted)">📷 Click or drag a photo of your spread<br><span style="font-size:11px">JPG, PNG, WEBP</span></p>';
+  document.getElementById('quick-go').style.display='none';
+  goScreen('screen-quick');
+}
+
+// ===== CONCERNS =====
+function addConcern(){
+  const list=document.getElementById('concern-list');
+  const row=document.createElement('div');
+  row.className='concern-row';
+  row.innerHTML='<input type="text" placeholder="Another concern…" class="concern-input"><button class="btn btn-sm btn-danger" onclick="removeConcern(this)" title="Remove">✕</button>';
+  list.appendChild(row);
+}
+function removeConcern(btn){
+  const rows=document.querySelectorAll('.concern-row');
+  if(rows.length>1)btn.parentElement.remove();
+}
+function tagConcern(el){
+  el.classList.toggle('active');
+  const inputs=document.querySelectorAll('.concern-input');
+  for(const inp of inputs){
+    if(!inp.value){inp.value=el.textContent;return;}
+  }
+  addConcern();
+  const last=document.querySelectorAll('.concern-input');
+  last[last.length-1].value=el.textContent;
+}
+function saveConcerns(){
+  state.concerns=[];
+  document.querySelectorAll('.concern-input').forEach(inp=>{
+    if(inp.value.trim())state.concerns.push(inp.value.trim());
+  });
+  goScreen('screen-card-system');
+}
+
+// ===== CARD SYSTEM =====
+function selectSystem(sys,el){
+  state.cardSystem=sys;
+  document.querySelectorAll('#screen-card-system .card-opt').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentCards=getCards();
+}
+function confirmSystem(){
+  if(!state.cardSystem){alert('Please select a card system.');return;}
+  currentCards=getCards();
+  renderSpreads();
+  goScreen('screen-spread');
+}
+
+// ===== SPREADS =====
+function renderSpreads(){
+  const grid=document.getElementById('spread-grid');
+  grid.innerHTML='';
+  SPREADS.forEach(sp=>{
+    const card=document.createElement('div');
+    card.className='spread-card'+(state.spreadId===sp.id?' selected':'');
+    card.onclick=()=>{selectSpread(sp.id,card)};
+    const posNames=sp.id==='custom'?'You define the positions':sp.positions.map(p=>p.name).join(' · ');
+    card.innerHTML=`<h4>${sp.name}</h4><div class="count">${sp.id==='custom'?'?':sp.cardCount} cards</div><div class="pos-list">${posNames}</div><p style="font-size:10px;color:var(--muted);margin-top:4px">${sp.description}</p>`;
+    grid.appendChild(card);
+  });
+}
+function selectSpread(id,el){
+  state.spreadId=id;
+  document.querySelectorAll('.spread-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('custom-spread-form').style.display=id==='custom'?'block':'none';
+}
+function buildCustomPositions(){
+  const n=parseInt(document.getElementById('custom-count').value)||3;
+  const spread=SPREADS.find(s=>s.id==='custom');
+  spread.cardCount=n;
+  spread.positions=[];
+  const container=document.getElementById('custom-positions');
+  container.innerHTML='';
+  for(let i=1;i<=n;i++){
+    spread.positions.push({id:i,name:`Position ${i}`,description:''});
+    const row=document.createElement('div');
+    row.style.cssText='margin-bottom:6px';
+    row.innerHTML=`<input type="text" placeholder="Position ${i} name" style="width:100%" onchange="SPREADS.find(s=>s.id==='custom').positions[${i-1}].name=this.value;SPREADS.find(s=>s.id==='custom').positions[${i-1}].description=this.value">`;
+    container.appendChild(row);
+  }
+}
+function confirmSpread(){
+  if(!state.spreadId){alert('Please select a spread.');return;}
+  state.cards={};
+  state.guidedStep=0;
+  buildCardEntry();
+  goScreen('screen-card-entry');
+}
+
+// ===== CARD ENTRY =====
+function switchTab(tabId,btn){
+  ['tab-guided','tab-upload','tab-manual'].forEach(t=>document.getElementById(t).style.display='none');
+  document.getElementById(tabId).style.display='block';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function buildCardEntry(){
+  const spread=getSpread();
+  if(!spread)return;
+  buildGuidedDraw(spread);
+  buildManualEntries(spread);
+  buildSuitFilter();
+}
+
+// Guided card-by-card placement
+const GUIDED_PROMPTS=[
+  'Take a breath and clear your mind…',
+  'Focus on your question…',
+  'Let your intuition guide your hand…',
+  'Draw from wherever feels right…',
+  'Trust the card that presents itself…',
+  'The cards speak to those who listen…',
+  'Let the energy of the deck flow through you…',
+  'Close your eyes for a moment, then draw…',
+  'The next card is ready to reveal itself…',
+  'Almost there — this card holds deep meaning…'
+];
+
+function buildGuidedDraw(spread){
+  state.guidedStep=0;
+  renderGuidedRitual(spread);
+}
+
+function renderSpreadDiagram(spread,activeIdx){
+  const n=spread.positions.length;
+  // Build rows based on spread layout
+  let rows=[];
+  if(spread.layout==='row'||n<=3){
+    rows=[spread.positions.map((_,i)=>i)];
+  }else if(spread.layout==='cross'&&n===10){
+    // Celtic cross layout
+    rows=[[0],[3,1,4],[2],[5],[6,7,8,9]];
+  }else if(spread.layout==='pyramid'&&n===6){
+    rows=[[0],[1,2],[3,4,5]];
+  }else if(n===7){
+    rows=[[0,6],[1,5],[2,4],[3]];
+  }else if(n===13){
+    rows=[[0],[1],[2,8],[3,4,9,10],[5,6,11,12],[7]];
+  }else{
+    // Generic: rows of 3-4
+    for(let i=0;i<n;i+=Math.min(4,Math.ceil(n/Math.ceil(n/4)))){
+      rows.push(spread.positions.slice(i,i+Math.min(4,n-i)).map((_,j)=>i+j));
+    }
+  }
+  let html='<div class="spread-diagram">';
+  rows.forEach(row=>{
+    html+='<div class="spread-row">';
+    row.forEach(idx=>{
+      const pos=spread.positions[idx];
+      if(!pos)return;
+      const cls=idx<activeIdx?'done':idx===activeIdx?'active':'';
+      const check=idx<activeIdx?'✓':'';
+      html+=`<div class="slot ${cls}">
+        <div class="slot-num">${check||pos.id}</div>
+        <div class="slot-label">${pos.name}</div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+  html+='</div>';
+  return html;
+}
+
+function renderGuidedRitual(spread){
+  const prompt=document.getElementById('guided-ritual-prompt');
+  const diagram=document.getElementById('guided-spread-diagram');
+  const actions=document.getElementById('guided-actions');
+  const photo=document.getElementById('guided-photo-section');
+  const pos=spread.positions[state.guidedStep];
+
+  // Render diagram
+  diagram.innerHTML=renderSpreadDiagram(spread,state.guidedStep);
+
+  if(!pos){
+    // All cards placed — show photo upload
+    prompt.innerHTML=`<div class="guided-ritual">
+      <div class="ritual-text">✦ All ${spread.cardCount} cards have been placed ✦</div>
+      <div class="ritual-desc">Your spread is complete. Now take a clear photo of all your cards face-up, and AI will read them for you.</div>
+    </div>`;
+    actions.innerHTML='';
+    photo.style.display='block';
+    return;
+  }
+
+  photo.style.display='none';
+  const promptText=GUIDED_PROMPTS[state.guidedStep%GUIDED_PROMPTS.length];
+  const stepNum=state.guidedStep+1;
+  const total=spread.positions.length;
+
+  prompt.innerHTML=`<div class="guided-ritual">
+    <div class="ritual-counter">Card ${stepNum} of ${total}</div>
+    <div class="ritual-text">${promptText}</div>
+    <div class="ritual-pos">${pos.name}</div>
+    <div class="ritual-desc">${pos.description}</div>
+    <p style="font-size:11px;color:var(--muted)">Draw a card from your deck and place it face-up in position <strong style="color:var(--gold)">${pos.id}</strong> (highlighted above).</p>
+  </div>`;
+
+  actions.innerHTML=`<button class="btn btn-primary" onclick="nextGuidedPosition()">✦ Card Placed — Next</button>
+    ${state.guidedStep>0?'<button class="btn btn-sm" onclick="prevGuidedPosition()" style="margin-left:8px">← Back</button>':''}`;
+}
+
+function nextGuidedPosition(){
+  const spread=getSpread();
+  state.guidedStep++;
+  renderGuidedRitual(spread);
+  document.getElementById('guided-ritual-prompt').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function prevGuidedPosition(){
+  const spread=getSpread();
+  if(state.guidedStep>0)state.guidedStep--;
+  renderGuidedRitual(spread);
+  document.getElementById('guided-ritual-prompt').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Guided photo upload handlers
+function handleGuidedDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)processUpload(f,'guided-upload-zone','guided-identify-btn')}
+function handleGuidedUpload(inp){if(inp.files[0])processUpload(inp.files[0],'guided-upload-zone','guided-identify-btn')}
+
+async function identifyGuidedCards(){
+  const settings=loadSettings();
+  if(!settings.geminiKey){alert('Please set your Gemini API key in Settings first.');return;}
+  const spread=getSpread();
+  const btn=document.getElementById('guided-identify-btn');
+  btn.disabled=true;btn.textContent='Identifying…';
+  try{
+    const posNames=spread.positions.map(p=>`${p.id}. ${p.name}`).join(', ');
+    const prompt=`This is a photo of a ${state.cardSystem==='tarot'?'tarot':'playing card'} spread laid out in the "${spread.name}" pattern with ${spread.cardCount} positions: ${posNames}. For each visible card, identify the card name and whether it appears upright or reversed. Return ONLY valid JSON array: [{"position":1,"card":"Card Name","orientation":"upright"},...]  If a card is unclear, set card to null.`;
+    const result=await callGemini(prompt,settings.geminiKey,state.uploadedImage);
+    const match=result.match(/\[[\s\S]*?\]/);
+    if(match){
+      const identified=JSON.parse(match[0]);
+      identified.forEach(item=>{
+        if(item.card){
+          state.cards[item.position]={name:item.card,orientation:item.orientation||'upright'};
+        }
+      });
+      buildManualEntries(spread);
+      document.getElementById('guided-identify-results').innerHTML='<p style="color:var(--success);font-size:12px;margin-top:8px">✓ Cards identified! Click "Review Cards" below to verify and continue.</p>';
+    }
+  }catch(err){
+    document.getElementById('guided-identify-results').innerHTML=`<p style="color:var(--danger);font-size:12px;margin-top:8px">Error: ${err.message}. Try switching to Manual Entry tab.</p>`;
+  }
+  btn.disabled=false;btn.textContent='✨ Identify Cards with AI';
+}
+
+// Manual entries
+function buildManualEntries(spread){
+  const container=document.getElementById('manual-entries');
+  container.innerHTML='';
+  spread.positions.forEach(pos=>{
+    const row=document.createElement('div');
+    row.className='card-entry-row';
+    const existing=state.cards[pos.id];
+    row.innerHTML=`
+      <span class="pos-name">${pos.name}</span>
+      <div style="position:relative;flex:1">
+        <input type="text" placeholder="Search card…" value="${existing?existing.name:''}" oninput="searchCard(this,'${pos.id}')" onfocus="searchCard(this,'${pos.id}')" data-pos="${pos.id}" autocomplete="off">
+      </div>
+      <div class="orient-btn ${existing&&existing.orientation==='reversed'?'reversed':''}" onclick="toggleOrient(this)" data-orient="${existing?existing.orientation:'upright'}" title="Toggle orientation">${existing&&existing.orientation==='reversed'?'↓':'↑'}</div>`;
+    container.appendChild(row);
+  });
+}
+
+function buildSuitFilter(){
+  const container=document.getElementById('suit-filter');
+  container.innerHTML='<span class="suit-btn active" onclick="filterSuit(null,this)">All</span>';
+  if(state.cardSystem==='tarot'){
+    container.innerHTML+='<span class="suit-btn" onclick="filterSuit(\'major\',this)">Major</span>';
+    TAROT_SUITS.forEach(s=>{
+      container.innerHTML+=`<span class="suit-btn" onclick="filterSuit('${s}',this)">${TAROT_SUIT_SYM[s]} ${TAROT_SUIT_NAMES[s]}</span>`;
+    });
+  }else{
+    PLAYING_SUITS.forEach(s=>{
+      container.innerHTML+=`<span class="suit-btn" onclick="filterSuit('${s}',this)">${PLAYING_SYM[s]} ${s.charAt(0).toUpperCase()+s.slice(1)}</span>`;
+    });
+  }
+}
+let activeSuitFilter=null;
+function filterSuit(suit,el){
+  activeSuitFilter=suit;
+  document.querySelectorAll('.suit-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleOrient(el){
+  if(el.dataset.orient==='upright'){el.dataset.orient='reversed';el.textContent='↓';el.classList.add('reversed')}
+  else{el.dataset.orient='upright';el.textContent='↑';el.classList.remove('reversed')}
+}
+
+function toggleDrop(){
+  const tog=document.getElementById('drop-toggle');
+  tog.classList.toggle('on');
+  state.hasDroppedCard=tog.classList.contains('on');
+  document.getElementById('drop-card-entry').style.display=state.hasDroppedCard?'block':'none';
+}
+
+let activeDropdown=null;
+function searchCard(input,posId){
+  closeDropdowns();
+  const query=input.value.toLowerCase().trim();
+  if(!query){return;}
+  let results=currentCards.filter(c=>c.name.toLowerCase().includes(query));
+  if(activeSuitFilter){
+    if(activeSuitFilter==='major')results=results.filter(c=>c.arcana==='major');
+    else results=results.filter(c=>c.suit===activeSuitFilter);
+  }
+  results=results.slice(0,8);
+  if(!results.length)return;
+  const dd=document.createElement('div');
+  dd.className='search-dropdown';
+  dd.style.cssText='position:absolute;left:0;right:0;top:100%;z-index:100';
+  results.forEach(card=>{
+    const item=document.createElement('div');
+    item.className='dd-item';
+    item.textContent=`${getSuitSym(card)} ${card.name}`;
+    item.onclick=()=>{
+      input.value=card.name;
+      if(posId.startsWith('guided-')){
+        // guided mode handled separately
+      }else if(posId==='drop'){
+        state.droppedCard={name:card.name,orientation:input.closest('.card-entry-row').querySelector('.orient-btn').dataset.orient};
+      }else{
+        const orient=input.closest('.card-entry-row').querySelector('.orient-btn').dataset.orient;
+        state.cards[posId]={name:card.name,orientation:orient};
+      }
+      closeDropdowns();
+    };
+    dd.appendChild(item);
+  });
+  input.parentElement.style.position='relative';
+  input.parentElement.appendChild(dd);
+  activeDropdown=dd;
+}
+function closeDropdowns(){
+  document.querySelectorAll('.search-dropdown').forEach(d=>d.remove());
+  activeDropdown=null;
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.search-dropdown')&&!e.target.matches('input[data-pos]'))closeDropdowns();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeDropdowns();
+  if(!activeDropdown)return;
+  const items=[...activeDropdown.querySelectorAll('.dd-item')];
+  if(!items.length)return;
+  const cur=activeDropdown.querySelector('.dd-item.hl');
+  let idx=cur?items.indexOf(cur):-1;
+  if(e.key==='ArrowDown'){e.preventDefault();idx=Math.min(idx+1,items.length-1)}
+  else if(e.key==='ArrowUp'){e.preventDefault();idx=Math.max(idx-1,0)}
+  else if(e.key==='Enter'&&cur){e.preventDefault();cur.click();return}
+  else return;
+  items.forEach(i=>i.classList.remove('hl'));
+  if(items[idx]){items[idx].classList.add('hl');items[idx].scrollIntoView({block:'nearest'})}
+});
+
+// Upload photo
+function handleDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)processUpload(f,'upload-zone','identify-btn')}
+function handleUpload(inp){if(inp.files[0])processUpload(inp.files[0],'upload-zone','identify-btn')}
+function handleQuickDrop(e){e.preventDefault();const f=e.dataTransfer.files[0];if(f)processUpload(f,'quick-upload-zone','quick-go')}
+function handleQuickUpload(inp){if(inp.files[0])processUpload(inp.files[0],'quick-upload-zone','quick-go')}
+
+function processUpload(file,zoneId,btnId){
+  const reader=new FileReader();
+  reader.onload=e=>{
+    state.uploadedImage=e.target.result;
+    const zone=document.getElementById(zoneId);
+    zone.classList.add('has-image');
+    zone.innerHTML=`<img src="${e.target.result}" alt="Uploaded spread">`;
+    document.getElementById(btnId).style.display='block';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function identifyCards(){
+  const settings=loadSettings();
+  if(!settings.geminiKey){alert('Please set your Gemini API key in Settings first.');return;}
+  const spread=getSpread();
+  const btn=document.getElementById('identify-btn');
+  btn.disabled=true;btn.textContent='Identifying…';
+  try{
+    const posNames=spread.positions.map(p=>p.name).join(', ');
+    const prompt=`This is a photo of a ${state.cardSystem==='tarot'?'tarot':'playing card'} spread. The spread is "${spread.name}" with ${spread.cardCount} positions: ${posNames}. For each visible card, identify the card name and whether it appears upright or reversed. Return ONLY valid JSON array: [{"position":1,"card":"Card Name","orientation":"upright"},...]  If a card is unclear, set card to null.`;
+    const result=await callGemini(prompt,settings.geminiKey,state.uploadedImage);
+    const match=result.match(/\[[\s\S]*?\]/);
+    if(match){
+      const identified=JSON.parse(match[0]);
+      identified.forEach(item=>{
+        if(item.card){
+          state.cards[item.position]={name:item.card,orientation:item.orientation||'upright'};
+        }
+      });
+      buildManualEntries(spread);
+      document.getElementById('upload-results').innerHTML='<p style="color:var(--success);font-size:12px;margin-top:8px">Cards identified. Switch to Manual Entry tab to review and correct.</p>';
+    }
+  }catch(err){
+    document.getElementById('upload-results').innerHTML=`<p style="color:var(--danger);font-size:12px;margin-top:8px">Error: ${err.message}. Try manual entry instead.</p>`;
+  }
+  btn.disabled=false;btn.textContent='✨ Identify Cards with AI';
+}
+
+function confirmCards(){
+  const spread=getSpread();
+  // Collect from manual entries if not yet stored
+  document.querySelectorAll('#manual-entries .card-entry-row').forEach(row=>{
+    const inp=row.querySelector('input[data-pos]');
+    if(!inp)return;
+    const posId=inp.dataset.pos;
+    const val=inp.value.trim();
+    const orient=row.querySelector('.orient-btn').dataset.orient;
+    if(val)state.cards[posId]={name:val,orientation:orient};
+  });
+  // Check drop card
+  if(state.hasDroppedCard){
+    const dropInput=document.querySelector('#drop-card-entry input[data-pos="drop"]');
+    const dropOrient=document.querySelector('#drop-card-entry .orient-btn');
+    if(dropInput&&dropInput.value.trim()){
+      state.droppedCard={name:dropInput.value.trim(),orientation:dropOrient.dataset.orient};
+    }
+  }
+  // Validate — check both numeric and string keys since positions use numeric ids
+  let filled=0;
+  spread.positions.forEach(p=>{if(state.cards[p.id]||state.cards[String(p.id)])filled++});
+  if(filled<spread.cardCount){
+    if(!confirm(`You have ${filled} of ${spread.cardCount} cards entered. Continue anyway?`))return;
+  }
+  renderOverview();
+  goScreen('screen-overview');
+}
+
+// ===== OVERVIEW =====
+function renderOverview(){
+  const spread=getSpread();
+  const grid=document.getElementById('overview-grid');
+  grid.innerHTML='';
+  spread.positions.forEach(pos=>{
+    const entry=state.cards[pos.id];
+    const card=entry?currentCards.find(c=>c.name.toLowerCase()===entry.name.toLowerCase()):null;
+    const tile=document.createElement('div');
+    tile.className='overview-tile';
+    if(!entry){
+      tile.innerHTML=`<div class="c-pos">${pos.name}</div><div style="color:var(--muted);font-size:12px;margin-top:12px;cursor:pointer" onclick="goScreen('screen-card-entry')">Unknown — tap to set</div>`;
+    }else{
+      const sym=card?getSuitSym(card):'?';
+      const kws=card?card.keywords.slice(0,3):[];
+      tile.innerHTML=`
+        <div class="suit-sym">${sym}</div>
+        <div class="c-name">${entry.name}</div>
+        <div class="c-pos">${pos.name}</div>
+        <span class="orient ${entry.orientation}">${entry.orientation==='upright'?'↑ Upright':'↓ Reversed'}</span>
+        <div class="kw">${kws.map(k=>`<span>${k}</span>`).join('')}</div>`;
+    }
+    grid.appendChild(tile);
+  });
+  // Dropped card
+  const dropDiv=document.getElementById('dropped-overview');
+  if(state.hasDroppedCard&&state.droppedCard){
+    const dc=currentCards.find(c=>c.name.toLowerCase()===state.droppedCard.name.toLowerCase());
+    const kws=dc?dc.keywords.slice(0,3):[];
+    dropDiv.style.display='block';
+    dropDiv.innerHTML=`<div class="overview-tile" style="border-color:var(--gold);background:#1e1545">
+      <div style="font-size:10px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">✦ Dropped Card (Jumper)</div>
+      <div class="suit-sym">${dc?getSuitSym(dc):'?'}</div>
+      <div class="c-name">${state.droppedCard.name}</div>
+      <span class="orient ${state.droppedCard.orientation}">${state.droppedCard.orientation==='upright'?'↑ Upright':'↓ Reversed'}</span>
+      <div class="kw">${kws.map(k=>`<span>${k}</span>`).join('')}</div>
+      <p style="font-size:10px;color:var(--muted);margin-top:6px;font-style:italic">This card jumped out during shuffling — it may reveal an underlying theme influencing your reading.</p>
+    </div>`;
+  }else{
+    dropDiv.style.display='none';
+  }
+}
+
+// ===== READING GENERATION =====
+async function generateReading(){
+  goScreen('screen-reading');
+  const content=document.getElementById('reading-content');
+  content.innerHTML='<div class="loading"><div class="spinner"></div><p>Generating your reading…</p><p id="ai-status" style="font-size:11px;color:var(--muted);margin-top:4px"></p></div>';
+  const settings=loadSettings();
+  if(settings.geminiKey&&state.readingMode!=='classic-forced'){
+    state.readingMode='ai';
+    try{
+      const narrative=await generateAIReading(settings);
+      state.narrative=narrative;
+      renderReading(narrative);
+      highlightReadingBtn('ai');
+    }catch(e){
+      const fallback=generateClassicReading();
+      state.narrative=fallback;
+      renderReading(fallback);
+      highlightReadingBtn('classic');
+      content.insertAdjacentHTML('afterbegin',`<p style="color:var(--danger);font-size:11px;margin-bottom:12px">AI reading failed (${e.message}). Showing classic reading instead.</p>`);
+    }
+  }else{
+    state.readingMode='classic';
+    const classic=generateClassicReading();
+    state.narrative=classic;
+    renderReading(classic);
+    highlightReadingBtn('classic');
+  }
+}
+
+function highlightReadingBtn(mode){
+  document.getElementById('btn-ai-read').classList.toggle('btn-primary',mode==='ai');
+  document.getElementById('btn-classic-read').classList.toggle('btn-primary',mode==='classic');
+}
+
+async function switchReadingMode(mode){
+  const content=document.getElementById('reading-content');
+  if(mode==='ai'){
+    const settings=loadSettings();
+    if(!settings.geminiKey){alert('Set your Gemini API key in Settings to use AI readings.');return;}
+    content.innerHTML='<div class="loading"><div class="spinner"></div><p>Generating AI reading…</p><p id="ai-status" style="font-size:11px;color:var(--muted);margin-top:4px"></p></div>';
+    try{
+      const narrative=await generateAIReading(settings);
+      state.narrative=narrative;
+      renderReading(narrative);
+    }catch(e){
+      content.innerHTML=`<p style="color:var(--danger)">Error: ${e.message}</p>`;
+    }
+  }else{
+    const classic=generateClassicReading();
+    state.narrative=classic;
+    renderReading(classic);
+  }
+  highlightReadingBtn(mode);
+}
+
+async function generateAIReading(settings){
+  const spread=getSpread();
+  let cardLines='';
+  spread.positions.forEach(pos=>{
+    const entry=state.cards[pos.id];
+    if(entry){
+      const card=currentCards.find(c=>c.name.toLowerCase()===entry.name.toLowerCase());
+      const kws=card?card.keywords.join(', '):'';
+      cardLines+=`  ${pos.name}: ${entry.name} (${entry.orientation}) — Keywords: ${kws}\n`;
+    }
+  });
+  let droppedLine='';
+  if(state.hasDroppedCard&&state.droppedCard){
+    const dc=currentCards.find(c=>c.name.toLowerCase()===state.droppedCard.name.toLowerCase());
+    droppedLine=`\nDropped Card (fell out during shuffling): ${state.droppedCard.name} (${state.droppedCard.orientation}) — Keywords: ${dc?dc.keywords.join(', '):''}\nThis card may reveal an underlying theme influencing the entire reading.\n`;
+  }
+  const prompt=`You are a compassionate, insightful tarot reader with deep knowledge of ${state.cardSystem==='tarot'?'traditional tarot':'playing card cartomancy'}.
+Generate a complete reading with these sections, using markdown headers (##):
+## Introduction — Overall theme and mood
+## Position-by-Position — Each card interpreted in context of its position
+## Pattern Analysis — Dominant suits, major arcana influence, repeated numbers, reversals, card interactions
+## Guidance — Practical, actionable advice
+## Reflection Questions — 3-5 thoughtful journaling prompts as a bulleted list
+
+Reading style: ${settings.readingStyle}. Tone: ${settings.readingTone}.
+${state.concerns.length?'Concerns: '+state.concerns.join(', '):'No specific concerns — provide general guidance.'}
+Spread: ${spread.name} — ${spread.description}
+Cards:
+${cardLines}${droppedLine}
+Write as a flowing narrative, not a list of definitions. Make connections between the cards. Be specific and insightful.`;
+  return await callGemini(prompt,settings.geminiKey,null,document.getElementById('ai-status'));
+}
+
+function generateClassicReading(){
+  const spread=getSpread();
+  let reading='';
+  // Analyze patterns
+  let suitCounts={};let majorCount=0;let reversedCount=0;
+  const entries=[];
+  spread.positions.forEach(pos=>{
+    const entry=state.cards[pos.id];
+    if(!entry)return;
+    const card=currentCards.find(c=>c.name.toLowerCase()===entry.name.toLowerCase());
+    if(!card)return;
+    entries.push({pos,entry,card});
+    if(card.suit)suitCounts[card.suit]=(suitCounts[card.suit]||0)+1;
+    if(card.arcana==='major')majorCount++;
+    if(entry.orientation==='reversed')reversedCount++;
+  });
+  const dominantSuit=Object.entries(suitCounts).sort((a,b)=>b[1]-a[1])[0];
+
+  // Dropped card
+  if(state.hasDroppedCard&&state.droppedCard){
+    const dc=currentCards.find(c=>c.name.toLowerCase()===state.droppedCard.name.toLowerCase());
+    reading+=`## The Dropped Card\n\nBefore the reading begins, a card fell from the deck: **${state.droppedCard.name}** (${state.droppedCard.orientation}). ${dc?`This card speaks of ${state.droppedCard.orientation==='upright'?dc.upright:dc.reversed}`:'This card carries its own message.'} This jumper card often reveals an underlying energy influencing the entire spread — keep its message in mind as you read on.\n\n`;
+  }
+
+  // Introduction
+  reading+=`## Introduction\n\n`;
+  if(majorCount>=3)reading+=`This reading carries significant weight — ${majorCount} Major Arcana cards appear, suggesting powerful life forces and spiritual lessons at play. `;
+  if(dominantSuit){
+    const suitThemes={wands:'passion and creative energy',cups:'emotions and relationships',swords:'mental clarity and challenges',pentacles:'material matters and practical concerns',hearts:'love and emotional connections',spades:'mental challenges and difficult truths',diamonds:'material prosperity and practical matters',clubs:'ambition and dynamic energy'};
+    reading+=`The dominant suit is ${dominantSuit[0]} (${dominantSuit[1]} cards), centering this reading on themes of ${suitThemes[dominantSuit[0]]||dominantSuit[0]}. `;
+  }
+  if(reversedCount>0)reading+=`${reversedCount} reversed card${reversedCount>1?'s':''} suggest${reversedCount===1?'s':''} blocked energy or internal challenges to work through. `;
+  reading+=`\n\nLet us explore what the cards reveal.\n\n`;
+
+  // Position by position
+  reading+=`## Position-by-Position\n\n`;
+  entries.forEach(({pos,entry,card})=>{
+    const meaning=entry.orientation==='upright'?card.upright:card.reversed;
+    reading+=`**${pos.name} — ${entry.name}** (${entry.orientation})\n\n`;
+    reading+=`In the position of *${pos.description}*, ${card.name} speaks of ${meaning.toLowerCase().endsWith('.')?meaning:meaning+'.'}`;
+    reading+=` Keywords to reflect on: ${card.keywords.join(', ')}.\n\n`;
+  });
+
+  // Pattern Analysis
+  reading+=`## Pattern Analysis\n\n`;
+  if(majorCount>0)reading+=`- **Major Arcana presence:** ${majorCount} card${majorCount>1?'s':''} — significant spiritual and life-path themes are active.\n`;
+  if(dominantSuit)reading+=`- **Dominant suit:** ${dominantSuit[0]} appears ${dominantSuit[1]} times.\n`;
+  if(reversedCount>0)reading+=`- **Reversals:** ${reversedCount} reversed card${reversedCount>1?'s':''} indicate areas of blocked or internalized energy.\n`;
+  const numbers=entries.map(e=>e.card.number);
+  const numCounts={};numbers.forEach(n=>{numCounts[n]=(numCounts[n]||0)+1});
+  const repeatedNums=Object.entries(numCounts).filter(([_,c])=>c>1);
+  if(repeatedNums.length)reading+=`- **Repeated numbers:** ${repeatedNums.map(([n,c])=>`${n} appears ${c} times`).join('; ')}.\n`;
+  reading+='\n';
+
+  // Guidance
+  reading+=`## Guidance\n\n`;
+  reading+=`Based on this reading, consider taking time to reflect on the themes that have emerged. `;
+  if(state.concerns.length)reading+=`In relation to your concerns about ${state.concerns.join(' and ')}, the cards suggest paying attention to the areas highlighted above. `;
+  reading+=`Trust your intuition as you move forward, and remember that the cards reflect possibilities, not certainties. Your choices shape your path.\n\n`;
+
+  // Reflection Questions
+  reading+=`## Reflection Questions\n\n`;
+  reading+=`- What emotions arise as you look at this spread?\n`;
+  reading+=`- Which card surprised you the most, and why?\n`;
+  reading+=`- What is one small action you can take today based on this guidance?\n`;
+  if(reversedCount>0)reading+=`- What blocked energy do the reversed cards point to, and how might you release it?\n`;
+  if(state.concerns.length)reading+=`- How does this reading shift your perspective on ${state.concerns[0]}?\n`;
+
+  return reading;
+}
+
+function renderReading(text){
+  const content=document.getElementById('reading-content');
+  // Markdown rendering — process lists properly
+  const lines=text.split('\n');
+  let html='';let inList=false;
+  lines.forEach(line=>{
+    const trimmed=line.trim();
+    if(trimmed.startsWith('## ')){
+      if(inList){html+='</ul>';inList=false}
+      html+=`<div class="reading-section"><h3>${trimmed.slice(3)}</h3>`;
+    }else if(trimmed.startsWith('- ')){
+      if(!inList){html+='<ul>';inList=true}
+      html+=`<li>${trimmed.slice(2)}</li>`;
+    }else if(trimmed===''){
+      if(inList){html+='</ul>';inList=false}
+      html+='</p><p>';
+    }else{
+      if(inList){html+='</ul>';inList=false}
+      html+=trimmed+'<br>';
+    }
+  });
+  if(inList)html+='</ul>';
+  html='<p>'+html+'</p>';
+  // Bold and italic
+  html=html.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>');
+  // Clean up empty paragraphs
+  html=html.replace(/<p><\/p>/g,'').replace(/<p><br>/g,'<p>').replace(/<br><\/p>/g,'</p>');
+  // Close reading sections
+  const sections=html.split('<div class="reading-section">');
+  if(sections.length>1){
+    html=sections[0]+sections.slice(1).map(s=>'<div class="reading-section">'+s+'</div>').join('');
+  }
+  content.innerHTML=html;
+}
+
+// ===== GEMINI API =====
+const GEMINI_MODELS=['gemini-2.5-flash','gemini-2.5-flash-lite','gemini-3.5-flash','gemini-3.1-flash-lite'];
+
+async function callGemini(prompt,apiKey,imageData=null,statusEl=null){
+  const parts=[{text:prompt}];
+  if(imageData){
+    const base64=imageData.split(',')[1];
+    const mime=imageData.split(';')[0].split(':')[1];
+    parts.push({inline_data:{mime_type:mime,data:base64}});
+  }
+  const body=JSON.stringify({contents:[{parts}]});
+  const headers={'Content-Type':'application/json'};
+
+  for(let m=0;m<GEMINI_MODELS.length;m++){
+    const model=GEMINI_MODELS[m];
+    const url=`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    for(let attempt=0;attempt<2;attempt++){
+      if(statusEl)statusEl.textContent=`Trying ${model}${attempt>0?' (retry)':''}…`;
+      const resp=await fetch(url,{method:'POST',headers,body});
+      if(resp.ok){
+        const data=await resp.json();
+        return data.candidates?.[0]?.content?.parts?.[0]?.text||'No response generated.';
+      }
+      if(resp.status===429){
+        const errText=await resp.text();
+        const isZeroQuota=errText.includes('limit: 0');
+        // If limit is 0, this model has no quota at all — skip immediately to next model
+        if(isZeroQuota){
+          if(m<GEMINI_MODELS.length-1){
+            if(statusEl)statusEl.textContent=`${model} has no quota. Trying ${GEMINI_MODELS[m+1]}…`;
+            break;
+          }
+          throw new Error(`All models rate limited (limit: 0). Your API key may not have free tier access. Try creating a new key in a new project at aistudio.google.com`);
+        }
+        // Temporary rate limit — wait and retry once
+        let wait=15;
+        const delayMatch=errText.match(/retryDelay.*?(\d+)/);
+        if(delayMatch)wait=Math.min(parseInt(delayMatch[1])+2,45);
+        if(attempt===0){
+          if(statusEl)statusEl.textContent=`Rate limited on ${model}. Waiting ${wait}s…`;
+          await countdown(wait,statusEl,model);
+          continue;
+        }
+        if(m<GEMINI_MODELS.length-1){
+          if(statusEl)statusEl.textContent=`${model} quota exhausted. Trying ${GEMINI_MODELS[m+1]}…`;
+          break;
+        }
+        throw new Error(`All models rate limited. Please wait a minute and try again.`);
+      }
+      // Other error (400, 403, etc)
+      const e=await resp.text();
+      if(resp.status===400&&m<GEMINI_MODELS.length-1)break; // model doesn't exist, try next
+      if(resp.status===403)throw new Error('API key invalid or Generative Language API not enabled. Go to aistudio.google.com/apikey and create a new key in a new project.');
+      if(m<GEMINI_MODELS.length-1)break;
+      throw new Error(`API error ${resp.status}`);
+    }
+  }
+  throw new Error('All models failed. Please try again later.');
+}
+
+async function countdown(secs,statusEl,model){
+  for(let i=secs;i>0;i--){
+    if(statusEl)statusEl.textContent=`Rate limited on ${model}. Retrying in ${i}s…`;
+    await new Promise(r=>setTimeout(r,1000));
+  }
+}
+
+async function testApiKey(){
+  const key=document.getElementById('api-key-input').value.trim();
+  const status=document.getElementById('key-status');
+  if(!key){status.textContent='Enter a key first';status.style.color='var(--danger)';return;}
+  status.textContent='Testing…';status.style.color='var(--muted)';
+  try{
+    await callGemini('Say "hello" in one word.',key,null,status);
+    status.textContent='✓ Key works! (auto-saved)';status.style.color='var(--success)';
+    // Auto-save on successful test
+    saveSettings();
+    // Re-open modal since saveSettings closes it
+    document.getElementById('modal-settings').classList.add('open');
+    loadSettingsUI();
+  }catch(e){
+    const msg=e.message||'';
+    if(msg.includes('rate limit')||msg.includes('Rate limit')||msg.includes('429')){
+      status.textContent='✓ Key is valid (rate limited, try later)';status.style.color='var(--gold)';
+      saveSettings();
+      document.getElementById('modal-settings').classList.add('open');
+      loadSettingsUI();
+    }else{
+      status.textContent='✕ ' + (e.message||'Unknown error');status.style.color='var(--danger)';
+    }
+  }
+}
+
+// ===== QUICK READING =====
+async function quickRead(){
+  const settings=loadSettings();
+  if(!settings.geminiKey){alert('Quick Reading requires a Gemini API key. Set it in Settings.');return;}
+  if(!state.uploadedImage){alert('Please upload a photo first.');return;}
+  const concern=document.getElementById('quick-concern').value.trim();
+  state.concerns=concern?[concern]:[];
+  state.cardSystem=state.cardSystem||'tarot';
+  const results=document.getElementById('quick-results');
+  results.innerHTML='<div class="loading"><div class="spinner"></div><p>Analyzing your spread…</p><p id="quick-ai-status" style="font-size:11px;color:var(--muted);margin-top:4px"></p></div>';
+  try{
+    const prompt=`This is a photo of a tarot or playing card spread. Please:
+1. Identify the card system (tarot or playing cards)
+2. Identify the spread type and number of cards
+3. For each card, identify its name and orientation (upright/reversed)
+4. Generate a complete reading with sections: Introduction, Position-by-Position, Pattern Analysis, Guidance, Reflection Questions
+
+${concern?'The querent\'s concern: '+concern:'No specific concern — provide general guidance.'}
+Reading style: ${settings.readingStyle}. Tone: ${settings.readingTone}.
+
+Write the reading as a flowing narrative using ## markdown headers for sections.`;
+    const narrative=await callGemini(prompt,settings.geminiKey,state.uploadedImage,document.getElementById('quick-ai-status'));
+    state.narrative=narrative;
+    results.innerHTML='';
+    const content=document.createElement('div');
+    content.id='quick-reading-content';
+    results.appendChild(content);
+    renderReadingInto(content,narrative);
+    results.insertAdjacentHTML('beforeend',`
+      <div class="nav-row" style="margin-top:16px">
+        <button class="btn" onclick="window.print()">🖨 Print</button>
+        <button class="btn btn-primary" onclick="saveReading()">💾 Save Reading</button>
+      </div>`);
+  }catch(e){
+    results.innerHTML=`<p style="color:var(--danger)">Error: ${e.message}</p>`;
+  }
+}
+
+function renderReadingInto(container,text){
+  // Reuse same markdown logic as renderReading
+  const lines=text.split('\n');
+  let html='';let inList=false;
+  lines.forEach(line=>{
+    const trimmed=line.trim();
+    if(trimmed.startsWith('## ')){
+      if(inList){html+='</ul>';inList=false}
+      html+=`<div class="reading-section"><h3>${trimmed.slice(3)}</h3>`;
+    }else if(trimmed.startsWith('- ')){
+      if(!inList){html+='<ul>';inList=true}
+      html+=`<li>${trimmed.slice(2)}</li>`;
+    }else if(trimmed===''){
+      if(inList){html+='</ul>';inList=false}
+      html+='</p><p>';
+    }else{
+      if(inList){html+='</ul>';inList=false}
+      html+=trimmed+'<br>';
+    }
+  });
+  if(inList)html+='</ul>';
+  html='<p>'+html+'</p>';
+  html=html.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\*(.*?)\*/g,'<em>$1</em>');
+  html=html.replace(/<p><\/p>/g,'').replace(/<p><br>/g,'<p>').replace(/<br><\/p>/g,'</p>');
+  const sections=html.split('<div class="reading-section">');
+  if(sections.length>1){
+    html=sections[0]+sections.slice(1).map(s=>'<div class="reading-section">'+s+'</div>').join('');
+  }
+  container.innerHTML=html;
+}
+
+// ===== TOAST NOTIFICATION =====
+function showToast(msg){
+  let t=document.getElementById('app-toast');
+  if(!t){t=document.createElement('div');t.id='app-toast';t.className='toast';document.body.appendChild(t)}
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ===== PERSISTENCE =====
+function loadSettings(){
+  try{return JSON.parse(localStorage.getItem('arcana_settings'))||{geminiKey:'',readingStyle:'Traditional',readingTone:'Gentle'}}catch(e){return{geminiKey:'',readingStyle:'Traditional',readingTone:'Gentle'}}
+}
+function saveSettings(){
+  const s={
+    geminiKey:document.getElementById('api-key-input').value.trim(),
+    readingStyle:document.getElementById('reading-style').value,
+    readingTone:document.getElementById('reading-tone').value
+  };
+  localStorage.setItem('arcana_settings',JSON.stringify(s));
+  closeModal('modal-settings');
+  showToast('Settings saved ✓');
+}
+function showToast(msg){
+  let t=document.querySelector('.toast');
+  if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
+}
+function loadSettingsUI(){
+  const s=loadSettings();
+  document.getElementById('api-key-input').value=s.geminiKey;
+  document.getElementById('reading-style').value=s.readingStyle;
+  document.getElementById('reading-tone').value=s.readingTone;
+}
+
+function saveReading(){
+  const title=prompt('Give this reading a title:','Reading '+new Date().toLocaleDateString());
+  if(!title)return;
+  const readings=JSON.parse(localStorage.getItem('arcana_readings')||'[]');
+  const spread=getSpread();
+  readings.unshift({
+    id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),
+    title,
+    date:new Date().toISOString(),
+    mode:state.mode,
+    concerns:[...state.concerns],
+    cardSystem:state.cardSystem||'tarot',
+    spread:state.spreadId||'quick',
+    spreadName:spread?spread.name:'Quick Reading',
+    cards:{...state.cards},
+    droppedCard:state.droppedCard,
+    hasDroppedCard:state.hasDroppedCard,
+    narrative:state.narrative,
+    notes:''
+  });
+  if(readings.length>50)readings.pop();
+  localStorage.setItem('arcana_readings',JSON.stringify(readings));
+  showToast('Reading saved!');
+}
+
+// ===== HISTORY =====
+function renderHistory(){
+  const list=document.getElementById('history-list');
+  const readings=JSON.parse(localStorage.getItem('arcana_readings')||'[]');
+  if(!readings.length){list.innerHTML='<p style="text-align:center;color:var(--muted);padding:40px">No saved readings yet. Complete a reading and save it to see it here.</p>';return;}
+  list.innerHTML='';
+  readings.forEach((r,i)=>{
+    const d=new Date(r.date);
+    const item=document.createElement('div');
+    item.className='history-item';
+    item.innerHTML=`
+      <div class="history-header" onclick="this.nextElementSibling.classList.toggle('open')">
+        <div><h4 style="font-size:13px">${r.title||'Untitled Reading'}</h4><span style="font-size:11px;color:var(--muted)">${r.spreadName||r.spread} · ${r.cardSystem}</span></div>
+        <span class="h-date">${d.toLocaleDateString()}</span>
+      </div>
+      <div class="history-body">
+        ${r.concerns&&r.concerns.length?`<p style="font-size:12px;color:var(--muted);margin-bottom:8px"><strong>Concerns:</strong> ${r.concerns.join(', ')}</p>`:''}
+        <div id="history-reading-${i}" style="margin-bottom:12px"></div>
+        <label style="font-size:11px;color:var(--gold)">Journal Notes</label>
+        <textarea style="margin-top:4px" placeholder="Add your reflections…" oninput="updateNote(${i},this.value)">${r.notes||''}</textarea>
+        <div style="margin-top:8px;text-align:right">
+          <button class="btn btn-sm btn-danger" onclick="deleteReading(${i})">Delete</button>
+        </div>
+      </div>`;
+    list.appendChild(item);
+    // Render reading content
+    const readingDiv=document.getElementById(`history-reading-${i}`);
+    renderReadingInto(readingDiv,r.narrative||'No reading content saved.');
+  });
+}
+function updateNote(idx,val){
+  const readings=JSON.parse(localStorage.getItem('arcana_readings')||'[]');
+  if(readings[idx]){readings[idx].notes=val;localStorage.setItem('arcana_readings',JSON.stringify(readings))}
+}
+function deleteReading(idx){
+  if(!confirm('Delete this reading?'))return;
+  const readings=JSON.parse(localStorage.getItem('arcana_readings')||'[]');
+  readings.splice(idx,1);
+  localStorage.setItem('arcana_readings',JSON.stringify(readings));
+  renderHistory();
+}
+
+// ===== MODALS =====
+function openModal(id){document.getElementById(id).classList.add('open');if(id==='modal-settings')loadSettingsUI()}
+function closeModal(id){document.getElementById(id).classList.remove('open')}
+document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)})});
+
+// ===== INIT =====
+function init(){
+  // Stars
+  const s=document.getElementById('stars');
+  for(let i=0;i<60;i++){
+    const d=document.createElement('div');
+    d.className='star';
+    d.style.left=Math.random()*100+'%';
+    d.style.top=Math.random()*100+'%';
+    d.style.animationDelay=Math.random()*3+'s';
+    d.style.animationDuration=(2+Math.random()*3)+'s';
+    s.appendChild(d);
+  }
+  currentCards=getCards();
+}
+init();
+</script>
+</body>
+</html>
