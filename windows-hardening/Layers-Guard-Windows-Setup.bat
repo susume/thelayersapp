@@ -14,7 +14,7 @@ powershell.exe -NoProfile -Command "$p=New-Object Security.Principal.WindowsPrin
 if errorlevel 1 (
     echo Layers Guard needs Windows administrator permission.
     echo A Windows permission prompt will appear now.
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:ComSpec -ArgumentList '/d','/c',('^"' + $env:LG_SETUP_FILE + '^"') -Verb RunAs"
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:LG_SETUP_FILE -Verb RunAs"
     exit /b
 )
 
