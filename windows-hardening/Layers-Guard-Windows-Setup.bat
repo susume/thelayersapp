@@ -14,7 +14,7 @@ powershell.exe -NoProfile -Command "$p=New-Object Security.Principal.WindowsPrin
 if errorlevel 1 (
     echo Layers Guard needs Windows administrator permission.
     echo A Windows permission prompt will appear now.
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:LG_SETUP_FILE -Verb RunAs"
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$q='""'+$env:LG_SETUP_FILE+'""'; Start-Process -FilePath $env:ComSpec -ArgumentList '/d','/c',$q -Verb RunAs"
     exit /b
 )
 
@@ -47,9 +47,13 @@ if errorlevel 1 goto :fail
 
 rem Keep a verified local copy with the policy backup for simple future rollback.
 copy /Y "%WORKDIR%\layers-guard-common.ps1" "%BACKUP_DIR%\layers-guard-common.ps1" >nul
+if errorlevel 1 goto :fail
 copy /Y "%WORKDIR%\layers-guard-check.ps1" "%BACKUP_DIR%\layers-guard-check.ps1" >nul
+if errorlevel 1 goto :fail
 copy /Y "%WORKDIR%\layers-guard-harden.ps1" "%BACKUP_DIR%\layers-guard-harden.ps1" >nul
+if errorlevel 1 goto :fail
 copy /Y "%WORKDIR%\layers-guard-restore.ps1" "%BACKUP_DIR%\layers-guard-restore.ps1" >nul
+if errorlevel 1 goto :fail
 
 echo.
 echo Verifying protection...

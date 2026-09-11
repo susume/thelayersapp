@@ -13,7 +13,7 @@ powershell.exe -NoProfile -Command "$p=New-Object Security.Principal.WindowsPrin
 if errorlevel 1 (
     echo Layers Guard needs Windows administrator permission.
     echo A Windows permission prompt will appear now.
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "Start-Process -FilePath $env:LG_REMOVE_FILE -Verb RunAs"
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "$q='""'+$env:LG_REMOVE_FILE+'""'; Start-Process -FilePath $env:ComSpec -ArgumentList '/d','/c',$q -Verb RunAs"
     exit /b
 )
 
@@ -53,7 +53,6 @@ if "%RESTORE_EXIT%"=="0" (
 echo.
 echo The restore completed with a warning or conflict.
 echo Layers Guard deliberately did not overwrite settings that another
-
 echo administrator changed after Windows Secure Mode was installed.
 echo Please visit https://thelayersapp.com/guard-windows.html for help.
 echo.
