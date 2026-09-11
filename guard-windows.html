@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Layers Guard — Windows Secure Mode Setup for Parents</title>
+<meta name="description" content="Parent-friendly Windows setup guide for Layers Guard. Download the public hardening toolkit, disable Chrome bypass routes, verify protection, and keep the child's Windows account standard.">
+<meta name="theme-color" content="#6D28D9">
+<link rel="canonical" href="https://thelayersapp.com/guard-windows.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F4EE;--card:#fff;--text:#1C2B20;--muted:#5A6B5E;--dim:#8D998F;--guard:#6D28D9;--guard2:#7C3AED;--gborder:rgba(109,40,217,.20);--green:#2D6A4F;--greenbg:#EDF5F0;--amber:#9A6700;--amberbg:#FFF7DB;--border:rgba(45,106,79,.14);--code:#17151C}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);line-height:1.65}a{color:inherit}.page{position:relative;z-index:1}body:before{content:"";position:fixed;inset:0;background-image:linear-gradient(rgba(45,106,79,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(45,106,79,.035) 1px,transparent 1px);background-size:60px 60px;pointer-events:none}
+nav{position:sticky;top:0;z-index:50;height:64px;padding:0 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(247,244,238,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'DM Serif Display',serif;font-size:1.3rem}.dot{width:10px;height:10px;border-radius:50%;background:var(--guard);box-shadow:0 0 18px rgba(109,40,217,.45)}.navlinks{display:flex;gap:22px;align-items:center}.navlinks a{text-decoration:none;color:var(--muted);font-size:.88rem;font-weight:600}.navlinks .pill{background:var(--guard);color:#fff;padding:8px 16px;border-radius:999px}
+.hero{max-width:1080px;margin:0 auto;padding:88px 32px 52px;text-align:center}.badge{display:inline-flex;align-items:center;gap:8px;color:var(--guard);background:rgba(109,40,217,.08);border:1px solid var(--gborder);border-radius:999px;padding:7px 15px;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase}.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(2.7rem,6vw,5rem);line-height:1.02;margin:24px auto 22px;max-width:900px}.hero h1 em{color:var(--guard);font-style:italic}.hero p{max-width:720px;margin:0 auto;color:var(--muted);font-size:1.08rem}.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:32px 0 18px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:12px;padding:13px 20px;text-decoration:none;font-weight:700;border:1px solid var(--gborder);background:#fff}.btn.primary{background:var(--guard);color:white;border-color:var(--guard);box-shadow:0 8px 24px rgba(109,40,217,.18)}.btn:hover{transform:translateY(-1px)}.smallnote{font-size:.84rem;color:var(--dim)}
+.wrap{max-width:1080px;margin:0 auto;padding:48px 32px}.section-title{text-align:center;margin-bottom:30px}.eyebrow{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--guard);font-size:.72rem;font-weight:700}.section-title h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;margin-top:10px}.section-title p{max-width:700px;margin:13px auto 0;color:var(--muted)}
+.notice{display:grid;grid-template-columns:auto 1fr;gap:14px;background:var(--amberbg);border:1px solid rgba(154,103,0,.22);border-radius:16px;padding:18px 20px;margin:28px 0}.notice strong{display:block;margin-bottom:2px}.notice p{color:#6D530D;font-size:.93rem}.shield{font-size:1.4rem}
+.downloads{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.download{display:flex;gap:15px;align-items:center;padding:18px;background:#fff;border:1px solid var(--border);border-radius:16px;text-decoration:none;transition:.18s}.download:hover{border-color:var(--gborder);transform:translateY(-2px)}.fileicon{width:44px;height:44px;border-radius:11px;background:rgba(109,40,217,.08);display:grid;place-items:center;font-family:'DM Mono',monospace;font-weight:700;color:var(--guard)}.download strong{display:block}.download span{color:var(--muted);font-size:.86rem}.required{font-size:.68rem!important;color:var(--guard)!important;font-weight:700;text-transform:uppercase;letter-spacing:.08em}.optional{font-size:.68rem!important;color:var(--green)!important;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+.steps{display:grid;gap:26px}.step{display:grid;grid-template-columns:1fr 1.1fr;gap:28px;background:#fff;border:1px solid var(--border);border-radius:22px;padding:26px;align-items:center}.step:nth-child(even) .visual{order:2}.stepnum{font-family:'DM Mono',monospace;color:var(--guard);font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}.step h3{font-size:1.38rem;margin:8px 0}.step p{color:var(--muted);margin-bottom:12px}.step ul{padding-left:20px;color:var(--muted)}.step li{margin:5px 0}.visual{background:#F4F1FA;border:1px solid var(--gborder);border-radius:17px;padding:12px;overflow:hidden}.visual svg{display:block;width:100%;height:auto}.caption{font-size:.76rem;color:var(--dim);text-align:center;margin-top:8px}
+.codebox{background:var(--code);color:#F6F3FA;border-radius:14px;padding:16px 18px;margin:13px 0;font-family:'DM Mono',monospace;font-size:.81rem;overflow:auto;white-space:pre}.copy{border:0;background:rgba(109,40,217,.11);color:var(--guard);font-weight:700;border-radius:9px;padding:8px 12px;cursor:pointer}.copyrow{display:flex;justify-content:flex-end;margin-top:-6px}.success{background:var(--greenbg);border:1px solid rgba(45,106,79,.2);border-radius:16px;padding:20px}.success h3{color:var(--green);margin-bottom:8px}.success-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}.check{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px;font-size:.9rem}.check b{color:var(--green)}
+.boundary{display:grid;grid-template-columns:1fr 1fr;gap:16px}.boundary-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:22px}.boundary-card h3{margin-bottom:8px}.boundary-card p{color:var(--muted);font-size:.92rem}.yes{border-top:4px solid var(--green)}.no{border-top:4px solid var(--guard)}
+footer{border-top:1px solid var(--border);margin-top:50px;padding:36px 30px;color:var(--muted);text-align:center;font-size:.86rem}.footerlinks{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:12px}.footerlinks a{text-decoration:none}
+@media(max-width:760px){nav{padding:0 18px}.navlinks a:not(.pill){display:none}.hero,.wrap{padding-left:20px;padding-right:20px}.downloads,.boundary,.success-grid{grid-template-columns:1fr}.step{grid-template-columns:1fr}.step:nth-child(even) .visual{order:0}.step .visual{order:0}.hero{padding-top:62px}.hero h1{font-size:2.8rem}}
+</style>
+</head>
+<body>
+<div class="page">
+<nav>
+  <a class="brand" href="/"><span class="dot"></span>Layers</a>
+  <div class="navlinks"><a href="guard.html">Layers Guard</a><a href="#downloads" class="pill">Download Windows Toolkit</a></div>
+</nav>
+
+<header class="hero">
+  <div class="badge">🛡 Windows Secure Mode · Parent Setup</div>
+  <h1>Close the easy Chrome <em>bypass routes.</em></h1>
+  <p>Layers Guard works inside Chrome. This optional Windows toolkit lets a parent with administrator access disable Chrome Guest Mode, Incognito, new profile creation and extension Developer Mode, then force-install Layers Guard using its published Chrome Web Store ID.</p>
+  <div class="hero-actions"><a class="btn primary" href="#downloads">↓ Download the required files</a><a class="btn" href="#instructions">View picture guide</a></div>
+  <div class="smallnote">For Windows PCs using Google Chrome · The child should use a Standard Windows account</div>
+</header>
+
+<main>
+<section class="wrap" id="downloads">
+  <div class="section-title"><span class="eyebrow">// Public download</span><h2>Download these files into one folder</h2><p>The hardening script uses the helper and checker beside it, so keep the required files together. The restore script is strongly recommended so you can reverse only the settings Layers Guard owns.</p></div>
+  <div class="notice"><div class="shield">⚠️</div><div><strong>Use only on a PC you administer.</strong><p>This changes machine-level Chrome policies and requires a Windows Administrator account. It does not delete Chrome profiles or change Windows accounts.</p></div></div>
+  <div class="downloads">
+    <a class="download" href="windows-hardening/layers-guard-harden.ps1" download><div class="fileicon">PS1</div><div><span class="required">Required</span><strong>layers-guard-harden.ps1</strong><span>Applies and verifies Chrome machine policies.</span></div></a>
+    <a class="download" href="windows-hardening/layers-guard-common.ps1" download><div class="fileicon">PS1</div><div><span class="required">Required</span><strong>layers-guard-common.ps1</strong><span>Shared safety, backup and policy functions.</span></div></a>
+    <a class="download" href="windows-hardening/layers-guard-check.ps1" download><div class="fileicon">PS1</div><div><span class="required">Required</span><strong>layers-guard-check.ps1</strong><span>Read-only verification of Windows Secure Mode.</span></div></a>
+    <a class="download" href="windows-hardening/layers-guard-restore.ps1" download><div class="fileicon">PS1</div><div><span class="optional">Recommended</span><strong>layers-guard-restore.ps1</strong><span>Conservatively restores the backed-up values.</span></div></a>
+  </div>
+  <p class="smallnote" style="text-align:center;margin-top:15px">Advanced documentation: <a href="windows-hardening/README.md">README</a> · <a href="windows-hardening/SECURITY-CHECKLIST.md">Security checklist</a></p>
+</section>
+
+<section class="wrap" id="instructions">
+  <div class="section-title"><span class="eyebrow">// Picture guide</span><h2>Set it up in four steps</h2><p>You do not need to edit the scripts. The exact Layers Guard Chrome Web Store ID is already shown in the command below.</p></div>
+  <div class="steps">
+
+    <article class="step">
+      <div class="visual">
+        <svg viewBox="0 0 560 320" role="img" aria-label="Windows Downloads folder with four Layers Guard PowerShell files">
+          <rect width="560" height="320" rx="18" fill="#fff"/><rect x="0" y="0" width="560" height="42" rx="18" fill="#E9E5F3"/><circle cx="23" cy="21" r="6" fill="#EF6B6B"/><circle cx="43" cy="21" r="6" fill="#F1BE55"/><circle cx="63" cy="21" r="6" fill="#62B88A"/><text x="92" y="27" font-family="Arial" font-size="14" fill="#453E52">Downloads › Layers-Guard-Windows</text>
+          <g font-family="Arial" font-size="13" fill="#312B38"><rect x="28" y="68" width="504" height="48" rx="8" fill="#F6F3FB"/><rect x="42" y="78" width="27" height="28" rx="5" fill="#6D28D9"/><text x="49" y="97" font-size="9" fill="#fff">PS1</text><text x="84" y="97">layers-guard-harden.ps1</text><text x="430" y="97" fill="#2D6A4F">✓</text>
+          <rect x="28" y="124" width="504" height="48" rx="8" fill="#fff"/><rect x="42" y="134" width="27" height="28" rx="5" fill="#6D28D9"/><text x="49" y="153" font-size="9" fill="#fff">PS1</text><text x="84" y="153">layers-guard-common.ps1</text><text x="430" y="153" fill="#2D6A4F">✓</text>
+          <rect x="28" y="180" width="504" height="48" rx="8" fill="#F6F3FB"/><rect x="42" y="190" width="27" height="28" rx="5" fill="#6D28D9"/><text x="49" y="209" font-size="9" fill="#fff">PS1</text><text x="84" y="209">layers-guard-check.ps1</text><text x="430" y="209" fill="#2D6A4F">✓</text>
+          <rect x="28" y="236" width="504" height="48" rx="8" fill="#fff"/><rect x="42" y="246" width="27" height="28" rx="5" fill="#6D28D9"/><text x="49" y="265" font-size="9" fill="#fff">PS1</text><text x="84" y="265">layers-guard-restore.ps1</text><text x="430" y="265" fill="#2D6A4F">✓</text></g>
+        </svg>
+        <div class="caption">All four files should be together in the same folder.</div>
+      </div>
+      <div><div class="stepnum">Step 01</div><h3>Create a folder and download the toolkit</h3><p>Create a folder such as <b>Layers-Guard-Windows</b> inside Downloads. Use the buttons above to save all four PowerShell files into that same folder.</p><ul><li>Do not rename the files.</li><li>Keep the restore script with the backup created later.</li><li>Install Layers Guard from the Chrome Web Store first.</li></ul></div>
+    </article>
+
+    <article class="step">
+      <div class="visual">
+        <svg viewBox="0 0 560 320" role="img" aria-label="Windows Start menu showing PowerShell Run as administrator">
+          <rect width="560" height="320" rx="18" fill="#211E28"/><rect x="26" y="24" width="508" height="272" rx="16" fill="#F8F6FB"/><rect x="54" y="53" width="452" height="46" rx="12" fill="#EDE9F5"/><circle cx="78" cy="76" r="10" fill="none" stroke="#6D28D9" stroke-width="3"/><line x1="85" y1="83" x2="94" y2="92" stroke="#6D28D9" stroke-width="3"/><text x="109" y="82" font-family="Arial" font-size="15" fill="#3B3542">PowerShell</text><rect x="54" y="118" width="452" height="127" rx="14" fill="#fff" stroke="#DAD3E8"/><rect x="73" y="138" width="50" height="50" rx="10" fill="#2457A7"/><text x="84" y="170" font-family="Consolas" font-size="22" fill="#fff">&gt;_</text><text x="140" y="157" font-family="Arial" font-weight="700" font-size="15" fill="#2F2935">Windows PowerShell</text><rect x="140" y="177" width="173" height="34" rx="8" fill="#6D28D9"/><text x="156" y="199" font-family="Arial" font-weight="700" font-size="13" fill="#fff">Run as administrator</text><path d="M332 185 l10 8 -10 8" fill="none" stroke="#6D28D9" stroke-width="3"/></svg>
+        <div class="caption">Search for PowerShell, then choose “Run as administrator”.</div>
+      </div>
+      <div><div class="stepnum">Step 02</div><h3>Open PowerShell as Administrator</h3><p>Open the Windows Start menu, search for <b>PowerShell</b>, right-click <b>Windows PowerShell</b>, and choose <b>Run as administrator</b>. Approve the Windows User Account Control prompt.</p><div class="notice" style="margin:14px 0"><div>🔐</div><div><strong>Use the parent's administrator password.</strong><p>The child's Windows account should remain a Standard User so these machine policies cannot simply be changed back.</p></div></div></div>
+    </article>
+
+    <article class="step">
+      <div class="visual">
+        <svg viewBox="0 0 560 320" role="img" aria-label="Administrator PowerShell running Layers Guard hardening command">
+          <rect width="560" height="320" rx="18" fill="#16131B"/><rect x="0" y="0" width="560" height="38" rx="18" fill="#2A2531"/><text x="18" y="25" font-family="Arial" font-size="13" fill="#E7E0EE">Administrator: Windows PowerShell</text><g font-family="Consolas" font-size="12"><text x="24" y="74" fill="#C9BFDA">PS C:\Users\Parent&gt;</text><text x="24" y="102" fill="#fff">cd "$HOME\Downloads\Layers-Guard-Windows"</text><text x="24" y="136" fill="#fff">.\layers-guard-harden.ps1 -ExtensionId</text><text x="24" y="157" fill="#C7A9FF">'alielgklefmocpmnmfahepacngmeomof'</text><text x="24" y="200" fill="#70D69A">[PASS] Guest Mode disabled</text><text x="24" y="222" fill="#70D69A">[PASS] Incognito disabled</text><text x="24" y="244" fill="#70D69A">[PASS] New Chrome profiles disabled</text><text x="24" y="266" fill="#70D69A">[PASS] Extension Developer Mode disabled</text><text x="24" y="288" fill="#70D69A">[PASS] Windows Secure Mode attestation configured</text></g></svg>
+        <div class="caption">A successful run prints green-style [PASS] lines in PowerShell.</div>
+      </div>
+      <div><div class="stepnum">Step 03</div><h3>Run the hardening command</h3><p>First move PowerShell into the folder where you saved the files. Then run Layers Guard using its published Chrome Web Store ID.</p><div class="codebox" id="cmd">Set-Location "$HOME\Downloads\Layers-Guard-Windows"
+.\layers-guard-harden.ps1 -ExtensionId 'alielgklefmocpmnmfahepacngmeomof'</div><div class="copyrow"><button class="copy" onclick="copyText('cmd',this)">Copy commands</button></div><p>If Windows says script execution is disabled, run <code>Set-ExecutionPolicy -Scope Process Bypass</code> in that same Administrator PowerShell window, then run the hardening command again. This changes the policy only for the current PowerShell process.</p></div>
+    </article>
+
+    <article class="step">
+      <div class="visual">
+        <svg viewBox="0 0 560 320" role="img" aria-label="Chrome policy page and successful Layers Guard verification">
+          <rect width="560" height="320" rx="18" fill="#fff"/><rect x="0" y="0" width="560" height="42" rx="18" fill="#EAE7EF"/><circle cx="30" cy="21" r="8" fill="#4285F4"/><rect x="54" y="10" width="356" height="23" rx="11" fill="#fff"/><text x="72" y="26" font-family="Arial" font-size="12" fill="#5A5362">chrome://policy</text><g font-family="Arial" font-size="12"><text x="28" y="76" font-weight="700" fill="#292330">Chrome Policies</text><rect x="28" y="92" width="504" height="38" rx="7" fill="#F6F3FB"/><text x="42" y="116" fill="#34303A">BrowserGuestModeEnabled</text><text x="432" y="116" fill="#2D6A4F">0 ✓</text><rect x="28" y="136" width="504" height="38" rx="7" fill="#fff"/><text x="42" y="160" fill="#34303A">IncognitoModeAvailability</text><text x="432" y="160" fill="#2D6A4F">1 ✓</text><rect x="28" y="180" width="504" height="38" rx="7" fill="#F6F3FB"/><text x="42" y="204" fill="#34303A">BrowserAddPersonEnabled</text><text x="432" y="204" fill="#2D6A4F">0 ✓</text><rect x="28" y="224" width="504" height="38" rx="7" fill="#fff"/><text x="42" y="248" fill="#34303A">ExtensionDeveloperModeSettings</text><text x="432" y="248" fill="#2D6A4F">1 ✓</text></g><rect x="180" y="276" width="200" height="28" rx="14" fill="#EDF5F0"/><text x="217" y="295" font-family="Arial" font-size="12" font-weight="700" fill="#2D6A4F">Protection verified ✓</text></svg>
+        <div class="caption">After restarting Chrome, verify the policies rather than assuming setup succeeded.</div>
+      </div>
+      <div><div class="stepnum">Step 04</div><h3>Restart Chrome and verify protection</h3><p>Close every Chrome window and reopen Chrome. Then run the checker and review Chrome's policy page.</p><div class="codebox" id="checkcmd">.\layers-guard-check.ps1 -ExtensionId 'alielgklefmocpmnmfahepacngmeomof'</div><div class="copyrow"><button class="copy" onclick="copyText('checkcmd',this)">Copy check command</button></div><ul><li>Open <b>chrome://policy</b> and use “Reload policies” if needed.</li><li>Confirm Guest Mode, Incognito, Add profile and extension Developer Mode are unavailable.</li><li>The checker lists Windows Administrators. Confirm the child's account is <b>not</b> listed.</li></ul></div>
+    </article>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="section-title"><span class="eyebrow">// What success looks like</span><h2>Verify, don't just assume</h2></div>
+  <div class="success"><h3>Expected protection checks</h3><p>The checker should report these controls as configured. If it warns about multiple Chrome profiles, review and remove or secure old profiles manually—the toolkit deliberately never deletes user data.</p><div class="success-grid"><div class="check"><b>✓</b> Guest Mode disabled</div><div class="check"><b>✓</b> Incognito disabled</div><div class="check"><b>✓</b> New Chrome profiles disabled</div><div class="check"><b>✓</b> Extension Developer Mode disabled</div><div class="check"><b>✓</b> Layers Guard force-install policy present</div><div class="check"><b>✓</b> Windows Secure Mode marker present</div></div></div>
+</section>
+
+<section class="wrap">
+  <div class="section-title"><span class="eyebrow">// Important limits</span><h2>Windows Secure Mode strengthens Chrome</h2><p>It is an important extra layer, not a whole-device parental-control system.</p></div>
+  <div class="boundary"><div class="boundary-card yes"><h3>What this toolkit protects</h3><p>It applies machine-level Google Chrome policies, makes common Chrome bypass routes harder to use, can force-install the published Layers Guard extension, creates a policy backup before changes, and provides a read-only checker plus conservative rollback.</p></div><div class="boundary-card no"><h3>What it does not protect</h3><p>It does not control Edge, Firefox, Brave, Opera, portable browsers, games, native apps, other devices, DNS/router settings, or a child who has Windows Administrator access. For broader coverage, combine Layers Guard with a Standard child account and OS/router parental controls.</p></div></div>
+</section>
+
+<section class="wrap">
+  <div class="section-title"><span class="eyebrow">// Undo Windows Secure Mode</span><h2>Need to restore the previous policies?</h2><p>Keep the automatically created <b>layers-guard-policy-backup.json</b> beside the scripts. In Administrator PowerShell, run:</p></div>
+  <div class="codebox" id="restorecmd" style="max-width:740px;margin:0 auto">.\layers-guard-restore.ps1</div><div class="copyrow" style="max-width:740px;margin:8px auto 0"><button class="copy" onclick="copyText('restorecmd',this)">Copy restore command</button></div><p class="smallnote" style="text-align:center;max-width:730px;margin:12px auto">Restore is intentionally conservative: if another administrator changed a targeted setting after setup, the script warns and leaves that newer value untouched rather than overwriting it.</p>
+</section>
+</main>
+
+<footer><div class="footerlinks"><a href="/">Layers Home</a><a href="guard.html">Layers Guard</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy</a></div>© 2026 Layers · Parent-managed Windows protection for Layers Guard</footer>
+</div>
+<script>
+function copyText(id,button){var text=document.getElementById(id).innerText;navigator.clipboard.writeText(text).then(function(){var old=button.textContent;button.textContent='Copied ✓';setTimeout(function(){button.textContent=old},1600)});}
+</script>
+</body>
+</html>
