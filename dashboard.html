@@ -1132,6 +1132,49 @@
       border-radius: var(--radius-sm);
       display: inline-block;
     }
+    .pair-webcam-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      background: #111827;
+      border: 1px solid var(--border);
+    }
+    .pair-webcam-frame video { width: 100%; height: 100%; object-fit: cover; }
+    .pair-scan-guide {
+      position: absolute;
+      inset: 18% 22%;
+      border: 3px solid rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 0 0 999px rgba(0,0,0,0.12);
+      pointer-events: none;
+    }
+    .pair-webcam-status { color: var(--text-muted); font-size: 0.8125rem; margin: var(--sp-sm) 0; }
+    .pairing-success-box { text-align: center; }
+    .pair-success-icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto var(--sp-md);
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e8f7ef;
+      color: #16805d;
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+    .pair-success-subtitle { color: var(--text-muted); font-size: 0.875rem; margin-bottom: var(--sp-lg); }
+    .pair-success-device-card {
+      text-align: left;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: var(--sp-md);
+    }
+    .pair-success-device-card .device-label { color: var(--text-muted); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .pair-success-device-card .device-name { color: var(--text); font-weight: 700; margin-top: 4px; }
+    .pair-success-device-card .device-meta { color: var(--text-muted); font-size: 0.8125rem; margin-top: 4px; }
     .spinner {
       width: 24px;
       height: 24px;
@@ -1786,15 +1829,26 @@
       <div class="auth-logo-wrap">
         <div class="auth-logo-icon"></div>
       </div>
-      <h2 data-i18n="setup_title">Pair a device</h2>
+      <h2 data-i18n="pair_add_title">Add a device</h2>
       <div class="auth-tabs" style="margin-bottom:var(--sp-lg)">
-        <button data-pair-tab="enter" class="active" data-i18n="setup_enter_code">Enter a code manually</button>
-        <button data-pair-tab="display" data-i18n="setup_pair_new">Show my code</button>
+        <button data-pair-tab="enter" class="active" data-i18n="pair_enter_tab">Enter code</button>
+        <button data-pair-tab="display" data-i18n="pair_display_tab">Show a code</button>
       </div>
       <div id="pairEnterMode">
         <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:var(--sp-md)" data-i18n="setup_enter_code_label">
           Enter the code shown on your child's device.
         </p>
+        <button type="button" id="pairWebcamBtn" class="btn btn-outline" data-i18n="pair_webcam_btn" style="width:100%;padding:12px;margin-bottom:var(--sp-md)">
+          Scan QR with webcam
+        </button>
+        <div id="pairWebcamMode" style="display:none;margin-bottom:var(--sp-md)">
+          <div class="pair-webcam-frame">
+            <video id="pairCameraVideo" autoplay muted playsinline></video>
+            <div class="pair-scan-guide" aria-hidden="true"></div>
+          </div>
+          <p id="pairWebcamStatus" class="pair-webcam-status" data-i18n="pair_webcam_status">Point the webcam at the QR code.</p>
+          <button type="button" id="pairWebcamCloseBtn" class="btn btn-outline" data-i18n="pair_webcam_manual" style="width:100%;padding:10px">Enter code manually</button>
+        </div>
         <form id="pairCodeForm">
           <div class="form-group">
             <input id="pairCodeInput" class="input" type="text" required
@@ -2287,6 +2341,18 @@
           <button type="button" class="mobile-more-action" id="mobileMoreLogout"><i data-lucide="log-out" aria-hidden="true"></i><span data-i18n="settings_logout">Log out</span></button>
         </div>
       </aside>
+    </div>
+  </section>
+
+  <!-- ===== SCREEN: PAIRING SUCCESS ===== -->
+  <section id="screenPairingSuccess" class="screen auth-screen">
+    <div class="auth-box setup-box pairing-success-box">
+      <div class="pair-success-icon" aria-hidden="true">✓</div>
+      <h2 data-i18n="pair_success_title">Device connected!</h2>
+      <p class="pair-success-subtitle" data-i18n="pair_success_body">Your child&apos;s device is now linked to Layers Guard.</p>
+      <div id="pairSuccessDeviceCard" class="pair-success-device-card"></div>
+      <button id="pairSuccessDoneBtn" type="button" class="btn btn-primary" data-i18n="pair_success_continue" style="width:100%;padding:12px;margin-top:var(--sp-lg)">Continue setup</button>
+      <button id="pairSuccessAnotherBtn" type="button" class="btn btn-outline" data-i18n="pair_add_another" style="width:100%;padding:10px;margin-top:var(--sp-sm)">Add another device</button>
     </div>
   </section>
 
@@ -4030,6 +4096,47 @@
       controls_per_day_suffix: '{time}/ngày',
     });
 
+    Object.assign(DASHBOARD_COPY.en, {
+      pair_add_title: 'Add a device', pair_enter_tab: 'Enter code', pair_display_tab: 'Show a code',
+      pair_webcam_btn: 'Scan QR with webcam', pair_webcam_manual: 'Enter code manually',
+      pair_webcam_status: 'Point the webcam at the QR code.', pair_webcam_unavailable: 'Webcam scanning is not available in this browser. Enter the code manually.',
+      pair_webcam_looking: 'Looking for a Layers Guard QR code…', pair_webcam_keep: 'Keep the QR code inside the frame.',
+      pair_webcam_denied: 'Camera access was denied. Enter the code manually instead.', pair_waiting_parent: 'Waiting for your parent…',
+      pair_success_title: 'Device connected!', pair_success_body: "Your child's device is now linked to Layers Guard.",
+      pair_success_device_label: 'Device', pair_success_continue: 'Done', pair_add_another: 'Add another device',
+      pair_already_used: 'This code has already been used. Ask for a new code.',
+    });
+    Object.assign(DASHBOARD_COPY.ja, {
+      pair_add_title: '\u30c7\u30d0\u30a4\u30b9\u3092\u8ffd\u52a0', pair_enter_tab: '\u30b3\u30fc\u30c9\u3092\u5165\u529b', pair_display_tab: '\u30b3\u30fc\u30c9\u3092表示',
+      pair_webcam_btn: 'QR をウェブカメラでスキャン', pair_webcam_manual: 'コードを手動入力',
+      pair_webcam_status: 'カメラを QR コードに向けてください。', pair_webcam_unavailable: 'このブラウザではウェブカメラスキャンが使えません。コードを入力してください。',
+      pair_webcam_looking: 'Layers Guard の QR コードを探しています…', pair_webcam_keep: 'QR コードをフレーム内に入れてください。',
+      pair_webcam_denied: 'カメラの利用が拒否されました。コードを手動入力してください。', pair_waiting_parent: '保護者を待っています…',
+      pair_success_title: 'デバイスが接続されました！', pair_success_body: 'お子様のデバイスが Layers Guard に接続されました。',
+      pair_success_device_label: 'デバイス', pair_success_continue: '完了', pair_add_another: '別のデバイスを追加',
+      pair_already_used: 'このコードは使用済みです。新しいコードを使ってください。',
+    });
+    Object.assign(DASHBOARD_COPY.zh, {
+      pair_add_title: '添加设备', pair_enter_tab: '输入代码', pair_display_tab: '显示代码',
+      pair_webcam_btn: '使用网络摄像头扫描 QR', pair_webcam_manual: '手动输入代码',
+      pair_webcam_status: '将摄像头对准 QR 码。', pair_webcam_unavailable: '此浏览器不支持网络摄像头扫描。请手动输入代码。',
+      pair_webcam_looking: '正在查找 Layers Guard QR 码…', pair_webcam_keep: '请将 QR 码放在框内。',
+      pair_webcam_denied: '摄像头权限被拒绝。请手动输入代码。', pair_waiting_parent: '正在等待家长…',
+      pair_success_title: '设备已连接！', pair_success_body: '孩子的设备已连接到 Layers Guard。',
+      pair_success_device_label: '设备', pair_success_continue: '完成', pair_add_another: '添加另一台设备',
+      pair_already_used: '此代码已使用。请请求新代码。',
+    });
+    Object.assign(DASHBOARD_COPY.vi, {
+      pair_add_title: 'Thêm thiết bị', pair_enter_tab: 'Nhập mã', pair_display_tab: 'Hiện mã',
+      pair_webcam_btn: 'Quét QR bằng webcam', pair_webcam_manual: 'Nhập mã thủ công',
+      pair_webcam_status: 'Hướng webcam vào mã QR.', pair_webcam_unavailable: 'Trình duyệt này không hỗ trợ quét webcam. Hãy nhập mã thủ công.',
+      pair_webcam_looking: 'Đang tìm mã QR Layers Guard…', pair_webcam_keep: 'Giữ mã QR trong khung.',
+      pair_webcam_denied: 'Quyền camera bị từ chối. Hãy nhập mã thủ công.', pair_waiting_parent: 'Đang chờ phụ huynh…',
+      pair_success_title: 'Đã kết nối thiết bị!', pair_success_body: 'Thiết bị của con bạn đã kết nối với Layers Guard.',
+      pair_success_device_label: 'Thiết bị', pair_success_continue: 'Xong', pair_add_another: 'Thêm thiết bị khác',
+      pair_already_used: 'Mã này đã được sử dụng. Hãy tạo mã mới.',
+    });
+
     let currentLang = localStorage.getItem('guard_dashboard_lang') || 'en';
     function T(key) {
       return (DASHBOARD_COPY[currentLang] && DASHBOARD_COPY[currentLang][key])
@@ -4104,6 +4211,10 @@
     let blockedSites = [];
     let blockedApps = [];
     let pairingInterval = null;
+    let pairingCameraStream = null;
+    let pairingScanTimer = null;
+    let pairingUiWired = false;
+    let pairingSuccessDeviceId = null;
     let _latestStatus = null;
     let _latestPendingRequests = {};
     let _latestAuditLog = {};
@@ -4128,6 +4239,7 @@
     // Utility helpers (placeholder — filled in Task 2+)
     // ============================================================
     function showScreen(id) {
+      if (id !== 'screenSetup') stopPairingWebcam();
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
@@ -4451,12 +4563,26 @@
     // ============================================================
 
     function startPairing() {
+      if (pairingInterval) {
+        clearInterval(pairingInterval);
+        pairingInterval = null;
+      }
+      stopPairingWebcam();
       showScreen('screenSetup');
+      document.getElementById('pairEnterMode').style.display = 'block';
+      document.getElementById('pairDisplayMode').style.display = 'none';
+      document.getElementById('pairWebcamMode').style.display = 'none';
+      document.getElementById('pairCodeForm').style.display = 'block';
+      document.getElementById('pairCodeInput').value = '';
+      document.getElementById('pairCodeError').style.display = 'none';
+      document.querySelectorAll('[data-pair-tab]').forEach(b => b.classList.toggle('active', b.dataset.pairTab === 'enter'));
 
-      // ── Pairing tab switcher ──
+      if (pairingUiWired) return;
+      pairingUiWired = true;
       document.querySelectorAll('[data-pair-tab]').forEach(btn => {
         btn.addEventListener('click', () => {
           const tab = btn.dataset.pairTab;
+          stopPairingWebcam();
           document.querySelectorAll('[data-pair-tab]').forEach(b => b.classList.toggle('active', b.dataset.pairTab === tab));
           document.getElementById('pairEnterMode').style.display = tab === 'enter' ? 'block' : 'none';
           document.getElementById('pairDisplayMode').style.display = tab === 'display' ? 'block' : 'none';
@@ -4465,16 +4591,22 @@
       });
     }
 
-    // ── MODE 1: Parent enters child's code ──
-    document.getElementById('pairCodeForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const rawCode = document.getElementById('pairCodeInput').value.trim().toUpperCase();
+    function normalisePairingCode(value) {
+      const raw = String(value || '').trim().toUpperCase();
+      if (!raw) return '';
+      const uriMatch = raw.match(/LAYERSGUARD:\/\/PAIR\?[^#]*\bCODE=(LG-\d{4}|\d{4})/i);
+      const match = uriMatch ? uriMatch[1] : raw.match(/\bLG-?\d{4}\b/)?.[0] || raw.match(/^\d{4}$/)?.[0];
+      if (!match) return '';
+      const digits = match.replace(/[^0-9]/g, '');
+      return /^\d{4}$/.test(digits) ? 'LG-' + digits : '';
+    }
+
+    async function submitPairingCode(rawCode) {
       const errEl = document.getElementById('pairCodeError');
-      const btn = e.target.querySelector('button[type="submit"]');
+      const btn = document.querySelector('#pairCodeForm button[type="submit"]');
       errEl.style.display = 'none';
 
-      // Normalize — accept with or without LG- prefix
-      const code = rawCode.startsWith('LG-') ? rawCode : 'LG-' + rawCode;
+      const code = normalisePairingCode(rawCode);
 
       if (!/^LG-\d{4}$/.test(code)) {
         errEl.textContent = T('setup_err_pair_code_invalid');
@@ -4492,8 +4624,6 @@
         if (!val) {
           errEl.textContent = T('setup_code_invalid');
           errEl.style.display = 'block';
-          btn.disabled = false;
-          btn.textContent = T('setup_code_submit');
           return;
         }
 
@@ -4501,12 +4631,20 @@
         if (val.created_at && Date.now() - val.created_at > 600000) {
           errEl.textContent = T('setup_code_expired');
           errEl.style.display = 'block';
-          btn.disabled = false;
-          btn.textContent = T('setup_code_submit');
           return;
         }
 
         const deviceId = val.device_id;
+        if (!deviceId) {
+          errEl.textContent = T('setup_code_invalid');
+          errEl.style.display = 'block';
+          return;
+        }
+        if (val.paired === true) {
+        errEl.textContent = T('pair_already_used');
+          errEl.style.display = 'block';
+          return;
+        }
 
         // Mark as paired — do NOT delete yet; child app polls every 3s and needs to see paired=true
         await update(ref(db, GUARD_ROOT + '/pairing_codes/' + code), {
@@ -4519,12 +4657,14 @@
 
         // Write device info if it doesn't exist yet
         const infoSnap = await get(ref(db, GUARD_ROOT + '/' + deviceId + '/info'));
+        let info = infoSnap.val() || {};
         if (!infoSnap.val()) {
           await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
             parent_auth_uid: currentUser.uid,
             child_name: 'My child',
             paired_at: Date.now(),
           });
+          info = { child_name: 'My child', name: 'Child device', device_type: 'android' };
         } else {
           await update(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
             parent_auth_uid: currentUser.uid,
@@ -4539,15 +4679,104 @@
         await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
         devices = devList;
         currentDeviceId = deviceId;
-        showToast(T('setup_paired_success'));
-        showScreen('screenPinCreate');
+        showPairingSuccess(deviceId, info);
       } catch (err) {
         console.error('[Dashboard] Pair code error:', err);
-        errEl.textContent = err.message || T('error_generic');
+        errEl.textContent = T('error_generic');
         errEl.style.display = 'block';
+      } finally {
         btn.disabled = false;
         btn.textContent = T('setup_code_submit');
       }
+    }
+
+    // ── MODE 1: Parent enters child's code ──
+    document.getElementById('pairCodeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await submitPairingCode(document.getElementById('pairCodeInput').value);
+    });
+
+    function showPairingSuccess(deviceId, info = {}) {
+      pairingSuccessDeviceId = deviceId;
+      stopPairingWebcam();
+      const card = document.getElementById('pairSuccessDeviceCard');
+      const deviceName = getDeviceLabel(info, deviceId);
+      const childName = getChildLabel(info) || 'Child';
+      const platform = info.device_type || info.platform || 'Android';
+      card.innerHTML = `
+        <div class="device-label">${escapeHtml(T('pair_success_device_label'))}</div>
+        <div class="device-name">${escapeHtml(deviceName)}</div>
+        <div class="device-meta">${escapeHtml(childName)} · ${escapeHtml(platform)}</div>
+      `;
+      showScreen('screenPairingSuccess');
+    }
+
+    document.getElementById('pairSuccessDoneBtn').addEventListener('click', () => {
+      if (pairingSuccessDeviceId) currentDeviceId = pairingSuccessDeviceId;
+      showScreen('screenPinCreate');
+    });
+    document.getElementById('pairSuccessAnotherBtn').addEventListener('click', () => {
+      startPairing();
+    });
+
+    async function startPairingWebcam() {
+      const status = document.getElementById('pairWebcamStatus');
+      if (!window.BarcodeDetector || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        status.textContent = T('pair_webcam_unavailable');
+        showToast(T('pair_webcam_unavailable'), true);
+        return;
+      }
+      try {
+        pairingCameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false });
+        const video = document.getElementById('pairCameraVideo');
+        video.srcObject = pairingCameraStream;
+        document.getElementById('pairCodeForm').style.display = 'none';
+        document.getElementById('pairWebcamMode').style.display = 'block';
+        await video.play();
+        const detector = new BarcodeDetector({ formats: ['qr_code'] });
+        const scan = async () => {
+          if (!pairingCameraStream) return;
+          try {
+            const results = await detector.detect(video);
+            const code = normalisePairingCode(results[0]?.rawValue);
+            if (code) {
+              document.getElementById('pairCodeInput').value = code;
+              stopPairingWebcam();
+              await submitPairingCode(code);
+              return;
+            }
+            status.textContent = T('pair_webcam_looking');
+          } catch (_) {
+            status.textContent = T('pair_webcam_keep');
+          }
+          pairingScanTimer = setTimeout(scan, 250);
+        };
+        scan();
+      } catch (_) {
+        stopPairingWebcam();
+        status.textContent = T('pair_webcam_denied');
+        showToast(T('pair_webcam_denied'), true);
+      }
+    }
+
+    function stopPairingWebcam() {
+      if (pairingScanTimer) {
+        clearTimeout(pairingScanTimer);
+        pairingScanTimer = null;
+      }
+      if (pairingCameraStream) {
+        pairingCameraStream.getTracks().forEach(track => track.stop());
+        pairingCameraStream = null;
+      }
+      const video = document.getElementById('pairCameraVideo');
+      if (video) video.srcObject = null;
+    }
+
+    document.getElementById('pairWebcamBtn').addEventListener('click', startPairingWebcam);
+    document.getElementById('pairWebcamCloseBtn').addEventListener('click', () => {
+      stopPairingWebcam();
+      document.getElementById('pairWebcamMode').style.display = 'none';
+      document.getElementById('pairCodeForm').style.display = 'block';
     });
 
     // ── MODE 2: Display code for child to enter ──
@@ -4562,6 +4791,7 @@
         created_at: Date.now(),
         paired: false,
         device_id: deviceId,
+        source: 'parent',
         parent_auth_uid: currentUser.uid,
       });
 
@@ -4578,21 +4808,21 @@
           // Clean up pairing code
           await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
           // Write device info
-          await set(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'), {
+          const pairingInfo = {
             parent_auth_uid: currentUser.uid,
             child_name: 'My child',
             paired_at: Date.now(),
-          });
+          };
+          await set(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'), pairingInfo);
           // Append to user's devices
           const userSnap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
           const userData = userSnap.val() || {};
           const devList = normaliseFirebaseArray(userData.devices);
-          devList.push(childDeviceId);
+          if (!devList.includes(childDeviceId)) devList.push(childDeviceId);
           await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
           devices = devList;
           currentDeviceId = childDeviceId;
-          showToast(T('setup_paired_success'));
-          showScreen('screenPinCreate');
+          showPairingSuccess(childDeviceId, pairingInfo);
         }
       }, 3000);
     }
