@@ -30,6 +30,39 @@ test('health never treats configuration flags or stale reports as active protect
   assert.equal(c.getDeviceHealth({ last_seen: now, protection_state: 'partial' }, now).startupNeedsRepair, false);
 });
 
+test('pairing code parsing is strict and expiry is unit-safe at the boundary', () => {
+  const c = runtime(['normalisePairingCode', 'timestampMs', 'pairingCodeExpiryMs', 'pairingCodeExpired']);
+  assert.equal(c.normalisePairingCode('LG-1234'), 'LG-1234');
+  assert.equal(c.normalisePairingCode('1234'), 'LG-1234');
+  assert.equal(c.normalisePairingCode('layersguard://pair?code=1234'), 'LG-1234');
+  assert.equal(c.normalisePairingCode('https://example.test/LG-1234'), '');
+  assert.equal(c.normalisePairingCode('layersguard://pair?code=%E0%A4%A'), '');
+  assert.equal(c.normalisePairingCode('LG-12A4'), '');
+
+  const createdAtSeconds = 1800000000;
+  const createdAtMs = createdAtSeconds * 1000;
+  const record = { created_at: createdAtSeconds };
+  assert.equal(c.pairingCodeExpiryMs(record), createdAtMs + 600000);
+  assert.equal(c.pairingCodeExpired(record, createdAtMs + 599999), false);
+  assert.equal(c.pairingCodeExpired(record, createdAtMs + 600000), true);
+  assert.equal(c.pairingCodeExpired({ expires_at: createdAtMs + 600000 }, createdAtMs + 600000), true);
+});
+
+test('dashboard pairing uses one idempotent transaction path for both pairing entry points', () => {
+  assert.equal((html.match(/async function submitPairingCode\(/g) || []).length, 1);
+  const submitStart = html.indexOf('async function submitPairingCode');
+  const submitEnd = html.indexOf('// ── MODE 1:', submitStart);
+  const submit = html.slice(submitStart, submitEnd);
+  assert.match(submit, /runTransaction\(ref\(db, GUARD_ROOT \+ '\/pairing_codes\/' \+ code\)/);
+  assert.match(submit, /claimResult = 'idempotent'/);
+  assert.match(submit, /parent_auth_uid: currentUser\.uid/);
+  assert.match(submit, /new Set\(\[\.\.\.list, finalDeviceId\]\)/);
+  assert.match(html, /settingsPairCode.*?submitPairingCode/s);
+  assert.match(html, /let pairingDisplayCode = null/);
+  assert.match(html, /staleCode/);
+  assert.match(html, /stopPairingWebcam\(\);\s*stopPairingPolling\(\);/);
+});
+
 test('autosave coalesces edits and retains the original device after navigation', async () => {
   const timers = new Map();
   const writes = [];

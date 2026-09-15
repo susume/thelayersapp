@@ -2518,7 +2518,7 @@
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
     import {
       getDatabase, ref, onValue, set, update, remove, push, get, off,
-      onDisconnect, serverTimestamp
+      onDisconnect, serverTimestamp, runTransaction
     } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
     // ============================================================
@@ -2762,6 +2762,7 @@
         alerts_category_bullying:     'Bullying',
         alerts_category_sexual:       'Sexual content',
         alerts_category_stranger:     'Stranger danger',
+        alerts_category_unknown:      'Safety notice',
         alerts_detected_on:           'Detected on {source}',
         alerts_time_just_now:         'Just now',
         alerts_time_minutes_ago:      '{n}m ago',
@@ -4211,10 +4212,12 @@
     let blockedSites = [];
     let blockedApps = [];
     let pairingInterval = null;
+    let pairingDisplayCode = null;
     let pairingCameraStream = null;
     let pairingScanTimer = null;
     let pairingUiWired = false;
     let pairingSuccessDeviceId = null;
+    let pairingSubmitInFlight = false;
     let _latestStatus = null;
     let _latestPendingRequests = {};
     let _latestAuditLog = {};
@@ -4239,7 +4242,10 @@
     // Utility helpers (placeholder — filled in Task 2+)
     // ============================================================
     function showScreen(id) {
-      if (id !== 'screenSetup') stopPairingWebcam();
+      if (id !== 'screenSetup') {
+        stopPairingPolling();
+        stopPairingWebcam();
+      }
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
@@ -4563,10 +4569,7 @@
     // ============================================================
 
     function startPairing() {
-      if (pairingInterval) {
-        clearInterval(pairingInterval);
-        pairingInterval = null;
-      }
+      stopPairingPolling();
       stopPairingWebcam();
       showScreen('screenSetup');
       document.getElementById('pairEnterMode').style.display = 'block';
@@ -4583,6 +4586,7 @@
         btn.addEventListener('click', () => {
           const tab = btn.dataset.pairTab;
           stopPairingWebcam();
+          stopPairingPolling();
           document.querySelectorAll('[data-pair-tab]').forEach(b => b.classList.toggle('active', b.dataset.pairTab === tab));
           document.getElementById('pairEnterMode').style.display = tab === 'enter' ? 'block' : 'none';
           document.getElementById('pairDisplayMode').style.display = tab === 'display' ? 'block' : 'none';
@@ -4594,16 +4598,42 @@
     function normalisePairingCode(value) {
       const raw = String(value || '').trim().toUpperCase();
       if (!raw) return '';
-      const uriMatch = raw.match(/LAYERSGUARD:\/\/PAIR\?[^#]*\bCODE=(LG-\d{4}|\d{4})/i);
-      const match = uriMatch ? uriMatch[1] : raw.match(/\bLG-?\d{4}\b/)?.[0] || raw.match(/^\d{4}$/)?.[0];
-      if (!match) return '';
-      const digits = match.replace(/[^0-9]/g, '');
-      return /^\d{4}$/.test(digits) ? 'LG-' + digits : '';
+      const direct = raw.replace(/\s+/g, '');
+      if (/^\d{4}$/.test(direct)) return 'LG-' + direct;
+      if (/^LG-\d{4}$/.test(direct)) return direct;
+      if (!/^LAYERSGUARD:\/\/PAIR\?/i.test(raw)) return '';
+      const query = raw.slice(raw.indexOf('?') + 1).split('#')[0];
+      const field = query.split('&').find(part => part.split('=')[0].toLowerCase() === 'code');
+      let candidate = '';
+      try {
+        candidate = field ? decodeURIComponent(field.slice(field.indexOf('=') + 1)).replace(/\s+/g, '') : '';
+      } catch (_) {
+        return '';
+      }
+      return /^LG-\d{4}$/.test(candidate) ? candidate : (/^\d{4}$/.test(candidate) ? 'LG-' + candidate : '');
     }
 
-    async function submitPairingCode(rawCode) {
-      const errEl = document.getElementById('pairCodeError');
-      const btn = document.querySelector('#pairCodeForm button[type="submit"]');
+    function timestampMs(value) {
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric) || numeric <= 0) return null;
+      return numeric < 1e12 ? numeric * 1000 : numeric;
+    }
+
+    function pairingCodeExpiryMs(record) {
+      if (!record || typeof record !== 'object') return null;
+      const explicit = timestampMs(record.expires_at ?? record.expiresAt);
+      const created = timestampMs(record.created_at ?? record.createdAt);
+      return explicit || (created ? created + 600000 : null);
+    }
+
+    function pairingCodeExpired(record, now = Date.now()) {
+      const expiry = pairingCodeExpiryMs(record);
+      return expiry !== null && now >= expiry;
+    }
+
+    async function submitPairingCode(rawCode, options = {}) {
+      const errEl = options.errorEl || document.getElementById('pairCodeError');
+      const btn = options.button || document.querySelector('#pairCodeForm button[type="submit"]');
       errEl.style.display = 'none';
 
       const code = normalisePairingCode(rawCode);
@@ -4614,6 +4644,14 @@
         return;
       }
 
+      if (pairingSubmitInFlight) return;
+      if (!currentUser?.uid) {
+        errEl.textContent = T('error_generic');
+        errEl.style.display = 'block';
+        return;
+      }
+
+      pairingSubmitInFlight = true;
       btn.disabled = true;
       btn.textContent = '…';
 
@@ -4627,8 +4665,7 @@
           return;
         }
 
-        // Check if expired (older than 10 minutes)
-        if (val.created_at && Date.now() - val.created_at > 600000) {
+        if (pairingCodeExpired(val)) {
           errEl.textContent = T('setup_code_expired');
           errEl.style.display = 'block';
           return;
@@ -4640,51 +4677,74 @@
           errEl.style.display = 'block';
           return;
         }
-        if (val.paired === true) {
-        errEl.textContent = T('pair_already_used');
-          errEl.style.display = 'block';
-          return;
-        }
-
-        // Mark as paired — do NOT delete yet; child app polls every 3s and needs to see paired=true
-        await update(ref(db, GUARD_ROOT + '/pairing_codes/' + code), {
-          paired: true,
-          parent_auth_uid: currentUser.uid,
+        let claimResult = 'claimed';
+        const claim = await runTransaction(ref(db, GUARD_ROOT + '/pairing_codes/' + code), current => {
+          if (!current || pairingCodeExpired(current)) {
+            claimResult = 'expired';
+            return;
+          }
+          if (current.paired === true) {
+            if (current.parent_auth_uid === currentUser.uid && current.device_id === deviceId) {
+              claimResult = 'idempotent';
+              return current;
+            }
+            claimResult = 'conflict';
+            return current;
+          }
+          if (current.parent_auth_uid && current.parent_auth_uid !== currentUser.uid) {
+            claimResult = 'conflict';
+            return current;
+          }
+          return {
+            ...current,
+            device_id: current.device_id || deviceId,
+            paired: true,
+            parent_auth_uid: currentUser.uid,
+            paired_at: current.paired_at || Date.now(),
+          };
         });
 
-        // Let child app read paired=true, then clean up after a delay
-        setTimeout(() => remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)), 15000);
+        if (claimResult === 'expired') throw new Error('pairing_code_expired');
+        if (claimResult === 'conflict') throw new Error('pairing_code_already_claimed');
+        if (!claim.committed) throw new Error('pairing_code_unavailable');
 
-        // Write device info if it doesn't exist yet
-        const infoSnap = await get(ref(db, GUARD_ROOT + '/' + deviceId + '/info'));
-        let info = infoSnap.val() || {};
-        if (!infoSnap.val()) {
-          await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
-            parent_auth_uid: currentUser.uid,
-            child_name: 'My child',
-            paired_at: Date.now(),
-          });
-          info = { child_name: 'My child', name: 'Child device', device_type: 'android' };
-        } else {
-          await update(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), {
-            parent_auth_uid: currentUser.uid,
-          });
+        const claimed = claim.snapshot.val() || val;
+        const finalDeviceId = claimed.device_id || deviceId;
+
+        // Preserve child-owned metadata and commit the durable ownership marker.
+        const infoSnap = await get(ref(db, GUARD_ROOT + '/' + finalDeviceId + '/info'));
+        const info = infoSnap.val() || {};
+        const pairedAt = info.paired_at || claimed.paired_at || Date.now();
+        await update(ref(db, GUARD_ROOT + '/' + finalDeviceId + '/info'), {
+          parent_auth_uid: currentUser.uid,
+          paired: true,
+          paired_at: pairedAt,
+        });
+
+        const userDevices = await runTransaction(ref(db, USERS_ROOT + '/' + currentUser.uid + '/devices'), current => {
+          const list = normaliseFirebaseArray(current);
+          return Array.from(new Set([...list, finalDeviceId]));
+        });
+        if (!userDevices.committed) throw new Error('user_device_update_failed');
+        const devList = normaliseFirebaseArray(userDevices.snapshot.val());
+        const verifiedInfo = (await get(ref(db, GUARD_ROOT + '/' + finalDeviceId + '/info'))).val() || {};
+        if (verifiedInfo.parent_auth_uid !== currentUser.uid || verifiedInfo.paired !== true || !devList.includes(finalDeviceId)) {
+          throw new Error('pairing_verification_failed');
         }
-
-        // Append to user's devices
-        const userSnap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
-        const userData = userSnap.val() || {};
-        const devList = normaliseFirebaseArray(userData.devices);
-        if (!devList.includes(deviceId)) devList.push(deviceId);
-        await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
+        setTimeout(() => remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)).catch(() => {}), 30000);
         devices = devList;
-        currentDeviceId = deviceId;
-        showPairingSuccess(deviceId, info);
+        currentDeviceId = finalDeviceId;
+        if (options.onSuccess) options.onSuccess(finalDeviceId, verifiedInfo);
+        if (options.showSuccess !== false) showPairingSuccess(finalDeviceId, verifiedInfo);
+        return { deviceId: finalDeviceId, info: verifiedInfo };
       } catch (err) {
         console.error('[Dashboard] Pair code error:', err);
-        errEl.textContent = T('error_generic');
+        errEl.textContent = err.message === 'pairing_code_expired' ? T('setup_code_expired')
+          : err.message === 'pairing_code_already_claimed' ? T('pair_already_used')
+          : T('error_generic');
         errEl.style.display = 'block';
       } finally {
+        pairingSubmitInFlight = false;
         btn.disabled = false;
         btn.textContent = T('setup_code_submit');
       }
@@ -4780,49 +4840,93 @@
     });
 
     // ── MODE 2: Display code for child to enter ──
-    function startDisplayCodePairing() {
+    function stopPairingPolling({ revoke = true } = {}) {
+      if (pairingInterval) {
+        clearInterval(pairingInterval);
+        pairingInterval = null;
+      }
+      const staleCode = pairingDisplayCode;
+      pairingDisplayCode = null;
+      if (revoke && staleCode) {
+        remove(ref(db, GUARD_ROOT + '/pairing_codes/' + staleCode)).catch(() => {});
+      }
+    }
+
+    async function startDisplayCodePairing() {
+      stopPairingPolling();
       const code = 'LG-' + String(Math.floor(Math.random() * 10000)).padStart(4, '0');
       const deviceId = Array.from({ length: 16 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 
       document.getElementById('pairingCode').textContent = code;
 
       // Write pairing code to Firebase
-      set(ref(db, GUARD_ROOT + '/pairing_codes/' + code), {
-        created_at: Date.now(),
+      let occupied = false;
+      const createdAt = Date.now();
+      const payload = {
+        created_at: createdAt,
+        expires_at: createdAt + 600000,
         paired: false,
         device_id: deviceId,
         source: 'parent',
         parent_auth_uid: currentUser.uid,
-      });
+      };
+      try {
+        const created = await runTransaction(ref(db, GUARD_ROOT + '/pairing_codes/' + code), current => {
+          if (current && !pairingCodeExpired(current)) {
+            occupied = true;
+            return current;
+          }
+          return payload;
+        });
+        if (occupied || !created.committed) throw new Error('pairing_code_unavailable');
+      } catch (err) {
+        showToast(T('error_generic'), true);
+        return;
+      }
 
+      pairingDisplayCode = code;
       // Poll for paired
-      if (pairingInterval) clearInterval(pairingInterval);
       pairingInterval = setInterval(async () => {
-        const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
-        const val = snap.val();
-        if (val && val.paired) {
-          clearInterval(pairingInterval);
-          pairingInterval = null;
-          // Use the child's device_id (child overwrites it when claiming)
-          const childDeviceId = val.device_id || deviceId;
-          // Clean up pairing code
-          await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
-          // Write device info
-          const pairingInfo = {
-            parent_auth_uid: currentUser.uid,
-            child_name: 'My child',
-            paired_at: Date.now(),
-          };
-          await set(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'), pairingInfo);
-          // Append to user's devices
-          const userSnap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
-          const userData = userSnap.val() || {};
-          const devList = normaliseFirebaseArray(userData.devices);
-          if (!devList.includes(childDeviceId)) devList.push(childDeviceId);
-          await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices: devList });
-          devices = devList;
-          currentDeviceId = childDeviceId;
-          showPairingSuccess(childDeviceId, pairingInfo);
+        try {
+          const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+          const val = snap.val();
+          if (val && pairingCodeExpired(val)) {
+            stopPairingPolling();
+            await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)).catch(() => {});
+            showToast(T('setup_code_expired'), true);
+            return;
+          }
+          if (val && val.paired) {
+            // Keep the claimed record visible until durable info and the
+            // parent's device list have been verified; then remove it below.
+            stopPairingPolling({ revoke: false });
+            // Use the child's device_id (child overwrites it when claiming)
+            const childDeviceId = val.device_id || deviceId;
+            const pairingInfo = {
+              parent_auth_uid: currentUser.uid,
+              paired: true,
+              child_name: 'My child',
+              paired_at: val.paired_at || Date.now(),
+            };
+            await update(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'), pairingInfo);
+            const userResult = await runTransaction(ref(db, USERS_ROOT + '/' + currentUser.uid + '/devices'), current => {
+              const list = normaliseFirebaseArray(current);
+              return Array.from(new Set([...list, childDeviceId]));
+            });
+            if (!userResult.committed) throw new Error('user_device_update_failed');
+            const devList = normaliseFirebaseArray(userResult.snapshot.val());
+            const verifiedInfo = (await get(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'))).val() || {};
+            if (verifiedInfo.parent_auth_uid !== currentUser.uid || verifiedInfo.paired !== true || !devList.includes(childDeviceId)) {
+              throw new Error('pairing_verification_failed');
+            }
+            await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)).catch(() => {});
+            devices = devList;
+            currentDeviceId = childDeviceId;
+            showPairingSuccess(childDeviceId, verifiedInfo);
+          }
+        } catch (err) {
+          stopPairingPolling();
+          showToast(T('error_generic'), true);
         }
       }, 3000);
     }
@@ -7079,6 +7183,18 @@
       stranger_danger: 'alerts_filter_stranger', hate_speech: 'alerts_filter_hate',
     };
 
+    const ALERT_CATEGORY_FALLBACKS = {
+      violence: 'Violence', bullying: 'Bullying', sexual: 'Sexual content',
+      self_harm: 'Self-harm', sextortion: 'Sextortion', drugs: 'Drugs',
+      stranger_danger: 'Stranger danger', hate_speech: 'Hate speech',
+    };
+
+    function alertCategoryLabel(category) {
+      const key = String(category || '').trim().toLowerCase().replace(/[\s-]+/g, '_');
+      const translationKey = ALERT_CATEGORY_LABEL_KEYS[key];
+      return translationKey ? T(translationKey) : (ALERT_CATEGORY_FALLBACKS[key] || T('alerts_category_unknown') || 'Safety notice');
+    }
+
     function renderAlertsList() {
       const list = document.getElementById('alertsList');
       let entries = Object.entries(allAlerts).filter(([, alert]) => alert).sort((a, b) => (b[1].timestamp || 0) - (a[1].timestamp || 0));
@@ -7098,7 +7214,7 @@
           <div class="alert-body">
             <div class="alert-category">
               <span class="severity-dot ${severityClass}"></span>
-              ${escapeHtml(T(ALERT_CATEGORY_LABEL_KEYS[alert.category] || ('alerts_category_' + alert.category)) || alert.category)}
+              ${escapeHtml(alertCategoryLabel(alert.category))}
             </div>
             <div class="alert-source">${escapeHtml(alert.source || alert.domain || '')}</div>
             <div class="alert-time">${timeAgo(alert.timestamp)}</div>
@@ -7207,49 +7323,23 @@
     // ── Pair new device from Settings ──
     document.getElementById('settingsPairForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const rawCode = document.getElementById('settingsPairCode').value.trim().toUpperCase();
       const errEl = document.getElementById('settingsPairError');
       const btn = e.target.querySelector('button[type="submit"]');
       errEl.style.display = 'none';
-      const code = rawCode.startsWith('LG-') ? rawCode : 'LG-' + rawCode;
-      if (!/^LG-\d{4}$/.test(code)) {
-        errEl.textContent = T('setup_err_pair_code_invalid');
-        errEl.style.display = 'block';
-        return;
-      }
-      btn.disabled = true;
-      btn.textContent = '…';
-      try {
-        const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
-        const val = snap.val();
-        if (!val) { throw new Error(T('setup_code_invalid')); }
-        const deviceId = val.device_id;
-        // Mark paired — delay delete so child app can read it
-        await update(ref(db, GUARD_ROOT + '/pairing_codes/' + code), { paired: true, parent_auth_uid: currentUser.uid });
-        setTimeout(() => remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)), 15000);
-        // Write info if missing
-        const infoSnap = await get(ref(db, GUARD_ROOT + '/' + deviceId + '/info'));
-        if (!infoSnap.val()) {
-          await set(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), { parent_auth_uid: currentUser.uid, child_name: 'My child', paired_at: Date.now() });
-        } else {
-          await update(ref(db, GUARD_ROOT + '/' + deviceId + '/info'), { parent_auth_uid: currentUser.uid });
-        }
-        // Add to devices list
-        if (!devices.includes(deviceId)) devices.push(deviceId);
-        await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices });
-        currentDeviceId = deviceId;
-        detachListeners();
-        attachListeners();
-        renderChildSelector();
-        showToast(T('setup_paired_success'));
-        document.getElementById('settingsPairCode').value = '';
-        closeDialog('settingsOverlay');
-      } catch (err) {
-        errEl.textContent = err.message || T('error_generic');
-        errEl.style.display = 'block';
-      }
-      btn.disabled = false;
-      btn.textContent = T('setup_code_submit');
+      await submitPairingCode(document.getElementById('settingsPairCode').value, {
+        errorEl: errEl,
+        button: btn,
+        showSuccess: false,
+        onSuccess: (deviceId) => {
+          currentDeviceId = deviceId;
+          detachListeners();
+          attachListeners();
+          renderChildSelector();
+          showToast(T('setup_paired_success'));
+          document.getElementById('settingsPairCode').value = '';
+          closeDialog('settingsOverlay');
+        },
+      });
     });
 
     // ── Remove device ──
@@ -7286,6 +7376,13 @@
       currentDeviceId = null;
       devices = [];
       showScreen('screenAuth');
+    });
+
+    // Browser refresh/navigation must release camera and polling resources so
+    // a return to the dashboard cannot inherit a stale pairing session.
+    window.addEventListener('pagehide', () => {
+      stopPairingPolling();
+      stopPairingWebcam();
     });
 
   </script>
