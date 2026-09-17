@@ -220,5 +220,48 @@ test('request resolution, outcome metadata, and undo use real additive state', (
   assert.match(html, /resolved_at: Date\.now\(\)/);
   assert.match(html, /const undoable = pending\.cmdName === 'emergency_lock' \|\| pending\.cmdName === 'internet_pause'/);
   assert.match(html, /runRemoteCommand\(undo\.cmdName, \{ active: !undo\.active \}/);
-  assert.match(html, /requested_minutes \?\? req\.minutes \?\? req\.value/);
+  assert.match(html, /firstRequestValue\(req, \['requested_minutes', 'minutes', 'value'\]\)/);
+});
+
+test('request cards use inline choices, normalize legacy messages, and keep failures actionable', () => {
+  const c = runtime(['firstRequestValue', 'requestMinutesFor', 'requestMessageFor', 'requestTargetFor']);
+  assert.equal(c.requestMinutesFor({ requested_minutes: 30, minutes: 15, value: 60 }), 30);
+  assert.equal(c.requestMinutesFor({ minutes: 60 }), 60);
+  assert.equal(c.requestMinutesFor({ value: 15 }), 15);
+  assert.equal(c.requestMinutesFor({ requested_minutes: ' ', minutes: 60 }), 60);
+  assert.equal(c.requestMessageFor({ child_message: 'Finishing a game', reason: 'legacy' }), 'Finishing a game');
+  assert.equal(c.requestMessageFor({ child_message: ' ', reason: 'legacy reason' }), 'legacy reason');
+  assert.equal(c.requestMessageFor({ message: 'older schema' }), 'older schema');
+  assert.equal(c.requestMessageFor({}), '');
+  assert.equal(c.requestTargetFor({ type: 'unblock_site', domain: 'youtube.com' }), 'youtube.com');
+  assert.equal(c.requestTargetFor({ type: 'unblock_app', display_name: 'Discord', package_name: 'com.discord' }), 'Discord');
+
+  const renderStart = html.indexOf('function renderPendingRequests');
+  const renderEnd = html.indexOf('// ── 7-day bar chart rendering', renderStart);
+  const render = html.slice(renderStart, renderEnd);
+  assert.match(render, /request-amount-button/);
+  assert.match(render, /requested-badge/);
+  assert.match(render, /requestMessageFor/);
+  assert.match(render, /disabled aria-disabled/);
+  assert.doesNotMatch(render, /showConfirm/);
+
+  const handlerStart = html.indexOf('window.approveRequest =');
+  const handlerEnd = html.indexOf('// ── Block\/unblock site', handlerStart);
+  const handler = html.slice(handlerStart, handlerEnd);
+  assert.doesNotMatch(handler, /showConfirm/);
+  assert.match(handler, /_pendingRequestBusy\.add\(key\)/);
+  assert.match(handler, /_pendingRequestBusy\.delete\(key\)/);
+  assert.match(handler, /approval_feedback_failed/);
+  assert.match(handler, /kind: 'neutral'/);
+  assert.match(handler, /resolved_minutes/);
+});
+
+test('inbox prioritizes action items and labels protection state semantically', () => {
+  assert.match(html, /return items\.sort\(\(a, b\) => \(a\.priority - b\.priority\)/);
+  assert.match(html, /kind: 'requests', priority: 0/);
+  assert.match(html, /kind: 'safety', priority:/);
+  assert.match(html, /inbox-item-kicker/);
+  assert.match(html, /inbox_device_last_known_healthy/);
+  assert.match(html, /inbox-item\.safety\.severity-high/);
+  assert.match(html, /aria-pressed/);
 });
