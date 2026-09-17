@@ -203,3 +203,22 @@ test('device selector resolves metadata before rendering and edit tooling is opt
   assert.match(html, /if \(!editMode\) return/);
   assert.equal(html.includes('type="text/babel"'), false);
 });
+
+test('family and inbox surfaces keep child grouping presentation-only', () => {
+  assert.match(html, /id="tabFamily"/);
+  assert.match(html, /id="tabInbox"/);
+  assert.match(html, /function familyGroupsFromCache\(\)/);
+  assert.match(html, /function renderFamilyPanel\(\)/);
+  assert.match(html, /function renderInboxPanel\(\)/);
+  assert.match(html, /Device records remain separate|Device records remain separate\./i);
+  assert.match(html, /data-family-device/);
+  assert.match(html, /data-inbox-filter="requests"/);
+});
+
+test('request resolution, outcome metadata, and undo use real additive state', () => {
+  assert.match(html, /resolved_minutes: resolvedMinutes/);
+  assert.match(html, /resolved_at: Date\.now\(\)/);
+  assert.match(html, /const undoable = pending\.cmdName === 'emergency_lock' \|\| pending\.cmdName === 'internet_pause'/);
+  assert.match(html, /runRemoteCommand\(undo\.cmdName, \{ active: !undo\.active \}/);
+  assert.match(html, /requested_minutes \?\? req\.minutes \?\? req\.value/);
+});

@@ -1748,6 +1748,76 @@
         scroll-behavior: auto !important;
       }
     }
+
+    /* ========== FAMILY + INBOX OVERVIEW ========== */
+    .page-intro {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--sp-lg);
+      margin-bottom: var(--sp-lg);
+    }
+    .page-intro h2 { margin: 4px 0 6px; font-family: var(--font-heading); font-size: 1.65rem; }
+    .page-intro p:not(.eyebrow) { color: var(--text-muted); font-size: 0.875rem; margin: 0; line-height: 1.5; }
+    .page-intro .eyebrow { margin: 0; color: var(--accent); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .page-intro .btn { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .page-intro .btn svg { width: 16px; height: 16px; }
+    .family-member-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--sp-md); }
+    .family-member-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: var(--sp-lg); box-shadow: var(--shadow); }
+    .family-member-header { display: flex; align-items: center; gap: var(--sp-sm); margin-bottom: var(--sp-md); }
+    .family-avatar { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+    .family-member-copy { min-width: 0; flex: 1; }
+    .family-member-name { color: var(--text); font-weight: 700; overflow-wrap: anywhere; }
+    .family-member-meta { color: var(--text-muted); font-size: .75rem; margin-top: 3px; }
+    .family-health { display: flex; align-items: center; gap: 5px; font-size: .75rem; font-weight: 700; white-space: nowrap; }
+    .family-health.protected { color: #0F766E; }
+    .family-health.attention { color: #B45309; }
+    .family-health.offline { color: #B91C1C; }
+    .family-health.unknown { color: var(--text-muted); }
+    .family-device-list { display: grid; gap: 7px; }
+    .family-device-row { width: 100%; display: flex; align-items: center; gap: 9px; padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--card-border); background: var(--surface); color: var(--text); text-align: left; cursor: pointer; }
+    .family-device-row:hover { border-color: var(--accent); background: var(--accent-light); }
+    .family-device-row svg { width: 17px; height: 17px; color: var(--text-muted); flex-shrink: 0; }
+    .family-device-copy { min-width: 0; flex: 1; }
+    .family-device-name { font-size: .8125rem; font-weight: 650; overflow-wrap: anywhere; }
+    .family-device-meta { color: var(--text-muted); font-size: .6875rem; margin-top: 2px; }
+    .family-device-status { display: flex; align-items: center; gap: 4px; color: var(--text-muted); font-size: .6875rem; white-space: nowrap; }
+    .family-device-status .online-dot { width: 7px; height: 7px; }
+    .family-inferred-note { color: var(--text-muted); font-size: .6875rem; margin-top: var(--sp-sm); }
+    .device-family-group { display: grid; gap: 2px; }
+    .device-family-group + .device-family-group { margin-top: 10px; }
+    .device-family-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding: 6px 10px 3px; }
+    .device-family-name { color: var(--text-muted); font-size: .6875rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .device-family-count { color: var(--text-dim); font-size: .625rem; white-space: nowrap; }
+    .inbox-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--sp-md); }
+    .inbox-list { display: grid; gap: var(--sp-sm); }
+    .inbox-item { width: 100%; display: flex; align-items: flex-start; gap: var(--sp-sm); padding: 14px 16px; border: 1px solid var(--card-border); border-radius: var(--radius-sm); background: var(--card); text-align: left; color: var(--text); cursor: pointer; }
+    .inbox-item:hover { border-color: var(--accent); background: var(--accent-light); }
+    .inbox-item-icon { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; color: var(--accent); background: var(--accent-light); flex-shrink: 0; }
+    .inbox-item-icon svg { width: 17px; height: 17px; }
+    .inbox-item-body { min-width: 0; flex: 1; }
+    .inbox-item-title { font-size: .875rem; font-weight: 700; overflow-wrap: anywhere; }
+    .inbox-item-detail { color: var(--text-muted); font-size: .8125rem; line-height: 1.45; margin-top: 3px; overflow-wrap: anywhere; }
+    .inbox-item-time { color: var(--text-dim); font-size: .6875rem; margin-top: 6px; }
+    .inbox-item-arrow { color: var(--text-muted); flex-shrink: 0; }
+    .inbox-item-arrow svg { width: 17px; height: 17px; }
+    .next-event-card { display: flex; align-items: flex-start; gap: var(--sp-sm); padding: 12px 14px; margin-bottom: var(--sp-md); border: 1px solid var(--accent-dim); border-radius: var(--radius-sm); background: var(--accent-light); }
+    .next-event-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 10px; background: rgba(13,148,136,.14); color: var(--accent); flex-shrink: 0; }
+    .next-event-icon svg { width: 16px; height: 16px; }
+    .next-event-body { min-width: 0; flex: 1; }
+    .next-event-title { color: #0F766E; font-size: .6875rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .next-event-list { display: grid; gap: 3px; margin-top: 4px; }
+    .next-event-line { color: var(--text); font-size: .8125rem; line-height: 1.4; }
+    .next-event-empty { color: var(--text-muted); font-size: .8125rem; }
+    .feedback-undo { flex-shrink: 0; }
+    .tab-badge { min-width: 17px; height: 17px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; margin-left: 5px; border-radius: 10px; color: #fff; background: var(--danger); font-size: .625rem; font-weight: 800; }
+
+    @media (max-width: 768px) {
+      .page-intro { flex-direction: column; gap: var(--sp-md); }
+      .page-intro .btn { width: 100%; justify-content: center; }
+      .family-member-grid { grid-template-columns: 1fr; }
+      .next-event-card { margin-bottom: var(--sp-md); }
+    }
   </style>
 </head>
 <body>
@@ -1915,6 +1985,15 @@
 
       <div class="sidebar-section">
         <div class="sidebar-label" data-i18n="nav_general">General</div>
+        <button id="familyNavBtn" class="sidebar-nav-item" title="Family" data-i18n="tab_family" data-i18n-attr="title" data-tab="family" aria-label="Open family view">
+          <span class="nav-icon"><i data-lucide="users"></i></span>
+          <span data-i18n="tab_family">Family</span>
+        </button>
+        <button id="inboxNavBtn" class="sidebar-nav-item" title="Inbox" data-i18n="tab_inbox" data-i18n-attr="title" data-tab="inbox" aria-label="Open family inbox">
+          <span class="nav-icon"><i data-lucide="inbox"></i></span>
+          <span data-i18n="tab_inbox">Inbox</span>
+          <span class="badge" id="inboxBadge" style="display:none">0</span>
+        </button>
         <button id="alertsBellBtn" class="sidebar-nav-item" title="Alerts" data-i18n="alerts_title" data-i18n-attr="title" aria-label="Open alerts">
           <span class="nav-icon"><i data-lucide="bell"></i></span>
           <span data-i18n="alerts_title">Alerts</span>
@@ -1978,6 +2057,8 @@
       <!-- Tab bar -->
       <div class="tab-bar" id="tabBar">
         <button class="active" data-tab="today"><i data-lucide="layout-dashboard" style="width:16px;height:16px;margin-right:4px"></i> <span data-i18n="tab_today">Today</span></button>
+        <button data-tab="family"><i data-lucide="users" style="width:16px;height:16px;margin-right:4px"></i> <span data-i18n="tab_family">Family</span></button>
+        <button data-tab="inbox"><i data-lucide="inbox" style="width:16px;height:16px;margin-right:4px"></i> <span data-i18n="tab_inbox">Inbox</span><span class="tab-badge" id="inboxTabBadge" style="display:none">0</span></button>
         <button data-tab="trends"><i data-lucide="trending-up" style="width:16px;height:16px;margin-right:4px"></i> <span data-i18n="tab_trends">Trends</span></button>
         <button data-tab="controls"><i data-lucide="sliders-horizontal" style="width:16px;height:16px;margin-right:4px"></i> <span data-i18n="tab_controls">Controls</span></button>
       </div>
@@ -2044,6 +2125,14 @@
           </div>
         </div>
 
+        <div class="next-event-card" id="whatNextCard" aria-live="polite">
+          <div class="next-event-icon"><i data-lucide="calendar-clock" aria-hidden="true"></i></div>
+          <div class="next-event-body">
+            <div class="next-event-title" data-i18n="next_event_label">What happens next</div>
+            <div id="whatNextList" class="next-event-list"><span class="next-event-empty" data-i18n="next_event_checking">Checking the current rules…</span></div>
+          </div>
+        </div>
+
         <!-- Quick actions -->
         <div class="quick-actions">
           <button type="button" class="action-pill emergency" id="emergencyLockBtn">
@@ -2060,6 +2149,7 @@
           <i data-lucide="info" aria-hidden="true"></i>
           <span class="feedback-text"></span>
           <button type="button" class="btn btn-sm btn-outline feedback-retry" id="commandRetryBtn" style="display:none" data-i18n="retry">Retry</button>
+          <button type="button" class="btn btn-sm btn-outline feedback-undo" id="commandUndoBtn" style="display:none" data-i18n="undo">Undo</button>
         </div>
 
         <!-- Extend Time Bottom Sheet -->
@@ -2119,6 +2209,41 @@
           <div id="activityLogList" class="card-scroll" style="display:none">
             <div class="empty-state" id="logEmpty" data-i18n="activity_log_empty">No commands yet.</div>
           </div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: FAMILY ===== -->
+      <div id="tabFamily" class="tab-panel">
+        <div class="page-intro">
+          <div>
+            <p class="eyebrow" data-i18n="family_eyebrow">Family</p>
+            <h2 data-i18n="family_title">Everyone at a glance</h2>
+            <p data-i18n="family_subtitle">See each child first, with their devices underneath.</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="familyAddDeviceBtn"><i data-lucide="plus" aria-hidden="true"></i> <span data-i18n="settings_add_device">Add device</span></button>
+        </div>
+        <div id="familyMembersList" class="family-member-grid">
+          <div class="empty-state" data-i18n="family_empty">Pair a device to see your family here.</div>
+        </div>
+      </div>
+
+      <!-- ===== TAB: INBOX ===== -->
+      <div id="tabInbox" class="tab-panel">
+        <div class="page-intro">
+          <div>
+            <p class="eyebrow" data-i18n="inbox_eyebrow">Family inbox</p>
+            <h2 data-i18n="inbox_title">Things that need your attention</h2>
+            <p data-i18n="inbox_subtitle">Requests, safety notices, and protection issues in one place.</p>
+          </div>
+        </div>
+        <div class="inbox-filters" role="toolbar" aria-label="Inbox filters">
+          <button type="button" class="category-pill active" data-inbox-filter="all" data-i18n="inbox_filter_all">All</button>
+          <button type="button" class="category-pill" data-inbox-filter="requests" data-i18n="inbox_filter_requests">Requests</button>
+          <button type="button" class="category-pill" data-inbox-filter="safety" data-i18n="inbox_filter_safety">Safety</button>
+          <button type="button" class="category-pill" data-inbox-filter="devices" data-i18n="inbox_filter_devices">Devices</button>
+        </div>
+        <div id="inboxList" class="inbox-list">
+          <div class="empty-state" data-i18n="inbox_empty">You’re all caught up.</div>
         </div>
       </div>
 
@@ -2336,6 +2461,8 @@
         <div class="mobile-more-device-list" id="mobileMoreDeviceList" aria-label="Devices" data-i18n="nav_devices" data-i18n-attr="aria-label"></div>
         <div class="mobile-more-actions">
           <button type="button" class="mobile-more-action" id="mobileMoreAddDevice"><i data-lucide="plus" aria-hidden="true"></i><span data-i18n="settings_add_device">Add device</span></button>
+          <button type="button" class="mobile-more-action" id="mobileMoreFamily"><i data-lucide="users" aria-hidden="true"></i><span data-i18n="tab_family">Family</span></button>
+          <button type="button" class="mobile-more-action" id="mobileMoreInbox"><i data-lucide="inbox" aria-hidden="true"></i><span data-i18n="tab_inbox">Inbox</span><span class="badge" id="mobileMoreInboxBadge" style="display:none">0</span></button>
           <button type="button" class="mobile-more-action" id="mobileMoreAlerts"><i data-lucide="bell" aria-hidden="true"></i><span data-i18n="alerts_title">Alerts</span><span class="badge" id="mobileMoreAlertsBadge" style="display:none">0</span></button>
           <button type="button" class="mobile-more-action" id="mobileMoreSettings"><i data-lucide="settings" aria-hidden="true"></i><span data-i18n="settings_title">Settings</span></button>
           <button type="button" class="mobile-more-action" id="mobileMoreLogout"><i data-lucide="log-out" aria-hidden="true"></i><span data-i18n="settings_logout">Log out</span></button>
@@ -3887,6 +4014,27 @@
     const DASHBOARD_COPY = {
       en: {
         nav_devices: 'Devices', nav_general: 'General', nav_more: 'More',
+        tab_family: 'Family', tab_inbox: 'Inbox',
+        family_eyebrow: 'Family', family_title: 'Everyone at a glance',
+        family_subtitle: 'See each child first, with their devices underneath.',
+        family_today_title: 'Family protection', family_today_subtitle: 'A quick view of every child and device.',
+        family_empty: 'Pair a device to see your family here.', family_device_count: '{n} device(s)',
+        family_protected: 'Protected', family_attention: 'Needs attention', family_offline: 'Offline', family_unknown: 'Status unavailable',
+        family_device_label: 'Device', family_device_online: 'Online', family_device_last_seen: 'Last seen {time}',
+        family_inferred_note: 'Grouped by the current child name. Device records remain separate.',
+        inbox_eyebrow: 'Family inbox', inbox_title: 'Things that need your attention',
+        inbox_subtitle: 'Requests, safety notices, and protection issues in one place.',
+        inbox_filter_all: 'All', inbox_filter_requests: 'Requests', inbox_filter_safety: 'Safety', inbox_filter_devices: 'Devices',
+        inbox_empty: 'You’re all caught up.', inbox_filter_empty: 'Nothing in this filter.', inbox_now: 'Just now',
+        inbox_request_title: 'Access request', inbox_request_time: '{name} is asking for {n} more minutes',
+        inbox_request_site: '{name} wants access to {value}', inbox_request_app: '{name} wants to use {value}',
+        inbox_requested_minutes: '+{n} minutes requested', inbox_device_title: '{name} needs a protection check',
+        inbox_device_last_seen: 'Last contact was {time}.', inbox_device_no_contact: 'This device has not reported a heartbeat yet.',
+        approval_choose_amount: 'Choose an amount', approval_requested_amount: 'Requested: +{n} minutes', approval_amount: '+{n} minutes',
+        next_event_label: 'What happens next', next_event_checking: 'Checking the current rules…', next_event_none: 'No upcoming rule changes are scheduled.',
+        next_bedtime_starts: 'Bedtime starts at {time}', next_bedtime_ends: 'Bedtime ends at {time}',
+        next_daily_limit_remaining: '{mins} minutes remain in today’s allowance', next_daily_limit_reached: 'Today’s allowance has been reached',
+        undo: 'Undo',
         context_viewing: 'Viewing',
         trends_comparison_new: 'No comparison yet — this is the first recorded month.',
         status_checking: 'Checking…', status_online_checked: 'Online · checked {time}',
@@ -3989,6 +4137,40 @@
         controls_daily_limit_title: 'Thời gian màn hình mỗi ngày', controls_daily_limit_toggle: 'Bật giới hạn hàng ngày', controls_weekend_override: 'Ghi đè cuối tuần', controls_bedtime_starts: 'Bắt đầu lúc', controls_bedtime_ends: 'Kết thúc lúc', controls_weekend_start: 'Cuối tuần bắt đầu', controls_weekend_end: 'Cuối tuần kết thúc', controls_holiday_today: 'Hôm nay là ngày lễ', controls_blocked_sites_title: 'Trang web đã chặn', controls_blocked_apps_title: 'Ứng dụng đã chặn', controls_per_app_limits_title: 'Giới hạn hàng ngày cho ứng dụng', controls_add_site_placeholder: 'ví dụ tiktok.com', controls_add_app_exe: 'Tên tệp thực thi hoặc gói', controls_add_app_display: 'Tên hiển thị (không bắt buộc)', controls_block: 'Chặn', controls_no_blocked_sites: 'Chưa chặn trang web nào', controls_no_blocked_apps: 'Chưa chặn ứng dụng nào', controls_no_app_limits: 'Chưa có giới hạn ứng dụng', controls_search_apps: 'Tìm ứng dụng', controls_search_apps_placeholder: 'Tìm ứng dụng…', controls_advanced_add_app: 'Nâng cao · Thêm bằng tệp thực thi/tên gói', controls_add_app_limit: 'Thêm giới hạn ứng dụng', controls_app_limit_minutes: 'Số phút mỗi ngày', controls_site_duplicate: 'Trang web này đã bị chặn.', controls_site_invalid: 'Nhập trang web hoặc tên miền hợp lệ.', controls_saved: 'Đã lưu ✓', controls_saving: 'Đang lưu…', controls_save_error: 'Không thể lưu cài đặt. Hãy thử lại.', alerts_mark_all_read: 'Đánh dấu tất cả đã đọc', alerts_filter_all: 'Tất cả', alerts_filter_violence: 'Bạo lực', alerts_filter_self_harm: 'Tự hại', alerts_filter_sexual: 'Tình dục', alerts_filter_sextortion: 'Tống tiền tình dục', alerts_filter_drugs: 'Ma túy', alerts_filter_stranger: 'Người lạ', alerts_filter_hate: 'Thù ghét', alerts_filter_bullying: 'Bắt nạt', close: 'Đóng', confirm_body_default: 'Bạn có chắc không?', device_default_name: 'Thiết bị', offline_parent_browser: 'Bạn đang ngoại tuyến. Thay đổi sẽ đồng bộ khi trình duyệt kết nối lại.', offline_child_device: '{device} đang ngoại tuyến. Lần cuối hoạt động {time} trước. Lệnh mới sẽ áp dụng khi thiết bị kết nối lại.'
       }
     };
+
+    Object.assign(DASHBOARD_COPY.ja, {
+      tab_family: 'ファミリー', tab_inbox: '受信トレイ',
+      family_eyebrow: 'ファミリー', family_title: '家族の状況をひと目で', family_subtitle: 'お子さまごとにデバイスをまとめて確認できます。',
+      family_today_title: 'ファミリーの保護', family_today_subtitle: 'お子さまとデバイスの状態を確認', family_empty: 'デバイスをペアリングすると、ここに家族が表示されます。', family_device_count: 'デバイス {n} 台',
+      family_protected: '保護中', family_attention: '要確認', family_offline: 'オフライン', family_unknown: '状態を確認できません', family_device_label: 'デバイス', family_device_online: 'オンライン', family_device_last_seen: '最終確認 {time}', family_inferred_note: '現在の子どもの名前でまとめています。デバイス記録は個別に保持されています。',
+      inbox_eyebrow: 'ファミリー受信トレイ', inbox_title: '確認が必要な項目', inbox_subtitle: 'リクエスト、安全通知、保護状態の問題をまとめて確認します。',
+      inbox_filter_all: 'すべて', inbox_filter_requests: 'リクエスト', inbox_filter_safety: '安全', inbox_filter_devices: 'デバイス', inbox_empty: '対応が必要な項目はありません。', inbox_filter_empty: 'このフィルターにはありません。', inbox_now: 'たった今',
+      inbox_request_title: 'アクセスリクエスト', inbox_request_time: '{name}があと{n}分をリクエストしています', inbox_request_site: '{name}が{value}へのアクセスを希望', inbox_request_app: '{name}が{value}の利用を希望', inbox_requested_minutes: 'あと{n}分のリクエスト', inbox_device_title: '{name}の保護状態を確認してください', inbox_device_last_seen: '最終連絡: {time}前', inbox_device_no_contact: 'このデバイスから最新状態がまだ届いていません。',
+      approval_choose_amount: '追加時間を選択', approval_requested_amount: 'リクエスト: +{n}分', approval_amount: '+{n}分',
+      next_event_label: '次に起きること', next_event_checking: '現在のルールを確認中…', next_event_none: '予定されているルール変更はありません。', next_bedtime_starts: '就寝時間は{time}に開始', next_bedtime_ends: '就寝時間は{time}に終了', next_daily_limit_remaining: '今日の利用可能時間はあと{mins}分', next_daily_limit_reached: '今日の利用上限に達しました', undo: '元に戻す',
+    });
+    Object.assign(DASHBOARD_COPY.zh, {
+      tab_family: '家庭', tab_inbox: '收件箱',
+      family_eyebrow: '家庭', family_title: '一眼查看家人状态', family_subtitle: '按孩子查看，每个孩子的设备显示在下方。',
+      family_today_title: '家庭保护', family_today_subtitle: '快速查看每个孩子和设备的状态。', family_empty: '配对设备后，家庭成员会显示在这里。', family_device_count: '{n} 台设备',
+      family_protected: '已保护', family_attention: '需要注意', family_offline: '离线', family_unknown: '状态不可用', family_device_label: '设备', family_device_online: '在线', family_device_last_seen: '最后在线 {time}', family_inferred_note: '按当前孩子姓名分组。设备记录仍然分别保留。',
+      inbox_eyebrow: '家庭收件箱', inbox_title: '需要你关注的事项', inbox_subtitle: '请求、安全通知和保护问题集中显示。',
+      inbox_filter_all: '全部', inbox_filter_requests: '请求', inbox_filter_safety: '安全', inbox_filter_devices: '设备', inbox_empty: '目前没有需要处理的事项。', inbox_filter_empty: '此筛选条件下没有事项。', inbox_now: '刚刚',
+      inbox_request_title: '访问请求', inbox_request_time: '{name}请求增加{n}分钟', inbox_request_site: '{name}想访问{value}', inbox_request_app: '{name}想使用{value}', inbox_requested_minutes: '请求增加{n}分钟', inbox_device_title: '{name}需要检查保护状态', inbox_device_last_seen: '最后联系时间为 {time}。', inbox_device_no_contact: '此设备尚未报告最新状态。',
+      approval_choose_amount: '选择增加时长', approval_requested_amount: '请求：+{n}分钟', approval_amount: '+{n}分钟',
+      next_event_label: '接下来会发生什么', next_event_checking: '正在检查当前规则…', next_event_none: '没有安排中的规则变更。', next_bedtime_starts: '就寝时间将于 {time} 开始', next_bedtime_ends: '就寝时间将于 {time} 结束', next_daily_limit_remaining: '今天还剩 {mins} 分钟可用', next_daily_limit_reached: '今天的使用时长已达到上限', undo: '撤销',
+    });
+    Object.assign(DASHBOARD_COPY.vi, {
+      tab_family: 'Gia đình', tab_inbox: 'Hộp thư',
+      family_eyebrow: 'Gia đình', family_title: 'Nắm tình hình cả nhà', family_subtitle: 'Xem từng người con trước, với các thiết bị bên dưới.',
+      family_today_title: 'Bảo vệ gia đình', family_today_subtitle: 'Xem nhanh trạng thái của từng con và thiết bị.', family_empty: 'Ghép nối thiết bị để xem gia đình tại đây.', family_device_count: '{n} thiết bị',
+      family_protected: 'Đang được bảo vệ', family_attention: 'Cần chú ý', family_offline: 'Ngoại tuyến', family_unknown: 'Chưa có trạng thái', family_device_label: 'Thiết bị', family_device_online: 'Trực tuyến', family_device_last_seen: 'Hoạt động lần cuối {time} trước', family_inferred_note: 'Được nhóm theo tên con hiện tại. Bản ghi thiết bị vẫn được giữ riêng.',
+      inbox_eyebrow: 'Hộp thư gia đình', inbox_title: 'Các mục cần bạn chú ý', inbox_subtitle: 'Yêu cầu, thông báo an toàn và vấn đề bảo vệ ở cùng một nơi.',
+      inbox_filter_all: 'Tất cả', inbox_filter_requests: 'Yêu cầu', inbox_filter_safety: 'An toàn', inbox_filter_devices: 'Thiết bị', inbox_empty: 'Không có mục nào cần xử lý.', inbox_filter_empty: 'Không có mục trong bộ lọc này.', inbox_now: 'Vừa xong',
+      inbox_request_title: 'Yêu cầu truy cập', inbox_request_time: '{name} đang xin thêm {n} phút', inbox_request_site: '{name} muốn truy cập {value}', inbox_request_app: '{name} muốn dùng {value}', inbox_requested_minutes: 'Đã xin thêm {n} phút', inbox_device_title: '{name} cần kiểm tra bảo vệ', inbox_device_last_seen: 'Liên hệ lần cuối {time} trước.', inbox_device_no_contact: 'Thiết bị này chưa báo cáo trạng thái mới nhất.',
+      approval_choose_amount: 'Chọn thời lượng', approval_requested_amount: 'Đã xin: +{n} phút', approval_amount: '+{n} phút',
+      next_event_label: 'Điều gì xảy ra tiếp theo', next_event_checking: 'Đang kiểm tra quy tắc hiện tại…', next_event_none: 'Không có thay đổi quy tắc nào được lên lịch.', next_bedtime_starts: 'Giờ ngủ bắt đầu lúc {time}', next_bedtime_ends: 'Giờ ngủ kết thúc lúc {time}', next_daily_limit_remaining: 'Còn {mins} phút trong thời gian hôm nay', next_daily_limit_reached: 'Đã đạt giới hạn hôm nay', undo: 'Hoàn tác',
+    });
 
     Object.assign(DASHBOARD_COPY.en, {
       auth_error_too_many: 'Too many attempts. Please try again later.',
@@ -4187,6 +4369,9 @@
         renderBlockedSites();
         renderBlockedApps();
         populateControls(currentSchedule);
+        renderFamilyPanel();
+        renderInboxPanel();
+        renderNextEvents();
         if (document.getElementById('alertsOverlay').classList.contains('open')) renderAlertsList();
         if (document.getElementById('tabTrends').classList.contains('active')) loadTrendsMonth();
         showToast(T('toast_language_changed'));
@@ -4226,10 +4411,15 @@
     let _healthTicker = null;
     let _deviceInfoCache = {};
     let _deviceStatusCache = {};
+    let _devicePendingCache = {};
+    let _deviceAlertsCache = {};
     let _selectorLoadToken = 0;
     let _commandInFlight = new Set();
     let _pendingCommands = {};
     let _commandRetry = null;
+    let _commandUndo = null;
+    let _commandUndoTimer = null;
+    let _inboxFilter = 'all';
     let _scheduleSaveTimers = {};
     let _scheduleSavePatches = {};
     let _deviceSession = 0;
@@ -4333,7 +4523,273 @@
     }
 
     function getChildLabel(info) {
-      return (info && (info.child_name || info.child || info.profile_name)) || '';
+      const value = String((info && (info.child_name || info.child || info.profile_name || info.profileName)) || '').trim().replace(/\s+/g, ' ');
+      return value && !['child', 'family member'].includes(value.toLowerCase()) ? value : '';
+    }
+
+    function getFamilyIdentity(info, did) {
+      const data = info || {};
+      const explicit = data.childId || data.child_id || data.familyMemberId || data.family_member_id || data.profileId || data.profile_id;
+      if (explicit) return { key: 'id:' + String(explicit), inferred: false };
+      const childName = String(getChildLabel(data) || '').trim().replace(/\s+/g, ' ');
+      if (childName) return { key: 'name:' + childName.toLowerCase(), inferred: true };
+      return { key: 'device:' + String(did), inferred: false };
+    }
+
+    function familyHealthFor(did) {
+      const status = _deviceStatusCache[did] || {};
+      const previousLoaded = _statusLoaded;
+      // The active device has an explicit loading lifecycle. Other devices are
+      // allowed to use a cached status snapshot for the family overview.
+      _statusLoaded = did === currentDeviceId
+        ? previousLoaded
+        : Object.keys(status).length > 0;
+      const health = getDeviceHealth(status, Date.now());
+      _statusLoaded = previousLoaded;
+      if (!health.heartbeatKnown) return { ...health, protectionState: 'unknown' };
+      if (health.stale || status.online === false || health.lastSeen > Date.now() + 30000) {
+        return { ...health, protectionState: 'offline' };
+      }
+      return health;
+    }
+
+    function aggregateFamilyHealth(healths) {
+      const states = healths.map(health => health.protectionState);
+      if (states.some(state => state === 'attention' || state === 'partial')) return 'attention';
+      if (states.length && states.every(state => state === 'protected' || state === 'protected-local')) return 'protected';
+      if (states.length && states.every(state => state === 'attention')) return 'attention';
+      if (states.length && states.every(state => state === 'unknown')) return 'unknown';
+      if (states.some(state => state === 'offline')) return states.every(state => state === 'offline') ? 'offline' : 'attention';
+      if (states.some(state => state === 'protected' || state === 'protected-local')) return 'attention';
+      return 'unknown';
+    }
+
+    function familyHealthLabel(state) {
+      return T({ protected: 'family_protected', attention: 'family_attention', offline: 'family_offline', unknown: 'family_unknown' }[state] || 'family_unknown');
+    }
+
+    function familyHealthIcon(state) {
+      return { protected: 'shield-check', attention: 'shield-alert', offline: 'cloud-off', unknown: 'shield-question' }[state] || 'shield-question';
+    }
+
+    function familyInitials(name) {
+      const parts = String(name || '?').trim().split(/\s+/).filter(Boolean);
+      return (parts.slice(0, 2).map(part => part[0]).join('') || '?').toUpperCase();
+    }
+
+    function familyGroupsFromCache() {
+      const groups = new Map();
+      devices.forEach(did => {
+        const info = _deviceInfoCache[did] || {};
+        const identity = getFamilyIdentity(info, did);
+        if (!groups.has(identity.key)) {
+          groups.set(identity.key, {
+            key: identity.key,
+            childName: getChildLabel(info) || getDeviceLabel(info, did),
+            inferred: identity.inferred,
+            devices: [],
+          });
+        }
+        const pending = _devicePendingCache[did] || {};
+        const alerts = _deviceAlertsCache[did] || {};
+        groups.get(identity.key).devices.push({
+          did,
+          info,
+          status: _deviceStatusCache[did] || {},
+          health: familyHealthFor(did),
+          pendingCount: Object.values(pending).filter(request => request && request.status === 'pending').length,
+          unreadAlerts: Object.values(alerts).filter(alert => alert && !alert.read).length,
+        });
+      });
+      return [...groups.values()].map(group => ({
+        ...group,
+        healthState: aggregateFamilyHealth(group.devices.map(device => device.health)),
+        deviceCount: group.devices.length,
+      }));
+    }
+
+    function renderFamilyPanel() {
+      const list = document.getElementById('familyMembersList');
+      if (!list) return;
+      const groups = familyGroupsFromCache();
+      if (!groups.length) {
+        list.innerHTML = '<div class="empty-state">' + escapeHtml(T('family_empty')) + '</div>';
+        return;
+      }
+      list.innerHTML = groups.map(group => {
+        const healthState = group.healthState;
+        const healthClass = healthState;
+        const devicesHtml = group.devices.map(device => {
+          const health = device.health;
+          const deviceName = getDeviceLabel(device.info, device.did);
+          const platform = device.info.platform || device.info.device_type || device.status.platform || T('family_device_label');
+          const statusLabel = health.online
+            ? T('family_device_online')
+            : health.lastSeen
+              ? fillTemplate(T('family_device_last_seen'), { time: formatHeartbeatAge(health.lastSeen) })
+              : T('family_unknown');
+          return `<button type="button" class="family-device-row" data-family-device="${escapeAttr(device.did)}" aria-label="${escapeAttr(deviceName + ' · ' + statusLabel)}">
+            <i data-lucide="devices" aria-hidden="true"></i>
+            <span class="family-device-copy"><span class="family-device-name">${escapeHtml(deviceName)}</span><span class="family-device-meta">${escapeHtml(platform)}</span></span>
+            <span class="family-device-status"><span class="online-dot ${health.online ? 'online' : 'offline'}"></span>${escapeHtml(statusLabel)}</span>
+            <i data-lucide="chevron-right" class="family-device-arrow" aria-hidden="true"></i>
+          </button>`;
+        }).join('');
+        return `<section class="family-member-card">
+          <div class="family-member-header">
+            <div class="family-avatar" style="background:${escapeAttr(group.devices[0]?.info?.avatar_color || '#0D9488')}">${escapeHtml(familyInitials(group.childName))}</div>
+            <div class="family-member-copy"><div class="family-member-name">${escapeHtml(group.childName)}</div><div class="family-member-meta">${escapeHtml(fillTemplate(T('family_device_count'), { n: group.deviceCount }))}</div></div>
+            <div class="family-health ${healthClass}"><i data-lucide="${familyHealthIcon(healthState)}" aria-hidden="true"></i>${escapeHtml(familyHealthLabel(healthState))}</div>
+          </div>
+          <div class="family-device-list">${devicesHtml}</div>
+          ${group.inferred ? '<div class="family-inferred-note">' + escapeHtml(T('family_inferred_note')) + '</div>' : ''}
+        </section>`;
+      }).join('');
+      document.querySelectorAll('[data-family-device]').forEach(button => {
+        button.addEventListener('click', () => {
+          const did = button.dataset.familyDevice;
+          if (!did) return;
+          currentDeviceId = did;
+          closeDialog('mobileMoreOverlay');
+          switchTab('today');
+          detachListeners();
+          attachListeners();
+        });
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function buildInboxItems() {
+      const items = [];
+      devices.forEach(did => {
+        const info = _deviceInfoCache[did] || {};
+        const childName = getChildLabel(info) || getDeviceLabel(info, did);
+        const pending = _devicePendingCache[did] || {};
+        Object.entries(pending).forEach(([key, request]) => {
+          if (!request || request.status !== 'pending') return;
+          const minutes = Number(request.requested_minutes ?? request.minutes ?? request.value) || 15;
+          let detail = request.type === 'extend_time'
+            ? fillTemplate(T('inbox_request_time'), { name: childName, n: minutes })
+            : request.type === 'unblock_site'
+              ? fillTemplate(T('inbox_request_site'), { name: childName, value: request.domain || request.value || '' })
+              : fillTemplate(T('inbox_request_app'), { name: childName, value: request.display_name || request.app_name || request.exe || request.value || '' });
+          if (request.child_message) detail += ' · "' + request.child_message + '"';
+          items.push({ kind: 'requests', did, key, timestamp: normaliseTimestamp(request.timestamp || request.created_at) || 0, title: T('inbox_request_title'), detail });
+        });
+        const alerts = _deviceAlertsCache[did] || {};
+        Object.entries(alerts).forEach(([key, alert]) => {
+          if (!alert || alert.read) return;
+          items.push({
+            kind: 'safety', did, key, timestamp: normaliseTimestamp(alert.timestamp) || 0,
+            title: alertCategoryLabel(alert.category), detail: childName + (alert.source || alert.domain ? ' · ' + (alert.source || alert.domain) : ''),
+          });
+        });
+        const health = familyHealthFor(did);
+        if (health.protectionState === 'attention' || health.protectionState === 'partial' || health.protectionState === 'offline' || health.protectionState === 'unknown') {
+          items.push({
+            kind: 'devices', did, timestamp: health.lastSeen || 0,
+            title: fillTemplate(T('inbox_device_title'), { name: childName }),
+            detail: health.lastSeen
+              ? fillTemplate(T('inbox_device_last_seen'), { time: formatHeartbeatAge(health.lastSeen) })
+              : T('inbox_device_no_contact'),
+          });
+        }
+      });
+      return items.sort((a, b) => b.timestamp - a.timestamp);
+    }
+
+    function renderInboxPanel() {
+      const list = document.getElementById('inboxList');
+      if (!list) return;
+      const items = buildInboxItems();
+      const filtered = _inboxFilter === 'all' ? items : items.filter(item => item.kind === _inboxFilter);
+      const count = items.length;
+      [document.getElementById('inboxBadge'), document.getElementById('inboxTabBadge'), document.getElementById('mobileMoreInboxBadge')].forEach(badge => {
+        if (!badge) return;
+        badge.style.display = count ? 'inline-flex' : 'none';
+        badge.textContent = count > 9 ? '9+' : String(count);
+      });
+      if (!filtered.length) {
+        list.innerHTML = '<div class="empty-state">' + escapeHtml(T(count ? 'inbox_filter_empty' : 'inbox_empty')) + '</div>';
+        return;
+      }
+      const icons = { requests: 'hand-wave', safety: 'shield-alert', devices: 'devices' };
+      list.innerHTML = filtered.map(item => `<button type="button" class="inbox-item" data-inbox-device="${escapeAttr(item.did)}">
+        <span class="inbox-item-icon"><i data-lucide="${icons[item.kind] || 'inbox'}" aria-hidden="true"></i></span>
+        <span class="inbox-item-body"><span class="inbox-item-title">${escapeHtml(item.title)}</span><span class="inbox-item-detail">${escapeHtml(item.detail)}</span><span class="inbox-item-time">${escapeHtml(item.timestamp ? timeAgo(item.timestamp) : T('inbox_now'))}</span></span>
+        <span class="inbox-item-arrow"><i data-lucide="chevron-right" aria-hidden="true"></i></span>
+      </button>`).join('');
+      document.querySelectorAll('[data-inbox-device]').forEach(button => {
+        button.addEventListener('click', () => {
+          const did = button.dataset.inboxDevice;
+          if (!did) return;
+          currentDeviceId = did;
+          switchTab('today');
+          detachListeners();
+          attachListeners();
+        });
+      });
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function scheduleClockMinutes(value) {
+      const match = String(value || '').match(/^(\d{1,2}):(\d{2})$/);
+      if (!match) return null;
+      const hour = Number(match[1]);
+      const minute = Number(match[2]);
+      return hour <= 23 && minute <= 59 ? hour * 60 + minute : null;
+    }
+
+    function formatScheduleClock(value) {
+      const minutes = scheduleClockMinutes(value);
+      if (minutes === null) return '';
+      const date = new Date();
+      date.setHours(Math.floor(minutes / 60), minutes % 60, 0, 0);
+      try {
+        return new Intl.DateTimeFormat(currentLang || 'en', { hour: 'numeric', minute: '2-digit', hour12: currentLang === 'en' }).format(date);
+      } catch (_) {
+        return value;
+      }
+    }
+
+    function renderNextEvents() {
+      const list = document.getElementById('whatNextList');
+      if (!list) return;
+      if (!_scheduleLoaded) {
+        list.innerHTML = '<span class="next-event-empty">' + escapeHtml(T('next_event_checking')) + '</span>';
+        return;
+      }
+      const now = new Date();
+      const currentMinutes = now.getHours() * 60 + now.getMinutes();
+      const holidayActive = currentSchedule.holiday_today === true
+        && (!currentSchedule.holiday_today_date || currentSchedule.holiday_today_date === now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0'));
+      const weekend = now.getDay() === 0 || now.getDay() === 6;
+      const weekendRules = currentSchedule.weekend_enabled === true && (weekend || holidayActive);
+      const lockout = weekendRules ? (currentSchedule.weekend_lockout || currentSchedule.lockout || {}) : (currentSchedule.lockout || {});
+      const enabled = lockout.enabled === true || lockout.enabled === 1 || lockout.enabled === 'true';
+      const start = scheduleClockMinutes(lockout.start);
+      const end = scheduleClockMinutes(lockout.end);
+      const lines = [];
+      if (enabled && start !== null && end !== null) {
+        const overnight = end <= start;
+        const active = _latestStatus?.lockout_active === true || (overnight ? (currentMinutes >= start || currentMinutes < end) : (currentMinutes >= start && currentMinutes < end));
+        if (active) {
+          lines.push(fillTemplate(T('next_bedtime_ends'), { time: formatScheduleClock(lockout.end) }));
+        } else {
+          lines.push(fillTemplate(T('next_bedtime_starts'), { time: formatScheduleClock(lockout.start) }));
+        }
+      }
+      const limit = Number(weekendRules ? (currentSchedule.weekend_daily_limit_mins ?? currentSchedule.daily_limit_mins) : currentSchedule.daily_limit_mins) || 0;
+      const limitEnabled = currentSchedule.daily_limit_enabled !== false && limit > 0;
+      const used = Math.max(Number(todayTimeLog.total_mins) || 0, Number(_statusScreenTimeMins) || 0, Number(currentUsedMins) || 0);
+      if (limitEnabled) {
+        const remaining = Math.max(0, limit - used);
+        lines.push(remaining > 0
+          ? fillTemplate(T('next_daily_limit_remaining'), { mins: remaining })
+          : T('next_daily_limit_reached'));
+      }
+      if (!lines.length) lines.push(T('next_event_none'));
+      list.innerHTML = lines.slice(0, 2).map(line => '<span class="next-event-line">' + escapeHtml(line) + '</span>').join('');
     }
 
     function deviceButtonFor(did, root = document) {
@@ -4996,12 +5452,16 @@
         let info = {};
         let status = {};
         try {
-          const [infoSnap, statusSnap] = await Promise.all([
+          const [infoSnap, statusSnap, pendingSnap, alertsSnap] = await Promise.all([
             get(ref(db, GUARD_ROOT + '/' + did + '/info')),
             get(ref(db, GUARD_ROOT + '/' + did + '/status')),
+            get(ref(db, GUARD_ROOT + '/' + did + '/pending_requests')),
+            get(ref(db, GUARD_ROOT + '/' + did + '/alerts')),
           ]);
           info = infoSnap.val() || {};
           status = statusSnap.val() || {};
+          _devicePendingCache[did] = pendingSnap.val() || {};
+          _deviceAlertsCache[did] = alertsSnap.val() || {};
         } catch (error) {
           console.warn('[Dashboard] Could not load device summary:', did, error.message);
         }
@@ -5040,9 +5500,30 @@
         return btn;
       };
 
+      const groups = new Map();
+      resolved.forEach(item => {
+        const identity = getFamilyIdentity(item.info, item.did);
+        if (!groups.has(identity.key)) {
+          groups.set(identity.key, {
+            childName: getChildLabel(item.info) || getDeviceLabel(item.info, item.did),
+            inferred: identity.inferred,
+            devices: [],
+          });
+        }
+        groups.get(identity.key).devices.push(item);
+      });
+
       targets.forEach(target => {
         target.innerHTML = '';
-        resolved.forEach(item => target.appendChild(makeDeviceButton(item)));
+        groups.forEach(group => {
+          const groupEl = document.createElement('div');
+          groupEl.className = 'device-family-group';
+          groupEl.innerHTML = '<div class="device-family-heading"><span class="device-family-name">'
+            + escapeHtml(group.childName) + '</span><span class="device-family-count">'
+            + escapeHtml(fillTemplate(T('family_device_count'), { n: group.devices.length })) + '</span></div>';
+          group.devices.forEach(item => groupEl.appendChild(makeDeviceButton(item)));
+          target.appendChild(groupEl);
+        });
         const addBtn = document.createElement('button');
         addBtn.type = 'button';
         addBtn.className = 'sidebar-nav-item sidebar-add-device';
@@ -5054,6 +5535,8 @@
         target.appendChild(addBtn);
       });
       updateDeviceSelectorStatuses();
+      renderFamilyPanel();
+      renderInboxPanel();
     }
 
     function updateDeviceSelectorStatuses() {
@@ -5097,6 +5580,7 @@
       _latestTimeLog = {};
       _pendingCommands = {};
       _commandRetry = null;
+      clearCommandUndo();
       emergencyLocked = false;
       internetPaused = false;
       showLoadingState();
@@ -5139,6 +5623,9 @@
         if (_statusScreenTimeMins > 0 && Object.keys(_latestTimeLog).length > 0) {
           renderWeekChart(_latestTimeLog);
         }
+        renderFamilyPanel();
+        renderInboxPanel();
+        renderNextEvents();
       });
       listeners.push(() => off(statusRef));
 
@@ -5150,6 +5637,7 @@
         renderHeroLimit();
         renderWeekChart(_latestTimeLog);
         populateControls();
+        renderNextEvents();
       });
       listeners.push(() => off(schedRef));
 
@@ -5165,6 +5653,7 @@
         todayTimeLog = log[today] || {};
         renderWeekChart(log);
         renderHeroFromTimeLog(log, today);
+        renderNextEvents();
       });
       listeners.push(() => off(timeRef));
 
@@ -5172,6 +5661,7 @@
       const reqRef = ref(db, GUARD_ROOT + '/' + did + '/pending_requests');
       onValue(reqRef, (snap) => {
         _latestPendingRequests = snap.val() || {};
+        _devicePendingCache[did] = _latestPendingRequests;
         renderPendingRequests(_latestPendingRequests);
       });
       listeners.push(() => off(reqRef));
@@ -5188,7 +5678,10 @@
       const alertsRef = ref(db, GUARD_ROOT + '/' + did + '/alerts');
       onValue(alertsRef, (snap) => {
         allAlerts = snap.val() || {};
+        _deviceAlertsCache[did] = allAlerts;
         renderAlertsBadge();
+        renderFamilyPanel();
+        renderInboxPanel();
       });
       listeners.push(() => off(alertsRef));
 
@@ -5343,25 +5836,42 @@
       if (pending.length === 0) {
         if (card) card.classList.add('is-empty');
         list.innerHTML = '<div class="empty-state compact" data-i18n="approval_empty_compact">' + T('approval_empty_compact') + '</div>';
+        renderInboxPanel();
         return;
       }
       if (card) card.classList.remove('is-empty');
       list.innerHTML = pending.map(([key, req]) => {
         const requestTranslation = T('cmd_' + req.type);
         const typeLabel = req.type === 'extend_time' ? T('today_request_more_time') : (requestTranslation === 'cmd_' + req.type ? String(req.type || '').replace(/_/g, ' ') : requestTranslation);
-        const valueLabel = req.value || '';
+        const requestedMinutes = Number(req.requested_minutes ?? req.minutes ?? req.value) || 15;
+        const actionValue = req.type === 'unblock_site'
+          ? (req.domain ?? req.value ?? '')
+          : req.type === 'unblock_app'
+            ? (req.exe ?? req.package_name ?? req.value ?? '')
+            : (req.value ?? requestedMinutes);
+        const valueLabel = req.type === 'extend_time'
+          ? fillTemplate(T('inbox_requested_minutes'), { n: requestedMinutes })
+          : actionValue;
         const msg = req.child_message || '';
+        const requestTime = req.timestamp || req.created_at;
+        const amountButtons = req.type === 'extend_time'
+          ? '<div class="request-amounts"><span class="request-amount-label">' + escapeHtml(T('approval_choose_amount')) + '</span>'
+            + [15, 30, 60].map(minutes => '<button type="button" class="btn btn-outline btn-sm" onclick="approveRequest(\'' + escapeInlineArgument(key) + '\',\'extend_time\',\'' + minutes + '\')">+' + minutes + '</button>').join('')
+            + '</div>'
+          : '';
         return '<div class="request-card">'
           + '<div class="request-info">'
           + '<div class="request-type">' + escapeHtml(typeLabel) + '</div>'
-          + '<div class="request-detail">' + escapeHtml(valueLabel) + (msg ? ' — "' + escapeHtml(msg) + '"' : '') + (req.created_at ? ' · ' + escapeHtml(timeAgo(req.created_at)) : '') + '</div>'
+          + '<div class="request-detail">' + escapeHtml(valueLabel) + (msg ? ' — "' + escapeHtml(msg) + '"' : '') + (requestTime ? ' · ' + escapeHtml(timeAgo(requestTime)) : '') + '</div>'
           + '</div>'
+          + amountButtons
           + '<div class="request-actions">'
-          + '<button type="button" class="btn btn-primary btn-sm" onclick="approveRequest(\'' + escapeInlineArgument(key) + '\',\'' + escapeInlineArgument(req.type) + '\',\'' + escapeInlineArgument(req.value || '') + '\')">' + T('approval_approve') + '</button>'
+          + '<button type="button" class="btn btn-primary btn-sm" onclick="approveRequest(\'' + escapeInlineArgument(key) + '\',\'' + escapeInlineArgument(req.type) + '\',\'' + escapeInlineArgument(actionValue) + '\')">' + T('approval_approve') + '</button>'
           + '<button type="button" class="btn btn-outline btn-sm" onclick="denyRequest(\'' + escapeInlineArgument(key) + '\')">' + T('approval_deny') + '</button>'
           + '</div>'
           + '</div>';
       }).join('');
+      renderInboxPanel();
     }
 
     // ── 7-day bar chart rendering (redesigned) ──
@@ -5828,6 +6338,9 @@
       updateDeviceSelectorStatuses();
       renderDeviceContext(_deviceInfoCache[currentDeviceId] || null, currentHealth);
       renderProtectionStrip(s, currentHealth);
+      renderFamilyPanel();
+      renderInboxPanel();
+      renderNextEvents();
 
       // These are device-reported values only. A parent request never mutates
       // them locally; pending request copy is rendered separately below.
@@ -5882,12 +6395,25 @@
         return;
       }
       document.querySelectorAll('.tab-panel').forEach(p => p.classList.toggle('active', p.id === 'tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)));
-      document.querySelectorAll('#tabBar button, #mobileTabBar button').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
+      document.querySelectorAll('#tabBar button, #mobileTabBar button, .sidebar-nav-item[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === tabName));
       if (tabName === 'trends') loadTrendsMonth();
+      if (tabName === 'family') renderFamilyPanel();
+      if (tabName === 'inbox') renderInboxPanel();
     }
 
     document.querySelectorAll('#tabBar button, #mobileTabBar button').forEach(btn => {
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+    document.querySelectorAll('.sidebar-nav-item[data-tab]').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+    });
+
+    document.querySelectorAll('[data-inbox-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        _inboxFilter = btn.dataset.inboxFilter || 'all';
+        document.querySelectorAll('[data-inbox-filter]').forEach(item => item.classList.toggle('active', item === btn));
+        renderInboxPanel();
+      });
     });
 
     // ── Alerts badge ──
@@ -5900,6 +6426,10 @@
         el.style.display = unread > 0 ? 'flex' : 'none';
         el.textContent = unread > 9 ? '9+' : unread;
       });
+      if (currentDeviceId) {
+        _deviceAlertsCache[currentDeviceId] = allAlerts;
+        renderInboxPanel();
+      }
     }
 
     // ============================================================
@@ -5987,14 +6517,26 @@
       return T('command_requested');
     }
 
-    function setCommandFeedback(kind, message, canRetry = false) {
+    function setCommandFeedback(kind, message, canRetry = false, canUndo = false) {
       const el = document.getElementById('commandFeedback');
       const text = el && el.querySelector('.feedback-text');
       const retryBtn = document.getElementById('commandRetryBtn');
+      const undoBtn = document.getElementById('commandUndoBtn');
       if (!el || !text) return;
       el.className = 'command-feedback' + (message ? ' visible' : '') + (kind ? ' ' + kind : '');
       text.textContent = message || '';
       if (retryBtn) retryBtn.style.display = canRetry ? 'inline-flex' : 'none';
+      if (undoBtn) undoBtn.style.display = canUndo ? 'inline-flex' : 'none';
+    }
+
+    function clearCommandUndo() {
+      _commandUndo = null;
+      if (_commandUndoTimer) {
+        clearTimeout(_commandUndoTimer);
+        _commandUndoTimer = null;
+      }
+      const undoBtn = document.getElementById('commandUndoBtn');
+      if (undoBtn) undoBtn.style.display = 'none';
     }
 
     function pendingCommandFor(cmdName) {
@@ -6087,7 +6629,13 @@
         if (!isCommandAcknowledged(pending, status)) return;
         delete _pendingCommands[key];
         const action = commandActionLabel(pending.cmdName, pending.payload);
-        setCommandFeedback('success', fillTemplate(T('command_acknowledged'), { action }));
+        const undoable = pending.cmdName === 'emergency_lock' || pending.cmdName === 'internet_pause';
+        if (undoable) {
+          clearCommandUndo();
+          _commandUndo = { cmdName: pending.cmdName, active: pending.payload.active };
+          _commandUndoTimer = setTimeout(clearCommandUndo, 8000);
+        }
+        setCommandFeedback('success', fillTemplate(T('command_acknowledged'), { action }), false, undoable);
         showToast(fillTemplate(T('command_acknowledged'), { action }));
       });
     }
@@ -6127,6 +6675,8 @@
       if (_commandInFlight.has(key)) return { ok: false, busy: true };
       _commandInFlight.add(key);
       _commandRetry = null;
+      if (typeof clearCommandUndo === 'function') clearCommandUndo();
+      else _commandUndo = null;
       setCommandFeedback('', T('command_sending'));
       renderActionButtons();
       try {
@@ -6203,6 +6753,16 @@
       }
     });
 
+    document.getElementById('commandUndoBtn').addEventListener('click', () => {
+      if (!_commandUndo) return;
+      const undo = _commandUndo;
+      clearCommandUndo();
+      const action = undo.cmdName === 'emergency_lock'
+        ? (undo.active ? T('command_unlock') : T('command_lock'))
+        : (undo.active ? T('command_resume_internet') : T('command_pause_internet'));
+      runRemoteCommand(undo.cmdName, { active: !undo.active }, { action });
+    });
+
     // ── Approve/deny pending requests (global scope for inline onclick) ──
     window.approveRequest = function(key, type, value) {
       showConfirm(
@@ -6211,8 +6771,10 @@
         async () => {
           try {
             let result;
+            let resolvedMinutes = null;
             if (type === 'extend_time') {
-              result = await writeCommand('extend_time', { minutes: parseInt(value, 10) || 15 });
+              resolvedMinutes = parseInt(value, 10) || 15;
+              result = await writeCommand('extend_time', { minutes: resolvedMinutes });
             } else if (type === 'unblock_site') {
               result = await writeCommand('unblock_site', { domain: value });
             } else if (type === 'unblock_app') {
@@ -6221,7 +6783,11 @@
               throw new Error('Unsupported request type');
             }
             if (!result.ok) throw result.error || new Error('Command write failed');
-            await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'approved' });
+            await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), {
+              status: 'approved',
+              ...(resolvedMinutes ? { resolved_minutes: resolvedMinutes } : {}),
+              resolved_at: Date.now(),
+            });
             showToast(T('approval_approve'));
           } catch (err) {
             showToast(T('error_firebase_write'), true);
@@ -7262,6 +7828,15 @@
     document.getElementById('mobileMoreAddDevice').addEventListener('click', () => {
       closeDialog('mobileMoreOverlay');
       startPairing();
+    });
+    document.getElementById('familyAddDeviceBtn').addEventListener('click', () => startPairing());
+    document.getElementById('mobileMoreFamily').addEventListener('click', () => {
+      closeDialog('mobileMoreOverlay');
+      switchTab('family');
+    });
+    document.getElementById('mobileMoreInbox').addEventListener('click', () => {
+      closeDialog('mobileMoreOverlay');
+      switchTab('inbox');
     });
     document.getElementById('mobileMoreAlerts').addEventListener('click', () => {
       closeDialog('mobileMoreOverlay');
