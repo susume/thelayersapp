@@ -60,6 +60,11 @@ for name,page in parsed.items():
             destination=parsed.get(str(target.relative_to(ROOT)).replace('\\','/')) or Page(target.read_text(encoding='utf-8'))
             if unquote(u.fragment) not in destination.ids: errors.append(f'{name}: missing fragment {href}')
     visible=' '.join(page.data)
+    if name == 'teacher.html':
+        if 'data-teacher-demo' not in (ROOT/name).read_text(encoding='utf-8') or 'teacher-demo' not in page.ids:
+            errors.append(f'{name}: missing interactive Teacher walkthrough')
+        if not any(x.endswith('assets/teacher-demo.js') for x in page.script_srcs):
+            errors.append(f'{name}: missing Teacher React bundle')
     # Historical article content can retain third-party figures, but current product pages cannot sell old offers.
     if not name.startswith('blog/'):
         if re.search(r'\$(?:29|49|59)\b|gumroad\.com/l/',(ROOT/name).read_text(encoding='utf-8')): errors.append(f'{name}: stale purchase offer')
@@ -75,7 +80,7 @@ with tempfile.TemporaryDirectory(prefix='layers-site-check-') as temp:
             target.write_text(code,encoding='utf-8')
             result=subprocess.run([node,'--check',str(target)],capture_output=True,text=True)
             if result.returncode: errors.append(name+': '+result.stderr)
-    for name in ['assets/site.js','assets/product-demo.js','worker.js']:
+    for name in ['assets/site.js','assets/product-demo.js','assets/teacher-demo.js','worker.js']:
         target=Path(temp)/(Path(name).stem+'.mjs')
         target.write_text((ROOT/name).read_text(encoding='utf-8'),encoding='utf-8')
         result=subprocess.run([node,'--check',str(target)],capture_output=True,text=True)

@@ -111,3 +111,20 @@ decline a sample time request. The hero and expanded walkthrough share state.
 These previews do not authenticate, persist customer settings, call Firebase,
 or operate real child devices. The rendered UI is a product walkthrough with
 sample data, not the actual native binaries.
+# Interactive Teacher preview
+
+The Teacher page now loads a separate local React bundle. Its graphite dock,
+language pair, Caption/Timer/Picker/Draw/Classroom/More controls and floating
+tool windows follow `layers-windows/layers.py`: `PALETTE`, `_build_toolbar`,
+`TimerLayer`, `PickerLayer`, `ScreenPointerLayer`, `ClassroomLayer`,
+`DictionaryLayer` and `NoiseMeterLayer`. Desktop visitors can move tool windows
+and draw on sample lesson slides. Phone layouts put the selected window below
+the toolbar, before the lesson, so a tool change appears next to its controls.
+
+The preview includes real local countdown/stopwatch timing, editable sample
+class lists, random selection, slide navigation, freehand/highlighter strokes,
+undo and clear. Captions/translations, dictionary results, relative noise levels,
+room codes, help requests and student browser responses use transient sample
+data. Classroom actions require a sample connection; ending the class resets
+focus, lockdown and links. No microphone, Firebase, payment, account or remote
+classroom API is used. The closed beta CTA and existing Guard demos are retained.

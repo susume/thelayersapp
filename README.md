@@ -13,6 +13,9 @@ under the existing `www.thelayersapp.com` domain.
 - `src/product-demo.jsx` / `src/demo-state.mjs`: interactive React product
   walkthrough and isolated sample device state.
 - `assets/product-demo.css`: device frames and platform-specific app previews.
+- `src/teacher-demo.jsx` / `src/teacher-state.mjs`: interactive Windows Teacher
+  toolbar over sample slides, with isolated timer and classroom state.
+- `assets/teacher-demo.css`: source-matched native Teacher palette and layout.
 - `content/articles/`: retained journal body/header content.
 - `tools/refresh_supporting_pages.py`: journal generation, assistant prompt,
   access labels, sitemap, robots and extensionless localized aliases.
@@ -34,6 +37,13 @@ Guard Family pages when updating content. They share transient sample state and
 never connect to Firebase, sign in, or issue real device commands. The parent web
 preview follows `dashboard.html`, the Android Controller uses its dark purple
 theme, and the Windows child window follows `windows_ui.py`.
+
+The Teacher page has its own React bundle, loaded only on `teacher.html`.
+Preserve its floating toolbar, tool windows and interactive slide annotation.
+Captions, dictionary results, microphone levels and student connections use
+sample data; timers and drawing work locally. It never records audio, sends
+links to real students, or connects to classroom services. `build:demo` builds
+both previews; generated bundles and their React licence files are committed.
 
 ## Preview and verify
 

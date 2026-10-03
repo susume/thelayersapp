@@ -2,7 +2,7 @@
   "name": "layers-public-site",
   "private": true,
   "scripts": {
-    "build:demo": "esbuild src/product-demo.jsx --bundle --minify --legal-comments=linked --outfile=assets/product-demo.js",
+    "build:demo": "esbuild src/product-demo.jsx src/teacher-demo.jsx --bundle --minify --legal-comments=linked --outdir=assets",
     "test": "node --test tests/*.test.mjs"
   },
   "dependencies": { "react": "18.3.1", "react-dom": "18.3.1" },
