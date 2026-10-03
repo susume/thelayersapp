@@ -16,6 +16,9 @@ under the existing `www.thelayersapp.com` domain.
 - `src/teacher-demo.jsx` / `src/teacher-state.mjs`: interactive Windows Teacher
   toolbar over sample slides, with isolated timer and classroom state.
 - `assets/teacher-demo.css`: source-matched native Teacher palette and layout.
+- `src/browser-guard-demo.jsx` / `src/browser-guard-state.mjs`: extension Parent
+  Controls, popup and sample browsing, with shared transient rules and alerts.
+- `assets/browser-guard-demo.css`: extension-matched dark theme and browser frame.
 - `content/articles/`: retained journal body/header content.
 - `tools/refresh_supporting_pages.py`: journal generation, assistant prompt,
   access labels, sitemap, robots and extensionless localized aliases.
@@ -43,7 +46,15 @@ Preserve its floating toolbar, tool windows and interactive slide annotation.
 Captions, dictionary results, microphone levels and student connections use
 sample data; timers and drawing work locally. It never records audio, sends
 links to real students, or connects to classroom services. `build:demo` builds
-both previews; generated bundles and their React licence files are committed.
+all previews; generated bundles and their React licence files are committed.
+
+Browser Guard loads its own React bundle only on `guard.html`. Its preview follows
+`chrome_extension_home` and stays separate from Guard Family. Website rules,
+per-site schedules, bedtime, scanning settings and alerts update sample browsing
+and the popup. The sample PIN is 1234. Content examples are preclassified harmless
+placeholders; no page scanning, Chrome permissions, system hardening, browsing
+history, account or extension storage is accessed. Sample site visits never fetch
+the entered domain. Preserve this interaction when editing the Browser Guard page.
 
 ## Preview and verify
 

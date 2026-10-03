@@ -128,3 +128,22 @@ room codes, help requests and student browser responses use transient sample
 data. Classroom actions require a sample connection; ending the class resets
 focus, lockdown and links. No microphone, Firebase, payment, account or remote
 classroom API is used. The closed beta CTA and existing Guard demos are retained.
+
+## Interactive Browser Guard preview
+
+The Browser Guard page loads a separate React bundle following the extension's
+`chrome_extension_home/options.html`, `options.css`, `popup.html`, `popup.css`,
+`blocked.html` and `content-scanner.css`. Its Parent Controls tabs, fixed sample
+PIN (1234), website rule editor, per-site schedules, bedtime, content settings,
+alerts and popup share transient sample state. A sample browser displays a study
+page, an explanatory block page or preclassified content blur examples.
+
+Schedule and health semantics follow `shared/config.js` and `shared/status.js`:
+overnight intervals include the start and exclude the end, equal times are not
+active, bedtime overrides individual rules, and incomplete Incognito/scanning
+coverage remains visible. The Incognito control is explicitly simulated.
+
+No Chrome permissions, extension storage, system policies, Firebase, payments or
+remote domains are accessed. Domain visits never fetch websites. Content examples
+are harmless preclassified placeholders, not a live scanner or an accuracy claim.
+Guard Family and Teacher previews remain independently bundled.

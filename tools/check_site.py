@@ -60,6 +60,11 @@ for name,page in parsed.items():
             destination=parsed.get(str(target.relative_to(ROOT)).replace('\\','/')) or Page(target.read_text(encoding='utf-8'))
             if unquote(u.fragment) not in destination.ids: errors.append(f'{name}: missing fragment {href}')
     visible=' '.join(page.data)
+    if name == 'guard.html':
+        if 'data-browser-guard-demo' not in (ROOT/name).read_text(encoding='utf-8') or 'browser-guard-demo' not in page.ids:
+            errors.append(f'{name}: missing interactive browser extension walkthrough')
+        if not any(x.endswith('assets/browser-guard-demo.js') for x in page.script_srcs):
+            errors.append(f'{name}: missing Browser Guard React bundle')
     if name == 'teacher.html':
         if 'data-teacher-demo' not in (ROOT/name).read_text(encoding='utf-8') or 'teacher-demo' not in page.ids:
             errors.append(f'{name}: missing interactive Teacher walkthrough')
@@ -80,7 +85,7 @@ with tempfile.TemporaryDirectory(prefix='layers-site-check-') as temp:
             target.write_text(code,encoding='utf-8')
             result=subprocess.run([node,'--check',str(target)],capture_output=True,text=True)
             if result.returncode: errors.append(name+': '+result.stderr)
-    for name in ['assets/site.js','assets/product-demo.js','assets/teacher-demo.js','worker.js']:
+    for name in ['assets/site.js','assets/product-demo.js','assets/teacher-demo.js','assets/browser-guard-demo.js','worker.js']:
         target=Path(temp)/(Path(name).stem+'.mjs')
         target.write_text((ROOT/name).read_text(encoding='utf-8'),encoding='utf-8')
         result=subprocess.run([node,'--check',str(target)],capture_output=True,text=True)
