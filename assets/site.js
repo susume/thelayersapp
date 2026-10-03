@@ -37,9 +37,9 @@ if (form) {
     const subject = 'Layers — ' + label;
     const body = 'Name: ' + name + '\nReply email: ' + email + '\nTopic: ' + label + '\n\n' + message;
     const link = document.querySelector('#email-draft-link');
-    link.href = 'mailto:questions@thelayersapp.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    link.href = 'mailto:contact@thelayersapp.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
     const draft = document.querySelector('#email-draft');
-    draft.value = 'To: questions@thelayersapp.com\nSubject: ' + subject + '\n\n' + body;
+    draft.value = 'To: contact@thelayersapp.com\nSubject: ' + subject + '\n\n' + body;
     document.querySelector('#draft-box').hidden = false;
     document.querySelector('#form-status').textContent = 'Your draft is ready. Open your email app and press Send there, or copy the draft into your webmail. This website has not sent a message.';
     link.focus();

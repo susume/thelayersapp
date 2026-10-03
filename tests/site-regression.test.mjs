@@ -14,7 +14,7 @@ function contactRuntime(search = '') {
       name: { value: 'Katrin', focus() {} },
       email: { value: 'test@example.test' },
       message: { value: 'Please help with my Android setup.', focus() {} },
-      topic: { value: 'access', options: [{ value: 'access', textContent: 'Current access' }, { value: 'guard', textContent: 'Guard Family' }], selectedIndex: 0 },
+      topic: { value: 'access', options: [{ value: 'access', textContent: 'Closed beta enquiry' }, { value: 'guard', textContent: 'Guard Family' }], selectedIndex: 0 },
     },
     reportValidity: () => true,
     addEventListener(type, fn) { this[type] = fn; },
@@ -38,8 +38,8 @@ test('contact prepares a draft without sending, navigating or asserting delivery
   assert.equal(nodes['#draft-box'].hidden, false);
   const url = new URL(nodes['#email-draft-link'].href);
   assert.equal(url.protocol, 'mailto:');
-  assert.equal(url.pathname, 'questions@thelayersapp.com');
-  assert.equal(url.searchParams.get('subject'), 'Layers — Current access');
+  assert.equal(url.pathname, 'contact@thelayersapp.com');
+  assert.equal(url.searchParams.get('subject'), 'Layers — Closed beta enquiry');
   assert.match(url.searchParams.get('body'), /Reply email: test@example.test/);
   assert.match(nodes['#form-status'].textContent, /has not sent a message/);
   assert.equal(nodes['#email-draft-link'].focused, true);
@@ -53,7 +53,7 @@ test('draft encoding keeps user content out of mailto headers and recipients', (
   assert.deepEqual([...url.searchParams.keys()], ['subject', 'body']);
   assert.match(url.searchParams.get('body'), /&bcc=someone@example.test/);
   assert.match(nodes['#email-draft'].value, /<script>alert\(1\)<\/script>/);
-  assert.equal(url.pathname, 'questions@thelayersapp.com');
+  assert.equal(url.pathname, 'contact@thelayersapp.com');
 });
 
 test('invalid form and whitespace-only content keep the draft hidden', () => {

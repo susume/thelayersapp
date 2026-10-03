@@ -33,6 +33,19 @@ def refresh_dashboard():
             access,overview=labels[match[2]]
             return match[0]+"\n        site_access: '"+access+"',\n        site_overview: '"+overview+"',"
         text=re.sub(r"(license_get:\s*)'(Contact for access|利用について問い合わせ|联系获取使用权限|Liên hệ để sử dụng)',",add_labels,text)
+    beta_labels = {
+        'Contact for access': 'Join the closed beta',
+        'Contact the team for current access': 'Join the free closed beta',
+        '利用について問い合わせ': 'ベータに参加',
+        '現在の利用についてチームに問い合わせ': '無料のクローズドベータに参加',
+        '联系获取使用权限': '参加封闭测试',
+        '联系团队获取当前使用权限': '参加免费封闭测试',
+        'Liên hệ để sử dụng': 'Tham gia beta kín',
+        'Liên hệ nhóm để được truy cập hiện tại': 'Tham gia beta kín miễn phí',
+        'Current access is arranged through the Layers team.': 'Join the free closed beta in exchange for honest feedback and testimonials.',
+    }
+    for before, after in beta_labels.items():
+        text = text.replace(before, after)
     path.write_text(text,encoding='utf-8')
 
 ARTICLES = [
@@ -57,14 +70,14 @@ def refresh_articles():
             assert header and body, filename
             content=header[0]+body[0]
             # Preserve the article narrative and original date, but remove current-sale CTAs.
-            content=re.sub(r'<a\b[^>]*href="https://thelayersapp\.gumroad\.com[^"<>]*"[^>]*>.*?</a>','<a href="../contact.html?topic=access">Contact for current access</a>',content,flags=re.S)
+            content=re.sub(r'<a\b[^>]*href="https://thelayersapp\.gumroad\.com[^"<>]*"[^>]*>.*?</a>','<a href="../contact.html?topic=access">Join the closed beta</a>',content,flags=re.S)
             content=re.sub(r'\sstyle="[^"]*"','',content)
             content=content.replace('class="cta-btn cta-primary"','class="btn btn-primary"').replace('class="cta-btn cta-secondary"','class="btn btn-secondary"')
             # Own-product prices in a release article are obsolete; keep its technical history.
             if filename=='whats-new-v38-mac.html':
                 content=re.sub(r'\$(?:29|49|59)(?:\s*(?:one-time|once))?','legacy offer',content)
             saved.write_text(content,encoding='utf-8')
-        content=notice('This article reflects its original publication date. For the current lineup, Windows and Android are the active app platforms; Mac apps and Layers Talk are discontinued. Access is by contacting the team. See the current product pages for features and setup requirements.')+saved.read_text(encoding='utf-8')
+        content=notice('This article reflects its original publication date. For the current lineup, Windows and Android are the active app platforms; Mac apps and Layers Talk are discontinued. Layers is now running a free closed beta in exchange for honest feedback and testimonials. Email contact@thelayersapp.com to express interest. See the current product pages for features and setup requirements.')+saved.read_text(encoding='utf-8')
         content+= '<div style="height:32px"></div>'+cta()
         # Shell is nested under blog; adjust the current access CTA rather than article links.
         content=content.replace('href="contact.html?topic=access"','href="../contact.html?topic=access"')
@@ -73,10 +86,10 @@ def refresh_articles():
     content=hero('Notes from the Layers team.','Ideas about learning, family life and technology, plus earlier product history. For current features and access, use the product pages.','Layers journal')+section('Stories & perspectives','<div class="cards two">'+cards+'</div>')
     shell('blog/index.html','Layers journal','Stories about classroom learning and family technology. Historical product articles are labelled with the current lineup.',content)
 
-ASSISTANT_PROMPT = '''You are the Layers website assistant. Help visitors choose the right product and understand setup. Be concise and honest. If you do not know, direct them to questions@thelayersapp.com.
+ASSISTANT_PROMPT = '''You are the Layers website assistant. Help visitors choose the right product and understand setup. Be concise and honest. If you do not know, direct them to contact@thelayersapp.com.
 
-CURRENT ACCESS
-Do not quote prices, offer checkout, invent store listings or claim a public release. Current access and builds are arranged through the team at https://www.thelayersapp.com/contact.html?topic=access . Existing licence keys can still be used where the app or dashboard asks for them. Do not request full payment details, passwords or parent PINs.
+CLOSED BETA
+Layers is running a closed beta and inviting people to trial the apps free of charge in return for honest feedback and testimonials about their experience. Direct interested visitors to contact@thelayersapp.com or https://www.thelayersapp.com/contact.html?topic=access . Do not promise admission, a public launch date or future pricing. Do not quote prices, offer checkout, invent store listings or claim a public release. Existing licence keys can still be used where the app or dashboard asks for them. Do not request full payment details, passwords or parent PINs.
 
 CURRENT PRODUCT FAMILY
 Guard Family consists of a browser parent dashboard at https://www.thelayersapp.com/dashboard.html , the Android parent Controller, Guard Desktop on the child's Windows 10/11 PC, and Guard Mobile on the child's Android phone/tablet. Parents pair each child app using its current expiring code. The dashboard and Controller have Today, Trends and Controls, device status, app/time summaries, schedules, website/app lists, per-app limits, requests and alerts. Parent controls act on the selected paired device; do not promise every device is controlled by a single click.
@@ -119,9 +132,12 @@ def refresh_assistant():
 
 Current product and access information, updated 3 October 2026.
 
-## Access
-Contact questions@thelayersapp.com for current builds, access and activation guidance.
-No public prices or checkout links are advertised. Do not invent release availability.
+## Closed beta
+Layers is running a closed beta. Participants can trial the apps free of charge
+in return for honest feedback and testimonials about their experience.
+Email contact@thelayersapp.com with the apps and devices you would like to try.
+The team provides current beta builds, activation and setup guidance.
+Do not invent admission guarantees, public release dates or future pricing.
 Existing licence keys remain supported where the product asks for them.
 
 ## Guard Family

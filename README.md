@@ -48,8 +48,9 @@ preparation locally; do not send a real test message or create a customer accoun
 just to inspect the page.
 
 Current content decisions and implementation evidence are recorded in
-`docs/product-audit-2026-10-03.md`. Product access is currently by contact, prices
-are unpublished, and Windows/Android are the active child-app platforms. Do not
+`docs/product-audit-2026-10-03.md`. Layers is running a closed beta: participants trial the apps free of charge
+in return for honest feedback and testimonials. Enquiries go to
+`contact@thelayersapp.com`; future prices are unpublished, and Windows/Android are the active child-app platforms. Do not
 restore retired Mac offers or use a source version as proof of a public release.
 
 `worker.js` is the separately deployed assistant Worker, not a GitHub Pages
