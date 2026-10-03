@@ -1855,8 +1855,13 @@
       .next-event-card { margin-bottom: var(--sp-md); }
     }
   </style>
+  <meta name="description" content="Parent dashboard for paired Layers Guard Windows and Android child devices. Current access is arranged through the Layers team.">
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#142c38">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/dashboard-theme.css">
 </head>
-<body>
+<body class="dashboard-page">
 
   <!-- ===== OFFLINE BANNER ===== -->
   <div id="offlineBanner" class="offline-banner"></div>
@@ -1903,6 +1908,8 @@
         <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;margin-top:var(--sp-sm)" data-i18n="auth_signup">Sign up</button>
         <div id="signupError" class="auth-error"></div>
       </form>
+      <p class="site-return"><a href="contact.html?topic=guard" data-i18n="site_access">Contact the team for current access</a></p>
+      <a class="site-return" href="index.html" data-i18n="site_overview">Layers product overview</a>
     </div>
   </section>
 
@@ -1924,7 +1931,7 @@
         <div id="licenseError" class="auth-error"></div>
       </form>
       <p style="margin-top:var(--sp-lg);font-size:0.8125rem;color:var(--text-muted)">
-        <a href="https://thelayersapp.com/guard-pro.html" target="_blank" style="color:var(--accent);text-decoration:none" data-i18n="license_get">Get a license key</a>
+        <a href="contact.html?topic=guard" style="color:var(--accent);text-decoration:none" data-i18n="license_get">Contact for access</a>
       </p>
     </div>
   </section>
@@ -3168,7 +3175,9 @@
         license_placeholder:          'XXXX-XXXX-XXXX',
         license_activate:             'Activate',
         license_error:                'Invalid license key.',
-        license_get:                  'Get a license key',
+        license_get:                  'Contact for access',
+        site_access: 'Contact the team for current access',
+        site_overview: 'Layers product overview',
 
         // ── Web-dashboard-specific: Setup ──
         setup_web_title:              'Pair a device',
@@ -3449,7 +3458,9 @@
         license_placeholder:           'XXXX-XXXX-XXXX',
         license_activate:              '有効化',
         license_error:                 'ライセンスキーが無効です。',
-        license_get:                   'ライセンスキーを取得',
+        license_get:                   '利用について問い合わせ',
+        site_access: '現在の利用についてチームに問い合わせ',
+        site_overview: 'Layers 製品のご案内',
         // ── Web-dashboard-specific: Setup ──
         setup_web_title:               'デバイスをペアリング',
         setup_web_instructions:        'お子さまのデバイスのLayers Guardアプリにこのコードを入力してください。',
@@ -3726,7 +3737,9 @@
         license_placeholder:           'XXXX-XXXX-XXXX',
         license_activate:              '激活',
         license_error:                 '许可证密钥无效。',
-        license_get:                   '获取许可证密钥',
+        license_get:                   '联系获取使用权限',
+        site_access: '联系团队获取当前使用权限',
+        site_overview: 'Layers 产品概览',
         // ── Web-dashboard-specific: Setup ──
         setup_web_title:               '配对设备',
         setup_web_instructions:        '在孩子设备上的 Layers Guard 应用中输入此代码。',
@@ -4004,7 +4017,9 @@
         license_placeholder:           'XXXX-XXXX-XXXX',
         license_activate:              'Kích hoạt',
         license_error:                 'Mã bản quyền không hợp lệ.',
-        license_get:                   'Lấy mã bản quyền',
+        license_get:                   'Liên hệ để sử dụng',
+        site_access: 'Liên hệ nhóm để được truy cập hiện tại',
+        site_overview: 'Tổng quan sản phẩm Layers',
         // ── Web-dashboard-specific: Setup ──
         setup_web_title:               'Ghép nối thiết bị',
         setup_web_instructions:        'Nhập mã này trong ứng dụng Layers Guard trên thiết bị của con bạn.',

@@ -1,41 +1,51 @@
-# Layers — thelayersapp.com
+# Layers
 
-## What is Layers?
-Layers is a floating Windows application for teachers and presenters. It overlays on top of any presentation software (PowerPoint, Google Slides, Keynote via screen share) and provides:
-- Countdown and stopwatch timers
-- On-screen annotation tools
-- Live translation (47 languages)
-- Random student picker
-- Noise level monitor
-- Spotlight / focus mode
+Current product and access information, updated 3 October 2026.
 
-## Products
-- **Layers (teacher app)** — Windows desktop app, $9/month or $69/year. 14-day free trial.
-- **Layers Talk** — Floating live-translation toolbar for two people on one screen. No interpreter needed. 47 languages.
-- **Layers Student Extension** — Free Chrome extension for student Chromebooks. Push-deployed via Google Admin Console.
+## Access
+Contact questions@thelayersapp.com for current builds, access and activation guidance.
+No public prices or checkout links are advertised. Do not invent release availability.
+Existing licence keys remain supported where the product asks for them.
 
-## Who uses it?
-Teachers, international school educators, ESL/EFL instructors, and business professionals conducting multilingual meetings. Particularly popular in Japan, Vietnam, China, and international school settings.
+## Guard Family
+Parent controls: web dashboard in a compatible browser, or Android Guard Controller.
+Child apps: Guard Desktop on Windows 10/11; Guard Mobile on Android.
+Pair each device with the parent account using its current pairing code.
+Features: time limits, per-app limits, schedules/bedtime, app/site lists, device locks,
+internet pause, usage/status reporting, child requests, and best-effort content alerts.
+Protection depends on permissions and running services; online is not proof of protection.
+There is no current iOS child app or advertised location tracking.
 
-## Developer
-Peter Hoang — teacher turned developer, based in Japan (JST).
+## Classroom
+Layers Teacher: Windows toolbar with speech translation/captions, timer, picker,
+annotation, dictionary, noise meter, and classroom room-code connection.
+Layers Student: free Chrome/Edge learning extension with dictionary, translation,
+read aloud, notes, PDF viewer support and optional teacher-room connection.
+Teacher source v3.18 does not establish the version of an old public download.
+The local 14-day Windows teacher trial does not automatically charge at expiry.
 
-## Key pages
-- Home: https://thelayersapp.com/
-- Download (free trial): https://thelayersapp.com/get.html
-- Layers Talk (business translation): https://thelayersapp.com/soho
-- Student extension install guide: https://thelayersapp.com/layersinstall.html
-- Contact: https://thelayersapp.com/contact.html
-- Privacy Policy: https://thelayersapp.com/privacy.html
+## Browser Guard
+Separate free Chrome/Edge extension. Browser-local parent controls, site rules,
+browsing schedule and best-effort page scanning. Does not pair to the family dashboard.
+Optional Windows Secure Mode applies Chrome policies, not whole-device protection.
+Ask the team for the correct extension listing; the old site shared one unconfirmed ID.
 
-## Supported languages
-English, Japanese (日本語), Chinese Simplified (中文), Vietnamese (Tiếng Việt), and 43 more via live translation.
-
-## Licensing
-Individual teachers: monthly or annual subscription via Gumroad.
-Schools / districts: contact sales@thelayersapp.com for volume licensing.
+## Discontinued
+Teacher Mac, Guard Mac and separate Layers Talk are no longer active offerings.
+A Mac browser can still open the parent dashboard for Windows/Android child devices.
 
 ## Contact
-- General: questions@thelayersapp.com
-- Sales/Licensing: sales@thelayersapp.com
-- Developer: peter@thelayersapp.com
+The form prepares a draft. Visitors send it in an email app or webmail.
+The assistant cannot send emails, issue refunds or cancel subscriptions.
+For payment questions, request merchant, date and order reference with private details hidden.
+
+## Pages
+https://www.thelayersapp.com/
+https://www.thelayersapp.com/guard-pro.html
+https://www.thelayersapp.com/teacher.html
+https://www.thelayersapp.com/student.html
+https://www.thelayersapp.com/guard.html
+https://www.thelayersapp.com/get.html
+https://www.thelayersapp.com/support.html
+https://www.thelayersapp.com/contact.html
+https://www.thelayersapp.com/privacy.html

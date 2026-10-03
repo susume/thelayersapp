@@ -1,0 +1,10 @@
+{
+  "name": "layers-public-site",
+  "private": true,
+  "scripts": {
+    "build:demo": "esbuild src/product-demo.jsx --bundle --minify --legal-comments=linked --outfile=assets/product-demo.js",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "dependencies": { "react": "18.3.1", "react-dom": "18.3.1" },
+  "devDependencies": { "esbuild": "0.25.10" }
+}

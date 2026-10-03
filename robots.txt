@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thelayersapp.com/sitemap.xml
+Sitemap: https://www.thelayersapp.com/sitemap.xml

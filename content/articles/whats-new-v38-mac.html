@@ -1,0 +1,131 @@
+<header class="article-header">
+    <a href="./" class="back-link">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Blog
+    </a>
+    <div class="article-tags">
+      <span class="tag tag-green">Release Notes</span>
+      <span class="tag tag-orange">Mac App</span>
+      <span class="tag tag-blue">Classroom Sync</span>
+    </div>
+    <h1>What's New: Scheduled Focus Mode, Smarter Rooms, and the <em>Mac App</em> Is Coming</h1>
+    <div class="article-byline">
+      <div class="byline-avatar">P</div>
+      <div class="byline-text">
+        <strong>Layers Team</strong>
+        March 26, 2026 · 5 min read
+      </div>
+    </div>
+  </header><article class="article-body">
+
+    <p>
+      This one has been building for a while. Every session I've spent on Layers lately has been fixing the things that quietly bugged me while using the app, there are many changes, but below are the main.
+    </p>
+
+    <p>
+      v3.8 is a focused update. No new headline feature to put on the website. Just a lot of things that now work better than they did.
+    </p>
+
+    <hr class="article-divider">
+
+    <h2>Scheduled Focus Mode and Internet Lockdown</h2>
+
+    <p>
+      This was the most-requested thing I'd heard from teachers. "Can Layers just automatically turn on Focus Mode at the start of school and after school hours?" Yes — now it can.
+    </p>
+
+    <p>
+      In the Classroom Sync panel there's now a Schedule section at the bottom. You set a start and end time for Focus Mode and/or Internet Lockdown — separately, independently. Layers checks every 60 seconds and enforces whatever the schedule says. It handles overnight ranges, so if you want lockdown from 10pm to 7am for a boarding school situation, that works too.
+    </p>
+
+    <div class="feature-block">
+      <div class="feature-block-title">// How scheduling works</div>
+      <ul class="feature-list">
+        <li><strong>Two independent schedules</strong> — Focus Mode and Internet Lockdown each have their own start/end time. Setting one doesn't affect the other.</li>
+        <li><strong>Survives teacher disconnect</strong> — if you close the app or the session ends, the schedule keeps enforcing on student devices until its end time or until a student explicitly leaves the room.</li>
+        <li><strong>Persists across browser restarts</strong> — students' Chrome extension stores the schedule locally. If they restart their laptop at 8am and class starts at 9am, it still kicks in at 9am.</li>
+        <li><strong>Shared between teachers</strong> — if two teachers share a room (e.g. homeroom + subject teacher), Teacher B sees whatever Teacher A already scheduled when they connect. Firebase is the source of truth.</li>
+      </ul>
+    </div>
+
+    <p>
+      The Chrome extension needed its own update to support this — that's v1.3.5, which should auto-update in Chrome within 24 hours. 
+    </p>
+
+    <hr class="article-divider">
+
+    <h2>A Cleaner Classroom Sync Panel</h2>
+
+    <p>
+      The Sync panel was getting crowded. Saved rooms used to appear as a row of small buttons that wrapped awkwardly. PIN Lock was buried in its own expandable section. The panel couldn't scroll, so once you had a few features enabled the whole thing felt cramped.
+    </p>
+
+    <p>
+      Three changes here in v3.8:
+    </p>
+
+    <div class="feature-block">
+      <div class="feature-block-title">// Sync panel changes</div>
+      <ul class="feature-list">
+        <li><strong>Saved rooms are now a dropdown.</strong> Select a saved room to connect instantly — no password re-entry. A × button removes the selected room. "✨ New Room" is always the first option.</li>
+        <li><strong>PIN Lock moved to room creation.</strong> When you create a new room you can optionally set a 4-digit PIN. Students can't disable Focus Mode without it. The Sync panel no longer has a separate PIN section.</li>
+        <li><strong>The panel scrolls.</strong> All cards — Connection, Focus, Lockdown, Push Link, Block Sites, Schedule — sit inside a scrollable area. The panel stays a fixed size; the content adapts.</li>
+      </ul>
+    </div>
+
+    <hr class="article-divider">
+
+    <h2>A Few Other Things</h2>
+
+    <h3>Room Creation Is Faster</h3>
+    <p>
+      There was a bug where creating a new room caused a 5-second delay before the app connected. It was caused by a Firebase write that was happening too early — before the teacher session was properly established. Fixed. Room creation is now instant.
+    </p>
+
+    <h3>Layers Talk — Continuous Listening and Meeting Minutes</h3>
+    <p>
+      Layers Talk v1.5 shipped a few weeks ago with a full set of new features — continuous listening mode (no more holding F5/F6), a live scrollable transcript, editable speaker names, HTML meeting minutes export, and a customizable toolbar. If you haven't updated, grab the latest from Gumroad. Existing customers get it free.
+    </p>
+
+    <hr class="article-divider">
+
+    <!-- MAC CALLOUT -->
+    <div class="mac-callout">
+      <h2>The Mac App Is Real</h2>
+      <p>
+        I've been asked about a Mac version since I launched Layers. The honest answer for a long time was: I'm on Windows, I don't have a Mac, and building cross-platform without owning the hardware felt like a wall.
+      </p>
+      <p>
+        That wall came down. I built a complete Mac version of Layers — Electron + React, floats above Keynote and Safari in full-screen, real microphone capture, Firebase Classroom Sync, noise meter, schedule, everything. The build pipeline runs on GitHub's free Mac servers, so I don't need to own a Mac to ship a Mac app.
+      </p>
+      <p>
+        It's not out yet. The first build is compiling. I still need to test it properly, sort out the download page, and decide whether to charge for it separately or bundle it with the Windows license. But it's real, it exists, and it will be available at thelayersapp.com when it's ready.
+      </p>
+      <p>
+        Update, 3 October 2026: the Mac announcement has been superseded. Mac applications are discontinued and we are no longer taking Mac release notification requests.
+      </p>
+    </div>
+
+    <hr class="article-divider">
+
+    <h2>How to Get the Updates</h2>
+
+    <p>
+      <strong>Layers v3.8 (Windows)</strong> — download from your Gumroad purchase page, or from the hidden download page if you have that link. Existing license keys work with no changes.
+    </p>
+
+    <p>
+      <strong>Chrome Extension v1.3.5</strong> — auto-updates in Chrome within 24 hours. Force-update via chrome://extensions → Developer Mode → Update. If you deployed via Admin Console, the update pushes automatically.
+    </p>
+
+    <p>
+      <strong>Layers Talk v1.5</strong> — available on your Gumroad purchase page. Your existing license key works.
+    </p>
+
+    <p>
+      As always, if anything isn't working, email me directly at <a href="mailto:questions@thelayersapp.com">questions@thelayersapp.com</a>. I reply personally, usually within a few hours.
+    </p>
+
+    <p>— Peter</p>
+
+  </article>
