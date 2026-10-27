@@ -59,7 +59,8 @@ the entered domain. Preserve this interaction when editing the Browser Guard pag
 ## Preview and verify
 
 Use Node.js 24.22.1 (selected by `.node-version`), or a patched version allowed
-by `package.json`. The October 2026 security baseline excludes Node 20 and
+by `package.json`; `.npmrc` rejects installs on older runtimes. The October
+2026 security baseline excludes Node 20 and
 older Node 22/24/26 releases. If this site is built on Render, set its
 `NODE_VERSION` to the patched version too: that variable overrides the file.
 Rebuild the site to refresh the build environment's certificate store.
