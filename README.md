@@ -3,6 +3,19 @@
 Static product pages and the Firebase-powered Guard parent dashboard, hosted
 under the existing `www.thelayersapp.com` domain.
 
+## Start here: current product scope
+
+Windows and Android are the active native application platforms. **Native Mac
+apps are discontinued.** The owner has no Mac test devices and intends to
+remove the old app folders; missing Mac source is not a reason to restore it
+or add a Mac testing/release task. Mac browsers can still use the parent web
+dashboard and supported browser extensions. Layers Talk is legacy compatibility
+code, not an active offer.
+
+Use the [current system handoff](https://github.com/susume/layers/blob/main/docs/HANDOFF.md)
+for repository ownership, active products, verification and outstanding work.
+The [product audit](docs/product-audit-2026-10-03.md) records the website claims.
+
 ## Edit the current product pages
 
 - `tools/build_site.py`: English content, shared page shell and navigation.

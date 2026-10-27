@@ -8,6 +8,10 @@ which release a customer has installed or of payment-account settings.
 
 - Windows and Android are the active app platforms.
 - Mac applications are discontinued. A Mac browser can still be a parent client.
+- Reconfirmed by the owner on 27 October 2026: there are no Mac test devices,
+  and the old Mac application folders may be deleted to avoid confusion.
+  Do not restore them or treat Mac testing/releases as current work. See the
+  [current system handoff](https://github.com/susume/layers/blob/main/docs/HANDOFF.md).
 - Do not publish prices. Direct visitors to the team for current access.
 
 ## Source-backed product inventory
@@ -21,7 +25,7 @@ which release a customer has installed or of payment-account settings.
 | Guard Mobile | `layers/layers-guard-mobile/App.js`, `src/screens/PairingScreen.js`, `SetupScreen.js`, `src/services/GuardSyncService.js`, `StatusReporter.js`, `FirebaseService.js`, native Android modules | Android child app; pairing, usage reporting, rules, schedules, device/time locks, requests and alerts. VPN/accessibility/usage/overlay and other permissions govern individual capabilities. Device/battery/background settings matter. |
 | Guard Controller | `layers/LayersGuardController/App.js`, `src/screens/`, `src/services/FirebaseService.js`, `AuthService.js` | Android parent client; Today, Trends, Controls, pairing/device selection, limits, schedules, restrictions, requests, alerts and audit history. Parent email/password account and PIN. |
 | Web dashboard | `thelayersapp/dashboard.html`: auth/pairing, device health, command acknowledgement, request handling, local-date time logs and string tables | Browser parent client of the same Guard devices. Sign-in, existing licence/setup flow, device selection, Today/Trends/Controls and the existing Firebase operations are retained. |
-| Mac apps | `layers/layers-ios/layers-mac/layers-mac/`, `layers/layers-guard-mac/` | No longer promoted or offered; historical source and release notes are not deleted. |
+| Mac apps (discontinued) | Former paths: `layers/layers-ios/layers-mac/layers-mac/`, `layers/layers-guard-mac/` | No longer promoted or offered. Source folders may be removed; Git history remains the historical record. No active Mac testing or release task. |
 | Layers Talk | `layers/layers-windows/layers_talk.py`, `layers/docs/architecture.md` | Legacy app, no longer an active offer. Its old route explains the change rather than selling a meeting translator. |
 
 ## Corrections made
