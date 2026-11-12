@@ -53,7 +53,10 @@ test('dashboard pairing uses one idempotent transaction path for both pairing en
   const submitStart = html.indexOf('async function submitPairingCode');
   const submitEnd = html.indexOf('// ── MODE 1:', submitStart);
   const submit = html.slice(submitStart, submitEnd);
-  assert.match(submit, /runTransaction\(ref\(db, GUARD_ROOT \+ '\/pairing_codes\/' \+ code\)/);
+  assert.match(submit, /runTransaction\(ref\(db, firebasePath\(GUARD_ROOT, 'pairing_codes', code\)\)/);
+  const { firebasePath } = runtime(['firebasePath']);
+  assert.equal(firebasePath('guard', 'pairing_codes', 'LG-1234'), 'guard/pairing_codes/LG-1234');
+  assert.equal(firebasePath('alert-id', 'read'), 'alert-id/read');
   assert.match(submit, /claimResult = 'idempotent'/);
   assert.match(submit, /parent_auth_uid: currentUser\.uid/);
   assert.match(submit, /new Set\(\[\.\.\.list, finalDeviceId\]\)/);
@@ -69,7 +72,7 @@ test('autosave coalesces edits and retains the original device after navigation'
   const feedback = [];
   let timerId = 0;
   let resolveWrite;
-  const c = runtime(['scheduleFeedbackId', 'scheduleAutosave'], {
+  const c = runtime(['firebasePath', 'scheduleFeedbackId', 'scheduleAutosave'], {
     currentDeviceId: 'child-a', _deviceSession: 1, _scheduleSaveTimers: {}, _scheduleSavePatches: {},
     db: {}, GUARD_ROOT: 'guard', ref: (_, path) => path,
     update: (path, patch) => { writes.push({ path, patch }); return new Promise(resolve => { resolveWrite = resolve; }); },
@@ -166,7 +169,7 @@ test('device health and command state are explicit and time-aware', () => {
   const writeCommand = html.slice(commandStart, commandEnd);
   assert.match(writeCommand, /return \{ ok: true/);
   assert.match(writeCommand, /return \{ ok: false/);
-  assert.equal(/update\(ref\(db, GUARD_ROOT \+ '\/' \+ did \+ '\/status'/.test(writeCommand), false);
+  assert.doesNotMatch(writeCommand, /update\(ref\(db, firebasePath\(GUARD_ROOT, did, 'status'\)/);
 });
 
 test('today hierarchy, controls, and mobile secondary navigation are present', () => {

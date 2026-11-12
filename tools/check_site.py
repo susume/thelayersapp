@@ -3,12 +3,16 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import re, subprocess, tempfile, sys
-from build_site import ROOT, PAGES, LOCALIZED
+import xml.etree.ElementTree as ET
+from build_site import ROOT, SITE_URL, PAGES, LOCALIZED, canonical_path
 
 class Page(HTMLParser):
     def __init__(self, text):
         super().__init__(convert_charrefs=True)
         self.links=[]; self.ids=set(); self.h1=0; self.title=0; self.styles=[]; self.scripts=[]; self.script_srcs=[]; self.demo_mounts=[]; self.in_script=False; self.code=''; self.type=''; self.lang=''; self.data=[]
+        self.canonicals = []
+        self.alternates = {}
+        self.noindex = False
         self.feed(text)
     def handle_starttag(self, tag, attrs):
         a=dict(attrs)
@@ -19,6 +23,12 @@ class Page(HTMLParser):
         if tag=='title': self.title+=1
         if tag=='a' and a.get('href'): self.links.append(a['href'])
         if tag=='link' and a.get('rel')=='stylesheet': self.styles.append(a.get('href',''))
+        if tag == 'link' and a.get('rel') == 'canonical':
+            self.canonicals.append(a.get('href'))
+        if tag == 'link' and a.get('rel') == 'alternate' and a.get('hreflang'):
+            self.alternates[a['hreflang']] = a.get('href')
+        if tag == 'meta' and a.get('name') == 'robots':
+            self.noindex |= 'noindex' in a.get('content', '').lower().replace(' ', '').split(',')
         if tag=='script':
             self.in_script=True; self.code=''; self.type=a.get('type',''); self.src=a.get('src')
             if self.src: self.script_srcs.append(self.src)
@@ -35,6 +45,24 @@ pages += [str(p.relative_to(ROOT)).replace('\\','/') for p in (ROOT/'blog').glob
 pages += [lang+'/'+p for lang in ['ja','zh','vi'] for p in LOCALIZED]
 errors=[]
 parsed={name:Page((ROOT/name).read_text(encoding='utf-8')) for name in pages}
+indexable = {
+    SITE_URL + canonical_path(name): page for name, page in parsed.items()
+    if not page.noindex and name != 'guardinstall-print.html'
+}
+sitemap = ET.parse(ROOT / 'sitemap.xml')
+listed_urls = [loc.text for loc in sitemap.findall('{*}url/{*}loc')]
+if len(listed_urls) != len(set(listed_urls)):
+    errors.append('sitemap.xml: duplicate URLs')
+if set(listed_urls) != indexable.keys():
+    errors.append('sitemap.xml: must list every indexable public page and exclude archive and print pages')
+for url, page in indexable.items():
+    if page.canonicals != [url]:
+        errors.append(f'{url}: expected a self-referencing canonical, got {page.canonicals}')
+    for lang, target_url in page.alternates.items():
+        target = indexable.get(target_url)
+        if not target or target.alternates != page.alternates or (lang != 'x-default' and target.lang != lang):
+            errors.append(f'{url}: invalid hreflang {lang} target {target_url}')
+
 for name,page in parsed.items():
     if page.h1!=1 or page.title!=1: errors.append(f'{name}: must have one h1 and title')
     if not any(x.endswith('assets/site.css') for x in page.styles): errors.append(f'{name}: missing shared theme')

@@ -7,7 +7,7 @@ from pathlib import Path
 from html import escape, unescape
 import re
 import xml.etree.ElementTree as ET
-from build_site import ROOT, shell, hero, section, card, button, notice, cta, LOCALIZED
+from build_site import ROOT, SITE_URL, PAGES, LOCALIZED, canonical_path, localized_filename, shell, hero, section, card, button, notice, cta
 
 def refresh_dashboard():
     path = ROOT / 'dashboard.html'
@@ -186,19 +186,17 @@ https://www.thelayersapp.com/privacy.html
 
 def refresh_sitemap():
     # Archive apps, unlisted utilities and authenticated dashboard are intentionally excluded.
-    pages=['index.html','guard-pro.html','guard-desktop.html','guard-mobile.html','teacher.html','student.html','guard.html','get.html','contact.html','support.html','privacy.html','guardinstall.html','layersinstall.html','guard-windows.html','blog/index.html']
+    pages=list(PAGES)+['blog/index.html']
     pages += ['blog/'+name for name,*_ in ARTICLES if name!='whats-new-v38-mac.html']
-    pages += [lang+'/'+name for lang in ['ja','zh','vi'] for name in sorted(LOCALIZED) if name!='soho.html']
+    pages += [localized_filename(name, lang) for lang in ['ja','zh','vi'] for name in sorted(LOCALIZED) if name!='soho.html']
     ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9')
     root=ET.Element('{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')
     for page in pages:
         url=ET.SubElement(root,'url')
-        route=page.replace('index.html','')
-        ET.SubElement(url,'loc').text='https://www.thelayersapp.com/'+route
-        ET.SubElement(url,'lastmod').text='2026-10-03'
+        ET.SubElement(url,'loc').text=SITE_URL+canonical_path(page)
     ET.indent(root)
     (ROOT/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?>\n'+ET.tostring(root,encoding='unicode')+'\n',encoding='utf-8')
-    (ROOT/'robots.txt').write_text('User-agent: *\nAllow: /\n\nSitemap: https://www.thelayersapp.com/sitemap.xml\n',encoding='utf-8')
+    (ROOT/'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n',encoding='utf-8')
     # Historical extensionless locale paths should show the same up-to-date home page.
     for lang in ['ja','zh','vi']:
         alias=ROOT/lang/'index'

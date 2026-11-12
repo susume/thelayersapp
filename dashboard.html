@@ -2713,6 +2713,11 @@
     const DEV_KEYS = ['LAYERS-DEV-2026'];
     const LICENSE_URL = 'https://license.thelayersapp.com/validate';
 
+    // Build paths from database keys so the dashboard does not expose URL-like fragments to crawlers.
+    function firebasePath(...segments) {
+      return segments.map(String).join('/');
+    }
+
     // ── Firebase array normalisation (architecture.md §Key Implementation Notes) ──
     // Firebase RTDB serialises JS arrays as objects with numeric keys {"0":…,"1":…}
     // when stored via REST or when there are gaps.  Always normalise before use.
@@ -4946,7 +4951,7 @@
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, pass);
         try {
-          await set(ref(db, USERS_ROOT + '/' + cred.user.uid), {
+          await set(ref(db, firebasePath(USERS_ROOT, cred.user.uid)), {
             email: email,
             created_at: Date.now(),
             devices: [],
@@ -4998,13 +5003,13 @@
 
       // Dev key check
       if (DEV_KEYS.includes(key)) {
-        await update(ref(db, USERS_ROOT + '/' + currentUser.uid), {
+        await update(ref(db, firebasePath(USERS_ROOT, currentUser.uid)), {
           license_key: key,
           license_valid: true,
         });
         showToast(T('license_activated_dev'));
         // Re-trigger auth check
-        const snap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
+        const snap = await get(ref(db, firebasePath(USERS_ROOT, currentUser.uid)));
         const d = snap.val();
         devices = normaliseFirebaseArray(d.devices);
         if (devices.length === 0) { startPairing(); } else { currentDeviceId = devices[0]; showScreen('screenDashboard'); attachListeners(); }
@@ -5020,12 +5025,12 @@
         });
         const data = await resp.json();
         if (resp.ok && data.valid) {
-          await update(ref(db, USERS_ROOT + '/' + currentUser.uid), {
+          await update(ref(db, firebasePath(USERS_ROOT, currentUser.uid)), {
             license_key: key,
             license_valid: true,
           });
           showToast(T('license_activated'));
-          const snap = await get(ref(db, USERS_ROOT + '/' + currentUser.uid));
+          const snap = await get(ref(db, firebasePath(USERS_ROOT, currentUser.uid)));
           const d = snap.val();
           devices = normaliseFirebaseArray(d.devices);
           if (devices.length === 0) { startPairing(); } else { currentDeviceId = devices[0]; showScreen('screenDashboard'); attachListeners(); }
@@ -5055,23 +5060,23 @@
         // Check license
         let userSnap;
         try {
-          userSnap = await get(ref(db, USERS_ROOT + '/' + user.uid));
+          userSnap = await get(ref(db, firebasePath(USERS_ROOT, user.uid)));
         } catch (dbErr) {
           console.error('[Dashboard] Failed to read user record:', dbErr.code, dbErr.message);
           // User record doesn't exist yet — create it
-          await set(ref(db, USERS_ROOT + '/' + user.uid), {
+          await set(ref(db, firebasePath(USERS_ROOT, user.uid)), {
             email: user.email,
             created_at: Date.now(),
             devices: [],
           });
-          userSnap = await get(ref(db, USERS_ROOT + '/' + user.uid));
+          userSnap = await get(ref(db, firebasePath(USERS_ROOT, user.uid)));
         }
 
         const userData = userSnap.val() || {};
 
         // If no user record at all, create one
         if (!userSnap.val()) {
-          await set(ref(db, USERS_ROOT + '/' + user.uid), {
+          await set(ref(db, firebasePath(USERS_ROOT, user.uid)), {
             email: user.email,
             created_at: Date.now(),
             devices: [],
@@ -5190,7 +5195,7 @@
       btn.textContent = '…';
 
       try {
-        const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+        const snap = await get(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code)));
         const val = snap.val();
 
         if (!val) {
@@ -5212,7 +5217,7 @@
           return;
         }
         let claimResult = 'claimed';
-        const claim = await runTransaction(ref(db, GUARD_ROOT + '/pairing_codes/' + code), current => {
+        const claim = await runTransaction(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code)), current => {
           if (!current || pairingCodeExpired(current)) {
             claimResult = 'expired';
             return;
@@ -5246,26 +5251,26 @@
         const finalDeviceId = claimed.device_id || deviceId;
 
         // Preserve child-owned metadata and commit the durable ownership marker.
-        const infoSnap = await get(ref(db, GUARD_ROOT + '/' + finalDeviceId + '/info'));
+        const infoSnap = await get(ref(db, firebasePath(GUARD_ROOT, finalDeviceId, 'info')));
         const info = infoSnap.val() || {};
         const pairedAt = info.paired_at || claimed.paired_at || Date.now();
-        await update(ref(db, GUARD_ROOT + '/' + finalDeviceId + '/info'), {
+        await update(ref(db, firebasePath(GUARD_ROOT, finalDeviceId, 'info')), {
           parent_auth_uid: currentUser.uid,
           paired: true,
           paired_at: pairedAt,
         });
 
-        const userDevices = await runTransaction(ref(db, USERS_ROOT + '/' + currentUser.uid + '/devices'), current => {
+        const userDevices = await runTransaction(ref(db, firebasePath(USERS_ROOT, currentUser.uid, 'devices')), current => {
           const list = normaliseFirebaseArray(current);
           return Array.from(new Set([...list, finalDeviceId]));
         });
         if (!userDevices.committed) throw new Error('user_device_update_failed');
         const devList = normaliseFirebaseArray(userDevices.snapshot.val());
-        const verifiedInfo = (await get(ref(db, GUARD_ROOT + '/' + finalDeviceId + '/info'))).val() || {};
+        const verifiedInfo = (await get(ref(db, firebasePath(GUARD_ROOT, finalDeviceId, 'info')))).val() || {};
         if (verifiedInfo.parent_auth_uid !== currentUser.uid || verifiedInfo.paired !== true || !devList.includes(finalDeviceId)) {
           throw new Error('pairing_verification_failed');
         }
-        setTimeout(() => remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)).catch(() => {}), 30000);
+        setTimeout(() => remove(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code))).catch(() => {}), 30000);
         devices = devList;
         currentDeviceId = finalDeviceId;
         if (options.onSuccess) options.onSuccess(finalDeviceId, verifiedInfo);
@@ -5382,7 +5387,7 @@
       const staleCode = pairingDisplayCode;
       pairingDisplayCode = null;
       if (revoke && staleCode) {
-        remove(ref(db, GUARD_ROOT + '/pairing_codes/' + staleCode)).catch(() => {});
+        remove(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', staleCode))).catch(() => {});
       }
     }
 
@@ -5405,7 +5410,7 @@
         parent_auth_uid: currentUser.uid,
       };
       try {
-        const created = await runTransaction(ref(db, GUARD_ROOT + '/pairing_codes/' + code), current => {
+        const created = await runTransaction(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code)), current => {
           if (current && !pairingCodeExpired(current)) {
             occupied = true;
             return current;
@@ -5422,11 +5427,11 @@
       // Poll for paired
       pairingInterval = setInterval(async () => {
         try {
-          const snap = await get(ref(db, GUARD_ROOT + '/pairing_codes/' + code));
+          const snap = await get(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code)));
           const val = snap.val();
           if (val && pairingCodeExpired(val)) {
             stopPairingPolling();
-            await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)).catch(() => {});
+            await remove(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code))).catch(() => {});
             showToast(T('setup_code_expired'), true);
             return;
           }
@@ -5442,18 +5447,18 @@
               child_name: 'My child',
               paired_at: val.paired_at || Date.now(),
             };
-            await update(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'), pairingInfo);
-            const userResult = await runTransaction(ref(db, USERS_ROOT + '/' + currentUser.uid + '/devices'), current => {
+            await update(ref(db, firebasePath(GUARD_ROOT, childDeviceId, 'info')), pairingInfo);
+            const userResult = await runTransaction(ref(db, firebasePath(USERS_ROOT, currentUser.uid, 'devices')), current => {
               const list = normaliseFirebaseArray(current);
               return Array.from(new Set([...list, childDeviceId]));
             });
             if (!userResult.committed) throw new Error('user_device_update_failed');
             const devList = normaliseFirebaseArray(userResult.snapshot.val());
-            const verifiedInfo = (await get(ref(db, GUARD_ROOT + '/' + childDeviceId + '/info'))).val() || {};
+            const verifiedInfo = (await get(ref(db, firebasePath(GUARD_ROOT, childDeviceId, 'info')))).val() || {};
             if (verifiedInfo.parent_auth_uid !== currentUser.uid || verifiedInfo.paired !== true || !devList.includes(childDeviceId)) {
               throw new Error('pairing_verification_failed');
             }
-            await remove(ref(db, GUARD_ROOT + '/pairing_codes/' + code)).catch(() => {});
+            await remove(ref(db, firebasePath(GUARD_ROOT, 'pairing_codes', code))).catch(() => {});
             devices = devList;
             currentDeviceId = childDeviceId;
             showPairingSuccess(childDeviceId, verifiedInfo);
@@ -5499,7 +5504,7 @@
         const hashBuffer = await crypto.subtle.digest('SHA-256', data);
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { pin_hash: hashHex });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'info')), { pin_hash: hashHex });
         _pinCreateValue = '';
         document.getElementById('pinCreateInput').value = '';
         document.getElementById('pinConfirmInput').value = '';
@@ -5531,10 +5536,10 @@
         let status = {};
         try {
           const [infoSnap, statusSnap, pendingSnap, alertsSnap] = await Promise.all([
-            get(ref(db, GUARD_ROOT + '/' + did + '/info')),
-            get(ref(db, GUARD_ROOT + '/' + did + '/status')),
-            get(ref(db, GUARD_ROOT + '/' + did + '/pending_requests')),
-            get(ref(db, GUARD_ROOT + '/' + did + '/alerts')),
+            get(ref(db, firebasePath(GUARD_ROOT, did, 'info'))),
+            get(ref(db, firebasePath(GUARD_ROOT, did, 'status'))),
+            get(ref(db, firebasePath(GUARD_ROOT, did, 'pending_requests'))),
+            get(ref(db, firebasePath(GUARD_ROOT, did, 'alerts'))),
           ]);
           info = infoSnap.val() || {};
           status = statusSnap.val() || {};
@@ -5673,7 +5678,7 @@
       const did = currentDeviceId;
 
       // Device info listener — updates active device button in sidebar list
-      const infoRef = ref(db, GUARD_ROOT + '/' + did + '/info');
+      const infoRef = ref(db, firebasePath(GUARD_ROOT, did, 'info'));
       onValue(infoRef, (snap) => {
         const info = snap.val() || {};
         _deviceInfoCache[did] = info;
@@ -5693,7 +5698,7 @@
       listeners.push(() => off(infoRef));
 
       // Status listener — renderStatus, renderHero, renderActiveApps, chart fallback
-      const statusRef = ref(db, GUARD_ROOT + '/' + did + '/status');
+      const statusRef = ref(db, firebasePath(GUARD_ROOT, did, 'status'));
       onValue(statusRef, (snap) => {
         const s = snap.val() || {};
         _latestStatus = s;
@@ -5716,7 +5721,7 @@
       listeners.push(() => off(statusRef));
 
       // Schedule listener — for hero card limit display
-      const schedRef = ref(db, GUARD_ROOT + '/' + did + '/schedule');
+      const schedRef = ref(db, firebasePath(GUARD_ROOT, did, 'schedule'));
       onValue(schedRef, (snap) => {
         currentSchedule = snap.val() || {};
         _scheduleLoaded = true;
@@ -5730,7 +5735,7 @@
       // Time log listener — today + 7-day chart
       // Compute today dynamically inside callback to survive midnight rollover
       // (architecture.md: "Date keys always use local time")
-      const timeRef = ref(db, GUARD_ROOT + '/' + did + '/time_log');
+      const timeRef = ref(db, firebasePath(GUARD_ROOT, did, 'time_log'));
       onValue(timeRef, (snap) => {
         const log = snap.val() || {};
         _latestTimeLog = log;
@@ -5744,7 +5749,7 @@
       listeners.push(() => off(timeRef));
 
       // Pending requests listener
-      const reqRef = ref(db, GUARD_ROOT + '/' + did + '/pending_requests');
+      const reqRef = ref(db, firebasePath(GUARD_ROOT, did, 'pending_requests'));
       onValue(reqRef, (snap) => {
         _latestPendingRequests = snap.val() || {};
         const pendingKeys = new Set(Object.entries(_latestPendingRequests).filter(([, request]) => request && request.status === 'pending').map(([key]) => key));
@@ -5758,7 +5763,7 @@
       listeners.push(() => off(reqRef));
 
       // Audit log listener
-      const auditRef = ref(db, GUARD_ROOT + '/' + did + '/audit_log');
+      const auditRef = ref(db, firebasePath(GUARD_ROOT, did, 'audit_log'));
       onValue(auditRef, (snap) => {
         _latestAuditLog = snap.val() || {};
         renderActivityLog(_latestAuditLog);
@@ -5766,7 +5771,7 @@
       listeners.push(() => off(auditRef));
 
       // Alerts listener
-      const alertsRef = ref(db, GUARD_ROOT + '/' + did + '/alerts');
+      const alertsRef = ref(db, firebasePath(GUARD_ROOT, did, 'alerts'));
       onValue(alertsRef, (snap) => {
         allAlerts = snap.val() || {};
         _deviceAlertsCache[did] = allAlerts;
@@ -5777,12 +5782,12 @@
       listeners.push(() => off(alertsRef));
 
       // Blocked sites listener (for Controls tab) — normalise Firebase array gotcha
-      const bsRef = ref(db, GUARD_ROOT + '/' + did + '/blocked_sites');
+      const bsRef = ref(db, firebasePath(GUARD_ROOT, did, 'blocked_sites'));
       onValue(bsRef, (snap) => { blockedSites = normaliseFirebaseArray(snap.val()).filter(Boolean); renderBlockedSites(); });
       listeners.push(() => off(bsRef));
 
       // Blocked apps listener (for Controls tab) — normalise Firebase array gotcha
-      const baRef = ref(db, GUARD_ROOT + '/' + did + '/blocked_apps');
+      const baRef = ref(db, firebasePath(GUARD_ROOT, did, 'blocked_apps'));
       onValue(baRef, (snap) => { blockedApps = normaliseFirebaseArray(snap.val()).filter(Boolean); renderBlockedApps(); });
       listeners.push(() => off(baRef));
 
@@ -6835,7 +6840,7 @@
     async function writeCommand(cmdName, payload, did = currentDeviceId) {
       const ts = Date.now();
       try {
-        await set(ref(db, GUARD_ROOT + '/' + did + '/commands/' + cmdName), {
+        await set(ref(db, firebasePath(GUARD_ROOT, did, 'commands', cmdName)), {
           ...(payload || {}),
           timestamp: ts,
           issued_by: getIssuedBy(),
@@ -6844,7 +6849,7 @@
         // are the sole source of truth for whether a command took effect.
         try {
           const key = 'web_' + ts + '_' + cmdName;
-          await set(ref(db, GUARD_ROOT + '/' + did + '/audit_log/' + key), {
+          await set(ref(db, firebasePath(GUARD_ROOT, did, 'audit_log', key)), {
             command: cmdName,
             payload: payload || {},
             source: 'web_dashboard',
@@ -6982,7 +6987,7 @@
           throw new Error('Unsupported request type');
         }
         if (!result.ok) throw result.error || new Error('Command write failed');
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), {
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'pending_requests', key)), {
           status: 'approved',
           ...(resolvedMinutes ? { resolved_minutes: resolvedMinutes } : {}),
           resolved_at: Date.now(),
@@ -7014,7 +7019,7 @@
       clearPendingRequestGlobalFeedback();
       renderPendingRequests(_latestPendingRequests);
       try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/pending_requests/' + key), { status: 'denied' });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'pending_requests', key)), { status: 'denied' });
         _pendingRequestResolved.add(key);
         setPendingRequestGlobalFeedback({ kind: 'neutral', message: T('approval_feedback_denied') });
         showToast(T('approval_feedback_denied'));
@@ -7067,7 +7072,7 @@
             const result = await writeCommand('block_site', { domain });
             if (!result.ok) throw result.error || new Error('Command write failed');
             const newList = [...blockedSites, domain];
-            await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_sites'), newList);
+            await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_sites')), newList);
             input.value = '';
             setInlineMessage('addSiteMessage', getSettingSavedMessage(), 'success');
             showToast(getSettingSavedMessage());
@@ -7085,7 +7090,7 @@
           const result = await writeCommand('unblock_site', { domain });
           if (!result.ok) throw result.error || new Error('Command write failed');
           const newList = blockedSites.filter(s => s !== domain);
-          await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_sites'), newList);
+          await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_sites')), newList);
           showToast(getSettingSavedMessage());
         } catch (err) {
           showToast(T('error_firebase_write'), true);
@@ -7109,7 +7114,7 @@
         const result = await writeCommand('block_app', { exe, display_name: displayName });
         if (!result.ok) throw result.error || new Error('Command write failed');
         const newList = [...blockedApps, { exe, display_name: displayName }];
-        await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+        await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_apps')), newList);
         document.getElementById('addAppExe').value = '';
         document.getElementById('addAppName').value = '';
         showToast(getSettingSavedMessage());
@@ -7126,7 +7131,7 @@
           const result = await writeCommand('unblock_app', { exe });
           if (!result.ok) throw result.error || new Error('Command write failed');
           const newList = blockedApps.filter(a => blockedAppExe(a) !== exe);
-          await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+          await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_apps')), newList);
           showToast(getSettingSavedMessage());
         } catch (err) {
           showToast(T('error_firebase_write'), true);
@@ -7246,7 +7251,7 @@
                   const result = await writeCommand('unblock_app', { exe: pkg });
                   if (!result.ok) throw result.error || new Error('Command write failed');
                   const newList = blockedApps.filter(a => blockedAppExe(a) !== pkg);
-                  await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+                  await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_apps')), newList);
                   showToast(getSettingSavedMessage());
                 } catch (err) {
                   showToast(T('error_firebase_write'), true);
@@ -7258,7 +7263,7 @@
               const result = await writeCommand('block_app', { exe: pkg, display_name: name });
               if (!result.ok) throw result.error || new Error('Command write failed');
               const newList = [...blockedApps, { exe: pkg, display_name: name }];
-              await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), newList);
+              await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_apps')), newList);
               showToast(getSettingSavedMessage());
             } catch (err) {
               showToast(T('error_firebase_write'), true);
@@ -7287,7 +7292,7 @@
                   nextList.push(app);
                 }
               }
-              await set(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/blocked_apps'), nextList);
+              await set(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'blocked_apps')), nextList);
               blockedApps = nextList;
               renderBlockedApps();
               showToast(getSettingSavedMessage());
@@ -7409,7 +7414,7 @@
         delete _scheduleSavePatches[saveKey];
         delete _scheduleSaveTimers[saveKey];
         try {
-          await update(ref(db, GUARD_ROOT + '/' + did + '/schedule'), savedPatch);
+          await update(ref(db, firebasePath(GUARD_ROOT, did, 'schedule')), savedPatch);
           if (session !== _deviceSession || did !== currentDeviceId || _scheduleSaveTimers[saveKey]) return;
           setScheduleFeedback(scheduleFeedbackId(key), getSettingSavedMessage(), 'saved');
           renderHeroLimit();
@@ -7521,7 +7526,7 @@
       const previous = [...appTimeLimits];
       appTimeLimits.push({ exe, display_name: displayName, limit_mins: mins });
       try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), { app_time_limits: appTimeLimits });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'schedule')), { app_time_limits: appTimeLimits });
         document.getElementById('appLimitExe').value = '';
         document.getElementById('appLimitName').value = '';
         document.getElementById('appLimitMins').value = '';
@@ -7539,7 +7544,7 @@
       appTimeLimits.splice(index, 1);
       renderAppLimits(appTimeLimits);
       try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), { app_time_limits: appTimeLimits });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'schedule')), { app_time_limits: appTimeLimits });
         showToast(getSettingSavedMessage());
       } catch (err) {
         appTimeLimits = previous;
@@ -7581,7 +7586,7 @@
       if (!start || !end) return;
       const siteSchedules = normaliseFirebaseArray(currentSchedule.site_schedules).filter(s => s.domain !== domain);
       siteSchedules.push({ domain, start, end });
-      update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/schedule'), { site_schedules: siteSchedules })
+      update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'schedule')), { site_schedules: siteSchedules })
         .then(() => showToast(getSettingSavedMessage()))
         .catch(() => showToast(T('error_firebase_write'), true));
     };
@@ -7634,7 +7639,7 @@
 
       let log = {};
       try {
-        const snap = await get(ref(db, GUARD_ROOT + '/' + did + '/time_log'));
+        const snap = await get(ref(db, firebasePath(GUARD_ROOT, did, 'time_log')));
         log = snap.val() || {};
       } catch (err) {
         if (token === _trendsLoadToken && session === _deviceSession) showToast(T('error_generic'), true);
@@ -8018,7 +8023,7 @@
     // ── Mark alert as read ──
     window.markAlertRead = async function(key) {
       try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/alerts/' + key), { read: true });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'alerts', key)), { read: true });
       } catch (e) { /* best-effort */ }
     };
 
@@ -8026,11 +8031,11 @@
     document.getElementById('markAllReadBtn').addEventListener('click', async () => {
       const updates = {};
       for (const [key, alert] of Object.entries(allAlerts)) {
-        if (alert && !alert.read) updates[key + '/read'] = true;
+        if (alert && !alert.read) updates[firebasePath(key, 'read')] = true;
       }
       if (Object.keys(updates).length > 0) {
         try {
-          await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/alerts'), updates);
+          await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'alerts')), updates);
           showToast(T('alerts_mark_all_read'));
         } catch (e) { showToast(T('error_firebase_write'), true); }
       }
@@ -8086,7 +8091,7 @@
     });
 
     async function loadSettingsData() {
-      const snap = await get(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'));
+      const snap = await get(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'info')));
       const info = snap.val() || {};
       document.getElementById('settingsChildName').value = info.child_name || '';
       document.getElementById('langSelect').value = currentLang;
@@ -8097,7 +8102,7 @@
       const name = document.getElementById('settingsChildName').value.trim();
       if (!name) return;
       try {
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { child_name: name });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'info')), { child_name: name });
         const nameEl = document.querySelector(`#deviceList .device-item[data-device-id="${currentDeviceId}"] .device-name`);
         if (nameEl) nameEl.textContent = name;
         showToast(T('toast_saved'));
@@ -8115,7 +8120,7 @@
         const hashArray = Array.from(new Uint8Array(hashBuffer));
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-        await update(ref(db, GUARD_ROOT + '/' + currentDeviceId + '/info'), { pin_hash: hashHex });
+        await update(ref(db, firebasePath(GUARD_ROOT, currentDeviceId, 'info')), { pin_hash: hashHex });
         showToast(T('settings_screen_pin_saved'));
         document.getElementById('settingsPin').value = '';
       } catch (e) { showToast(T('error_firebase_write'), true); }
@@ -8152,9 +8157,9 @@
         T('settings_remove_device_body'),
         async () => {
           try {
-            await remove(ref(db, GUARD_ROOT + '/' + currentDeviceId));
+            await remove(ref(db, firebasePath(GUARD_ROOT, currentDeviceId)));
             devices = devices.filter(d => d !== currentDeviceId);
-            await update(ref(db, USERS_ROOT + '/' + currentUser.uid), { devices });
+            await update(ref(db, firebasePath(USERS_ROOT, currentUser.uid)), { devices });
             closeDialog('settingsOverlay');
             if (devices.length === 0) {
               startPairing();

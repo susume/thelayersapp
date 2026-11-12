@@ -8,6 +8,7 @@ from html import escape
 import json
 
 ROOT = Path(__file__).resolve().parents[1]
+SITE_URL = 'https://www.thelayersapp.com'
 E = escape
 
 BETA = {
@@ -78,6 +79,16 @@ def relationship(lang='en'):
     return '<div data-guard-demo="compact"><noscript><p>Enable JavaScript to explore the interactive app preview.</p></noscript></div>'
 
 
+def canonical_path(filename):
+    path = Path(filename)
+    route = path.as_posix()
+    return '/' + (route.removesuffix('index.html') if path.name == 'index.html' else route)
+
+
+def localized_filename(filename, lang):
+    return filename if lang == 'en' else lang + '/' + filename
+
+
 def shell(filename, title, description, content, lang='en', editorial=False, noindex=False):
     path = Path(filename)
     prefix = '../' if len(path.parts) > 1 else ''
@@ -93,7 +104,8 @@ def shell(filename, title, description, content, lang='en', editorial=False, noi
         return result + ('?' + query if query_sep else '') + ('#' + fragment if sep else '')
     routes = [('guard-pro.html',n[0]),('teacher.html',n[1]),('guard.html',n[2]),('support.html',n[3])]
     current = path.name
-    interactive = current in {'index.html', 'guard-pro.html'} and not editorial
+    localized = current in LOCALIZED and filename == localized_filename(current, lang)
+    interactive = localized and current in {'index.html', 'guard-pro.html'} and not editorial
     if interactive:
         walkthrough = '<section class="interactive-section" id="demo" aria-label="Interactive Layers Guard walkthrough"><div data-guard-demo="full"><noscript><p>Enable JavaScript to try the app with sample data.</p></noscript></div></section>'
         invitation = '<aside class="notice"><p><strong>' + E(BETA[lang][0]) + '</strong> ' + beta_copy(lang) + '</p></aside>'
@@ -104,21 +116,18 @@ def shell(filename, title, description, content, lang='en', editorial=False, noi
     if current == 'guard.html' and not editorial:
         demo_assets += f'<link rel="stylesheet" href="{prefix}assets/browser-guard-demo.css"><script src="{prefix}assets/browser-guard-demo.js" defer></script>'
     navigation = ''.join(f'<a href="{url(route)}"' + (' aria-current="page"' if current==route else '') + '>' + E(label) + '</a>' for route,label in routes)
-    brand = '<a class="site-brand" href="' + url('index.html') + '">' + icon('layers') + '<span>Layers</span></a>'
-    canonical = 'https://www.thelayersapp.com/' + (str(path).replace('\\','/') if path.name!='index.html' else (lang+'/' if lang!='en' else ''))
+    brand = '<a class="site-brand" href="' + canonical_path(localized_filename('index.html', lang)) + '">' + icon('layers') + '<span>Layers</span></a>'
+    canonical = SITE_URL + canonical_path(filename)
     alts = ''
-    if current in LOCALIZED:
-        for code in NAV:
-            route = (code+'/' if code!='en' else '') + ('' if current=='index.html' else current)
-            alts += f'<link rel="alternate" hreflang="{code}" href="https://www.thelayersapp.com/{route}">\n'
-        alts += '<link rel="alternate" hreflang="x-default" href="https://www.thelayersapp.com/' + ('' if current=='index.html' else current) + '">'
     lang_links = ''
-    if current in LOCALIZED:
+    if localized and not noindex:
         for code,label in [('en','English'),('ja','日本語'),('zh','中文'),('vi','Tiếng Việt')]:
-            target = prefix + (code+'/' if code!='en' else '') + current
+            target = canonical_path(localized_filename(current, code))
+            alts += f'<link rel="alternate" hreflang="{code}" href="{SITE_URL}{target}">\n'
             lang_links += '<a href="' + target + '" lang="' + code + '" hreflang="' + code + '"' + (' aria-current="page"' if code==lang else '') + '>' + label + '</a>'
+        alts += f'<link rel="alternate" hreflang="x-default" href="{SITE_URL}{canonical_path(current)}">'
     products = [('guard-pro.html','Guard Family'),('guard-desktop.html','Guard Desktop · Windows'),('guard-mobile.html','Guard Mobile · Android'),('dashboard.html',n[14]),('teacher.html','Layers Teacher'),('student.html','Layers Student'),('guard.html',n[2])]
-    resources = [('get.html',n[4]),('support.html',n[3]),('blog/index.html',n[11]),('contact.html',n[12]),('privacy.html',n[10])]
+    resources = [('get.html',n[4]),('support.html',n[3]),('blog/',n[11]),('contact.html',n[12]),('privacy.html',n[10])]
     def links(items): return ''.join('<a href="' + url(route) + '">' + E(label) + '</a>' for route,label in items)
     html = f'''<!DOCTYPE html>
 <html lang="{lang}">
@@ -202,9 +211,6 @@ def classroom_guide():
 def secure_mode():
     return hero('Make Chrome’s rules harder to sidestep.', 'Windows Secure Mode is an optional policy toolkit for the browser Guard extension. It is separate from Guard Desktop and requires parent administrator approval.', 'Chrome on Windows', [button('Contact for setup guidance','contact.html?topic=browser-guard',True),button('Browser Guard overview','guard.html')], ['Windows 10/11','Google Chrome','Administrator setup']) + section('Understand the changes first.', '<div class="prose"><p>The toolkit can disable Chrome Guest Mode, Incognito, adding profiles, and extension Developer Mode. With the correct published Guard extension ID, it can also configure force-installation.</p><p>These settings affect Chrome on the computer. They do not block other browsers or native apps. A child should use a Windows Standard User account. Without a verified Guard extension ID, force-install protection is incomplete.</p><ol><li>Contact us for the correct Guard extension and current policy setup instructions.</li><li>Configure the extension’s local parent controls. Review the toolkit and keep its backup/restore instructions.</li><li>Run parent setup with administrator permission only after confirming the correct extension ID. Check the result before giving the PC back to the child.</li><li>Confirm the child’s Standard User account and test the expected Chrome rules.</li></ol></div>') + notice('Secure Mode helps reduce some browser bypass routes. It does not make a computer impossible to bypass and does not replace a device app or parent supervision. Older setup downloads may refer to an unconfirmed extension listing; ask us for current guidance.') + cta()
 
-def legacy_talk():
-    return hero('Layers Talk is a legacy app.', 'The separate Layers Talk product is no longer part of the active lineup. Current development focuses on Layers Teacher for Windows and Guard Family for Windows and Android.', 'Product update', [button('Explore Layers Teacher','teacher.html',True),button('Contact about an older licence','contact.html?topic=payment')]) + notice('For speech translation in a classroom, explore the current Windows teacher toolbar. It is a different workflow from the old two-way meeting translator. We no longer advertise Layers Talk pricing or downloads.')
-
 def privacy():
     return hero('Privacy across the Layers family.', 'Different tools use different data. Browser-local protection, classroom rooms, and paired family devices should not be described as the same service.', 'Privacy · Updated 3 October 2026') + '<div class="prose">' + notice('This notice describes the current product implementation. Contact us about the build you use, access to your data, or deletion. It does not claim that all data stays on your device.') + '''
 <h2>Who to contact</h2><p>Layers is maintained by the Layers team. Email <a href="mailto:contact@thelayersapp.com">contact@thelayersapp.com</a> for privacy or product questions. Windows and Android are the active app platforms; Mac apps and the separate Layers Talk product are discontinued.</p>
@@ -232,13 +238,12 @@ PAGES = {
  'guardinstall.html': ('Guard Family setup','Pair Windows and Android child devices with the parent web dashboard or Android Controller, then complete permissions and verify protection.',family_guide),
  'layersinstall.html': ('Classroom setup','Connect Layers Teacher for Windows to Layers Student in Chrome or Edge using a classroom room code.',classroom_guide),
  'guard-windows.html': ('Windows Secure Mode','Optional Chrome policies for browser Guard on Windows. Parent administrator setup, Standard User guidance and protection limits.',secure_mode),
- 'soho.html': ('Layers Talk product update','Layers Talk is a legacy product. Explore current Windows classroom tools or contact the Layers team about an older licence.',legacy_talk),
  'privacy.html': ('Privacy across the Layers family','How Layers handles classroom connection, parent accounts, paired Windows and Android devices, browser-local settings, online services and contact drafts.',privacy),
 }
 
 def build():
     for filename,(title,description,render) in PAGES.items():
-        shell(filename,title,description,render(),noindex=(filename=='soho.html'))
+        shell(filename,title,description,render())
     # Printing is a dedicated, functional guide rather than a separate product claim.
     shell('guardinstall-print.html','Guard Family setup — print guide',PAGES['guardinstall.html'][1],family_guide() + '<style>@media print{.site-header,.site-footer,.cta-band,.actions{display:none!important}.site{background:white!important}.card{box-shadow:none;break-inside:avoid}.container{width:100%!important}.section{padding:20px 0}a{color:inherit!important}}</style>')
     from localized_content import build_localized

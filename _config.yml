@@ -1,0 +1,3 @@
+exclude:
+  # Source fragments used to generate the public journal under /blog/.
+  - content/articles
