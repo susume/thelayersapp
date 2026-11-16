@@ -40,11 +40,13 @@ class Page(HTMLParser):
             if not self.src and self.code.strip(): self.scripts.append((self.type,self.code))
             self.in_script=False
 
-pages=list(PAGES)+['guardinstall-print.html','blog/index.html']
+pages=list(PAGES)+['404.html','guardinstall-print.html','blog/index.html']
 pages += [str(p.relative_to(ROOT)).replace('\\','/') for p in (ROOT/'blog').glob('*.html') if p.name!='index.html']
 pages += [lang+'/'+p for lang in ['ja','zh','vi'] for p in LOCALIZED]
 errors=[]
 parsed={name:Page((ROOT/name).read_text(encoding='utf-8')) for name in pages}
+if not parsed['404.html'].noindex:
+    errors.append('404.html: missing noindex directive')
 indexable = {
     SITE_URL + canonical_path(name): page for name, page in parsed.items()
     if not page.noindex and name != 'guardinstall-print.html'
@@ -75,7 +77,8 @@ for name,page in parsed.items():
             errors.append(f'{name}: missing React demo bundle')
     for asset in page.styles+page.script_srcs:
         u=urlsplit(asset)
-        if not u.scheme and not u.netloc and not (ROOT/name).parent.joinpath(u.path).exists():
+        target = ROOT / u.path.lstrip('/') if u.path.startswith('/') else (ROOT/name).parent / u.path
+        if not u.scheme and not u.netloc and not target.is_file():
             errors.append(f'{name}: missing asset {asset}')
     for href in page.links:
         u=urlsplit(href)
